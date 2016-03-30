@@ -5,15 +5,26 @@ The Dashboard Write-Up file is an in-depth look into what the dashboard is compr
 
 PAGES:
 index.php
+
 dashboard.php
+
 sales.php
+
 project_management.php
+
 customer_services.php
+
 production.php
+
 vendors.php
+
 clients.php
+
 post_offices.php
+
 weights_and_measures.php
+
+https://cloud.githubusercontent.com/assets/11249546/14151778/a4871f68-f67d-11e5-9e0e-f920bb388a69.png
 
 There will also be an assortment of other smaller .php files that will host scripts and variables to send data to the database through user inputs.
 
