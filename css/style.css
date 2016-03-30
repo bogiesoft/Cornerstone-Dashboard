@@ -1,0 +1,170 @@
+/* Reset -------------------------------------------------- */
+* { box-sizing:content-box; }
+html { margin:0;padding:0;border:0; }
+body {margin:0; padding:0; border:0; background-color:#e9eced;}
+.wrapper { }
+.container { margin:0 auto; width:1142px;  }
+.clear { clear:both; }
+a, label, input, p {
+	font-family: "Montserrat", sans-serif;
+	text-decoration:none;
+	color:black;
+	font-size:14px;
+}
+
+a:hover {
+	opacity:80%;
+	color:#366CAC;
+}
+
+h1,h2,h3,h4,h5 {
+	font-family:"Montserrat", sans-serif;
+	font-weight:bold;
+}
+
+/* login ---------------------------------------- */
+.main-login { display:inline-block; height:100%; width:100%; background-image: url("../images/background.png"); background-repeat:no-repeat;background-attachment: fixed;
+    background-position: center;  padding:205px 0 208px 0; position:fixed;}
+.main-login .login-outer { width:450px; background-color:#f0f3f4; margin:0 auto; padding:0 0 55px 0; border-radius:8px; }
+.main-login .login-logo { display:inline-block; width:100%; background-color:#366CAC; text-align:center; padding:10px 0 10px 0; border-top-left-radius:8px; border-top-right-radius:8px; }
+.main-login .login-outer form { padding:45px 55px 0 55px; }
+.main-login .login-outer form input[type="text"],.main-login .login-outer form input[type="password"] { display:inline-block; width:100%; padding:18px; box-sizing:border-box; font-size:16px; color:#666; line-height:24px; margin:0 0 24px 0; border-radius:5px; font-family: 'Montserrat', sans-serif; }
+.main-login .login-outer form input[type="submit"] { display:inline-block; width:95%; background-color:#366CAC; line-height:60px; border-radius:8px; text-align:center; color:#fff; font-size:20px;margin-bottom:25px; transition:all 300ms 0s; font-family:'Montserrat', sans-serif; }
+.main-login .login-outer form input[type="submit"]:hover { opacity:.7; }
+.main-login .login-outer .loginform-row {}
+.main-login .login-outer .formrow-left { float:left; width:135px; }
+.main-login .login-outer .formrow-left input[type="checkbox"] { float:left;}
+.main-login .login-outer .formrow-left label { float:left; color:#666; font-size:12px; line-height:24px; padding-left:10px;}
+.main-login .login-outer .formrow-right { float:right; }
+.main-login .login-outer .formrow-right a { float:left; width:100%; text-decoration:none; color:#366CAC; font-size:14px; line-height:24px; }
+
+@media screen and (max-width:480px) {
+.main-login { padding:185px 0 200px 0; }
+.main-login .login-outer { width:auto; margin:0 15px; padding:0; }
+.main-login .login-logo img { width:80%; }
+.main-login .login-outer form { padding:20px 30px; }
+.main-login .login-outer .formrow-left { width:100%; }
+.main-login .login-outer .formrow-left label { float:left; padding:0 0 0 15px; }
+.main-login .login-outer .formrow-right { float:left; width:100%; }
+.main-login .login-outer form input[type="text"] { padding:10px 18px; }
+ .main-login .login-outer form input[type="submit"] { line-height:44px; }
+}
+
+@media screen and  (max-width:400px){
+.dg-container .mid-line { left:120%; width:285px; }
+.dg-container nav { margin-left:353px; width:357px; }
+}
+
+#loginlogo {
+	margin:0 auto;
+	width:80%;
+}
+
+
+
+/* navbar */
+#navbar {
+	height:100px;
+	width:100%;
+	position: fixed;
+	background-color:white;
+	display:inline-block;
+	z-index:2;
+}
+
+#crst_logo {
+	height:100px;
+	width:auto;
+	float:left;
+}
+
+#navbar ul {
+	list-style:none;
+	padding:45px 0 35px 0;
+	margin:0 auto;
+	box-shadow:0px 1px 3px 0px rgba(50, 50, 50, 0.3);
+	background-color:white;
+}
+
+#navbar li {
+	display:inline;
+	font-family:"Montserrat", sans-serif;
+	font-size:16px;
+	font-weight:bold;
+	padding:0 15px 0 20px;
+}
+
+
+#profile {
+	float: right;
+	display:inline;
+	font-family:"Montserrat", sans-serif;
+	font-size:16px;
+	font-weight:bold;
+	padding:0 15px 0 20px;
+}
+
+/* sidebar */
+
+.content {
+  width:auto;
+  top:100px;
+  height:100%;
+  position: absolute;
+ padding-left: 10px;
+
+}
+
+
+.sidebar-toggle {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 20px;
+  height: 20px;
+  background: black;
+}
+
+.sidebar {
+background-color:#fff;
+  width:350px;
+  float:left;
+  height:100%;
+  position: fixed;
+  top: 100px;
+  
+}
+
+.sidebar-list {
+  list-style-type: none;
+  padding-left: 20px;
+  width: auto;
+  margin:0 auto;
+	
+}
+
+.sidebar-list li {
+	font-family:"Montserrat", sans-serif;
+	font-size:16px;
+	font-weight:bold;
+	padding:20px 0 20px 0;
+	width:90%;
+	border-bottom:1px solid #e9eced;;
+}
+
+/* Footer */
+.dashboard_footer {
+	clear:both;
+}
+
+/* Client's Page */
+
+.main-content {
+	float:left;
+	width: 100%;
+	display:block;
+	padding:10px 0 0 350px;
+	height:auto;
+	width:auto;
+	z-index:1;
+}
