@@ -1,6 +1,47 @@
 <?php
 require ("header.php");
 ?>
+<style>
+table {
+    width: 40em;
+    margin: 2em auto;
+}
+
+thead {
+    background: #000;
+    color: #fff;
+}
+
+td {
+    width: 10em;
+    padding: 0.3em;
+}
+
+tbody {
+    background: #ccc;
+}
+
+div.pager {
+    text-align: center;
+    margin: 1em 0;
+}
+
+div.pager span {
+    display: inline-block;
+    width: 1.8em;
+    height: 1.8em;
+    line-height: 1.8;
+    text-align: center;
+    cursor: pointer;
+    background: #000;
+    color: #fff;
+    margin-right: 0.5em;
+}
+
+div.pager span.active {
+    background: #c00;
+}
+</style>
 <div class="content">
 <div class="content-box">
 <div class="topbar">
@@ -10,11 +51,11 @@ require ("header.php");
 <div class="search-cont">
 	<div class="searchcont-detail">
 		<div class="search-boxleft">
-			<form action="" method="get" onsubmit="return false">
+			<form action="editClient.php" method="post" >
 				<label>Quick Search</label>
-				<input name="" type="text" placeholder="Search for a specific client">
+				<input name="frmSearch" type="text" placeholder="Search for a specific client">
+				<input id="SubmitBtn" type="submit" value="SUBMIT" >
 			</form>
-			<a href="#">Search</a>
 		</div>
 	</div>
 </div>
@@ -34,15 +75,22 @@ if ($conn->connect_error) {
 
 
 $result = mysqli_query($conn,"SELECT * FROM client_info");
-echo "Results from clientinfo:"."<br>"."<br>";
+
+
+echo "<table  border='1' cellspacing='2' cellpadding='2' class='paginated' >"; // start a table tag in the HTML
+echo "<thead>";
+echo "<tr><th> Client name </th><th> Contact name </th><th> Address </th><th> Contact Phone </th><th> Email </th><th> Website </th><th> Category </th><th> Title </th><th> Notes </th></tr>";
+echo "</thead>";
+
+
 if ($result->num_rows > 0) {
     // output data of each row
 	
     while($row = $result->fetch_assoc()) {
-		$a = $row["contact_name"];
-        echo "<br>"."Client: ";
-		echo "<a href='http://localhost/crst_dashboard/client_info.php'>".$a."</a>";
-		echo "<br>". "Address: " . $row["client_add"]. "<br>". "Contact Name: " . $row["contact_name"]. "<br>". "Contact Phobe: " . $row["contact_phone"]. "<br>". "Email: " . $row["contact_email"]. "<br>". "Website: " . $row["website"]. "<br>". "Category: " . $row["category"]. "<br>". "Title: " . $row["title"]. "<br>". "Notes: " . $row["notes"]. "<br>";
+		
+
+
+		echo "<tr><td>"."<a href='http://localhost/crst_dashboard/client_info.php'>".$row["client_name"]."</a>"."</td><td>".  $row["contact_name"]."</td><td>". $row["client_add"]. "</td><td>". $row["contact_phone"]. "</td><td>". $row["contact_email"]."</td><td>". $row["website"]. "</td><td>". $row["category"]. "</td><td>". $row["title"]. "</td><td>". $row["notes"]. "</td></tr>";
     }
 	echo "<br>";
 } else {
@@ -52,7 +100,7 @@ if ($result->num_rows > 0) {
 $conn->close();
 
 ?>
-<div class="allcontacts-table">
+<!--<div class="allcontacts-table">
 <table border="0" cellspacing="0" cellpadding="0" class="table-bordered allcontacts-table">
 	<tbody>
 		<tr valign="top">
@@ -99,10 +147,41 @@ $conn->close();
 			</ul>
 		</nav>
 	</div>
-</div>
+</div>-->
 </div>
 </div>			
 				
-</div>			
+</div>	
+<script>
+/*$('td', 'table').each(function(i) {
+    $(this).text(i+1);
+});
+*/
+
+
+$('table.paginated').each(function() {
+    var currentPage = 0;
+    var numPerPage = 5;
+    var $table = $(this);
+    $table.bind('repaginate', function() {
+        $table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
+    });
+    $table.trigger('repaginate');
+    var numRows = $table.find('tbody tr').length;
+    var numPages = Math.ceil(numRows / numPerPage);
+    var $pager = $('<div class="pager"></div>');
+    for (var page = 0; page < numPages; page++) {
+        $('<span class="page-number"></span>').text(page + 1).bind('click', {
+            newPage: page
+        }, function(event) {
+            currentPage = event.data['newPage'];
+            $table.trigger('repaginate');
+            $(this).addClass('active').siblings().removeClass('active');
+        }).appendTo($pager).addClass('clickable');
+    }
+    $pager.insertBefore($table).find('span.page-number:first').addClass('active');
+});
+</script>
+	
 
 						
