@@ -2,9 +2,10 @@
 require ("header.php");
 ?>
 <div class="content">
+<div class="content-box">
 <div class="topbar">
-<h2>Clients</h2>
-<a href="add_client.php" id="add_button">Add Client</a>
+<h1>Clients</h1>
+<a href="add_client.php" class="add_button">Add Client</a>
 </div>
 <div class="search-cont">
 	<div class="searchcont-detail">
@@ -100,8 +101,8 @@ $conn->close();
 	</div>
 </div>
 </div>
+</div>			
 				
-				
-			
+</div>			
 
 						

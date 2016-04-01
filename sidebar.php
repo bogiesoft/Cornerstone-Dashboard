@@ -1,14 +1,18 @@
 
 <div class="sidebar">
-  <div class="sidebar-toggle"></div>
+  <div class="sidebar-toggle"><i><img src="images/web-icons/close.png"></i></div>
   <ul class="sidebar-list">
-    <a href=""><li>Post Offices</li></a>
-    <a href="clients.php"><li>Clients</li></a>
-    <a href=""><li>Vendors</li></a>
-    <a href=""><li>Documentation</li></a>
-    <a href=""><li>Weights and Measures</li></a>
-	<a href=""><li>Archive Jobs</li></a>
+    <li><a href=""><i class="icon"><img src="images/web-icons/postoffice.png"></i>Post Offices</a></li>
+    <li><a href="clients.php"><i class="icon"><img src="images/web-icons/clients.png"></i>Clients</a></li>
+    <li><a href=""><i class="icon"><img src="images/web-icons/vendors.png"></i>Vendors</a></li>
+    <li><a href=""><i class="icon"><img src="images/web-icons/documentation.png"></i>Documentation</a></li>
+	<li><a href=""><i class="icon"><img src="images/web-icons/reminders.png"></i>Reminders</a></li>
+    <li><a href=""><i class="icon"><img src="images/web-icons/w_m.png"></i>Weights and Measures</a></li>
+	<li><a href=""><i class="icon"><img src="images/web-icons/archive.png"></i>Archive Jobs</a></li>
   </ul>
+  <div class="crst_circle">
+	<img id="circle-logo" src="images/crst_circle-logo.png">
+	</div>
 </div>
 
 
