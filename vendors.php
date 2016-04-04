@@ -5,13 +5,13 @@ require ("header.php");
 <div class="content">
 <div class="content-box">
 <div class="topbar">
-<h1>Clients</h1>
-<a href="add_client.php" class="add_button">Add Client</a>
+<h1>Vendors</h1>
+<a href="add_vendor.php" class="add_button">Add Vendor</a>
 </div>
 <div class="search-cont">
 	<div class="searchcont-detail">
 		<div class="search-boxleft">
-			<form action="v.php" method="get" >
+			<form action="search_vendor.php" method="POST" >
 				<label>Quick Search</label>
 				<input name="frmSearch" type="text" placeholder="Search for a specific client">
 				<input id="SubmitBtn" type="submit" value="SUBMIT" >
@@ -43,19 +43,19 @@ if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
 		
 		echo "<div data-role='main' class='ui-content'>";
-			echo "<div><br>";
+			echo "<div><br><br><br>";
 				$x = $row["vendor_name"];
 				echo "<B>".$row["vendor_name"]."</B>"."<br>";
 				echo "Contact Name: ".$row["vendor_contact"]."<br>";
 				echo "Address: ".$row["vendor_add"]."<br>";
 				echo "Email: ".$row["vendor_email"]."<br>";
 				echo "Phone: ".$row["vendor_phone"]."<br>";
-				echo "Website: ".$row["vendor_website"]."<br><br>";
+				echo "Website: ".$row["vendor_website"];
 			echo "</div>";
 				
-			
-			echo "<div data-role='collapsible'>";
-				echo "<h1>Material Info</h1>";					
+			echo "<input type='submit' value='show'>";		
+					echo "<div>";
+							
 					$result1 = mysqli_query($conn,"SELECT * FROM w_and_m WHERE vendor='$x'");
 					
 					if ($result1->num_rows > 0) {
@@ -83,14 +83,8 @@ $conn->close();
 ?>
 
 </div>
-</div>			
-				
 </div>
 
-
-<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
-<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>	
 
 
 	

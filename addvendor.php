@@ -20,12 +20,13 @@ $vendor_email = $_POST['vendor_email'];
 $vendor_website = $_POST['vendor_website'];
 
 
-$sql = "INSERT INTO vendors(vendor_name,vendor_add,vendor_contact,vendor_phone,vendor_email,vendor_website) VALUES ('$vendor_name', '$vendor_add', '$vendor_contact', '$vendor_phone','vendor_email','vendor_website')";
+$sql = "INSERT INTO vendors(vendor_name,vendor_add,vendor_contact,vendor_phone,vendor_email,vendor_website) VALUES ('$vendor_name', '$vendor_add', '$vendor_contact', '$vendor_phone','$vendor_email','$vendor_website')";
 $result = $conn->query($sql) or die('Error querying database.');
  
 $conn->close();
 
 header("location: http://localhost/crst_dashboard/vendors.php ");
+
 exit();
 
 ?>
