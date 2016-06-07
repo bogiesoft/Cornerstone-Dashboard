@@ -218,6 +218,34 @@ background-color:#fff;
 	margin-left:auto;
 	margin-right:auto;
 }
+/* Dashboard Popup */
+#popup
+{
+	width:560px;
+	height:360px;
+	background:#00CC33;
+	color:#fff;
+	padding:20px;
+	position:absolute;
+	top:0%;
+	left:50%;
+	margin-top:-500px;
+	margin-left:-250px;
+	z-index: 9998;
+}
+#popup h1
+{
+	margin:0px;
+	padding:0px;
+}
+
+.float{
+    width: 100px;
+    padding: 10px;
+    border: 5px solid gray;
+    margin: 0;
+	background-color: white;    
+}
 
 /* Main Content */
 .content {

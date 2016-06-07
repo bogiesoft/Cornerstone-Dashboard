@@ -1,36 +1,6 @@
 <?php
 require('header.php');
 ?>
-<style>
-#popup
-{
-	width:560px;
-	height:360px;
-	background:#00CC33;
-	color:#fff;
-	padding:20px;
-	position:absolute;
-	top:0%;
-	left:50%;
-	margin-top:-500px;
-	margin-left:-250px;
-}
-#popup h1
-{
-	margin:0px;
-	padding:0px;
-}
-
-.float{
-    width: 100px;
-    padding: 10px;
-    border: 5px solid gray;
-    margin: 0;
-	background-color: white;    
-}
-
-
-</style>
 
 <div id="popup" onclick="hide('popup')">
 <p id="demo"></p>
@@ -174,7 +144,14 @@ function hide(target) {
     document.getElementById(target).style.display = 'none';
 }
 
-$(document).ready(function(e) {
-        $('#popup').animate({"top":"50%","marginTop":"-200px"},1000);
-    });
+var firstTime = localStorage.getItem("first_time");
+
+$(document).ready(function(e)
+{		
+	if (!sessionStorage.alreadyClicked) {
+		$('#popup').animate({"top":"50%","marginTop":"-200px"},1000);
+		sessionStorage.alreadyClicked = 1;
+}
+});
+	
 </script>

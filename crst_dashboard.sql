@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 07, 2016 at 04:08 PM
+-- Generation Time: Jun 07, 2016 at 10:52 PM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.5.30
 
@@ -336,7 +336,7 @@ CREATE TABLE `mail_data` (
 
 INSERT INTO `mail_data` (`job_id`, `data_loc`, `records_total`, `domestic`, `foreigns`, `data_source`, `data_received`, `data_completed`, `processed_by`, `dqr_sent`, `exact`, `mail_foreigns`, `household`, `ncoa`) VALUES
 (5509, '', 0, 0, 0, '', '0000-00-00', '0000-00-00', 'KM', '0000-00-00', '', '', '', ''),
-(5514, '', 0, 0, 0, '', '0000-00-00', '0000-00-00', 'KM', '0000-00-00', '', '', '', ''),
+(5514, '', 0, 0, 0, '', '0000-00-00', '0000-00-00', 'MB', '0000-00-00', '', '', '', ''),
 (5515, '', 0, 0, 0, '', '0000-00-00', '0000-00-00', 'AB', '0000-00-00', '', '', '', ''),
 (5516, '', 0, 0, 0, '', '0000-00-00', '0000-00-00', 'KM', '0000-00-00', '', '', '', ''),
 (5517, '', 0, 0, 0, '', '0000-00-00', '0000-00-00', 'KM', '0000-00-00', '', '', '', ''),
@@ -484,7 +484,9 @@ INSERT INTO `reminder` (`user`, `text`, `date`) VALUES
 ('fpatel', 'day after', '2016-05-07'),
 ('fpatel', 'go home', '2016-05-09'),
 ('fpatel', 'mother earth', '2016-05-13'),
-('kmcready', 'tyfyjfyf', '2016-06-07');
+('kmcready', 'tyfyjfyf', '2016-06-07'),
+('sayre', 'fgsdfgsdfgsfdg', '2016-06-07'),
+('sayre', 'asdsdfsdfs', '2016-06-07');
 
 -- --------------------------------------------------------
 
@@ -558,7 +560,8 @@ INSERT INTO `timestamp` (`user`, `time`, `job`) VALUES
 ('fpatel', 'June 6, 2016, 4:37 pm', 'added new w&m'),
 ('kmcready', 'June 7, 2016, 9:24 am', 'created job ticket'),
 ('kmcready', 'June 7, 2016, 9:39 am', 'added new client'),
-('kmcready', 'June 7, 2016, 9:47 am', 'added new client');
+('kmcready', 'June 7, 2016, 9:47 am', 'added new client'),
+('sayre', 'June 7, 2016, 4:08 pm', 'updated job ticket');
 
 -- --------------------------------------------------------
 
@@ -579,11 +582,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user`, `password`, `initial`, `department`, `name`) VALUES
-('fpatel', '1234', 'FP', 'prod', 'Femina patel'),
-('jscheuler', 'Sales4$CRST', 'JS', 'Sales', 'Jessica Isabel Scheuler'),
+('fpatel', '1234', 'FP', 'Devel', 'Femina'),
 ('kmcready', 'DC3#CRST1', 'KM', 'Project Management', 'Kevin McReady'),
 ('mbirnbaum', 'Ibanez1!', 'MB', 'Project Management', 'Michael Birnbaum'),
-('rob', 'rob123', 'RP', 'Production', 'Rob Philipes');
+('rob', 'rob123', 'RP', 'Production', 'Rob Philipes'),
+('sayre', '1234', 'SA', 'Development', 'Stephen Ayre');
 
 -- --------------------------------------------------------
 
