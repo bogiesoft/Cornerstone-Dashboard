@@ -28,11 +28,12 @@ $result=mysqli_query($conn,$sql);
 
 // If result matched $username and $password, table row must be 1 row
 if ($result->num_rows == 1) {
-	
     header("location: dashboard.php");
 	
 } else {
-    echo "Unsuccessful!";
+		$_SESSION['errorValue'] = TRUE;
+		$_SESSION['error'] = "User Name/Password Incorrect";
+		header("location: index.php");
 }
 
 
