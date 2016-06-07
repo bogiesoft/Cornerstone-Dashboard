@@ -9,7 +9,7 @@ require ("header.php");
 <div class="dashboard-detail">
 	<div class="newcontacts-outer">
 		<div class="tab-content">
-			<form action="addclient.php" method="post">
+			<form action="add_new_client.php" method="post">
 				<div class="newclienttab-inner">
 					<div class="tabinner detail">
 					<label>Client Name</label>

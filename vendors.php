@@ -6,7 +6,8 @@ require ("header.php");
 <div class="content-box">
 <div class="topbar">
 <h1>Vendors</h1>
-<a href="add_vendor.php" class="add_button">Add Vendor</a>
+<a href="add_vendor.php" class="add_button">Add Vendor</a><br>
+<a href="add_pop_wm.php" class="add_button">Add Poupular W & M</a>
 </div>
 <div class="search-cont">
 	<div class="searchcont-detail">
@@ -39,13 +40,13 @@ $result = mysqli_query($conn,"SELECT * FROM vendors");
 
 if ($result->num_rows > 0) {
     // output data of each row
-	
+
     while($row = $result->fetch_assoc()) {
 		
 		echo "<div data-role='main' class='ui-content'>";
 			echo "<div><br><br><br>";
 				$x = $row["vendor_name"];
-				echo "<B>".$row["vendor_name"]."</B>"."<br>";
+				echo "<B><a href='http://localhost/crst_dashboard/search_vendor.php?vendor_name=$x'>".$row["vendor_name"]."</a></B>"."<br>";
 				echo "Contact Name: ".$row["vendor_contact"]."<br>";
 				echo "Address: ".$row["vendor_add"]."<br>";
 				echo "Email: ".$row["vendor_email"]."<br>";
@@ -53,7 +54,7 @@ if ($result->num_rows > 0) {
 				echo "Website: ".$row["vendor_website"];
 			echo "</div>";
 				
-			echo "<input type='submit' value='show'>";		
+	
 					echo "<div>";
 							
 					$result1 = mysqli_query($conn,"SELECT * FROM w_and_m WHERE vendor='$x'");

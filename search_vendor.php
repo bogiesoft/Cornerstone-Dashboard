@@ -3,7 +3,7 @@ require ("header.php");
 ?>
 <?php
 
-						//header("location: http://localhost/crst_dashboard/v.php ");
+
 						$servername = "localhost";
 						$username = "root";
 						$password = "";
@@ -15,12 +15,10 @@ require ("header.php");
 						if ($conn->connect_error) {
 							die("Connection failed: " . $conn->connect_error);
 						} 
-						if (!empty($_REQUEST['frmSearch'])){
+						
 							
-							$term = mysql_real_escape_string($_REQUEST['frmSearch']);
-							
-
-							$sql = "SELECT * FROM vendors WHERE vendor_name = '$term'"; 
+							$temp = $_GET['vendor_name'];
+							$sql = "SELECT * FROM vendors WHERE vendor_name = '$temp' "; 
 							$result = mysqli_query($conn,$sql); 
 							
 							
@@ -37,17 +35,11 @@ require ("header.php");
 								$vendor_website = $row["vendor_website"];		
 								$vendor_add = $row["vendor_add"];
 								$display = "yes";
-							
-							} 
-							else {
-								echo "No results found";
-								$display = "no";
-							}
 						}
 
 					?>
 					<div class = "content" >
-<form action="update_vendor.php" id="form" method="POST">
+			<form action="update_vendor.php" id="form" method="POST">
 				<div class="newclienttab-inner">
 					<div class="tabinner detail">					
 					<label>Vendor Name</label>

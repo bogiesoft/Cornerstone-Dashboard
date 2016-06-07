@@ -2,48 +2,7 @@
 require ("header.php");
 ?>
 <script src="sorttable.js"></script>
-<style>
-#table-scroll {
-  height:auto;
-  width:850px;
-  overflow:auto;   
-}
-
-div.pager span {
-    display: inline-block;
-    width: 1.8em;
-    height: 1.8em;
-    line-height: 1.8;
-    text-align: center;
-    cursor: pointer;
-    margin-right: 0.5em;
-}
-
-div.pager span.active {
-    background: #c00;
-}
-
-</style>
-
 <div class="content">
-<div class="content-box">
-<div class="topbar">
-<h1>Clients</h1>
-<a href="add_client.php" class="add_button">Add Client</a>
-</div>
-<div class="search-cont">
-	<div class="searchcont-detail">
-		<div class="search-boxleft">
-			<form action="client_search.php" method="post" >
-				<label>Quick Search</label>
-				<input id="search" name="frmSearch" type="text" placeholder="Search for a specific client">
-				<input id="SubmitBtn" type="submit" value="SUBMIT" >
-			</form>
-		</div>
-	</div>
-</div>
-
-
 <?php
 
 $servername = "localhost";
@@ -59,12 +18,12 @@ if ($conn->connect_error) {
 } 
 
 
-$result = mysqli_query($conn,"SELECT * FROM client_info");
+$result = mysqli_query($conn,"SELECT * FROM invoice");
 
 
 echo " <div id='table-scroll'><table id='table' border='1' cellspacing='2' cellpadding='2' class='sortable' >"; // start a table tag in the HTML
 echo "<thead>";
-echo "<tr><th>  </th><th> Client name </th><th> Contact name </th><th> Address </th><th> Contact Phone </th><th> Email </th><th> Website </th><th> Category </th><th> Title </th><th> Notes </th></tr>";
+echo "<tr><th>  </th><th> Job Id </th><th> Client Name </th><th> Job Name </th><th> Postage </th><th> Invoice </th><th> Residual </th><th> Follow Up </th><th> Notes </th><th> Status </th><th> Reason </th></tr>";
 echo "</thead>";
 echo "<tbody>";
 
@@ -75,8 +34,12 @@ if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
 		
 
-		$foo=$row['client_name'];
-		echo "<tr><th>"."<a href='http://localhost/crst_dashboard/edit_client.php?client_name=$foo'>"."Edit"."</a></th><td>".$row["client_name"]."</td><td>".  $row["contact_name"]."</td><td>". $row["client_add"]. "</td><td>". $row["contact_phone"]. "</td><td>". $row["contact_email"]."</td><td>". $row["website"]. "</td><td>". $row["category"]. "</td><td>". $row["title"]. "</td><td>". $row["notes"]. "</td></tr>";
+		$foo=$row['job_id'];
+		
+		$result1 = mysqli_query($conn,"SELECT * FROM job_ticket WHERE job_id = $foo");
+		$row1 = $result1->fetch_assoc();
+		
+		echo "<tr><th>"."<a href='http://localhost/crst_dashboard/edit_cs.php?job_id=$foo'>"."Edit"."</a></th><td>".$row["job_id"]."</td><td>". $row1["client_name"]. "</td><td>". $row1["project_name"]. "</td><td>".  $row["postage"]."</td><td>". $row["invoice_number"]. "</td><td>". $row["residual_returned"]. "</td><td>". $row["2week_followup"]."</td><td>". $row["notes"]. "</td><td>". $row["status"]. "</td><td>". $row["reason"]. "</td></tr>";
     }
 	echo "</tbody></table></div><br>";
 } else {
@@ -88,9 +51,6 @@ $conn->close();
 ?>
 
 </div>
-</div>		
-</div>
-<!--- script for making table sortable --->
 <script>
 $('table.sortable').each(function() {
     var currentPage = 0;
@@ -127,9 +87,3 @@ $("#search").keyup(function(){
     }); 
 
 </script>
-
-	
-
-	
-
-						

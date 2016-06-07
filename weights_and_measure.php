@@ -1,96 +1,56 @@
 <?php
-require ("header.php");
+require('header.php');
 ?>
 <script src="sorttable.js"></script>
-<style>
-#table-scroll {
-  height:auto;
-  width:850px;
-  overflow:auto;   
-}
-
-div.pager span {
-    display: inline-block;
-    width: 1.8em;
-    height: 1.8em;
-    line-height: 1.8;
-    text-align: center;
-    cursor: pointer;
-    margin-right: 0.5em;
-}
-
-div.pager span.active {
-    background: #c00;
-}
-
-</style>
-
 <div class="content">
 <div class="content-box">
 <div class="topbar">
-<h1>Clients</h1>
-<a href="add_client.php" class="add_button">Add Client</a>
+<h1>Weights and Measures</h1>
+<a href="add_wm.php" class="add_button">Add Weights and Measure</a>
 </div>
-<div class="search-cont">
-	<div class="searchcont-detail">
-		<div class="search-boxleft">
-			<form action="client_search.php" method="post" >
-				<label>Quick Search</label>
-				<input id="search" name="frmSearch" type="text" placeholder="Search for a specific client">
-				<input id="SubmitBtn" type="submit" value="SUBMIT" >
-			</form>
-		</div>
-	</div>
-</div>
-
 
 <?php
-
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname= "crst_dashboard";
-
 // Create Connection
 $conn = new mysqli($servername, $username, $password, $dbname);
-
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
-
-
-$result = mysqli_query($conn,"SELECT * FROM client_info");
-
-
-echo " <div id='table-scroll'><table id='table' border='1' cellspacing='2' cellpadding='2' class='sortable' >"; // start a table tag in the HTML
+$result = mysqli_query($conn,"SELECT * FROM materials");
+echo "<table  border='1' cellspacing='2' cellpadding='2' class='sortable' >"; // start a table tag in the HTML
 echo "<thead>";
-echo "<tr><th>  </th><th> Client name </th><th> Contact name </th><th> Address </th><th> Contact Phone </th><th> Email </th><th> Website </th><th> Category </th><th> Title </th><th> Notes </th></tr>";
+echo "<tr><th> Job ID </th><th> Client Name </th><th> Job Name </th><th> Recieved Date </th><th> Location </th><th> Checked In </th><th> Material </th><th> Type </th><th> Quantity </th><th> Vendor </th><th> Height </th><th> Weight </th><th> Size </th><th> Based On </th></tr>";
 echo "</thead>";
-echo "<tbody>";
-
-
 if ($result->num_rows > 0) {
     // output data of each row
 	
     while($row = $result->fetch_assoc()) {
 		
-
-		$foo=$row['client_name'];
-		echo "<tr><th>"."<a href='http://localhost/crst_dashboard/edit_client.php?client_name=$foo'>"."Edit"."</a></th><td>".$row["client_name"]."</td><td>".  $row["contact_name"]."</td><td>". $row["client_add"]. "</td><td>". $row["contact_phone"]. "</td><td>". $row["contact_email"]."</td><td>". $row["website"]. "</td><td>". $row["category"]. "</td><td>". $row["title"]. "</td><td>". $row["notes"]. "</td></tr>";
+		$job_id = $row['job_id'];
+		
+		$result1 = mysqli_query($conn,"SELECT client_name,project_name FROM job_ticket WHERE job_id='$job_id' ");
+		    while($row1 = $result1->fetch_assoc()){
+				$client_name = $row1["client_name"];
+				$project_name = $row1["project_name"];
+			}
+		
+		
+		
+		
+		echo "<tr><td><a href = 'http://localhost/crst_dashboard/edit_wm.php?job_id=$job_id'>".$row["job_id"]."</a></td><td>".$client_name."</td><td>".$project_name."</td><td>". $row["received"]. "</td><td>". $row["location"]."</td><td>". $row["checked_in"]. "</td><td>". $row["material"]. "</td><td>". $row["type"]. "</td><td>". $row["quantity"]. "</td><td>". $row["vendor"]. "</td><td>". $row["height"]. "</td><td>". $row["weight"]. "</td><td>". $row["size"]. "</td><td>". $row["based_on"]. "</td></tr>";
     }
-	echo "</tbody></table></div><br>";
+	echo "<br>";
 } else {
     echo "0 results";
 }
-
 $conn->close();
-
 ?>
 
 </div>
-</div>		
 </div>
-<!--- script for making table sortable --->
 <script>
 $('table.sortable').each(function() {
     var currentPage = 0;
@@ -126,10 +86,4 @@ $("#search").keyup(function(){
         });
     }); 
 
-</script>
-
-	
-
-	
-
-						
+</script>		

@@ -14,7 +14,8 @@ if ($conn->connect_error) {
 
 $user = $_POST['user'];
 $password = $_POST['password'];
-
+session_start();
+$_SESSION["user"] = $user;
 //$reqFields = compact("user", "password");
 
 

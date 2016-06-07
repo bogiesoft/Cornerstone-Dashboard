@@ -115,6 +115,35 @@ h1,h2,h3,h4,h5 {
 	border-left: 2px solid #e9eced;
 }
 
+li.dropdown {
+    display: inline-block;
+}
+
+.dropbtn {
+	cursor:pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    min-width: 160px;
+    box-shadow: 5px 10px 20px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content a {
+    color: #356CAC;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+	font-size:14px;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
 /* sidebar */
 .sidebar-toggle img {
   position: absolute;
@@ -161,7 +190,7 @@ background-color:#fff;
 }
 
 .sidebar-list li:hover {
-	border-left: 6px solid #366CAC;
+	border-left: 6px solid #356CAC;
 	transition:all 500ms 0s;
 }
 
@@ -195,6 +224,7 @@ background-color:#fff;
   width:auto;
   top:100px;
   height:auto;
+  display:fixed;
   position: absolute;
  padding:15px 0 0 25px;
 	z-index:1;
@@ -203,7 +233,7 @@ background-color:#fff;
 /* Client's Page */
 
 .add_button {
-	background-color:#366CAC;
+	background-color:#356CAC;
 	font-size: 16px;
 	font-weight:bold;
 	padding:10px;
@@ -220,4 +250,39 @@ background-color:#fff;
 .add_button a:hover{
 	color:white;
 	text-decoration:none;
+}
+
+/* Project Management */
+.pmsquare {
+	width:650px;
+	height:250px;
+	display:inline-block;
+	border:2px solid #356CAC;
+}
+
+.left {
+	width:30%;
+	display:inline-block;
+}
+
+.right {
+	width:30%;
+display:inline-block;
+}
+
+.center {
+	width:30%;
+display:inline-block;
+}
+
+.pmsquare h1 {
+	font-size:20px;
+	margin:0;
+	padding:0;
+}
+
+.pmsquare p {
+	font-size:18px;
+	margin:0;
+	padding:0;
 }
