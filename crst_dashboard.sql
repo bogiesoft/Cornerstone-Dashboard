@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 09, 2016 at 10:12 PM
+-- Generation Time: Jun 07, 2016 at 04:08 PM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.5.30
 
@@ -131,6 +131,7 @@ INSERT INTO `archive_jobs` (`job_id`, `client_name`, `project_name`, `ticket_dat
 (5505, 'ABC COMPANY', 'nail it', '2016-05-03', '2016-05-21', 'KM', '', '', '0000-00-00', '0000-00-00', 0, 'in Production', '', 456, 0, 0, '', '0000-00-00', '0000-00-00', 'RP', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', 0, '0000-00-00', '', '', '', '', 0, '', 0, 0, '', '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, '', '', '', 'Cancelled', '', 'no', 'no', '', '', '', '', '', '', '', 'May 4, 2016, 11:49 am'),
 (5506, 'Somebody', 'adsfds', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, '', '', 0, 0, 0, '', '0000-00-00', '0000-00-00', 'AB', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', 0, '2016-05-03', '', '', '', '', 0, 'Femina', 0, 0, '', '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, '', '', '', 'Cancelled', '', 'no', 'no', '', '', '', '', '', '', '', 'May 4, 2016, 11:51 am'),
 (5507, 'ABC COMPANY', 'loves to work', '0000-00-00', '0000-00-00', '', '', 'safsdgdfhb th tjyj uyk uikuik uil , lui\r\nsafsdgdfhb th tjyj uyk uikuik uil , lui\r\nsafsdgdfhb th tjyj uyk uikuik uil , lui\r\nsafsdgdfhb th tjyj uyk uikuik uil , lui\r\nsafsdgdfhb th tjyj uyk uikuik uil , lui\r\nsafsdgdfhb th tjyj uyk uikuik uil , lui\r\n', '0000-00-00', '0000-00-00', 0, 'on hold', '', 0, 0, 0, '', '0000-00-00', '0000-00-00', 'RP', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', 0, '2016-05-02', '123', '76', 'bday', 'small', 34, 'Femina123', 12, 10, '12', '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, '', '', '', 'Finished', '', '', '', '', '', '', '', '', '', '', 'May 9, 2016, 2:27 pm'),
+(5508, 'john Snow', 'climbes', '2016-05-04', '2016-05-12', 'Jess', '544040', 'Mail Foreigns: Yes\r\nHousehold: NO\r\nNCOA: Yes\r\n\r\nPROJECT MANAGEMENT:\r\n\r\nPRODUCTION:\r\n\r\nCUSTOMER SERVICE:\r\n\r\nfajlkfjealkfjealkjflkeajlkfejkla', '2016-05-04', '2016-05-06', 3000, 'in P.M.', '', 2500, 2000, 500, '', '2016-05-04', '2016-05-05', 'RP', '2016-05-12', '50', 'YES', 'YES', '', 'First Class', 'Auto', 'Letter', '#10 Envelope', '.75 in x .45 lb', '473', 'Newburgh, NY 12550', '50', 103838, '2016-05-17', 'somewhere123', 'Jim', 'envelopes', 'large', 123, 'Kevin', 96, 80, '4', '0000-00-00', 2, 0, 2091, 5, 2, 1, 1, 0, 4, 10, 2000, 10, 2, 25, 2500, '', 0, '', '', '', 'Finished', '', '', '', '', '', '', '', '', '', '', 'May 31, 2016, 5:02 pm'),
 (5510, 'Simpsons', 'loves to work', '2016-05-03', '2016-05-04', 'JS', '', '', '0000-00-00', '0000-00-00', 0, 'waiting for materials', '', 0, 0, 0, '', '0000-00-00', '0000-00-00', 'KM', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', 0, '2016-05-10', '', '', '', '', 0, 'Femina', 0, 0, '', '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, '', '', '', 'Finished', '', 'no', 'no', '', '', '', '', '', '', '', 'May 4, 2016, 3:06 pm'),
 (5511, 'ABC COMPANY', 'rebel', '2016-05-04', '2016-05-10', 'FP', '1236', '', '0000-00-00', '0000-00-00', 0, '', '', 0, 0, 0, '', '0000-00-00', '0000-00-00', 'RP', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', 0, '0000-00-00', '', '', '', '', 0, '', 0, 0, '', '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 85520, '', '', '', 'Finished', '', 'no', 'no', '', '', '', '', '', '', '', 'May 4, 2016, 1:40 pm'),
 (5512, 'Femina', 'makes website', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, '', '', 0, 0, 0, '', '0000-00-00', '0000-00-00', 'KM', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', 0, '2016-05-05', '31 Front', 'Kev', '6x9 One Side Postcard', 'card', 4000, 'Femina123', 2, 1, '6x9', '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '$18', 22929, 'YES', 'Paid postage and invoice', 'We had to deliver to Westchester', 'Finished', 'Job is printed and completed', 'no', 'no', '', '', '', '', '', '', '', 'May 4, 2016, 3:30 pm'),
@@ -167,12 +168,12 @@ CREATE TABLE `blue_sheet` (
 --
 
 INSERT INTO `blue_sheet` (`job_id`, `completed_date`, `data_hrs`, `gd_hrs`, `initialrec_count`, `manual`, `uncorrected`, `unverifiable`, `bs_foreigns`, `bs_exact`, `loose`, `householded`, `basic`, `ncoa_errors`, `bs_ncoa`, `final_count`, `bs_domestic`) VALUES
-(5508, '0000-00-00', 2, 0, 2091, 5, 2, 1, 10, 2, 1, 0, 4, 10, 25, 2000, 2500),
 (5509, '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 (5514, '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 (5515, '0000-00-00', 0, 0, 0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 (5516, '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5517, '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+(5517, '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5518, '2016-06-22', 5, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -204,12 +205,14 @@ INSERT INTO `client_info` (`client_name`, `client_add`, `contact_name`, `contact
 ('', '', 'Anna', '', '', '', '', '', '', '', '', '', ''),
 ('ABC COMPANY', '123 AWE', 'abc  AWE', '3474050304', 'jfg fhg', 'gfg ', '', '', '', 'BUsinessman', 'gh hj ', 'g yhgfh g', 'fggh'),
 ('Anna', '', '', '', '', '', '', '', '', '', '', '', ''),
+('dfgsf', 'fdfg', 'dfg', '343 32432 23', 'dsfsd', 'sadf', '', '', '', 'dfsd', 'fsdf', 'sdfsdff', 'sdf'),
 ('DickButt', '7 Hawkins St Awe', 'Kevin McReady Awe', '3474050304Awe', 'kevin.mcready@yahoo.com', '7183263163', '', '', '', 'BUsinessman', 'kevinmcready.com', 'Just a boss Awe', 'President'),
 ('Femina', '8 Southside Awesome', 'Femina AwePatel', '1234567890', 'femina@gmail.com', ' 2112345566Awe', '', '', '', 'studentAwe', 'sbdbjsfj.comAwe', 'Awedsf etgrrkjngkdfkgl  vng gjhjhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhg       dfjlads fkdslg               elfkldk fl;drk lfkldrjfklr jfji riooooooot', 'AweCircular progress bar (canvas)'),
 ('Femina1', '8 Southside Ave', 'Femina Patel', '1234567890', 'femina@gmail.com', '1231231230', '', '', '', 'student', 'sbdbjsfj.com', 'ermtr hyt y ju', 'Circular progress bar (canvas)'),
 ('john Snow', '', 'john snow', '', '', '', '', '', '', '', '', '', ''),
 ('Simpsons', '123 St ABC ', 'abc ', '123-456-7896', '123@gmail.com', '123-654-9878', '', '', '', 'Cartoon', 'abc.com', '123 abc check', 'Actor'),
-('Somebody', '31 CRST', 'HI ', '111-111-1111', 'sb@gmail.com', '454-545-5545', '', '', '', 'Artist', 'dfnkjjkgd.com', 'sd fefgfgfgfgfgfgfgfgfgfgfgfgfgfgfgfgfgfgfge', 'CEO');
+('Somebody', '31 CRST', 'HI ', '111-111-1111', 'sb@gmail.com', '454-545-5545', '', '', '', 'Artist', 'dfnkjjkgd.com', 'sd fefgfgfgfgfgfgfgfgfgfgfgfgfgfgfgfgfgfgfge', 'CEO'),
+('Steve', '234 dfsdf', 'Stevo', '233 454 2343', 'T@r.com', '234 676 2342', '', '', '', 'trtert', 'www.gdf.vom', 'dgdfg', 'werw');
 
 -- --------------------------------------------------------
 
@@ -264,12 +267,12 @@ CREATE TABLE `invoice` (
 --
 
 INSERT INTO `invoice` (`job_id`, `postage`, `invoice_number`, `residual_returned`, `2week_followup`, `notes`, `status`, `reason`) VALUES
-(5508, '', 0, '', '', '', '', ''),
 (5509, '', 0, '', '', '', '', ''),
 (5514, '', 0, '', '', '', '', ''),
 (5515, '', 0, '', '', '', '', ''),
 (5516, '', 0, '', '', '', '', ''),
-(5517, '', 0, '', '', '', '', '');
+(5517, '', 0, '', '', '', '', ''),
+(5518, '', 0, '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -297,12 +300,12 @@ CREATE TABLE `job_ticket` (
 --
 
 INSERT INTO `job_ticket` (`job_id`, `client_name`, `project_name`, `ticket_date`, `due_date`, `created_by`, `estimate_number`, `special_instructions`, `materials_ordered`, `materials_expected`, `expected_quantity`, `job_status`) VALUES
-(5508, 'john Snow', 'climbes', '2016-05-04', '2016-05-12', 'Jess', '544040', 'Mail Foreigns: Yes\r\nHousehold: NO\r\nNCOA: Yes\r\n\r\nPROJECT MANAGEMENT:\r\n\r\nPRODUCTION:\r\n\r\nCUSTOMER SERVICE:\r\n\r\nfajlkfjealkfjealkjflkeajlkfejkla', '2016-05-04', '2016-05-06', 3000, 'in P.M.'),
 (5509, 'Simpsons', 'go home', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
 (5514, 'Simpsons', 'loves to work', '2016-05-03', '2016-05-04', 'JS', '', '', '0000-00-00', '0000-00-00', 0, 'waiting for materials'),
 (5515, 'Simpsons', 'Hello There', '2016-05-04', '2016-05-26', 'JS', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, 'waiting for data'),
 (5516, 'john Snow', 'comes back', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
-(5517, 'Somebody', 'rebel', '2016-05-09', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, '');
+(5517, 'Somebody', 'rebel', '2016-05-09', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
+(5518, 'DickButt', 'sdfasdf', '2016-06-07', '2016-06-14', 'KM', '3', 'hhh', '0000-00-00', '0000-00-00', 5, 'on hold');
 
 -- --------------------------------------------------------
 
@@ -332,12 +335,12 @@ CREATE TABLE `mail_data` (
 --
 
 INSERT INTO `mail_data` (`job_id`, `data_loc`, `records_total`, `domestic`, `foreigns`, `data_source`, `data_received`, `data_completed`, `processed_by`, `dqr_sent`, `exact`, `mail_foreigns`, `household`, `ncoa`) VALUES
-(5508, '', 2500, 2000, 500, '', '2016-05-04', '2016-05-05', 'RP', '2016-05-12', '50', 'YES', 'YES', ''),
 (5509, '', 0, 0, 0, '', '0000-00-00', '0000-00-00', 'KM', '0000-00-00', '', '', '', ''),
 (5514, '', 0, 0, 0, '', '0000-00-00', '0000-00-00', 'KM', '0000-00-00', '', '', '', ''),
 (5515, '', 0, 0, 0, '', '0000-00-00', '0000-00-00', 'AB', '0000-00-00', '', '', '', ''),
 (5516, '', 0, 0, 0, '', '0000-00-00', '0000-00-00', 'KM', '0000-00-00', '', '', '', ''),
-(5517, '', 0, 0, 0, '', '0000-00-00', '0000-00-00', '', '0000-00-00', '', '', '', '');
+(5517, '', 0, 0, 0, '', '0000-00-00', '0000-00-00', 'KM', '0000-00-00', '', '', '', ''),
+(5518, 'dfg', 0, 0, 0, 'fhg', '2016-06-15', '2016-06-21', 'FP', '2016-06-10', 'tgf', 'gfd', 'dfg', 'asa');
 
 -- --------------------------------------------------------
 
@@ -363,12 +366,12 @@ CREATE TABLE `mail_info` (
 --
 
 INSERT INTO `mail_info` (`job_id`, `mail_class`, `rate`, `processing_category`, `mail_dim`, `weights_measures`, `permit`, `bmeu`, `based_on`, `non_profit_number`) VALUES
-(5508, 'First Class', 'Auto', 'Letter', '#10 Envelope', '.75 in x .45 lb', '473', 'Newburgh, NY 12550', '50', 103838),
 (5509, '', '', '', '', '', '', '', '', 0),
 (5514, '', '', '', '', '', '', '', '', 0),
 (5515, '123', '12', '', '', '', '', '', '', 0),
 (5516, '', '', '', '', '', '', '', '', 0),
-(5517, '', '', '', '', '', '', '', '', 0);
+(5517, '', '', '', '', '', '', '', '', 0),
+(5518, 'fdasdff', '34', 'sdfsadf', 'fdsa', 'gffgh', 'dgf', 'dfgd', 'fgdfg', 0);
 
 -- --------------------------------------------------------
 
@@ -396,9 +399,9 @@ CREATE TABLE `materials` (
 --
 
 INSERT INTO `materials` (`job_id`, `received`, `location`, `checked_in`, `material`, `type`, `quantity`, `vendor`, `height`, `weight`, `size`, `based_on`) VALUES
-(5508, '2016-05-17', 'somewhere123', 'Jim', 'envelopes', 'large', 123, 'Kevin', 96, 80, '4', 10),
 (5509, '2016-05-31', 'somewhere123', '', '', '', 0, 'Femina', 12, 2, '3', 5),
-(5514, '0000-00-00', '', '', '', '', 0, 'Femina', 0, 0, '', 0);
+(5514, '0000-00-00', '', '', '', '', 0, 'Femina', 0, 0, '', 0),
+(5516, '2016-06-06', '31 front', 'rp', 'postcard', 'oversized', 4000, 'Kevin', 4, 7, '6x9', 25);
 
 -- --------------------------------------------------------
 
@@ -424,12 +427,12 @@ CREATE TABLE `production` (
 --
 
 INSERT INTO `production` (`job_id`, `hold_postage`, `postage_paid`, `print_template`, `special_address`, `delivery`, `tasks`, `task1`, `task2`, `task3`) VALUES
-(5508, 'yes', 'no', '', '', '', '', '', '', ''),
 (5509, 'no', 'no', '', '', '', 'Mail Merge, In-House Envelope Printing, Tabbing, Sealing, Collating', '', '', ''),
 (5514, 'yes', 'yes', '', '', '', '', '', '', ''),
 (5515, 'yes', 'yes', '', '', '', '', '', '', ''),
 (5516, 'yes', 'yes', '', '', '', '', '', '', ''),
-(5517, 'yes', 'yes', '', '', '', '', '', '', '');
+(5517, 'yes', 'yes', '', '', '', '', '', '', ''),
+(5518, 'no', 'yes', 'jhkh', 'fghfg', 'fghfd', 'Letter Printing', 't', 'r', 'e');
 
 -- --------------------------------------------------------
 
@@ -480,7 +483,8 @@ INSERT INTO `reminder` (`user`, `text`, `date`) VALUES
 ('fpatel', 'tomorrow', '2016-05-06'),
 ('fpatel', 'day after', '2016-05-07'),
 ('fpatel', 'go home', '2016-05-09'),
-('fpatel', 'mother earth', '2016-05-13');
+('fpatel', 'mother earth', '2016-05-13'),
+('kmcready', 'tyfyjfyf', '2016-06-07');
 
 -- --------------------------------------------------------
 
@@ -548,7 +552,13 @@ INSERT INTO `timestamp` (`user`, `time`, `job`) VALUES
 ('fpatel', 'May 9, 2016, 2:42 pm', 'added new weights and measure'),
 ('fpatel', 'May 9, 2016, 2:48 pm', 'updated w&m'),
 ('fpatel', 'May 9, 2016, 2:50 pm', 'added new w&m'),
-('fpatel', 'May 9, 2016, 3:28 pm', 'created job ticket');
+('fpatel', 'May 9, 2016, 3:28 pm', 'created job ticket'),
+('fpatel', 'May 31, 2016, 5:01 pm', 'updated job ticket'),
+('fpatel', 'May 31, 2016, 5:02 pm', 'archived job'),
+('fpatel', 'June 6, 2016, 4:37 pm', 'added new w&m'),
+('kmcready', 'June 7, 2016, 9:24 am', 'created job ticket'),
+('kmcready', 'June 7, 2016, 9:39 am', 'added new client'),
+('kmcready', 'June 7, 2016, 9:47 am', 'added new client');
 
 -- --------------------------------------------------------
 
@@ -660,12 +670,12 @@ CREATE TABLE `yellow_sheet` (
 --
 
 INSERT INTO `yellow_sheet` (`job_id`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`, `13`, `14`, `percent`) VALUES
-(5508, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100),
-(5509, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 30),
+(5509, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100),
 (5514, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14),
 (5515, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 (5516, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5517, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+(5517, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5518, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 --
 -- Indexes for dumped tables
@@ -759,7 +769,7 @@ ALTER TABLE `yellow_sheet`
 -- AUTO_INCREMENT for table `job_ticket`
 --
 ALTER TABLE `job_ticket`
-  MODIFY `job_id` int(45) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5518;
+  MODIFY `job_id` int(45) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5519;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
