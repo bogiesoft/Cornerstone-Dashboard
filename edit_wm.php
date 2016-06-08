@@ -12,6 +12,7 @@ if ($conn->connect_error) {
 
 	
 	$term = $_GET['job_id'];
+	$job_id = $term;
 	
 	$sql = "SELECT * FROM materials WHERE job_id = '$term'"; 
 	$result = mysqli_query($conn,$sql); 
@@ -40,7 +41,45 @@ if ($conn->connect_error) {
 		echo "No results found";
 		$display = "no";
 	}
+	if(isset($_POST['submit_form'])){
+		session_start();
+		$user_name = $_SESSION['user'];
+		date_default_timezone_set('America/New_York');
+		$today = date("Y-m-d g:i:s");
+		$_SESSION['date'] = $today;
+		$job = "updated w&m"; 
 
+
+		$job_id = $_POST['job_id'];
+		$received = $_POST['received'];
+		$location = $_POST['location'];
+		$checked_in = $_POST['checked_in'];
+		$material = $_POST['material'];
+		$type = $_POST['type'];
+		$vendor = $_POST['vendor'];
+		$quantity = $_POST['quantity'];
+		$height = $_POST['height'];
+		$weight = $_POST['weight'];
+		$size = $_POST['size'];
+		$based_on = $_POST['based_on'];
+		$sql = "UPDATE materials SET location='$location',received='$received',checked_in='$checked_in',material='$material',type='$type',vendor='$vendor',quantity='$quantity',height='$height',weight='$weight',size='$size', based_on = '$based_on' 
+		 WHERE job_id ='$job_id'";
+		$result = $conn->query($sql) or die('Error querying database.');
+
+		$sql6 = "INSERT INTO timestamp (user,time,job) VALUES ('$user_name', '$today','$job')";
+		$result7 = $conn->query($sql6) or die('Error querying database 5.');
+		 
+		$conn->close();
+		header("location: http://localhost/crst_dashboard/weights_and_measure.php");
+		exit();
+	}
+	if(isset($_POST['delete_form'])){
+		$sql_delete = "DELETE FROM materials WHERE '$job_id' = job_id";
+		mysqli_query($conn, $sql_delete);
+		$conn->close();
+		header("location: http://localhost/crst_dashboard/weights_and_measure.php");
+	}
+	
 ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script>
@@ -55,7 +94,7 @@ $(document).ready(function(){
 </script>
 
 <div class="content">
-<form action="edit_w_m.php" method="post">
+<form action="" method="post">
 				<div class="newclienttab-inner">
 					<div class="tabinner detail">
 					<label>Job Id</label>
@@ -112,7 +151,8 @@ $(document).ready(function(){
 					</div>
 				</div>
 				<div class="form-bottom">
-					<input id="btn" type="submit" value="Save" name="submit_form">
+					<input id="btn" type="submit" value="Save" name="submit_form" onclick = "return confirm('Save changes?')">
+					<input id="delete" type="submit" value="Delete" name="delete_form" onclick = "return confirm('Are you sure you want to delete client?')">
 				</div>
 			</form>
 		</div>

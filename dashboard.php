@@ -1,7 +1,6 @@
 <?php
 require('header.php');
 ?>
-
 <div id="popup" onclick="hide('popup')">
 <p id="demo"></p>
 
@@ -12,12 +11,25 @@ if ($conn->connect_error) {
 } 
 //session_start();
 $user = $_SESSION['user'];
-echo "<h1>Welcome ".$user."!</h1><br><br>";
-echo "Your Task for today: <br><br>";
+$initial = $_SESSION['initial'];
+echo "<h1>Welcome ".$user."!</h1><br>";
+
+
 //echo CURDATE();
+//Retrieves Jobs for User and Reminders
+$conn = mysqli_connect("localhost","root","","crst_dashboard");
+$sqlJobs = "SELECT project_name FROM job_ticket INNER JOIN mail_data ON job_ticket.job_id = mail_data.job_id WHERE mail_data.processed_by = '$initial' AND job_ticket.due_date = CURDATE()";
+$resultJobs = mysqli_query($conn, $sqlJobs);
+$num_rows_Jobs = mysqli_num_rows($resultJobs);
+
+echo "<h3 style = 'color: #ffffff'>Jobs For Today: " . $num_rows_Jobs . "</h3>";
 
 $sql="SELECT text FROM reminder WHERE user='$user' and date = CURDATE()  ";
 $result=mysqli_query($conn,$sql);
+
+
+
+echo "<br><br><h4 style = 'color: #ffffff';>Reminders</h4>";
 
 if ($result->num_rows > 0) {
 	while($row = $result->fetch_assoc()) {
@@ -109,6 +121,9 @@ if ($result8->num_rows > 0) {
 
 $result = mysqli_query($conn,"SELECT * FROM timestamp ORDER BY time DESC LIMIT 10");
 
+$sql_time_query = "SELECT date_trunc('second', now()::timestamp) FROM timestamp ORDER BY time DESC LIMIT 10";
+$result_time_query = mysqli_query($conn, $sql_time_query);
+
 
 echo "<table  border='1' cellspacing='2' cellpadding='2'>"; // start a table tag in the HTML
 echo "<tr><th> User </th><th> Job </th><th> Time </th></tr>";
@@ -130,7 +145,6 @@ $conn->close();
 
 </div>
 
-
 <script src="jquery.js"></script>
 <script>
 var d = new Date();
@@ -143,6 +157,7 @@ document.getElementById("year").innerHTML = d.getFullYear();
 function hide(target) {
     document.getElementById(target).style.display = 'none';
 }
+
 
 var firstTime = localStorage.getItem("first_time");
 

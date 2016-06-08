@@ -13,7 +13,7 @@ session_start();
 
 $user_name = $_SESSION['user'];
 date_default_timezone_set('America/New_York');
-$today = date("F j, Y, g:i a");
+$today = date("Ymd g:i:s A");
 $_SESSION['date'] = $today;
 $job = "updated w&m"; 
 

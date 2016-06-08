@@ -37,10 +37,44 @@ if ($conn->connect_error) {
 		$client_add =$row["client_add"];
 		$sec1 = $row["sec1"];
 		$display = "yes";
-    
+		
 
 }
+if(isset($_POST['delete_form'])){
+	$sql_delete = "DELETE FROM client_info WHERE '$client_name' = client_name";
+	mysqli_query($conn, $sql_delete);
+	$conn->close();
+	header("location: http://localhost/crst_dashboard/clients.php");
+}
+if(isset($_POST['submit_form'])){
+	$client_name = $_POST['client_name'];
+	$client_add = $_POST['client_add'];
+	$contact_name = $_POST['contact_name'];
+	$contact_phone = $_POST['contact_phone'];
+	$contact_email = $_POST['contact_email'];
+	$category = $_POST['category'];
+	$sec1 = $_POST['sec1'];
+	$website = $_POST['website'];
+	$notes = $_POST['notes'];
+	$title = $_POST['title'];
+	session_start();
+	$user_name = $_SESSION['user'];
+	date_default_timezone_set('America/New_York');
+	$today = date("F j, Y, g:i a");
+	$_SESSION['date'] = $today;
+	$job = "updated client info";
 
+	$sql = "UPDATE client_info SET contact_name='$contact_name', client_add='$client_add',contact_phone='$contact_phone',contact_email='$contact_email',sec1='$sec1',website='$website',notes='$notes',category='$category',title='$title' WHERE client_name='$client_name'";
+
+	$sql6 = "INSERT INTO timestamp (user,time,job) VALUES ('$user_name', '$today','$job')";
+	$result7 = $conn->query($sql6) or die('Error querying database 5.');
+
+	$result = $conn->query($sql) or die('Error querying database.');
+	 
+	$conn->close();
+	header("location: http://localhost/crst_dashboard/clients.php ");
+	exit();
+}
 ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script>
@@ -55,7 +89,7 @@ $(document).ready(function(){
 </script>
 
 <div class="content">
-<form action="update_client.php" id="form" method="POST">
+<form action="" id="form" method="POST">
 				<div class="newclienttab-inner">
 					<div class="tabinner detail">
 					<label>Client Name</label>
@@ -103,7 +137,8 @@ $(document).ready(function(){
 					</div>
 				</div>
 				<div class="form-bottom">
-					<input id="btn" type="submit" value="Save" name="submit_form">
+					<input id="btn" type="submit" value="Save" name="submit_form" onclick = "return confirm('Save changes?')">
+					<input id = "delete_button" type = "submit" value = "Delete" name = "delete_form" onClick = "return confirm('Are you sure you want to delete client?')">
 				</div>
 			</form>
 			</div>
