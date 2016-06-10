@@ -10,18 +10,7 @@ require ("header.php");
 
 <?php
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname= "crst_dashboard";
-
-// Create Connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
+require ("connection.php");
 $result = mysqli_query($conn,"SELECT * FROM documentation");
 
 if ($result->num_rows > 0) {

@@ -14,12 +14,8 @@ require ("header.php");
 						<div class="tabinner detail">
 						<label>Job Id</label><select name='job_id' class="contact-prefix">
 						<?php
-						$servername = "localhost";
-						$username = "root";
-						$password = "";
-						$dbname= "crst_dashboard";
-						// Create Connection
-						$conn = new mysqli($servername, $username, $password, $dbname);
+						require ("connection.php");
+
 						
 						$result = $conn->query("SELECT job_id FROM job_ticket WHERE job_ticket.job_id NOT IN (SELECT job_id FROM materials)");
 						
@@ -58,12 +54,7 @@ require ("header.php");
 						<input name="quantity" type="text" class="contact-prefix">
 						</div>
 						<?php
-						$servername = "localhost";
-						$username = "root";
-						$password = "";
-						$dbname= "crst_dashboard";
-						// Create Connection
-						$conn = new mysqli($servername, $username, $password, $dbname);
+						require ("connection.php");
 						$result = $conn->query("select vendor_name from vendors");
 						echo("<div class='tabinner detail'>");
 						echo "<label>Vendor</label><select name='vendor'>";

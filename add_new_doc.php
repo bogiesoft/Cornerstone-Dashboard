@@ -1,16 +1,7 @@
 <?php
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname= "crst_dashboard";
+require ("connection.php");
 
-// Create Connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-} 
 
 date_default_timezone_set('America/New_York');
 $today1 = date("F j, Y, g:i a");

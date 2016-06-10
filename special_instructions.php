@@ -1,14 +1,6 @@
 <?php
 require('header.php');
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname= "crst_dashboard";
-// Create Connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+require ("connection.php");
 $temp = $_GET['job_id'];
 $sql = "SELECT * FROM job_ticket WHERE job_id = $temp "; 
 $result = mysqli_query($conn,$sql); 

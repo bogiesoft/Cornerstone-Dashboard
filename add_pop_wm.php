@@ -12,12 +12,8 @@ require ("header.php");
 			<form action="add_p_wm.php" method="post">
 				<div class="newclienttab-inner">
 				<?php
-						$servername = "localhost";
-						$username = "root";
-						$password = "";
-						$dbname= "crst_dashboard";
-						// Create Connection
-						$conn = new mysqli($servername, $username, $password, $dbname);
+						require ("connection.php");
+
 						$result = $conn->query("select vendor_name from vendors");
 						echo("<div class='tabinner detail'>");
 						//getting vendor from vendor table

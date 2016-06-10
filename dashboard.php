@@ -5,10 +5,7 @@ require('header.php');
 <p id="demo"></p>
 
 <?php
-$conn = new mysqli("localhost","root","","crst_dashboard");
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-} 
+require ("connection.php");
 //session_start();
 $user = $_SESSION['user'];
 $initial = $_SESSION['initial'];
@@ -17,7 +14,6 @@ echo "<h1>Welcome ".$user."!</h1><br>";
 
 //echo CURDATE();
 //Retrieves Jobs for User and Reminders
-$conn = mysqli_connect("localhost","root","","crst_dashboard");
 $sqlJobs = "SELECT project_name FROM job_ticket INNER JOIN mail_data ON job_ticket.job_id = mail_data.job_id WHERE mail_data.processed_by = '$initial' AND job_ticket.due_date = CURDATE()";
 $resultJobs = mysqli_query($conn, $sqlJobs);
 $num_rows_Jobs = mysqli_num_rows($resultJobs);
@@ -44,7 +40,7 @@ $conn->close();
 <div class="content">
 <p>Sales info for <b id = "month"></b> <b id = "year"> </b>:</p><br>
 <?php
-$conn = mysqli_connect("localhost","root","","crst_dashboard");
+require ("connection.php");
 
 $result1=mysqli_query($conn,"SELECT * FROM job_ticket WHERE estimate_number != 0  ");
 $num_rows = mysqli_num_rows($result1);
@@ -89,7 +85,7 @@ Femina: <?php echo "$num_rows5 \n"; ?><br>
 
 <?php
 
-$conn = mysqli_connect("localhost","root","","crst_dashboard");
+require ("connection.php");
 $result8 = mysqli_query($conn,"SELECT job_id,client_name,project_name,due_date,job_status FROM job_ticket");
 
 // all current jobs

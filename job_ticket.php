@@ -25,12 +25,7 @@ require ("header.php");
 			  <form action="add_job_ticket.php" method="post">
 				<div class="newclienttab-inner">
 				<?php
-						$servername = "localhost";
-						$username = "root";
-						$password = "";
-						$dbname= "crst_dashboard";
-						// Create Connection
-						$conn = new mysqli($servername, $username, $password, $dbname);
+						require ("connection.php");
 						$result = $conn->query("select client_name from client_info");
 						echo("<div class='tabinner detail'>");
 						echo "<label>Client</label><select name='client_name'>";

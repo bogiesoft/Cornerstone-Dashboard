@@ -1,14 +1,6 @@
 <?php
 require('header.php');
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname= "crst_dashboard";
-// Create Connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+require ("connection.php");
 	
 $sql = "SELECT * FROM job_ticket INNER JOIN mail_data ON job_ticket.job_id = mail_data.job_id AND mail_data.processed_by = 'RP'"; 
 $result = mysqli_query($conn,$sql); 

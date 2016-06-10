@@ -1,17 +1,7 @@
 
 <?php
    include("head.php");
-   $servername = "localhost";
-$username = "root";
-$password = "";
-$dbname= "crst_dashboard";
-
-// Create Connection
-$db = new mysqli($servername, $username, $password, $dbname);
-
-if ($db->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-} 
+require ("connection.php");
    session_start();
    $error = "";
    

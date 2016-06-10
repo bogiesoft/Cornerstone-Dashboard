@@ -10,15 +10,7 @@ require('header.php');
 </div>
 
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname= "crst_dashboard";
-// Create Connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-} 
+require ("connection.php");
 $result = mysqli_query($conn,"SELECT * FROM materials");
 echo "<table  border='1' cellspacing='2' cellpadding='2' class='sortable' >"; // start a table tag in the HTML
 echo "<thead>";
