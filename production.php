@@ -15,7 +15,7 @@ $result = mysqli_query($conn,$sql);
 echo "<div class='content'>";
 ?>
 <form action = "production_data.php" method = "POST">
-	<input type = "submit" name = "submit_form" value = "Production Data Manager">
+	<input class="add_button" type = "submit" name = "submit_form" value = "Production Data Manager">
 </form><br>
 <?php
 
