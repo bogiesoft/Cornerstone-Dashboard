@@ -4,12 +4,17 @@ require ("header.php");
 <?php
 
 
-						require ("connection.php");
-							$user_name = $_SESSION['user'];
-							date_default_timezone_set('America/New_York');
-							$_SESSION['date'] = $today;
-							$today = date("Y-m-d g:i:s");
-							$job = "updated vendor"; 
+						$servername = "localhost";
+						$username = "root";
+						$password = "";
+						$dbname= "crst_dashboard";
+
+						// Create Connection
+						$conn = new mysqli($servername, $username, $password, $dbname);
+
+						if ($conn->connect_error) {
+							die("Connection failed: " . $conn->connect_error);
+						} 
 							$temp = $_GET['vendor_name'];
 							$vendor_name = $temp;
 							$sql = "SELECT * FROM vendors WHERE vendor_name = '$temp' "; 
@@ -31,52 +36,49 @@ require ("header.php");
 								$display = "yes";
 								
 								if(isset($_POST['submit_form'])){
-								$vendor_name = $_POST['vendor_name'];
-								$vendor_contact = $_POST['vendor_contact'];
-								$vendor_phone = $_POST['vendor_phone'];
-								$vendor_email = $_POST['vendor_email'];
-								$vendor_website = $_POST['vendor_website'];		
-								$vendor_add = $_POST['vendor_add'];
+									$user_name = $_SESSION['user'];
+									date_default_timezone_set('America/New_York');
+									$today = date("Y-m-d G:i:s");
+									$a_p = date("A");
+									$_SESSION['date'] = $today;
+									$job = "updated vendor";
+									
+									$sql_update_vendor_time = "INSERT INTO timestamp (user,time,job,a_p) VALUES ('$user_name', '$today','$job', '$a_p')";
+									mysqli_query($conn, $sql_update_vendor_time) or die("update vendor error");
+									
+									$vendor_name = $_POST['vendor_name'];
+									$vendor_contact = $_POST['vendor_contact'];
+									$vendor_phone = $_POST['vendor_phone'];
+									$vendor_email = $_POST['vendor_email'];
+									$vendor_website = $_POST['vendor_website'];		
+									$vendor_add = $_POST['vendor_add'];
 
-								$sql = "UPDATE vendors SET vendor_name='$vendor_name',vendor_phone='$vendor_phone',vendor_add='$vendor_add',vendor_contact='$vendor_contact',vendor_email='$vendor_email',vendor_website='$vendor_website' WHERE vendor_name='$vendor_name'";
+									$sql = "UPDATE vendors SET vendor_name='$vendor_name',vendor_phone='$vendor_phone',vendor_add='$vendor_add',vendor_contact='$vendor_contact',vendor_email='$vendor_email',vendor_website='$vendor_website' WHERE vendor_name='$vendor_name'";
 
-								$result = $conn->query($sql) or die('Error querying database.');
-								 
-								$conn->close();
+									$result = $conn->query($sql) or die('Error querying database.');
+									 
+									$conn->close();
 
-								header("location: http://localhost/crst_dashboard/vendors.php ");
+									header("location: vendors.php ");
 
-								exit();
-							}
-						}
-						
-						if(isset($_POST['submit_form'])){
-							$vendor_name = $_POST['vendor_name'];
-							$vendor_contact = $_POST['vendor_contact'];
-							$vendor_phone = $_POST['vendor_phone'];
-							$vendor_email = $_POST['vendor_email'];
-							$vendor_website = $_POST['vendor_website'];		
-							$vendor_add = $_POST['vendor_add'];
-							
-							$sql_update = "INSERT INTO timestamp (user,time,job) VALUES ('$user_name', '$today','$job')";
-							mysqli_query($conn, $sql_update);
-							
-							$job = "updated vendor";
-							$sql = "UPDATE vendors SET vendor_name='$vendor_name',vendor_phone='$vendor_phone',vendor_add='$vendor_add',vendor_contact='$vendor_contact',vendor_email='$vendor_email',vendor_website='$vendor_website' WHERE vendor_name='$vendor_name'";
-
-							$result = $conn->query($sql) or die('Error querying database.');
-							 
-							$conn->close();
-
-							header("location: http://localhost/crst_dashboard/vendors.php ");
-
-							exit();
-						}
-						if(isset($_POST['delete_form'])){
-							$sql_delete = "DELETE FROM vendors WHERE '$vendor_name' = vendor_name";
-							mysqli_query($conn, $sql_delete);
-							$conn->close();
-							header("location: http://localhost/crst_dashboard/vendors.php");
+									exit();
+								}
+								if(isset($_POST['delete_form'])){
+									$user_name = $_SESSION['user'];
+									date_default_timezone_set('America/New_York');
+									$today = date("Y-m-d G:i:s");
+									$a_p = date("A");
+									$_SESSION['date'] = $today;
+									$job = "deleted vendor";
+									
+									$sql_delete_vendor_time = "INSERT INTO timestamp (user,time,job,a_p) VALUES ('$user_name', '$today','$job', '$a_p')";
+									mysqli_query($conn, $sql_delete_vendor_time) or die(" delete vendor error");
+									
+									$sql_delete = "DELETE FROM vendors WHERE '$vendor_name' = vendor_name";
+									mysqli_query($conn, $sql_delete);
+									$conn->close();
+									header("location: vendors.php");
+								}
 						}
 
 					?>

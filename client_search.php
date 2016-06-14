@@ -3,11 +3,18 @@ require ("header.php");
 ?>
 <?php
 //not using this page anymore
-require ("connection.php");
-
-if (!empty($_REQUEST['frmSearch'])){
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname= "crst_dashboard";
+// Create Connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+} 
+else if (!empty($_REQUEST['frmSearch'])){
 	
-	$term = mysql_real_escape_string($_REQUEST['frmSearch']);
+	$term = $_POST['frmSearch'];
 	
 	$sql = "SELECT * FROM client_info WHERE client_name LIKE '%".$term."%'"; 
 	$result = mysqli_query($conn,$sql); 
@@ -18,7 +25,7 @@ if (!empty($_REQUEST['frmSearch'])){
 	if ($result->num_rows > 0) {
 	
     while($row = $result->fetch_assoc()) {
-		echo "<tr><td>"."<a href='http://localhost/crst_dashboard/client_info.php'>".$row["client_name"]."</a>"."</td><td>".  $row["contact_name"]."</td><td>". $row["client_add"]. "</td><td>". $row["contact_phone"]. "</td><td>". $row["contact_email"]."</td><td>". $row["website"]. "</td><td>". $row["category"]. "</td><td>". $row["title"]. "</td><td>". $row["notes"]. "</td></tr>";
+		echo "<tr><td>"."<a href='client_info.php'>".$row["client_name"]."</a>"."</td><td>".  $row["contact_name"]."</td><td>". $row["client_add"]. "</td><td>". $row["contact_phone"]. "</td><td>". $row["contact_email"]."</td><td>". $row["website"]. "</td><td>". $row["category"]. "</td><td>". $row["title"]. "</td><td>". $row["notes"]. "</td></tr>";
     }
 	echo "<br>";
 	echo "</div>";

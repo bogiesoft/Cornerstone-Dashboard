@@ -10,7 +10,18 @@ require ("header.php");
 
 <?php
 
-require ("connection.php");
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname= "crst_dashboard";
+
+// Create Connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
 $result = mysqli_query($conn,"SELECT * FROM documentation");
 
 if ($result->num_rows > 0) {
@@ -18,7 +29,7 @@ if ($result->num_rows > 0) {
 	
     while($row = $result->fetch_assoc()) {
 		$temp = $row['title'];
-		echo "<a href='http://localhost/crst_dashboard/edit_doc.php?title=$temp'><h2>".$row['title']."</h2></a>"."User: ".$row['user']."  Time: ".$row['timestamp']."<br><br>";
+		echo "<a href='edit_doc.php?title=$temp'><h2>".$row['title']."</h2></a>"."User: ".$row['user']."  Time: ".$row['timestamp']."<br><br>";
 		echo nl2br($row['text'])."<br><br>";
 		
     }

@@ -1,6 +1,14 @@
 <?php
 require ("header.php");
-require ("connection.php");
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname= "crst_dashboard";
+// Create Connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+} 
 
 	
 	$term = $_GET['job_id'];
@@ -34,10 +42,11 @@ require ("connection.php");
 		$display = "no";
 	}
 	if(isset($_POST['submit_form'])){
-		session_start();
+		//session_start();
 		$user_name = $_SESSION['user'];
 		date_default_timezone_set('America/New_York');
-		$today = date("Y-m-d g:i:s");
+		$today = date("Y-m-d G:i:s");
+		$a_p = date("A");
 		$_SESSION['date'] = $today;
 		$job = "updated w&m"; 
 
@@ -58,18 +67,28 @@ require ("connection.php");
 		 WHERE job_id ='$job_id'";
 		$result = $conn->query($sql) or die('Error querying database.');
 
-		$sql6 = "INSERT INTO timestamp (user,time,job) VALUES ('$user_name', '$today','$job')";
+		$sql6 = "INSERT INTO timestamp (user,time,job, a_p) VALUES ('$user_name', '$today','$job', '$a_p')";
 		$result7 = $conn->query($sql6) or die('Error querying database 5.');
 		 
 		$conn->close();
-		header("location: http://localhost/crst_dashboard/weights_and_measure.php");
+		header("location: weights_and_measure.php");
 		exit();
 	}
 	if(isset($_POST['delete_form'])){
+		$user_name = $_SESSION['user'];
+		date_default_timezone_set('America/New_York');
+		$today = date("Y-m-d G:i:s");
+		$a_p = date("A");
+		$_SESSION['date'] = $today;
+		$job = "deleted w&m"; 
+		
+		$sql6 = "INSERT INTO timestamp (user,time,job, a_p) VALUES ('$user_name', '$today','$job', '$a_p')";
+		$result7 = $conn->query($sql6) or die('Error querying database 5.');
+		
 		$sql_delete = "DELETE FROM materials WHERE '$job_id' = job_id";
 		mysqli_query($conn, $sql_delete);
 		$conn->close();
-		header("location: http://localhost/crst_dashboard/weights_and_measure.php");
+		header("location: weights_and_measure.php");
 	}
 	
 ?>
@@ -144,7 +163,7 @@ $(document).ready(function(){
 				</div>
 				<div class="form-bottom">
 					<input id="btn" type="submit" value="Save" name="submit_form" onclick = "return confirm('Save changes?')">
-					<input id="delete" type="submit" value="Delete" name="delete_form" onclick = "return confirm('Are you sure you want to delete client?')">
+					<input id="delete" type="submit" value="Delete" name="delete_form" onclick = "return confirm('Are you sure you want to delete weight and measure?')">
 				</div>
 			</form>
 		</div>

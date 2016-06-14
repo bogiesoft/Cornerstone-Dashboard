@@ -46,7 +46,18 @@ div.pager span.active {
 
 <?php
 
-require ("connection.php");
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname= "crst_dashboard";
+
+// Create Connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+} 
+
 
 $result = mysqli_query($conn,"SELECT * FROM client_info");
 
@@ -65,7 +76,7 @@ if ($result->num_rows > 0) {
 		
 
 		$foo=$row['client_name'];
-		echo "<tr><th>"."<a href='http://localhost/crst_dashboard/edit_client.php?client_name=$foo'>"."Edit"."</a></th><td>".$row["client_name"]."</td><td>".  $row["contact_name"]."</td><td>". $row["client_add"]. "</td><td>". $row["contact_phone"]. "</td><td>". $row["contact_email"]."</td><td>". $row["website"]. "</td><td>". $row["category"]. "</td><td>". $row["title"]. "</td><td>". $row["notes"]. "</td></tr>";
+		echo "<tr><th>"."<a href='edit_client.php?client_name=$foo'>"."Edit"."</a></th><td>".$row["client_name"]."</td><td>".  $row["contact_name"]."</td><td>". $row["client_add"]. "</td><td>". $row["contact_phone"]. "</td><td>". $row["contact_email"]."</td><td>". $row["website"]. "</td><td>". $row["category"]. "</td><td>". $row["title"]. "</td><td>". $row["notes"]. "</td></tr>";
     }
 	echo "</tbody></table></div><br>";
 } else {

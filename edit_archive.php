@@ -31,7 +31,15 @@ require ("header.php");?>
 
 
 <?php
-require ("connection.php");
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname= "crst_dashboard";
+// Create Connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+} 
 
 	
 	
@@ -382,7 +390,7 @@ require ("connection.php");
 				<textarea name="special_instructions" class="contact-prefix" cols="80" rows="25"><?php echo $special_instructions ; ?></textarea>
 				</div>
 				<div class="form-bottom">
-				<input id="btn" type="submit" value="Save" name="submit_form">
+				<input id="btn" type="submit" value="Save" name="submit_form" onclick = "return confirm('Add job ticket?')">
 				</div>
 	</form>
 

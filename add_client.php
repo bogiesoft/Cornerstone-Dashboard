@@ -1,5 +1,18 @@
 <?php
 require ("header.php");
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname= "crst_dashboard";
+
+// Create Connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
 ?>
 <div class="content">
 <div class="contacts-title">
@@ -57,7 +70,7 @@ require ("header.php");
 					</div>
 				</div>
 				<div class="form-bottom">
-					<input id="btn" type="submit" value="Save" name="submit_form">
+					<input id="btn" type="submit" value="Save" name="submit_form" onclick = "return confirm('Add new client?')">
 				</div>
 			</form>
 		</div>

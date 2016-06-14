@@ -10,7 +10,15 @@ require('header.php');
 </div>
 
 <?php
-require ("connection.php");
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname= "crst_dashboard";
+// Create Connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+} 
 $result = mysqli_query($conn,"SELECT * FROM materials");
 echo "<table  border='1' cellspacing='2' cellpadding='2' class='sortable' >"; // start a table tag in the HTML
 echo "<thead>";
@@ -32,7 +40,7 @@ if ($result->num_rows > 0) {
 		
 		
 		
-		echo "<tr><td><a href = 'http://localhost/crst_dashboard/edit_wm.php?job_id=$job_id'>".$row["job_id"]."</a></td><td>".$client_name."</td><td>".$project_name."</td><td>". $row["received"]. "</td><td>". $row["location"]."</td><td>". $row["checked_in"]. "</td><td>". $row["material"]. "</td><td>". $row["type"]. "</td><td>". $row["quantity"]. "</td><td>". $row["vendor"]. "</td><td>". $row["height"]. "</td><td>". $row["weight"]. "</td><td>". $row["size"]. "</td><td>". $row["based_on"]. "</td></tr>";
+		echo "<tr><td><a href = 'edit_wm.php?job_id=$job_id'>".$row["job_id"]."</a></td><td>".$client_name."</td><td>".$project_name."</td><td>". $row["received"]. "</td><td>". $row["location"]."</td><td>". $row["checked_in"]. "</td><td>". $row["material"]. "</td><td>". $row["type"]. "</td><td>". $row["quantity"]. "</td><td>". $row["vendor"]. "</td><td>". $row["height"]. "</td><td>". $row["weight"]. "</td><td>". $row["size"]. "</td><td>". $row["based_on"]. "</td></tr>";
     }
 	echo "<br>";
 } else {

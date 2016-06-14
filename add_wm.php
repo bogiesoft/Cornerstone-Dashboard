@@ -14,8 +14,12 @@ require ("header.php");
 						<div class="tabinner detail">
 						<label>Job Id</label><select name='job_id' class="contact-prefix">
 						<?php
-						require ("connection.php");
-
+						$servername = "localhost";
+						$username = "root";
+						$password = "";
+						$dbname= "crst_dashboard";
+						// Create Connection
+						$conn = new mysqli($servername, $username, $password, $dbname);
 						
 						$result = $conn->query("SELECT job_id FROM job_ticket WHERE job_ticket.job_id NOT IN (SELECT job_id FROM materials)");
 						
@@ -54,7 +58,12 @@ require ("header.php");
 						<input name="quantity" type="text" class="contact-prefix">
 						</div>
 						<?php
-						require ("connection.php");
+						$servername = "localhost";
+						$username = "root";
+						$password = "";
+						$dbname= "crst_dashboard";
+						// Create Connection
+						$conn = new mysqli($servername, $username, $password, $dbname);
 						$result = $conn->query("select vendor_name from vendors");
 						echo("<div class='tabinner detail'>");
 						echo "<label>Vendor</label><select name='vendor'>";
@@ -86,7 +95,7 @@ require ("header.php");
 						</div>
 					</div>
 					<div class="form-bottom">
-						<input id="btn" type="submit" value="Save" name="submit_form">
+						<input id="btn" type="submit" value="Save" name="submit_form" onclick = "return confirm('Add weight and measure?')">
 					</div>
 				</form>
 			</div>

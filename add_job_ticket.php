@@ -1,12 +1,22 @@
 <?php
 
-require ("connection.php");
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname= "crst_dashboard";
 
+// Create Connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+} 
 session_start();
 
 $user_name = $_SESSION['user'];
 date_default_timezone_set('America/New_York');
-$today = date("F j, Y, g:i a");
+$today = date("Y-m-d G:i:s");
+$a_p = date("A");
 $_SESSION['date'] = $today;
 $job = "created job ticket";
 
@@ -107,7 +117,7 @@ $result5 = $conn->query($sql4) or die('Error querying database 4.');
 $sql5 = "INSERT INTO invoice(job_id) VALUES ('$job_id')";
 $result6 = $conn->query($sql5) or die('Error querying database 5.');
 
-$sql6 = "INSERT INTO timestamp (user,time,job) VALUES ('$user_name', '$today','$job')";
+$sql6 = "INSERT INTO timestamp (user,time,job,a_p) VALUES ('$user_name', '$today','$job', '$a_p')";
 $result7 = $conn->query($sql6) or die('Error querying database 6.');
 
 $sql8 = "INSERT INTO yellow_sheet (job_id) VALUES ('$job_id')";
@@ -115,7 +125,7 @@ $result9= $conn->query($sql8) or die('Error querying database 8.');
 
 $conn->close();
 
-header("location: http://localhost/crst_dashboard/job_ticket.php");
+header("location: job_ticket.php");
 exit();
 
 ?>

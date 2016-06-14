@@ -2,8 +2,17 @@
 <?php
 require ("header.php");
 
-require ("connection.php");
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname= "crst_dashboard";
 
+// Create Connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+} 
 
 $result = mysqli_query($conn,"SELECT * FROM archive_jobs");
 
@@ -21,7 +30,7 @@ if ($result->num_rows > 0) {
 		
 		$foo = $row["job_id"];
 		
-		echo "<tr><td><a href = 'http://localhost/crst_dashboard/edit_archive.php?job_id=$foo'>".$row["job_id"]."</a></td><td>".  $row["client_name"]."</td><td>". $row["project_name"]. "</td><td>". $row["records_total"]. "</td><td>". $row["invoice_number"]."</td><td>". $row["archive_date"]. "</td><td>". $row["reason"]. "</td></tr>";
+		echo "<tr><td><a href = 'edit_archive.php?job_id=$foo'>".$row["job_id"]."</a></td><td>".  $row["client_name"]."</td><td>". $row["project_name"]. "</td><td>". $row["records_total"]. "</td><td>". $row["invoice_number"]."</td><td>". $row["archive_date"]. "</td><td>". $row["reason"]. "</td></tr>";
     }
 	echo "</tbody></table></div><br>";
 } else {

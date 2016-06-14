@@ -1,11 +1,23 @@
 <?php
 require('header.php');
-require ("connection.php");
-	
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname= "crst_dashboard";
+// Create Connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 $sql = "SELECT * FROM job_ticket INNER JOIN mail_data ON job_ticket.job_id = mail_data.job_id AND mail_data.processed_by = 'RP'"; 
 $result = mysqli_query($conn,$sql); 
 
 echo "<div class='content'>";
+?>
+<form action = "production_data.php" method = "POST">
+	<input type = "submit" name = "submit_form" value = "Production Data Manager">
+</form><br>
+<?php
 
 if ($result->num_rows > 0) {
 	

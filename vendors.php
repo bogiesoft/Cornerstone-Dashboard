@@ -22,7 +22,17 @@ require ("header.php");
 </div>
 <?php
 
-require ("connection.php");
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname= "crst_dashboard";
+
+// Create Connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+} 
 
 
 $result = mysqli_query($conn,"SELECT * FROM vendors");
@@ -36,7 +46,7 @@ if ($result->num_rows > 0) {
 		echo "<div data-role='main' class='ui-content'>";
 			echo "<div><br><br><br>";
 				$x = $row["vendor_name"];
-				echo "<B><a href='http://localhost/crst_dashboard/search_vendor.php?vendor_name=$x'>".$row["vendor_name"]."</a></B>"."<br>";
+				echo "<B><a href='search_vendor.php?vendor_name=$x'>".$row["vendor_name"]."</a></B>"."<br>";
 				echo "Contact Name: ".$row["vendor_contact"]."<br>";
 				echo "Address: ".$row["vendor_add"]."<br>";
 				echo "Email: ".$row["vendor_email"]."<br>";

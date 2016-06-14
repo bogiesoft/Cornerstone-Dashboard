@@ -21,7 +21,7 @@ require ("header.php");
 						</div>
 					</div>
 					<div class="form-bottom">
-						<input id="btn" type="submit" value="Save" name="submit_form">
+						<input id="btn" type="submit" value="Save" name="submit_form" onclick = "return confirm('Add reminder?')">
 					</div>
 				</form>
 			</div>

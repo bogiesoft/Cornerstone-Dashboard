@@ -12,8 +12,12 @@ require ("header.php");
 			<form action="add_p_wm.php" method="post">
 				<div class="newclienttab-inner">
 				<?php
-						require ("connection.php");
-
+						$servername = "localhost";
+						$username = "root";
+						$password = "";
+						$dbname= "crst_dashboard";
+						// Create Connection
+						$conn = new mysqli($servername, $username, $password, $dbname);
 						$result = $conn->query("select vendor_name from vendors");
 						echo("<div class='tabinner detail'>");
 						//getting vendor from vendor table
@@ -67,7 +71,7 @@ require ("header.php");
 					</div>
 				</div>
 				<div class="form-bottom">
-					<input id="btn" type="submit" value="Save" name="submit_form">
+					<input id="btn" type="submit" value="Save" name="submit_form" onclick = "return confirm('Add weight and measure?')">
 				</div>
 			</form>
 		</div>

@@ -5,7 +5,10 @@ require('header.php');
 <p id="demo"></p>
 
 <?php
-require ("connection.php");
+$conn = new mysqli("localhost","root","","crst_dashboard");
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+} 
 //session_start();
 $user = $_SESSION['user'];
 $initial = $_SESSION['initial'];
@@ -14,11 +17,12 @@ echo "<h1>Welcome ".$user."!</h1><br>";
 
 //echo CURDATE();
 //Retrieves Jobs for User and Reminders
-$sqlJobs = "SELECT project_name FROM job_ticket INNER JOIN mail_data ON job_ticket.job_id = mail_data.job_id WHERE mail_data.processed_by = '$initial' AND job_ticket.due_date = CURDATE()";
+$conn = mysqli_connect("localhost","root","","crst_dashboard");
+$sqlJobs = "SELECT project_name FROM job_ticket INNER JOIN mail_data ON job_ticket.job_id = mail_data.job_id WHERE mail_data.processed_by = '$initial'";
 $resultJobs = mysqli_query($conn, $sqlJobs);
 $num_rows_Jobs = mysqli_num_rows($resultJobs);
 
-echo "<h3 style = 'color: #ffffff'>Jobs For Today: " . $num_rows_Jobs . "</h3>";
+echo "<h3 style = 'color: #ffffff'>Jobs Due: " . $num_rows_Jobs . "</h3>";
 
 $sql="SELECT text FROM reminder WHERE user='$user' and date = CURDATE()  ";
 $result=mysqli_query($conn,$sql);
@@ -40,7 +44,7 @@ $conn->close();
 <div class="content">
 <p>Sales info for <b id = "month"></b> <b id = "year"> </b>:</p><br>
 <?php
-require ("connection.php");
+$conn = mysqli_connect("localhost","root","","crst_dashboard");
 
 $result1=mysqli_query($conn,"SELECT * FROM job_ticket WHERE estimate_number != 0  ");
 $num_rows = mysqli_num_rows($result1);
@@ -85,7 +89,7 @@ Femina: <?php echo "$num_rows5 \n"; ?><br>
 
 <?php
 
-require ("connection.php");
+$conn = mysqli_connect("localhost","root","","crst_dashboard");
 $result8 = mysqli_query($conn,"SELECT job_id,client_name,project_name,due_date,job_status FROM job_ticket");
 
 // all current jobs
@@ -106,7 +110,7 @@ if ($result8->num_rows > 0) {
 		$result9 = mysqli_query($conn,"SELECT * FROM mail_data WHERE job_id = $foo");
 		$row9 = $result9->fetch_assoc();
 		
-		echo "<tr><th>"."<a href='http://localhost/crst_dashboard/edit_job.php?job_id=$foo'>"."Edit"."</a></th><td>".$row8["job_id"]."</td><td>".  $row8["client_name"]."</td><td>". $row8["project_name"]. "</td><td>". $row8["due_date"]. "</td><td>". $row8["job_status"]."</td><td>". $row9["records_total"]."</td><td>". $row9["processed_by"]."</td></tr>";
+		echo "<tr><th>"."<a href='edit_job.php?job_id=$foo'>"."Edit"."</a></th><td>".$row8["job_id"]."</td><td>".  $row8["client_name"]."</td><td>". $row8["project_name"]. "</td><td>". $row8["due_date"]. "</td><td>". $row8["job_status"]."</td><td>". $row9["records_total"]."</td><td>". $row9["processed_by"]."</td></tr>";
     }
 	echo "</tbody></table></div><br>";
 } else {
@@ -126,7 +130,9 @@ echo "<tr><th> User </th><th> Job </th><th> Time </th></tr>";
 if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
-        echo "<tr><td>" . $row['user'] . "</td><td>" . $row['job'] ."</td><td>".$row['time']."</td></tr>"; 
+		$time = strtotime($row['time']);
+		$myFormatForView = date("M d, Y g:i", $time);
+        echo "<tr><td>" . $row['user'] . "</td><td>" . $row['job'] ."</td><td>". $myFormatForView . " " . $row['a_p'] . "</td></tr>"; 
     }
 	echo "<br>";
 } else {
