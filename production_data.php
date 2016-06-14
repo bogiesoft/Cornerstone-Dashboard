@@ -71,22 +71,22 @@ progress[value]::-webkit-progress-value {
 		{
 			if(unit.value == "min."){
 				var calculation = parseInt(recordsNum) / parseInt(recsPer) * parseInt(time) / 60 / parseInt(people.value);
-				bar.value = "" + calculation;
+				bar.value = 250.0 - calculation;
 				displayTime.innerHTML = "Hours: " + calculation;
 			}
 			else
 			{
 				var calculation = parseInt(recordsNum) / parseInt(recsPer) * parseInt(time) / 3600 / parseInt(people.value);
-				bar.value = "" + calculation;
+				bar.value = 250.0 - calculation;
 				displayTime.innerHTML = "Hours: " + calculation;
 			}
 			
-			if(calculation <= 40)
+			if(calculation <= 50)
 			{
 				displayEff.innerHTML = "Efficiency: High";
 				displayEff.style.color = "green";
 			}
-			else if(calculation <= 100)
+			else if(calculation <= 150)
 			{
 				displayEff.innerHTML = "Efficiency: Medium";
 				displayEff.style.color = "orange";

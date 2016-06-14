@@ -1,23 +1,35 @@
 <?php
 require('header.php');
+require('connection.php');
 ?>
 <div id="popup" onclick="hide('popup')">
 <p id="demo"></p>
 
 <?php
-$conn = new mysqli("localhost","root","","crst_dashboard");
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-} 
 //session_start();
+
 $user = $_SESSION['user'];
 $initial = $_SESSION['initial'];
-echo "<h1>Welcome ".$user."!</h1><br>";
+$sql_name = "SELECT name FROM users WHERE user = '$user'";
+$sql_user = "SELECT user, department FROM users WHERE department = 'ADMIN'";
+$result_admin = mysqli_query($conn, $sql_user);
+
+$admin = FALSE;
+
+while($row = $result_admin->fetch_assoc()){
+	if($row['user'] == $user && $row['department'] == "ADMIN"){
+		$admin = TRUE;
+	}
+}
+$result = mysqli_query($conn, $sql_name);
+
+$row = $result->fetch_assoc();
+
+echo "<h1>Welcome ".$row['name'] ."!</h1><br>";
 
 
 //echo CURDATE();
 //Retrieves Jobs for User and Reminders
-$conn = mysqli_connect("localhost","root","","crst_dashboard");
 $sqlJobs = "SELECT project_name FROM job_ticket INNER JOIN mail_data ON job_ticket.job_id = mail_data.job_id WHERE mail_data.processed_by = '$initial'";
 $resultJobs = mysqli_query($conn, $sqlJobs);
 $num_rows_Jobs = mysqli_num_rows($resultJobs);
@@ -42,6 +54,12 @@ $conn->close();
 ?>
 </div>
 <div class="content">
+<?php
+
+if($admin == TRUE){
+	echo "<a href = 'add_account.php' class = 'add_button'>Add Account</a>";
+}
+?>
 <p>Sales info for <b id = "month"></b> <b id = "year"> </b>:</p><br>
 <?php
 $conn = mysqli_connect("localhost","root","","crst_dashboard");
@@ -90,7 +108,7 @@ Femina: <?php echo "$num_rows5 \n"; ?><br>
 <?php
 
 $conn = mysqli_connect("localhost","root","","crst_dashboard");
-$result8 = mysqli_query($conn,"SELECT job_id,client_name,project_name,due_date,job_status FROM job_ticket");
+$result8 = mysqli_query($conn,"SELECT job_id,client_name,project_name,due_date,job_status FROM job_ticket ORDER BY due_date ASC");
 
 // all current jobs
 echo " <div id='table-scroll'><table id='table' border='1' cellspacing='2' cellpadding='2' class='paginated' >"; // start a table tag in the HTML

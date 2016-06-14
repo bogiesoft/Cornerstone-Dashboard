@@ -22,7 +22,7 @@ require ("header.php");
 	<div class="newcontacts-outer">
 		<div class="tab-content">
 			
-			  <form action="add_job_ticket.php" method="post">
+			  <form action="add_job_ticket.php" method="POST">
 				<div class="newclienttab-inner">
 				<?php
 						$servername = "localhost";
