@@ -10,17 +10,8 @@ require('connection.php');
 
 $user = $_SESSION['user'];
 $initial = $_SESSION['initial'];
-$sql_name = "SELECT name FROM users WHERE user = '$user'";
-$sql_user = "SELECT user, department FROM users WHERE department = 'ADMIN'";
-$result_admin = mysqli_query($conn, $sql_user);
+$sql_name = "SELECT * FROM users WHERE user = '$user'";
 
-$admin = FALSE;
-
-while($row = $result_admin->fetch_assoc()){
-	if($row['user'] == $user && $row['department'] == "ADMIN"){
-		$admin = TRUE;
-	}
-}
 $result = mysqli_query($conn, $sql_name);
 
 $row = $result->fetch_assoc();
@@ -54,12 +45,6 @@ $conn->close();
 ?>
 </div>
 <div class="content">
-<?php
-
-if($admin == TRUE){
-	echo "<a href = 'add_account.php' class = 'add_button'>Add Account</a>";
-}
-?>
 <p>Sales info for <b id = "month"></b> <b id = "year"> </b>:</p><br>
 <?php
 $conn = mysqli_connect("localhost","root","","crst_dashboard");
