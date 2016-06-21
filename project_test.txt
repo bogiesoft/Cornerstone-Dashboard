@@ -1,0 +1,176 @@
+<?php
+require('header.php');
+?>
+
+<div class='content'>
+<div>Total Records &nbsp; <br><input type = "text" id = "records" style = "width: 80px" value = "1"></input></div><br><br>
+  <div class = "prod_info">
+	<h1>Task 1: </h1><br>
+	Time/Unit &nbsp; <input type = "text" id = "time_number" style = "width: 40px; font-size = 18px;" value = "1"> &nbsp; </input><select id = "time_type"><option>min.</option><option>sec.</option></select>
+	Records Complete in Time &nbsp; <input type = "text" id = "per_rec" style = "width: 50px" value = "1"></input> &nbsp; &nbsp;
+	Number of People &nbsp; <select id = "people">
+	<?php
+		for($i = 1; $i <= 10; $i++)
+		{
+			echo "<option>" . $i . "</option>";
+		}
+	?>
+</select>
+Employee &nbsp; <select id = "employee">
+	<?php
+		$sql = "SELECT * FROM users";
+		$result = mysqli_query($conn, $sql);
+		while($row = $result->fetch_assoc())
+		{
+			echo "<option>" . $row['user'] . "</option>";
+		}
+	?>
+</select> &nbsp;
+Job &nbsp; <select id = "job">
+	<option>Insertion</option>
+	<option>Printing</option>
+	<option>Folding</option>
+	<option>Tabbing</option>
+	<option>Packaging</option>
+</select>
+</div><br>
+<button type = "button" onclick = "addTask();">Add Task</button>
+<h1><progress id = "progress_bar" value = "1" max = "250" style = "background-color: red"></progress></h1><br>
+<h2 id = "display_time">Hours: 0</h2><br>
+<h2 id = "eff">Efficiency: </h2><br>
+<input type = "submit" onclick = "changeBar();" value = "Submit Data"></input>
+
+<style>
+progress[value]::-webkit-progress-value {
+  background-image:
+	   -webkit-linear-gradient(-45deg, 
+	                           transparent 33%, rgba(0, 0, 0, .1) 33%, 
+	                           rgba(0,0, 0, .1) 66%, transparent 66%),
+	   -webkit-linear-gradient(top, 
+	                           rgba(255, 255, 255, .25), 
+	                           rgba(0, 0, 0, .25)),
+	   -webkit-linear-gradient(left, #09c, #f44);
+
+    border-radius: 2px; 
+    background-size: 35px 20px, 100% 100%, 100% 100%;
+}
+</style>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.2.min.js">
+</script>
+<script>
+	var time_number = ["time_number"];
+	var time_unit = ["time_unit"];
+	var recs_comp = ["per_rec"];
+	var people = ["people"];
+	var employee = ["employee"];
+	var job = ["job"];
+	var employeeOptions = document.getElementById('employee').options;
+	var jobList = ["Insertion", "Printing", "Folding", "Tabbing", "Packaging"];
+	var count = 1;
+	var Task = 2;
+	
+	function addTask(){
+		$(".prod_info").append("<h1>Task " + Task + ":</h1>Time/Unit &nbsp; <input type = 'text' id = 'time_number" + count + "' style = 'width: 40px; font-size = 18px;' value = '1'> &nbsp; </input><select id = 'time_unit" + count + "'><option>min.</option><option>sec.</option></select> Records Complete in Time &nbsp; <input type = 'text' id = 'per_rec" + count + "' style = 'width: 50px' value = '1'></input> &nbsp; &nbsp;");
+		$(".prod_info").append("&nbsp;Number of People &nbsp;<select id = 'people" + count + "'>");
+		for (var i = 1; i <= 10; i++){
+			var opt = document.createElement('option');
+			opt.value = i;
+			opt.innerHTML = i;
+			document.getElementById("people" + count).appendChild(opt);
+		}
+		$(".prod_info").append("</select>&nbsp;Employee &nbsp; <select id = 'employee" + count + "'>");
+		for (var i = 0; i < employeeOptions.length; i++){
+			var opt = document.createElement('option');
+			opt.value = employeeOptions[i].value;
+			opt.innerHTML = employeeOptions[i].value;
+			document.getElementById("employee" + count).appendChild(opt); 
+		}
+		$(".prod_info").append("</select> &nbsp; Job &nbsp; <select id = 'job" + count + "'>");
+		for(var i = 0; i < jobList.length; i++){
+			var opt = document.createElement('option');
+			opt.value = jobList[i];
+			opt.innerHTML = jobList[i];
+			document.getElementById("job" + count).appendChild(opt);
+		}
+		$(".prod_info").append("</select>");
+		time_number.push("time_number" + count);
+		time_unit.push("time_unit" + count);
+		recs_comp.push("per_rec" + count);
+		people.push("people" + count);
+		employee.push("employee" + count);
+		job.push("job" + count);
+		Task = Task + 1;
+		count = count + 1;
+	}
+</script>
+
+<script type = "text/javascript">
+	function changeBar(){
+		var bar = document.getElementById("progress_bar");
+		var recordsNum = document.getElementById("records").value;
+		var displayTime = document.getElementById("display_time");
+		var displayEff = document.getElementById("eff");
+	    
+		for(var i = 0; i < job.length; i++){
+			
+			var recsPer = document.getElementById(recs_comp[i]).value;
+			var time = document.getElementById(time_number[i]).value;
+			var unit = document.getElementById(time_unit[i]);
+			var people = document.getElementById(people[i]);
+		
+			if(/^[0-9]*$/.test(recordsNum) == false || /^[0-9]*$/.test(recsPer) == false || /^[0-9]*$/.test(time) == false){
+				
+				displayTime.innerHTML =  "Hours: -1";
+				displayEff.innerHTML = "Efficiency: ";
+				bar.value = "0";
+				displayEff.style.color = "black";
+			}
+			else if(recordsNum == 0 || recsPer == 0 || time == 0)
+			{
+				displayTime.innerHTML =  "Hours: 0";
+				displayEff.innerHTML = "Efficiency: ";
+				bar.value = "0";
+				displayEff.style.color = "black";
+			}
+			else if(recordsNum == "" || recsPer == "" || time == "")
+			{
+				displayTime.innerHTML = "Hours: 0";
+				displayEff.innerHTML = "Efficiency: ";
+				bar.value = "0";
+				displayEff.style.color = "black";
+			}
+			else
+			{
+				if(unit.value == "min."){
+					var calculation = parseInt(recordsNum) / parseInt(recsPer) * parseInt(time) / 60 / parseInt(people.value);
+					bar.value = 250.0 - calculation;
+					displayTime.innerHTML = "Hours: " + calculation;
+				}
+				else
+				{
+					var calculation = parseInt(recordsNum) / parseInt(recsPer) * parseInt(time) / 3600 / parseInt(people.value);
+					bar.value = 250.0 - calculation;
+					displayTime.innerHTML = "Hours: " + calculation;
+				}
+				
+				if(calculation <= 50)
+				{
+					displayEff.innerHTML = "Efficiency: High";
+					displayEff.style.color = "green";
+				}
+				else if(calculation <= 150)
+				{
+					displayEff.innerHTML = "Efficiency: Medium";
+					displayEff.style.color = "orange";
+				}
+				else
+				{
+					displayEff.innerHTML = "Efficiency: Low";
+					displayEff.style.color = "red";
+				}
+			}
+		}
+}
+</script>
+
+</div>

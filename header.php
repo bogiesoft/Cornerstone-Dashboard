@@ -21,6 +21,7 @@ $result = mysqli_query($conn, $sql);
 $row = $result->fetch_assoc();
 
 $title = $row['title'];
+$_SESSION['title'] = $title;
 
 
 
