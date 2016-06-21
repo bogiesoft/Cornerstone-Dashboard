@@ -15,12 +15,12 @@ if ($conn->connect_error) {
 } 
 session_start();
 $temp = $_SESSION["user"];
-$sql = "SELECT department FROM users WHERE user = '$temp'";
+$sql = "SELECT title FROM users WHERE user = '$temp'";
 $result = mysqli_query($conn, $sql);
 
 $row = $result->fetch_assoc();
 
-$title = $row['department'];
+$title = $row['title'];
 
 
 
@@ -36,7 +36,7 @@ $title = $row['department'];
 			<li id="profile" class="dropdown">
 				<a class="dropbtn"><i class="icon"><img src="images/web-icons/user.png"></i><?php echo $temp; ?></a>
 				<div class="dropdown-content">
-				<a href="index.php">Logout</a>
+				<a href="logout.php">Logout</a>
 				<?php
 				if($title == "ADMIN"){
 					echo "<a href='admin.php'>Accounts</a>";

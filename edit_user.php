@@ -25,14 +25,13 @@
    $lastName = "";
    
    while($row = $result->fetch_assoc()){
-	   $name = $row['name'];
-	   $split = explode(" ", $name);
-	   $firstName = $split[0]; //firstName
-	   $lastName = $split[1]; //lastName
+	   $firstName = $row['first_name']; //firstName
+	   $lastName = $row['last_name']; //lastName
 	   
 	   $password = $row['password']; //password
 	   $email = $row['email']; //email
 	   $department = $row['department']; //department
+	   $title = $row['title'];
    }
 ?>
 
@@ -47,18 +46,16 @@
 			 Email: <input type = "text" name = "email" placeholder = "Email" value = "<?php echo $email; ?>"/>
 		Department: <select name = "depart">
 						<option disabled selected value><?php echo $department; ?></option>
-					 <?php
-					 if($department != "ADMIN"){
-						echo "<option>Sales</option>";
-						echo "<option>Customer Service</option>";
-						echo "<option>Project Management</option>";
-						echo "<option>Production</option>";
-						echo "<option>Development</option>";
-			          } 
-					  else{
-						  echo "<option>ADMIN</option>";
-					  }
-					  ?>
+						<option>Sales</option>
+						<option>Customer Service</option>
+						<option>Project Management</option>
+						<option>Production</option>
+						<option>Development</option>
+					</select> &nbsp;
+			 Title: <select name = "title">
+						<option disabled selected value><?php echo $title; ?></option>
+						<option>MEMBER</option>
+						<option>ADMIN</option>
 					</select><br><br>
 		  <input type = "submit" name = "account_save" value = "Save Account" onclick = "return confirm('Save Changes?')"/>
 		  <input type = "submit" name = "account_delete" value = "Delete Account" onclick = "return confirm('Delete account?')"/>

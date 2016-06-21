@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 14, 2016 at 02:15 AM
+-- Generation Time: Jun 21, 2016 at 01:26 AM
 -- Server version: 5.7.9
 -- PHP Version: 5.6.16
 
@@ -183,7 +183,8 @@ INSERT INTO `blue_sheet` (`job_id`, `completed_date`, `data_hrs`, `gd_hrs`, `ini
 (5521, '0000-00-00', 2, 0, 2091, 5, 2, 1, 10, 2, 1, 0, 4, 10, 25, 2000, 2500),
 (5522, '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 (5523, '2016-05-26', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5524, '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+(5524, '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5530, '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -214,12 +215,12 @@ CREATE TABLE IF NOT EXISTS `client_info` (
 --
 
 INSERT INTO `client_info` (`client_name`, `client_add`, `contact_name`, `contact_phone`, `contact_email`, `sec1`, `sec2`, `sec3`, `vendor_contact`, `category`, `website`, `notes`, `title`) VALUES
-('$client_name', '$client_add', '$contact_name', '$contact_phone', '$contact_email', '$sec1', '', '', '', '$category', '$website', '$notes', '$title'),
 ('Femina1', '8 Southside Avesdfsf', 'Femina Patel', '1234567890', 'femina@gmail.com', '1231231230', '', '', '', 'student', 'sbdbjsfj.com', 'new note', 'Circular progress bar (canvas)'),
 ('Jill Lewis', 'lkj', 'l', 'lkjlk', 'jlkj', 'lk', '', '', '', 'lkj', 'jlkjlkj', 'lkjlk', 'lkj'),
 ('Led Zeppelin', 'jlkj', 'lkjlk', 'ljlk', 'jlk', 'jlkj', '', '', '', 'jlk', 'lklkj', 'lkjlkj', 'jlk'),
 ('New Client', 'kljlk', 'Client', 'kljlklkj', 'lkjlklk', 'lkjlkjlkjl', '', '', '', 'lkllkjk', 'lkjlkj', 'lkj', 'lkjlkj'),
-('Steve', '234 dfsdf', 'St', '233 454 2343', 'T@r.com', '234 676 2342', '', '', '', 'trtert', 'www.gdf.vom', 'dgdfg', 'werw');
+('Steve', '234 dfsdf', 'Stevo', '233 454 2343', 'T@r.com', '234 676 2342', '', '', '', 'trtert', 'www.gdf.vom', 'dgdfg', 'werw'),
+('Yo', 'lkj', 'Dude', 'lkj', 'lkj', 'lkj', '', '', '', 'lkj', 'lkj', 'lkj', 'lkj');
 
 -- --------------------------------------------------------
 
@@ -286,7 +287,8 @@ INSERT INTO `invoice` (`job_id`, `postage`, `invoice_number`, `residual_returned
 (5521, '', 0, '', '', '', '', ''),
 (5522, '', 0, '', '', '', '', ''),
 (5523, '', 0, '', '', '', '', ''),
-(5524, '', 0, '', '', '', '', '');
+(5524, '', 0, '', '', '', '', ''),
+(5530, '', 0, '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -310,7 +312,7 @@ CREATE TABLE IF NOT EXISTS `job_ticket` (
   `job_status` varchar(45) NOT NULL,
   PRIMARY KEY (`job_id`),
   UNIQUE KEY `jobid` (`job_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5525 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5531 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `job_ticket`
@@ -328,7 +330,13 @@ INSERT INTO `job_ticket` (`job_id`, `client_name`, `project_name`, `ticket_date`
 (5521, 'john Snow', 'climbes', '2016-05-04', '2016-05-12', 'Jess', '544040', 'Mail Foreigns: Yes\r\nHousehold: NO\r\nNCOA: Yes\r\n\r\nPROJECT MANAGEMENT:\r\n\r\nPRODUCTION:\r\n\r\nCUSTOMER SERVICE:\r\n\r\nfajlkfjealkfjealkjflkeajlkfejkla', '2016-05-04', '2016-05-06', 3000, 'in P.M.'),
 (5522, '$client_name', '', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
 (5523, 'Steve', '', '2016-06-14', '2016-06-21', 'SA', '', '', '2016-06-16', '2016-06-16', 0, 'on hold'),
-(5524, 'Somebody', 'go home', '0000-00-00', '0000-00-00', '', '', 'jdghkjfdhkgllg dbvfjdgkj f dfhg idfjgf\r\nsdfjshjgkhuf  jdflgkjhkj \r\nfgjfdihg\r\n fdgjifjgo fgklhkl\r\n rgkj r jgtfrjgko fdgjthkjgf dslrksltk\r\ndfgkl kh g tkljlo,gfhkolytiu \r\nrtgr myk fgt;l ty', '0000-00-00', '0000-00-00', 0, '');
+(5524, 'Somebody', 'go home', '0000-00-00', '0000-00-00', '', '', 'jdghkjfdhkgllg dbvfjdgkj f dfhg idfjgf\r\nsdfjshjgkhuf  jdflgkjhkj \r\nfgjfdihg\r\n fdgjifjgo fgklhkl\r\n rgkj r jgtfrjgko fdgjthkjgf dslrksltk\r\ndfgkl kh g tkljlo,gfhkolytiu \r\nrtgr myk fgt;l ty', '0000-00-00', '0000-00-00', 0, ''),
+(5525, '$client_name', '', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
+(5526, '$client_name', '', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
+(5527, '$client_name', '', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
+(5528, '$client_name', '', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
+(5529, '$client_name', '', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
+(5530, 'New Client', 'kjlk', '0000-00-00', '0000-00-00', '', 'lkjlkj', '', '0000-00-00', '0000-00-00', 0, '');
 
 -- --------------------------------------------------------
 
@@ -371,7 +379,8 @@ INSERT INTO `mail_data` (`job_id`, `data_loc`, `records_total`, `domestic`, `for
 (5521, '', 2500, 2000, 500, '', '2016-05-04', '2016-05-05', 'RP', '2016-05-12', '50', 'YES', 'YES', ''),
 (5522, '', 0, 0, 0, '', '0000-00-00', '0000-00-00', '', '0000-00-00', '', '', '', ''),
 (5523, '', 0, 0, 0, '', '2016-06-22', '2016-06-20', 'SA', '2016-06-20', '', '', '', ''),
-(5524, '', 0, 0, 0, '', '0000-00-00', '0000-00-00', 'AB', '0000-00-00', '', '', '', '');
+(5524, '', 0, 0, 0, '', '0000-00-00', '0000-00-00', 'AB', '0000-00-00', '', '', '', ''),
+(5530, 'lk', 0, 0, 0, 'lk', '0000-00-00', '0000-00-00', '', '0000-00-00', 'lkj', 'ljl', 'kjl', 'kjl');
 
 -- --------------------------------------------------------
 
@@ -410,7 +419,8 @@ INSERT INTO `mail_info` (`job_id`, `mail_class`, `rate`, `processing_category`, 
 (5521, 'First Class', 'Auto', 'Letter', '#10 Envelope', '.75 in x .45 lb', '473', 'Newburgh, NY 12550', '50', 103838),
 (5522, '', '', '', '', '', '', '', '', 0),
 (5523, '', '', '', '', '', '', '', '', 0),
-(5524, '', '', '', '', '', '', '', '', 0);
+(5524, '', '', '', '', '', '', '', '', 0),
+(5530, 'lkjlkjl', 'lkj', 'lkj', 'lkj', 'lkl', 'kjl', 'kjlk', 'jlk', 0);
 
 -- --------------------------------------------------------
 
@@ -481,7 +491,8 @@ INSERT INTO `production` (`job_id`, `hold_postage`, `postage_paid`, `print_templ
 (5521, 'yes', 'yes', '', '', '', '', '', '', ''),
 (5522, 'no', 'no', '', '', '', '', '', '', ''),
 (5523, 'no', 'no', '', '', '', '', '', '', ''),
-(5524, 'yes', 'yes', '', '', '', '', '', '', '');
+(5524, 'yes', 'yes', '', '', '', '', '', '', ''),
+(5530, 'no', 'no', 'lkj', 'lkj', 'lkj', 'Letter Printing', '', 'lkj', 'lkj');
 
 -- --------------------------------------------------------
 
@@ -510,38 +521,22 @@ INSERT INTO `projectmanager` (`pm`) VALUES
 
 DROP TABLE IF EXISTS `reminder`;
 CREATE TABLE IF NOT EXISTS `reminder` (
+  `id` varchar(30) NOT NULL,
   `user` varchar(45) NOT NULL,
   `text` text NOT NULL,
-  `date` date NOT NULL
+  `date` date NOT NULL,
+  `vendor_name` varchar(30) NOT NULL,
+  `client_name` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `reminder`
 --
 
-INSERT INTO `reminder` (`user`, `text`, `date`) VALUES
-('fpatel', 'hello', '2016-04-11'),
-('someone', 'hello there', '2016-04-11'),
-('fpatel', 'not to be printed', '2016-04-12'),
-('fpatel', 'today is here', '2016-04-11'),
-('fpatel', 'kevin is here', '2016-04-11'),
-('fpatel', 'no one', '2016-04-12'),
-('fpatel', '17th +6', '2016-04-17'),
-('fpatel', '16th +5', '2016-04-16'),
-('fpatel', 'gfh gh', '2017-02-03'),
-('fpatel', 'Remember to call Mr. Poopybutthole', '2016-05-18'),
-('fpatel', 'hello', '2016-05-04'),
-('fpatel', 'tomorrow', '2016-05-06'),
-('fpatel', 'day after', '2016-05-07'),
-('fpatel', 'go home', '2016-05-09'),
-('fpatel', 'mother earth', '2016-05-13'),
-('kmcready', 'tyfyjfyf', '2016-06-07'),
-('sayre', 'fgsdfgsdfgsfdg', '2016-06-07'),
-('sayre', 'asdsdfsdfs', '2016-06-07'),
-('sayre', 'Remind me to Remind me', '2016-06-08'),
-('sayre', 'Do the jingle', '2016-06-09'),
-('sayre', 'Remind myself', '2016-06-13'),
-('sayre', 'Another Reminder', '2016-06-13');
+INSERT INTO `reminder` (`id`, `user`, `text`, `date`, `vendor_name`, `client_name`) VALUES
+('2', 'sayre', 'ertert', '2016-06-22', 'Femina', 'New Client'),
+('3', 'sayre', 'Call Jill', '2016-06-16', '', 'Jill Lewis'),
+('4', 'admin', 'Call Jill', '2016-06-14', '', 'Jill Lewis');
 
 -- --------------------------------------------------------
 
@@ -629,7 +624,14 @@ INSERT INTO `timestamp` (`user`, `time`, `job`, `a_p`) VALUES
 ('sayre', '2016-06-13 15:30:36', 'deleted w&m', 'PM'),
 ('sayre', '2016-06-13 15:31:44', 'added new w&m', 'PM'),
 ('sayre', '2016-06-13 15:33:03', 'created job ticket', 'PM'),
-('sayre', '2016-06-13 15:58:41', 'deleted client info', 'PM');
+('sayre', '2016-06-13 15:58:41', 'deleted client info', 'PM'),
+('sayre', '2016-06-14 09:48:50', 'updated client info', 'AM'),
+('sayre', '2016-06-14 13:22:17', 'created job ticket', 'PM'),
+('sayre', '2016-06-14 13:40:51', 'deleted client info', 'PM'),
+('sayre', '2016-06-14 14:15:21', 'updated client info', 'PM'),
+('sayre', '2016-06-14 14:16:41', 'updated client info', 'PM'),
+('admin', '2016-06-15 09:06:46', 'updated client info', 'AM'),
+('admin', '2016-06-15 16:47:27', 'added new client', 'PM');
 
 -- --------------------------------------------------------
 
@@ -643,19 +645,20 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(45) NOT NULL,
   `initial` varchar(45) NOT NULL,
   `department` varchar(45) NOT NULL,
-  `name` varchar(45) NOT NULL,
-  UNIQUE KEY `user` (`user`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `email` varchar(45) NOT NULL,
+  `first_name` varchar(45) NOT NULL,
+  `last_name` varchar(45) NOT NULL,
+  `title` varchar(45) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user`, `password`, `initial`, `department`, `name`) VALUES
-('kmcready', 'DC3#CRST1', 'KM', 'Project Management', 'Kevin McReady'),
-('mbirnbaum', 'Ibanez1!', 'MB', 'Project Management', 'Michael Birnbaum'),
-('rob', 'rob123', 'RP', 'Production', 'Rob Philipes'),
-('sayre', '1234', 'SA', 'Development', 'Stephen Ayre');
+INSERT INTO `users` (`user`, `password`, `initial`, `department`, `email`, `first_name`, `last_name`, `title`) VALUES
+('admin', 'test', 'AD', 'Sales', 'r@fvf.com', 'Paul', 'Schmidt', 'ADMIN'),
+('sayre', '1234', 'SA', 'Sales', 'e@aol.com', 'Stephen', 'Ayre', 'MEMBER'),
+('jshwat', 'sdfsdf', 'JJ', 'Customer Service', 'Js@k.com', 'Jim', 'John', 'MEMBER');
 
 -- --------------------------------------------------------
 
@@ -767,7 +770,8 @@ INSERT INTO `yellow_sheet` (`job_id`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9
 (5521, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 (5522, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 (5523, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5524, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+(5524, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5530, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

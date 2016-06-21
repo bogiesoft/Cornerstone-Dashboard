@@ -16,7 +16,7 @@ $result = mysqli_query($conn, $sql_name);
 
 $row = $result->fetch_assoc();
 
-echo "<h1>Welcome ".$row['name'] ."!</h1><br>";
+echo "<h1>Welcome ".$row['first_name'] ."!</h1><br>";
 
 
 //echo CURDATE();

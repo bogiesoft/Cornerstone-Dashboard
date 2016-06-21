@@ -3,9 +3,10 @@ require('header.php');
 ?>
 
 <div class='content'>
+  <div id = 'prod_info'>
 	<div>Total Records &nbsp; <br><input type = "text" id = "records" style = "width: 80px" value = "1"></input></div><br><br>
-	<div>Time/Unit &nbsp; <input type = "text" id = "time_number" style = "width: 40px; font-size = 18px;" value = "1"> &nbsp; </input><select id = "time_type"><option>min.</option><option>sec.</option></select><div><br><br>
-	Records Complete in Time &nbsp; <input type = "text" id = "per_rec" style = "width: 50px" value = "1"></input><br><br>
+	<div>Time/Unit &nbsp; <input type = "text" id = "time_number" style = "width: 40px; font-size = 18px;" value = "1"> &nbsp; </input><select id = "time_type"><option>min.</option><option>sec.</option></select></div><br><br>
+	Records Complete in Time &nbsp; <input type = "text" id = "per_rec" style = "width: 50px" value = "1"></input> &nbsp; &nbsp;
 	Number of People &nbsp; <select id = "people">
 	<?php
 		for($i = 1; $i <= 10; $i++)
@@ -14,6 +15,8 @@ require('header.php');
 		}
 	?>
 </select><br><br><br><br>
+</div>
+<button type = "button" onclick = "appendDiv();">Add Task</button>
 <h1><progress id = "progress_bar" value = "1" max = "250" style = "background-color: red"></progress></h1><br>
 <h2 id = "display_time">Hours: 0</h2><br>
 <h2 id = "eff">Efficiency: </h2><br>
@@ -34,6 +37,15 @@ progress[value]::-webkit-progress-value {
     background-size: 35px 20px, 100% 100%, 100% 100%;
 }
 </style>
+
+
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.2.min.js">
+</script>
+<script>
+	function appendDiv(){
+		
+	}
+</script>
 
 <script type = "text/javascript">
 	function changeBar(){

@@ -1,6 +1,6 @@
 
 <div class="sidebar">
-  <div class="sidebar-toggle"><i><img src="images/web-icons/close.png"></i></div>
+  <div class="sidebar-toggle"><i><img id = "arrow" src="images/web-icons/close.png"></i></div>
   <ul class="sidebar-list">
     <li><a href=""><i class="icon"><img src="images/web-icons/postoffice.png"></i>Post Offices</a></li>
     <li><a href="clients.php"><i class="icon"><img src="images/web-icons/clients.png"></i>Clients</a></li>
@@ -39,6 +39,7 @@ $(document).ready(function() {
         marginLeft: "350px",
         opacity: "1"
       }, 1000);
+	  document.getElementById("arrow").src = "images/web-icons/close.png";
       sidebarStatus = true;
     }
     else {
@@ -50,6 +51,7 @@ $(document).ready(function() {
         marginLeft: "25px",
         opacity: "1"
       }, 1000);
+	  document.getElementById("arrow").src = "images/web-icons/open.png";
       sidebarStatus = false;
     }
   });

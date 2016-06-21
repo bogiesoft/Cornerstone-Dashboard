@@ -24,15 +24,11 @@
 			}
 		}
 				$email = $_POST['email']; //new email
-				$name = $_POST['first'] . " " . $_POST['last']; //new name
+				$firstName = $_POST['first']; //new first name
+				$lastName = $_POST['last']; //new last name
 				
 				if(strpos($email, '@') == FALSE){
 					$_SESSION['error_update_user_account'] = "Email needs @ symbol";
-					header("location: edit_user.php");
-					exit();
-				}
-				else if(strpos($_POST['first'], ' ') || strpos($_POST['last'], ' ')){
-					$_SESSION['error_update_user_account'] = "No spaces in first or last name";
 					header("location: edit_user.php");
 					exit();
 				}
@@ -41,21 +37,38 @@
 					$firstName = $_POST['first'];
 					$lastName = $_POST['last'];
 						
-					$firstName = strtoupper($firstName);
-					$lastName = strtoupper($lastName);
+					$firstName1 = strtoupper($firstName);
+					$lastName1 = strtoupper($lastName);
 						
-					$initial = $firstName[0] . $lastName[0]; //new initial
+					$initial = $firstName1[0] . $lastName1[0]; //new initial
 					
-					if(isset($_POST['depart'])){
+					if(isset($_POST['depart']) && !(isset($_POST['title']))){
 						$department = $_POST['depart']; //new department
 						
-						$sql = "UPDATE users SET user = '$new_user', password = '$password', initial = '$initial', department = '$department', name = '$name', email = '$email' WHERE user = '$user'";
+						$sql = "UPDATE users SET user = '$new_user', password = '$password', initial = '$initial', department = '$department', first_name = '$firstName', last_name = '$lastName', email = '$email' WHERE user = '$user'";
+						mysqli_query($conn, $sql) or die("ERROR");
+						header("location: admin.php");
+						exit();
+					}
+					else if(!(isset($_POST['depart'])) && isset($_POST['title'])){
+						$title = $_POST['title']; //new title
+						
+						$sql = "UPDATE users SET user = '$new_user', password = '$password', initial = '$initial', title = '$title', first_name = '$firstName', last_name = '$lastName', email = '$email' WHERE user = '$user'";
+						mysqli_query($conn, $sql) or die("ERROR");
+						header("location: admin.php");
+						exit();
+					}
+					else if(isset($_POST['depart']) && isset($_POST['title'])){
+						$department = $_POST['depart']; //new title and department
+						$title = $_POST['title'];
+						
+						$sql = "UPDATE users SET user = '$new_user', password = '$password', initial = '$initial', title = '$title', department = '$department', first_name = '$firstName', last_name = '$lastName', email = '$email' WHERE user = '$user'";
 						mysqli_query($conn, $sql) or die("ERROR");
 						header("location: admin.php");
 						exit();
 					}
 					else{
-						$sql = "UPDATE users SET user = '$new_user', password = '$password', initial = '$initial', name = '$name', email = '$email' WHERE user = '$user'";
+						$sql = "UPDATE users SET user = '$new_user', password = '$password', initial = '$initial', first_name = '$firstName', last_name = '$lastName', email = '$email' WHERE user = '$user'";
 						mysqli_query($conn, $sql) or die("ERROR");
 						header("location: admin.php");
 						exit();
