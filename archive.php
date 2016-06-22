@@ -1,27 +1,33 @@
+<?php require ("header.php"); ?>
 <script src="sorttable.js"></script>
+<div class="dashboard-cont" style="padding-top:110px;">
+	<div class="contacts-title">
+	<h1 class="pull-left">Archived Jobs</h1>
+	</div>
+<div class="dashboard-detail">
+	<div class="search-cont">
+	<div class="searchcont-detail">
+		<div class="search-boxleft">
+			<form action="client_search.php" method="post" >
+				<label>Quick Search</label>
+				<input id="search" name="frmSearch" type="text" placeholder="Search for a specific job">
+			</form>
+			<div class="search-boxright pull-right"><a href="#">Submit</a></div>
+		</div>
+	</div>
+	</div>
+<div class="clear"></div>
 <?php
-require ("header.php");
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname= "crst_dashboard";
+require ("connection.php");
 
-// Create Connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-} 
 
 $result = mysqli_query($conn,"SELECT * FROM archive_jobs");
 
-echo "<div class='content'>";
-echo " <div id='table-scroll'><table id='table' class='sortable' border='1' cellspacing='2' cellpadding='2'  >"; // start a table tag in the HTML
-echo "<thead>";
-echo "<tr><th> Job Id </th><th> Client name </th><th> Project Name </th><th> Records Total </th><th> Invoice </th><th> Archived Date </th><th> Reason </th></tr>";
-echo "</thead>";
+echo " <div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
 echo "<tbody>";
+echo "<tr valign='top'><th class='allcontacts-title'>Archived Jobs<span class='allcontacts-subtitle'></span></th></tr>";
+echo "<tr valign='top'><td colspan='2'><table border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='job_id' data-index='0'>Job ID</th><th class='maintable-thtwo data-header' data-name='client_name' data-index='1'>Client Name</th><th class='maintable-thtwo data-header' data-name='project_name' data-index='2'>Job Name</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='3'>Records Total</th><th class='maintable-thtwo data-header' data-name='invoice_number' data-index='4'>Invoice #</th><th class='maintable-thtwo data-header' data-name='archive_date' data-index='5'>Date Archived</th><th class='maintable-thtwo data-header' data-name='reason' data-index='6'>Reason</th></tr>";
 
 if ($result->num_rows > 0) {
     // output data of each row
@@ -30,15 +36,39 @@ if ($result->num_rows > 0) {
 		
 		$foo = $row["job_id"];
 		
-		echo "<tr><td><a href = 'edit_archive.php?job_id=$foo'>".$row["job_id"]."</a></td><td>".  $row["client_name"]."</td><td>". $row["project_name"]. "</td><td>". $row["records_total"]. "</td><td>". $row["invoice_number"]."</td><td>". $row["archive_date"]. "</td><td>". $row["reason"]. "</td></tr>";
+		echo "<tr><td><a href = 'http://localhost/crst_dashboard/edit_archive.php?job_id=$foo'>".$row["job_id"]."</a></td><td>".  $row["client_name"]."</td><td>". $row["project_name"]. "</td><td>". $row["records_total"]. "</td><td>". $row["invoice_number"]."</td><td>". $row["archive_date"]. "</td><td>". $row["reason"]. "</td></tr>";
     }
-	echo "</tbody></table></div><br>";
+	echo "</tbody></table></td></tr></tbody></table></div>";
 } else {
     echo "0 results";
 }
-echo "</div>";
 //class='paginated'
 ?>
+<div class="allcontacts-breadcrumbs">
+	<div class="allcontacts-breadcrumbsleft pull-left page-control">
+		<nav>
+			<ul class="pagination">
+				<li class="current"><a class="page" href="#">1<span class="sr-only">(current)</span></a></li>
+				<li><a class="page" href="#">2<span class="sr-only">(current)</span></a></li>
+				<li><a class="page" href="#">3<span class="sr-only">(current)</span></a></li>
+				<li><a class="page" href="#">4<span class="sr-only">(current)</span></a></li>
+				<li><a class="page" href="#">5<span class="sr-only">(current)</span></a></li>
+				<li><a class="next" href="#">Next<span class="sr-only">(current)</span></a></li>
+			</ul>
+		</nav>
+	</div>
+	<div class="items-per-page-cont pull-right">
+		<label>Clients Per Page</label>
+		<select class="per-page-val">
+			<option value="10">10</option>
+			<option value="25">25</option>
+			<option value="50">50</option>
+			<option value="100">100</option>
+		</select>
+	</div>
+</div>
+</div>
+</div>
 <script>
 $('table.sortable').each(function() {
     var currentPage = 0;

@@ -1,72 +1,36 @@
 <?php
 require ("header.php");
 ?>
-<script src="sorttable.js"></script>
-<style>
-#table-scroll {
-  height:auto;
-  width:850px;
-  overflow:auto;   
-}
-
-div.pager span {
-    display: inline-block;
-    width: 1.8em;
-    height: 1.8em;
-    line-height: 1.8;
-    text-align: center;
-    cursor: pointer;
-    margin-right: 0.5em;
-}
-
-div.pager span.active {
-    background: #c00;
-}
-
-</style>
-
-<div class="content">
-<div class="content-box">
-<div class="topbar">
-<h1>Clients</h1>
-<a href="add_client.php" class="add_button">Add Client</a>
-</div>
-<div class="search-cont">
+<div class="dashboard-cont" style="padding-top:110px;">
+	<div class="contacts-title">
+	<h1 class="pull-left">Clients</h1>
+	<a class="pull-right" href="add_client.php" class="add_button">Add Client</a>
+	</div>
+<div class="dashboard-detail">
+	<div class="search-cont">
 	<div class="searchcont-detail">
 		<div class="search-boxleft">
 			<form action="client_search.php" method="post" >
 				<label>Quick Search</label>
 				<input id="search" name="frmSearch" type="text" placeholder="Search for a specific client">
-				<input id="SubmitBtn" type="submit" value="SUBMIT" >
 			</form>
+			<div class="search-boxright pull-right"><a href="#">Submit</a></div>
 		</div>
 	</div>
-</div>
-
+	</div>
+<div class="clear"></div>
 
 <?php
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname= "crst_dashboard";
-
-// Create Connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-} 
-
+require ("connection.php");
 
 $result = mysqli_query($conn,"SELECT * FROM client_info");
 
 
-echo " <div id='table-scroll'><table id='table' border='1' cellspacing='2' cellpadding='2' class='sortable' >"; // start a table tag in the HTML
-echo "<thead>";
-echo "<tr><th>  </th><th> Client name </th><th> Contact name </th><th> Address </th><th> Contact Phone </th><th> Email </th><th> Website </th><th> Category </th><th> Title </th><th> Notes </th></tr>";
-echo "</thead>";
+echo " <div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
 echo "<tbody>";
+echo "<tr valign='top'><th class='allcontacts-title'>All Clients<span class='allcontacts-subtitle'></span></th></tr>";
+echo "<tr valign='top'><td colspan='2'><table border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Client Name</th><th class='maintable-thtwo data-header' data-name='contact_name' data-index='1'>Contact Name</th><th class='maintable-thtwo data-header' data-name='client_add' data-index='2'>Address</th><th class='maintable-thtwo data-header' data-name='contact_phone' data-index='3'>Phone</th><th class='maintable-thtwo data-header' data-name='contact_email' data-index='4'>Email</th><th class='maintable-thtwo data-header' data-name='website' data-index='5'>Website</th><th class='maintable-thtwo data-header' data-name='category' data-index='6'>Category</th><th class='maintable-thtwo data-header' data-name='title' data-index='7'>Title</th><th class='maintable-thnine'>Actions</th></tr>";
 
 
 if ($result->num_rows > 0) {
@@ -76,9 +40,9 @@ if ($result->num_rows > 0) {
 		
 
 		$foo=$row['client_name'];
-		echo "<tr><th>"."<a href='edit_client.php?client_name=$foo'>"."Edit"."</a></th><td>".$row["client_name"]."</td><td>".  $row["contact_name"]."</td><td>". $row["client_add"]. "</td><td>". $row["contact_phone"]. "</td><td>". $row["contact_email"]."</td><td>". $row["website"]. "</td><td>". $row["category"]. "</td><td>". $row["title"]. "</td><td>". $row["notes"]. "</td></tr>";
+		echo "<tr><td>".$row["client_name"]."</td><td>".  $row["contact_name"]."</td><td>". $row["client_add"]. "</td><td>". $row["contact_phone"]. "</td><td>". $row["contact_email"]."</td><td>". $row["website"]. "</td><td>". $row["category"]. "</td><td>". $row["title"]. "</td><th>"."<a href='http://localhost/crst_dashboard/edit_client.php?client_name=$foo'>"."Edit"."</a></th></tr>";
     }
-	echo "</tbody></table></div><br>";
+	echo "</tbody></table></td></tr></tbody></table></div>";
 } else {
     echo "0 results";
 }
@@ -86,10 +50,32 @@ if ($result->num_rows > 0) {
 $conn->close();
 
 ?>
+<div class="allcontacts-breadcrumbs">
+	<div class="allcontacts-breadcrumbsleft pull-left page-control">
+		<nav>
+			<ul class="pagination">
+				<li class="current"><a class="page" href="#">1<span class="sr-only">(current)</span></a></li>
+				<li><a class="page" href="#">2<span class="sr-only">(current)</span></a></li>
+				<li><a class="page" href="#">3<span class="sr-only">(current)</span></a></li>
+				<li><a class="page" href="#">4<span class="sr-only">(current)</span></a></li>
+				<li><a class="page" href="#">5<span class="sr-only">(current)</span></a></li>
+				<li><a class="next" href="#">Next<span class="sr-only">(current)</span></a></li>
+			</ul>
+		</nav>
+	</div>
+	<div class="items-per-page-cont pull-right">
+		<label>Clients Per Page</label>
+		<select class="per-page-val">
+			<option value="10">10</option>
+			<option value="25">25</option>
+			<option value="50">50</option>
+			<option value="100">100</option>
+		</select>
+	</div>
+</div>
+</div>
+</div>
 
-</div>
-</div>		
-</div>
 <!--- script for making table sortable --->
 <script>
 $('table.sortable').each(function() {

@@ -2,17 +2,7 @@
 require ("header.php");
 ?>
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname= "crst_dashboard";
-
-// Create Connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-} 
+require ("connection.php");
 
 	$temp=$_GET['job_id'];
 	
@@ -37,32 +27,48 @@ if ($conn->connect_error) {
 }
 
 ?>
-<div class="content">
+<div class="dashboard-cont" style="padding-top:110px;">
+	<div class="contacts-title">
+	<h1 class="pull-left">Edit Invoiced Job</h1>
+	<a class="pull-right" href="customer_service.php" >Back to CS</a>
+	<div class="clear"></div>
+	</div>
+<div class="dashboard-detail">
+	<div class="newcontacts-tabs">
+		<!---- Nav Tabs ---->
+		<ul class="nav nav-tabs" role="tablist">
+			<li role="presentation" class="active"><a  role="tab" data-toggle="tab" aria-expanded="true">Invoice & Close</a></li>
+		</ul>
+		<!--- Tab Panes --->
+	<div class="newcontactstabs-outer">
+		<div class="tab-content">
+			<div role="tabpanel" class="tab-pane active" id="home">
+			<div class="newcontactstab-detail">
 <form action="update_cs.php" id="form" method="POST">
-				<div class="newclienttab-inner">
-					<div class="tabinner detail">
+				<div class="newcontacttab-inner">
+					<div class="tabinner-detail">
 					<label>Job Id: </label>
 					<input name="job_id" type="text" value="<?php echo $job_id; ?>" class="contact-prefix">
 					</div>
-					<div class="tabinner detail">
+					<div class="tabinner-detail">
 					<label>Postage</label>
 					<input name="postage" type="text" value="<?php echo $postage; ?>" class="contact-prefix">
 					</div>
-					<div class="tabinner detail">
+					<div class="tabinner-detail">
 					<label>Invoice</label>
 					<input name="invoice_number" type="text" value="<?php echo $invoice_number; ?>" class="contact-prefix">
 					</div>
-					<div class="tabinner detail">
+					<div class="tabinner-detail">
 					<label>Residual Retured</label>
 					<input name="residual_returned" type="text" value="<?php echo $residual_returned; ?>" class="contact-prefix">
 					</div>
-					<div class="tabinner detail">
+					<div class="tabinner-detail">
 					<label>Follow up notes</label>
 					<input name="2week_followup" type="text" value="<?php echo $week_followup; ?>" class="contact-prefix">
 					</div>
 				</div>
-				<div class="newclienttab-inner">
-					<div class="tabinner detail">
+				<div class="newcontacttab-inner">
+					<div class="tabinner-detail">
 					<label>Status</label>
 					<select name='status'>
 					<option disabled selected value> -- select an option -- </option>
@@ -71,17 +77,26 @@ if ($conn->connect_error) {
 					<option value="Closed">Closed</option>
 					</select>
 					</div>
-					<div class="tabinner detail">
+					<div class="tabinner-detail">
 					<label>Reason</label>
 					<input name="reason" type="text" value="<?php echo $reason; ?>" class="contact-prefix">
 					</div>
-					<div class="tabinner detail">
+				</div>
+				<div class="newcontacttab-inner">
+					<div class="tabinner-detail">
 					<label>Notes</label>
-					<textarea name="notes" class="contact-notes" ><?php echo $notes; ?></textarea>
+					<textarea name="notes" class="contact-notes"><?php echo $notes; ?></textarea>
+					<div class="clear"></div>
 					</div>
 				</div>
-				<div class="form-bottom">
-					<input id="btn" type="submit" value="Save" name="submit_form">
+			</div>
+				<div class="newcontact-tabbtm">
+					<input class="save-btn" type="submit" value="Save" name="submit_form" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
+					<input class="save-btn" type = "submit" value = "Delete" name = "delete_form" onClick = "return confirm('Are you sure you want to delete job?')" style="width:200px; font-size:16px; background-color:#d14700; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px; float:left">
 				</div>
-</form>
+			</form>
+			</div>
+		</div>
+	</div>
+</div>
 </div>

@@ -1,14 +1,6 @@
 <?php
 require ("header.php");
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname= "crst_dashboard";
-// Create Connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-} 
+require ("connection.php");
 
 	
 	$term = $_GET['job_id'];
@@ -42,11 +34,10 @@ if ($conn->connect_error) {
 		$display = "no";
 	}
 	if(isset($_POST['submit_form'])){
-		//session_start();
+		session_start();
 		$user_name = $_SESSION['user'];
 		date_default_timezone_set('America/New_York');
-		$today = date("Y-m-d G:i:s");
-		$a_p = date("A");
+		$today = date("Y-m-d g:i:s");
 		$_SESSION['date'] = $today;
 		$job = "updated w&m"; 
 
@@ -67,28 +58,18 @@ if ($conn->connect_error) {
 		 WHERE job_id ='$job_id'";
 		$result = $conn->query($sql) or die('Error querying database.');
 
-		$sql6 = "INSERT INTO timestamp (user,time,job, a_p) VALUES ('$user_name', '$today','$job', '$a_p')";
+		$sql6 = "INSERT INTO timestamp (user,time,job) VALUES ('$user_name', '$today','$job')";
 		$result7 = $conn->query($sql6) or die('Error querying database 5.');
 		 
 		$conn->close();
-		header("location: weights_and_measure.php");
+		header("location: http://localhost/crst_dashboard/weights_and_measure.php");
 		exit();
 	}
 	if(isset($_POST['delete_form'])){
-		$user_name = $_SESSION['user'];
-		date_default_timezone_set('America/New_York');
-		$today = date("Y-m-d G:i:s");
-		$a_p = date("A");
-		$_SESSION['date'] = $today;
-		$job = "deleted w&m"; 
-		
-		$sql6 = "INSERT INTO timestamp (user,time,job, a_p) VALUES ('$user_name', '$today','$job', '$a_p')";
-		$result7 = $conn->query($sql6) or die('Error querying database 5.');
-		
 		$sql_delete = "DELETE FROM materials WHERE '$job_id' = job_id";
 		mysqli_query($conn, $sql_delete);
 		$conn->close();
-		header("location: weights_and_measure.php");
+		header("location: http://localhost/crst_dashboard/weights_and_measure.php");
 	}
 	
 ?>
@@ -104,66 +85,86 @@ $(document).ready(function(){
 });
 </script>
 
-<div class="content">
-<form action="" method="post">
-				<div class="newclienttab-inner">
-					<div class="tabinner detail">
+<div class="dashboard-cont" style="padding-top:110px;">
+	<div class="contacts-title">
+	<h1 class="pull-left">Edit Weights and Measures</h1>
+	<a class="pull-right" href="weights_and_measure.php" style="margin-right:20px; background-color:#d14700;">Back to W/M</a>
+	<div class="clear"></div>
+	</div>
+<div class="dashboard-detail">
+	<div class="newcontacts-tabs">
+		<!---- Nav Tabs ---->
+		<ul class="nav nav-tabs" role="tablist">
+			<li role="presentation" class="active"><a  role="tab" data-toggle="tab" aria-expanded="true">Edit W/M</a></li>
+		</ul>
+		<!--- Tab Panes --->
+	<div class="newcontactstabs-outer">
+		<div class="tab-content">
+			<div role="tabpanel" class="tab-pane active" id="home">
+			<div class="newcontactstab-detail">
+				<form action="" method="post">
+				<div class="newcontacttab-inner">
+					<div class="tabinner-detail">
 					<label>Job Id</label>
 					<input name="job_id" type="text" class="contact-prefix" value="<?php echo $job_id; ?>">
 					</div>
 					
 					
-					<div class="tabinner detail">
+					<div class="tabinner-detail">
 					<label>Received Date</label>
-					<input name="received" type="date" class="contact-prefix" value="<?php echo $received; ?>">
+					<input name="received" type="date" style="width:250px;" class="contact-birthday" value="<?php echo $received; ?>">
 					</div>
-					<div class="tabinner detail">
-					<label>Location</label>
-					<input name="location" type="text" class="contact-prefix" value="<?php echo $location; ?>">
-					</div>
-				</div>
-				<div class="newclienttab-inner">
-					<div class="tabinner detail">
-					<label>Checked In</label>
-					<input name="checked_in" type="text" class="contact-prefix" value="<?php echo $checked_in; ?>">
-					</div>
-					<div class="tabinner detail">
-					<label>Material</label>
-					<input name="material" type="text" class="contact-prefix" value="<?php echo $material; ?>">
-					</div>
-					<div class="tabinner detail">
-					<label>Type</label>
-					<input name="type" type="text" class="contact-prefix"value="<?php echo $type; ?>">
-					</div>
-					<div class="tabinner detail">
-					<label>Quantity</label>
-					<input name="quantity" type="text" class="contact-prefix" value="<?php echo $quantity; ?>">
-					</div>
-					<div class="tabinner detail">
+					<div class="tabinner-detail">
 					<label>Vendor</label>
 					<input name="vendor" type="text" class="contact-prefix" value="<?php echo $vendor; ?>">
 					</div>
-					
-					<div class="tabinner detail">
+				</div>
+				<div class="newcontacttab-inner">
+					<div class="tabinner-detail">
+					<label>Checked In</label>
+					<input name="checked_in" type="text" class="contact-prefix" value="<?php echo $checked_in; ?>">
+					</div>
+					<div class="tabinner-detail">
+					<label>Material</label>
+					<input name="material" type="text" class="contact-prefix" value="<?php echo $material; ?>">
+					</div>
+					<div class="tabinner-detail">
+					<label>Type</label>
+					<input name="type" type="text" class="contact-prefix"value="<?php echo $type; ?>">
+					</div>
+					<div class="tabinner-detail">
+					<label>Quantity</label>
+					<input name="quantity" type="text" class="contact-prefix" value="<?php echo $quantity; ?>">
+					</div>
+				</div>
+				<div class="newcontacttab-inner">
+					<div class="tabinner-detail">
 					<label>Height</label>
 					<input name="height" type="text" class="contact-prefix" value="<?php echo $height; ?>">
 					</div>
-					<div class="tabinner detail">
+					<div class="tabinner-detail">
 					<label>Weight</label>
 					<input name="weight" type="text" class="contact-prefix" value="<?php echo $weight; ?>">
 					</div>
-					<div class="tabinner detail">
+					<div class="tabinner-detail">
 					<label>Size</label>
 					<input name="size" type="text" class="contact-prefix" value="<?php echo $size; ?>">
 					</div>
-					<div class="tabinner detail">
+					<div class="tabinner-detail">
 					<label>Based On</label>
 					<input name="based_on" type="text" class="contact-prefix" value="<?php echo $based_on; ?>">
 					</div>
 				</div>
-				<div class="form-bottom">
-					<input id="btn" type="submit" value="Save" name="submit_form" onclick = "return confirm('Save changes?')">
-					<input id="delete" type="submit" value="Delete" name="delete_form" onclick = "return confirm('Are you sure you want to delete weight and measure?')">
+			</div>
+				<div class="newcontact-tabbtm">
+					<input class="save-btn" type="submit" value="Save" name="submit_form" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
+					<input class="save-btn" type = "submit" value = "Delete" name = "delete_form" onClick = "return confirm('Are you sure you want to delete this weights and measure?')" style="width:200px; font-size:16px; background-color:#d14700; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px; float:left">
 				</div>
-			</form>
+				</form>
+			
+			</div>
 		</div>
+	</div>
+	</div>
+</div>
+</div>

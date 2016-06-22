@@ -1,16 +1,7 @@
 <?php
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname= "crst_dashboard";
+require ("connection.php");
 
-// Create Connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-} 
 
 $vendor = $_POST['vendor'];
 $material = $_POST['material'];
@@ -22,20 +13,19 @@ session_start();
 
 $user_name = $_SESSION['user'];
 date_default_timezone_set('America/New_York');
-$today = date("Y-m-d G:i:s");
-$a_p = date("A");
+$today = date("F j, Y, g:i a");
 $_SESSION['date'] = $today;
 $job = "added new weights and measure";
 
 $sql = "INSERT INTO w_and_m (vendor,material,size,height,weight,based_on) VALUES ('$vendor', '$material', '$size', '$height','$weight','$based_on')";
 $result = $conn->query($sql) or die('Error querying database.');
  
-$sql6 = "INSERT INTO timestamp (user,time,job,a_p) VALUES ('$user_name', '$today','$job', '$a_p')";
+$sql6 = "INSERT INTO timestamp (user,time,job) VALUES ('$user_name', '$today','$job')";
 $result7 = $conn->query($sql6) or die('Error querying database 5.');
 
 $conn->close();
 
-header("location: vendors.php ");
+header("location: http://localhost/crst_dashboard/vendors.php ");
 
 exit();
 

@@ -1,16 +1,6 @@
 <?php
 //not using this page anymore
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname= "crst_dashboard";
-
-// Create Connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-} 
+require ("connection.php");
 if (!empty($_REQUEST['frmSearch'])){
 	
 	$term = mysql_real_escape_string($_REQUEST['frmSearch']);
@@ -53,38 +43,68 @@ $(document).ready(function(){
     }
 });
 </script>
-
-
-<form action="update_vendor.php" id="form" method="POST">
-				<div class="newclienttab-inner">
-					<div class="tabinner detail">
-					<?php echo $vendor_name; ?>
+			
+<div class="dashboard-cont" style="padding-top:110px;">
+	<div class="contacts-title">
+	<h1 class="pull-left">Edit Vendor</h1>
+	<a class="pull-right" href="vendors.php" style="margin-right:20px; background-color:#d14700;">Back to Vendors</a>
+	<div class="clear"></div>
+	</div>
+<div class="dashboard-detail">
+	<div class="newcontacts-tabs">
+		<!---- Nav Tabs ---->
+		<ul class="nav nav-tabs" role="tablist">
+			<li role="presentation" class="active"><a  role="tab" data-toggle="tab" aria-expanded="true">Primary Contact</a></li>
+		</ul>
+		<!--- Tab Panes --->
+	<div class="newcontactstabs-outer">
+		<div class="tab-content">
+			<div role="tabpanel" class="tab-pane active" id="home">
+			<div class="newcontactstab-detail">
+			<form action="update_vendor.php" method="post">
+				<div class="newcontacttab-inner">
+					<div class="tabinner-detail">
 					<label>Vendor Name</label>
-					<input name="vendor_name" type="text" value="<?php echo $vendor_name; ?>" class="contact-prefix">
+					<input name="client_name" type="text" value="<?php echo $vendor_name; ?>" class="contact-prefix">
+					<div class="clear"></div>
 					</div>
-					<div class="tabinner detail">
-					<label>Contact Name</label>
-					<?php echo $vendor_contact; ?>
-					<input name="vendor_contact" type="text" value="<?php echo $vendor_contact; ?>" class="contact-prefix">
+					<div class="tabinner-detail">
+					<label>Vendor Contact</label>
+					<input name="contact_name" type="text" value="<?php echo $vendor_contact; ?>" class="contact-prefix">
+					<div class="clear"></div>
 					</div>
-					<!--<div class="tabinner detail">
-					<label>Contact Address</label>
-					<input name="client_add" type="text" value="<?php echo $client_add; ?>" class="contact-prefix">
+					<div class="tabinner-detail">
+					<label>Vendor Address</label>
+					<input name="client_add" type="text" value="<?php echo $vendor_add; ?>" class="contact-prefix">
+					<div class="clear"></div>
 					</div>
-					<div class="tabinner detail">
-					<label>Phone Number</label>
-					<input name="contact_phone" type="text" value="<?php echo $contact_phone; ?>" class="contact-prefix">
-					</div>
-					<div class="tabinner detail">
-					<label>Email</label>
-					<input name="contact_email" type="text" value="<?php echo $contact_email; ?>" class="contact-prefix">
-					</div>
-					<div class="tabinner detail">
-					<label>Email</label>
-					<input name="contact_email" type="text" value="<?php echo $contact_email; ?>" class="contact-prefix">
-					</div>--->
 				</div>
-				<div class="form-bottom">
-					<input id="btn" type="submit" value="Save" name="submit_form">
+				<div class="newcontacttab-inner">
+					<div class="tabinner-detail">
+					<label>Website</label>
+					<input name="website" type="text" value="<?php echo $website; ?>" class="contact-prefix">
+					<div class="clear"></div>
+					</div>
+					<div class="tabinner-detail">
+					<label>Phone Number</label>
+					<input name="contact_phone" type="text" value="<?php echo $vendor_phone; ?>" class="contact-prefix">
+					<div class="clear"></div>
+					</div>
+					<div class="tabinner-detail">
+					<label>Email</label>
+					<input name="contact_email" type="text" value="<?php echo $vendor_email; ?>" class="contact-prefix">
+					<div class="clear"></div>
+					</div>
+				</div>
+			</div>
+				<div class="newcontact-tabbtm">
+					<input class="save-btn" type="submit" value="Save" name="submit_form" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
+					<input class="save-btn" type = "submit" value = "Delete" name = "delete_form" onClick = "return confirm('Are you sure you want to delete vendor?')" style="width:200px; font-size:16px; background-color:#d14700; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px; float:left">
 				</div>
 			</form>
+			</div>
+		</div>
+	</div>
+	</div>
+</div>
+</div>

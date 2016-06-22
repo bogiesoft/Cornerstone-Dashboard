@@ -1,20 +1,12 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname= "crst_dashboard";
-// Create Connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-} 
+require ("connection.php");
+
 
 		session_start();
 		
 		$user_name = $_SESSION['user'];
 		date_default_timezone_set('America/New_York');
-		$today = date("Y-m-d g:i:s");
-		$a_p = date("A");
+		$today = date("F j, Y, g:i a");
 		$_SESSION['date'] = $today;
 		$job = "updated job ticket";
 		
@@ -99,11 +91,12 @@ if ($conn->connect_error) {
 		$sql4 = "UPDATE blue_sheet SET  completed_date = '$completed_date',data_hrs = '$data_hrs',gd_hrs = '$gd_hrs',initialrec_count = '$initialrec_count',manual = '$manual',uncorrected = '$uncorrected',unverifiable = '$unverifiable',bs_foreigns = '$bs_foreigns',bs_exact = '$bs_exact',loose = '$loose',householded = '$householded',basic = '$basic',ncoa_errors = '$ncoa_errors',bs_ncoa = '$bs_ncoa',final_count = '$final_count',bs_domestic = '$bs_domestic' WHERE job_id = $job_id ";
 		$result4 = $conn->query($sql4) or die('Error querying database 4.');
 		
-		$sql5 = "INSERT INTO timestamp (user,time,job,a_p) VALUES ('$user_name', '$today','$job', '$a_p')";
+		$sql5 = "INSERT INTO timestamp (user,time,job) VALUES ('$user_name', '$today','$job')";
 		$result5 = $conn->query($sql5) or die('Error querying database 5.');
+		
 		
  
 $conn->close();
-header("location: job_ticket.php ");
+header("location: http://localhost/crst_dashboard/dashboard.php ");
 exit();
 ?>
