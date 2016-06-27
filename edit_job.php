@@ -1,5 +1,6 @@
 <?php
-require ("header.php");?>
+require ("header.php");
+?>
 
 <script type="text/javascript" src="http://jqueryjs.googlecode.com/files/jquery-1.3.1.min.js" > </script> 
 <script type="text/javascript">
@@ -40,7 +41,7 @@ require ("connection.php");
 	$sql = "SELECT * FROM job_ticket WHERE job_id = '$temp'"; 
 	$result = mysqli_query($conn,$sql); 
 	
-	
+	$client_name = "";
 	
 	if ($result->num_rows > 0) {
 		$row = $result->fetch_assoc();	
@@ -144,7 +145,20 @@ require ("connection.php");
 	else {
 		echo "No results found";
 		$display = "no";
+	
 	}
+	
+	$select_client = "";
+	
+	if($client_name != ""){
+		
+		$sql = "SELECT client_name FROM client_info WHERE client_name = '$client_name'";
+		$result = mysqli_query($conn, $sql);
+		
+		$row = $result->fetch_assoc();
+		$select_client = $row['client_name'];
+	}
+	
 
 ?>
 
@@ -168,7 +182,19 @@ require ("connection.php");
 				<form action="update_job.php" method="post">
 				<div class="tabinner-detail">
 				<label>Client Name</label>
-				<input name="client_name" type="text" value="<?php echo $client_name ; ?>" class="contact-prefix">
+				<select>
+					<?php
+						echo "<option selected>" . $select_client . "</option>";
+						
+						$sql = "SELECT client_name FROM client_info WHERE client_name != '$select_client'";
+						$result = mysqli_query($conn, $sql);
+						
+						while($row = $result->fetch_assoc())
+						{
+							echo "<option>" . $row['client_name'] . "</option>";
+						}
+					?>
+				</select>
 				</div>
 				<div class="tabinner-detail">
 				<label>Job Name</label>

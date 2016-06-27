@@ -22,7 +22,7 @@ $temp = $_SESSION["user"];
 			<li class="dropdown">
 				<a class="dropbtn"><i class="icon"><img src="images/web-icons/user.png"></i><?php echo $temp; ?></a>
 					<div class="dropdown-content">
-					<a href="#">Log Out</a>
+					<a href="logout.php">Log Out</a>
 					</div>
 			</li>
 			</div>

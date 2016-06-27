@@ -1,6 +1,7 @@
 <?php
 require ("header.php");
 ?>
+
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 	<h1 class="pull-left">Clients</h1>
@@ -20,6 +21,50 @@ require ("header.php");
 	</div>
 <div class="clear"></div>
 
+<style>
+.hoverTab { 
+   background: #f1f1f1; 
+}
+.hoverTab td a { 
+   display: block; 
+   padding: 16px; 
+   text-decoration: none;
+   color: black;
+}
+#client_name:hover{
+	background: #0047b3;
+	color: #ffffff;
+}
+#contact_name:hover{
+	background: #0047b3;
+	color: #ffffff;
+}
+#address:hover{
+	background: #0047b3;
+	color: #ffffff;
+}
+#phone:hover{
+	background: #0047b3;
+	color: #ffffff;
+}
+#email:hover{
+	background: #0047b3;
+	color: #ffffff;
+}
+#website:hover{
+	background: #0047b3;
+	color: #ffffff;
+}
+#category:hover{
+	background: #0047b3;
+	color: #ffffff;
+}
+#title:hover{
+	background: #0047b3;
+	color: #ffffff;
+}
+</style>
+
 <?php
 
 require ("connection.php");
@@ -27,10 +72,10 @@ require ("connection.php");
 $result = mysqli_query($conn,"SELECT * FROM client_info");
 
 
-echo " <div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
+echo " <div id = 'table-scroll' class='allcontacts-table'><table id = 'table' border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
 echo "<tbody>";
 echo "<tr valign='top'><th class='allcontacts-title'>All Clients<span class='allcontacts-subtitle'></span></th></tr>";
-echo "<tr valign='top'><td colspan='2'><table border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Client Name</th><th class='maintable-thtwo data-header' data-name='contact_name' data-index='1'>Contact Name</th><th class='maintable-thtwo data-header' data-name='client_add' data-index='2'>Address</th><th class='maintable-thtwo data-header' data-name='contact_phone' data-index='3'>Phone</th><th class='maintable-thtwo data-header' data-name='contact_email' data-index='4'>Email</th><th class='maintable-thtwo data-header' data-name='website' data-index='5'>Website</th><th class='maintable-thtwo data-header' data-name='category' data-index='6'>Category</th><th class='maintable-thtwo data-header' data-name='title' data-index='7'>Title</th><th class='maintable-thnine'>Actions</th></tr>";
+echo "<tr valign='top'><td colspan='2'><table id = 'client_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Client Name</th><th id = 'contact_name' class='maintable-thtwo data-header' data-name='contact_name' data-index='1'>Contact Name</th><th id = 'address' class='maintable-thtwo data-header' data-name='client_add' data-index='2'>Address</th><th id = 'phone' class='maintable-thtwo data-header' data-name='contact_phone' data-index='3'>Phone</th><th id = 'email' class='maintable-thtwo data-header' data-name='contact_email' data-index='4'>Email</th><th id = 'website' class='maintable-thtwo data-header' data-name='website' data-index='5'>Website</th><th id = 'category' class='maintable-thtwo data-header' data-name='category' data-index='6'>Category</th><th id = 'title' class='maintable-thtwo data-header' data-name='title' data-index='7'>Title</th></tr></thead><tbody>";
 
 
 if ($result->num_rows > 0) {
@@ -40,7 +85,7 @@ if ($result->num_rows > 0) {
 		
 
 		$foo=$row['client_name'];
-		echo "<tr><td>".$row["client_name"]."</td><td>".  $row["contact_name"]."</td><td>". $row["client_add"]. "</td><td>". $row["contact_phone"]. "</td><td>". $row["contact_email"]."</td><td>". $row["website"]. "</td><td>". $row["category"]. "</td><td>". $row["title"]. "</td><th>"."<a href='http://localhost/crst_dashboard/edit_client.php?client_name=$foo'>"."Edit"."</a></th></tr>";
+		echo "<tr class = 'hoverTab'><td><a href='edit_client.php?client_name=$foo'>".$row["client_name"]."</a></td><td><a href='edit_client.php?client_name=$foo'>".  $row["contact_name"]."</a></td><td><a href='edit_client.php?client_name=$foo'>". $row["client_add"]. "</a></td><td><a href='edit_client.php?client_name=$foo'>". $row["contact_phone"]. "</a></td><td><a href='edit_client.php?client_name=$foo'>". $row["contact_email"]."</a></td><td><a href='edit_client.php?client_name=$foo'>". $row["website"]. "</a></td><td><a href='edit_client.php?client_name=$foo'>". $row["category"]. "</a></td><td><a href='edit_client.php?client_name=$foo'>". $row["title"]. "</a></td></tr>";
     }
 	echo "</tbody></table></td></tr></tbody></table></div>";
 } else {
@@ -77,8 +122,11 @@ $conn->close();
 </div>
 
 <!--- script for making table sortable --->
+<script src="sorttable.js"></script>
+<script type="text/javascript" src="jquery-latest.js"></script> 
+<script type="text/javascript" src="jquery.tablesorter.js"></script> 
 <script>
-$('table.sortable').each(function() {
+$('table-bordered allcontacts-table').each(function() {
     var currentPage = 0;
     var numPerPage = 10;
     var $table = $(this);
@@ -104,14 +152,19 @@ $('table.sortable').each(function() {
 $("#search").keyup(function(){
         _this = this;
         // Show only matching TR, hide rest of them
-        $.each($("#table tbody tr"), function() {
+        $.each($("#client_table tbody tr"), function() {
             if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
                $(this).hide();
             else
                $(this).show();                
         });
     }); 
-
+	
+$(document).ready(function() 
+    { 
+        $("#client_table").tablesorter(); 
+    } 
+); 
 </script>
 
 	

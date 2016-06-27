@@ -1,7 +1,50 @@
 <?php
 require('header.php');
+require('connection.php');
 ?>
 
+<div id="popup" onclick="hide('popup')">
+<p id="demo"></p>
+
+<?php
+//session_start();
+
+$user = $_SESSION['user'];
+$initial = $_SESSION['initial'];
+$sql_name = "SELECT * FROM users WHERE user = '$user'";
+
+$result = mysqli_query($conn, $sql_name);
+
+$row = $result->fetch_assoc();
+
+echo "<h1>Welcome ".$row['first_name'] ."!</h1><br>";
+
+
+//echo CURDATE();
+//Retrieves Jobs for User and Reminders
+$sqlJobs = "SELECT project_name FROM job_ticket INNER JOIN mail_data ON job_ticket.job_id = mail_data.job_id WHERE mail_data.processed_by = '$initial' AND job_ticket.due_date = CURDATE()";
+$resultJobs = mysqli_query($conn, $sqlJobs);
+$num_rows_Jobs = mysqli_num_rows($resultJobs);
+
+echo "<h3 style = 'color: #ffffff'>Jobs Due: " . $num_rows_Jobs . "</h3>";
+
+$sql="SELECT text FROM reminder WHERE user='$user' and date = CURDATE()  ";
+$result=mysqli_query($conn,$sql);
+
+
+
+echo "<br><br><h4 style = 'color: #ffffff';>Reminders</h4>";
+
+if ($result->num_rows > 0) {
+	while($row = $result->fetch_assoc()) {
+        echo  $row["text"]. "<br>";
+    } 
+} 
+$conn->close();
+
+//exit();
+?>
+</div>
 <div class="dashboard-cont" style="padding-top: 110px;">
 	<h1>Dashboard</h1>
 	<div class="dashboard-detail">
@@ -78,7 +121,7 @@ if ($result8->num_rows > 0) {
 		$result9 = mysqli_query($conn,"SELECT * FROM mail_data WHERE job_id = $foo");
 		$row9 = $result9->fetch_assoc();
 		
-		echo "<tr><td>".$row8["job_id"]."</td><td>".  $row8["client_name"]."</td><td>". $row8["project_name"]. "</td><td>". $row8["due_date"]. "</td><td>". $row8["job_status"]."</td><td>". $row9["records_total"]."</td><td>". $row9["processed_by"]."</td><th>"."<a href='http://localhost/crst_dashboard/edit_job.php?job_id=$foo'>"."Edit"."</a></th></tr>";
+		echo "<tr><td>".$row8["job_id"]."</td><td>".  $row8["client_name"]."</td><td>". $row8["project_name"]. "</td><td>". $row8["due_date"]. "</td><td>". $row8["job_status"]."</td><td>". $row9["records_total"]."</td><td>". $row9["processed_by"]."</td><th>"."<a href='edit_job.php?job_id=$foo'>"."Edit"."</a></th></tr>";
     }
 	echo "</tbody></table></td></tr></tbody></table></div>";
 } else {
@@ -114,3 +157,24 @@ $conn->close();
 	</div>
 	</div>
 </div>
+
+<script src="jquery.js"></script>
+<script>
+var d = new Date();
+document.getElementById("demo").innerHTML = "Today's date: "+ d;
+function hide(target) {
+    document.getElementById(target).style.display = 'none';
+}
+
+
+var firstTime = localStorage.getItem("first_time");
+
+$(document).ready(function(e)
+{		
+	if (!sessionStorage.alreadyClicked) {
+		$('#popup').animate({"top":"50%","marginTop":"-200px"},1000);
+		sessionStorage.alreadyClicked = 1;
+}
+});
+	
+</script>
