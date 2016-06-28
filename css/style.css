@@ -190,7 +190,7 @@ background-color:#356CAC; transition:all 300ms 0s; }
 .dataconsulate-detail .dataconsulate-right .search-boxright a:hover { opacity:.7; }
 .dataconsulate-detail .dataconsulate-right .manage-btn a { background-color:#222; }
 .dataconsulate-detail .dataconsulate-right .allcontacts-table {padding-bottom:20px;}
-.dataconsulate-detail .dataconsulate-right .allcontacts-table table { width:1250px; word-wrap:break-word;}
+.dataconsulate-detail .dataconsulate-right .allcontacts-table table { width:1250px;}
 .dataconsulate-detail .dataconsulate-right .allcontacts-title { background-color: #f6f8f8; color: #222; font-size: 20px; line-height: 48px; padding: 0 0 0 20px; width: 85.5%; text-align: left;
 border-right: 1px solid #ddd; font-weight:400; }
 .dataconsulate-detail .dataconsulate-right .column-editorbtn { width: 14.5%; background-color: #eee; padding: 0; font-size:16px; line-height:50px; font-weight:300; color:#222; padding:0 0 0 20px; background:url(/images/down-arrow.png) 147px center no-repeat; cursor:pointer; }
