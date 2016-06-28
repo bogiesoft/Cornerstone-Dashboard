@@ -12,7 +12,7 @@ require ("header.php");
 	<div class="search-cont">
 	<div class="searchcont-detail">
 		<div class="search-boxleft">
-			<form id = "search_form" action="vendor_search.php" method="post" >
+			<form action="vendor_search.php" method="post" >
 				<label>Quick Search</label>
 				<input id="search" name="frmSearch" type="text" placeholder="Search for a specific vendor">
 			</form>
@@ -25,8 +25,8 @@ require ("header.php");
 
 require ("connection.php");
 
-
-$result = mysqli_query($conn,"SELECT * FROM vendors");
+$compare = $_POST['frmSearch'];
+$result = mysqli_query($conn,"SELECT * FROM vendors WHERE vendor_name LIKE '%{$compare}%' OR vendor_contact LIKE '%{$compare}%' OR vendor_add LIKE '%{$compare}%' OR vendor_email LIKE '%{$compare}%' OR vendor_phone LIKE '%{$compare}%' OR vendor_website LIKE '%{$compare}%'");
 
 
 if ($result->num_rows > 0) {
@@ -80,9 +80,3 @@ $conn->close();
 
 </div>
 </div>
-
-
-
-	
-
-						

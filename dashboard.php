@@ -143,7 +143,9 @@ echo "<tr valign='top'><td colspan='2'><table border='0' cellspacing='0' cellpad
 if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
-        echo "<tr><td>" . $row['user'] . "</td><td>" . $row['job'] ."</td><td>".$row['time']."</td></tr>"; 
+		$time = strtotime($row['time']);
+		$myFormatForView = date("M d, Y g:i", $time);
+        echo "<tr><td>" . $row['user'] . "</td><td>" . $row['job'] ."</td><td>".$myFormatForView. " ". $row['a_p']. "</td></tr>"; 
     }
 	echo "</tbody></table></td></tr></tbody></table></div>";
 } else {

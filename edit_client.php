@@ -31,10 +31,19 @@ require ("connection.php");
 
 }
 if(isset($_POST['delete_form'])){
+	session_start();
+	$user_name = $_SESSION['user'];
+	date_default_timezone_set('America/New_York');
+	$today = date("Y-m-d G:i:s");
+	$a_p = date("A");
+	$job = "deleted client info";
+	$sql6 = "INSERT INTO timestamp (user,time,job, a_p) VALUES ('$user_name', '$today','$job', '$a_p')";
+	$result7 = $conn->query($sql6) or die('Error querying database 5.');
 	$sql_delete = "DELETE FROM client_info WHERE '$client_name' = client_name";
 	mysqli_query($conn, $sql_delete);
 	$conn->close();
 	header("location: http://localhost/crst_dashboard/clients.php");
+	exit();
 }
 if(isset($_POST['submit_form'])){
 	$client_name = $_POST['client_name'];
@@ -50,13 +59,14 @@ if(isset($_POST['submit_form'])){
 	session_start();
 	$user_name = $_SESSION['user'];
 	date_default_timezone_set('America/New_York');
-	$today = date("F j, Y, g:i a");
+	$today = date("Y-m-d G:i:s");
+	$a_p = date("A");
 	$_SESSION['date'] = $today;
 	$job = "updated client info";
 
 	$sql = "UPDATE client_info SET contact_name='$contact_name', client_add='$client_add',contact_phone='$contact_phone',contact_email='$contact_email',sec1='$sec1',website='$website',notes='$notes',category='$category',title='$title' WHERE client_name='$client_name'";
 
-	$sql6 = "INSERT INTO timestamp (user,time,job) VALUES ('$user_name', '$today','$job')";
+	$sql6 = "INSERT INTO timestamp (user,time,job, a_p) VALUES ('$user_name', '$today','$job', '$a_p')";
 	$result7 = $conn->query($sql6) or die('Error querying database 5.');
 
 	$result = $conn->query($sql) or die('Error querying database.');

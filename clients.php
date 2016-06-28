@@ -1,7 +1,6 @@
 <?php
 require ("header.php");
 ?>
-
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 	<h1 class="pull-left">Clients</h1>
@@ -15,55 +14,12 @@ require ("header.php");
 				<label>Quick Search</label>
 				<input id="search" name="frmSearch" type="text" placeholder="Search for a specific client">
 			</form>
-			<div class="search-boxright pull-right"><a href="#">Submit</a></div>
 		</div>
 	</div>
 	</div>
 <div class="clear"></div>
 
-<style>
-.hoverTab { 
-   background: #f1f1f1; 
-}
-.hoverTab td a { 
-   display: block; 
-   padding: 16px; 
-   text-decoration: none;
-   color: black;
-}
-#client_name:hover{
-	background: #0047b3;
-	color: #ffffff;
-}
-#contact_name:hover{
-	background: #0047b3;
-	color: #ffffff;
-}
-#address:hover{
-	background: #0047b3;
-	color: #ffffff;
-}
-#phone:hover{
-	background: #0047b3;
-	color: #ffffff;
-}
-#email:hover{
-	background: #0047b3;
-	color: #ffffff;
-}
-#website:hover{
-	background: #0047b3;
-	color: #ffffff;
-}
-#category:hover{
-	background: #0047b3;
-	color: #ffffff;
-}
-#title:hover{
-	background: #0047b3;
-	color: #ffffff;
-}
-</style>
+
 
 <?php
 
@@ -85,7 +41,7 @@ if ($result->num_rows > 0) {
 		
 
 		$foo=$row['client_name'];
-		echo "<tr class = 'hoverTab'><td><a href='edit_client.php?client_name=$foo'>".$row["client_name"]."</a></td><td><a href='edit_client.php?client_name=$foo'>".  $row["contact_name"]."</a></td><td><a href='edit_client.php?client_name=$foo'>". $row["client_add"]. "</a></td><td><a href='edit_client.php?client_name=$foo'>". $row["contact_phone"]. "</a></td><td><a href='edit_client.php?client_name=$foo'>". $row["contact_email"]."</a></td><td><a href='edit_client.php?client_name=$foo'>". $row["website"]. "</a></td><td><a href='edit_client.php?client_name=$foo'>". $row["category"]. "</a></td><td><a href='edit_client.php?client_name=$foo'>". $row["title"]. "</a></td></tr>";
+		echo "<tr class = 'hoverTab'><td><a href = 'edit_client.php?client_name=$foo'>".$row["client_name"]."</a></td><td>".  $row["contact_name"]."</td><td>". $row["client_add"]. "</td><td>". $row["contact_phone"]. "</td><td>". $row["contact_email"]."</td><td>". $row["website"]. "</td><td>". $row["category"]. "</td><td>". $row["title"]. "</td></tr>";
     }
 	echo "</tbody></table></td></tr></tbody></table></div>";
 } else {
@@ -97,20 +53,14 @@ $conn->close();
 ?>
 <div class="allcontacts-breadcrumbs">
 	<div class="allcontacts-breadcrumbsleft pull-left page-control">
-		<nav>
-			<ul class="pagination">
-				<li class="current"><a class="page" href="#">1<span class="sr-only">(current)</span></a></li>
-				<li><a class="page" href="#">2<span class="sr-only">(current)</span></a></li>
-				<li><a class="page" href="#">3<span class="sr-only">(current)</span></a></li>
-				<li><a class="page" href="#">4<span class="sr-only">(current)</span></a></li>
-				<li><a class="page" href="#">5<span class="sr-only">(current)</span></a></li>
-				<li><a class="next" href="#">Next<span class="sr-only">(current)</span></a></li>
-			</ul>
-		</nav>
+	<nav>
+		<ul class = "pagination" id = "pag">
+		</ul>
+	</nav>
 	</div>
 	<div class="items-per-page-cont pull-right">
 		<label>Clients Per Page</label>
-		<select class="per-page-val">
+		<select class="per-page-val" id = "item_count" onchange = "changeCount()">
 			<option value="10">10</option>
 			<option value="25">25</option>
 			<option value="50">50</option>
@@ -126,28 +76,8 @@ $conn->close();
 <script type="text/javascript" src="jquery-latest.js"></script> 
 <script type="text/javascript" src="jquery.tablesorter.js"></script> 
 <script>
-$('table-bordered allcontacts-table').each(function() {
-    var currentPage = 0;
-    var numPerPage = 10;
-    var $table = $(this);
-    $table.bind('repaginate', function() {
-        $table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
-    });
-    $table.trigger('repaginate');
-    var numRows = $table.find('tbody tr').length;
-    var numPages = Math.ceil(numRows / numPerPage);
-    var $pager = $('<div class="pager"></div>');
-    for (var page = 0; page < numPages; page++) {
-        $('<span class="page-number"></span>').text(page + 1).bind('click', {
-            newPage: page
-        }, function(event) {
-            currentPage = event.data['newPage'];
-            $table.trigger('repaginate');
-            $(this).addClass('active').siblings().removeClass('active');
-        }).appendTo($pager).addClass('clickable');
-    }
-    $pager.insertBefore($table).find('span.page-number:first').addClass('active');
-});
+
+var numPerPage = 10;
 
 $("#search").keyup(function(){
         _this = this;
@@ -163,8 +93,46 @@ $("#search").keyup(function(){
 $(document).ready(function() 
     { 
         $("#client_table").tablesorter(); 
+		pageCreator();
     } 
 ); 
+function pageCreator(){
+	$('table.table-striped.main-table.contacts-list').each(function() {
+		var currentPage = 0;
+		numPerPage = parseInt(document.getElementById('item_count').value);
+		var $table = $(this);
+		var $ul = $('ul.pagination');
+		$table.bind('repaginate', function() {
+			$table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
+		});
+		$table.trigger('repaginate');
+		var numRows = $table.find('tbody tr').length;
+		var numPages = Math.ceil(numRows / numPerPage);
+		var count = 1;
+		for (var page = 0; page < numPages; page++) {
+			var i = $('<li id = id' + count + ' class = "current"></li>').text(page + 1).bind('click', {
+				newPage: page
+			}, function(event) {
+				currentPage = event.data['newPage'];
+				$table.trigger('repaginate');
+				$(this).addClass('clickable').siblings().removeClass('clickable');
+			}).appendTo($ul).addClass('current');
+			count = count + 1;
+		}
+		if(numPages > 1){
+			$("<li class = 'next' onclick = nextPage();>Next</li>").appendTo($ul);
+		}
+	});
+	document.getElementById("id1").className = "current clickable";
+}
+function changeCount(){
+	numPerPage = parseInt(document.getElementById('item_count').value);
+	$('#pag').empty();
+	pageCreator();
+}
+function nextPage(){
+	//code here
+}
 </script>
 
 	
