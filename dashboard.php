@@ -63,7 +63,7 @@ $conn->close();
 		$result3=mysqli_query($conn,"SELECT * FROM mail_data WHERE processed_by = 'KM'  ");
 		$num_rows3 = mysqli_num_rows($result3);
 
-		$result4=mysqli_query($conn,"SELECT * FROM mail_data WHERE processed_by = 'AB'  ");
+		$result4=mysqli_query($conn,"SELECT * FROM mail_data WHERE processed_by = 'MB'  ");
 		$num_rows4 = mysqli_num_rows($result4);
 
 		$result5=mysqli_query($conn,"SELECT * FROM mail_data WHERE processed_by = 'FP'  ");
@@ -102,7 +102,7 @@ $conn->close();
 <?php
 
 require ("connection.php");
-$result8 = mysqli_query($conn,"SELECT job_id,client_name,project_name,due_date,job_status FROM job_ticket");
+$result9 = mysqli_query($conn,"SELECT * FROM mail_data WHERE processed_by != ''");
 
 // all current jobs
 echo " <div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
@@ -111,15 +111,15 @@ echo "<tr valign='top'><th class='allcontacts-title'>Active Jobs<span class='all
 echo "<tr valign='top'><td colspan='2'><table border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='job_id' data-index='0'>Job ID</th><th class='maintable-thtwo data-header' data-name='client' data-index='1'>Client Name</th><th class='maintable-thtwo data-header' data-name='project_name' data-index='2'>Project Name</th><th class='maintable-thtwo data-header' data-name='due_date' data-index='3'>Due Date</th><th class='maintable-thtwo data-header' data-name='job_status' data-index='4'>Job Status</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='5'>Records Total</th><th class='maintable-thtwo data-header' data-name='processed_by' data-index='6'>User</th><th class='maintable-thnine'>Actions</th></tr>";
 
 
-if ($result8->num_rows > 0) {
+if ($result9->num_rows > 0) {
     // output data of each row
 	
-    while($row8 = $result8->fetch_assoc()) {
+    while($row9 = $result9->fetch_assoc()) {
 		
-		$foo=$row8['job_id'];
+		$foo=$row9['job_id'];
 		
-		$result9 = mysqli_query($conn,"SELECT * FROM mail_data WHERE job_id = $foo");
-		$row9 = $result9->fetch_assoc();
+		$result8 = mysqli_query($conn,"SELECT job_id,client_name,project_name,due_date,job_status FROM job_ticket WHERE job_id = '$foo'");
+		$row8 = $result8->fetch_assoc();
 		
 		echo "<tr><td>".$row8["job_id"]."</td><td>".  $row8["client_name"]."</td><td>". $row8["project_name"]. "</td><td>". $row8["due_date"]. "</td><td>". $row8["job_status"]."</td><td>". $row9["records_total"]."</td><td>". $row9["processed_by"]."</td><th>"."<a href='edit_job.php?job_id=$foo'>"."Edit"."</a></th></tr>";
     }

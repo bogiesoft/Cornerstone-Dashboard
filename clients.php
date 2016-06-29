@@ -10,10 +10,8 @@ require ("header.php");
 	<div class="search-cont">
 	<div class="searchcont-detail">
 		<div class="search-boxleft">
-			<form action="client_search.php" method="post" >
 				<label>Quick Search</label>
 				<input id="search" name="frmSearch" type="text" placeholder="Search for a specific client">
-			</form>
 		</div>
 	</div>
 	</div>

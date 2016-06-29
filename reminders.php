@@ -40,8 +40,9 @@ if ($result1->num_rows > 0) {
     while($row = $result1->fetch_assoc()) {
 		
 		if($row['user'] == $_SESSION['user'] ){
-			
-			echo $row['date'].":  ".$row['text']."<br>";
+			$time = strtotime($row['date']);
+			$myFormatForView = date("M d, Y", $time);
+			echo $myFormatForView.":  ".$row['text']."<br>";
 		}
 		
 		

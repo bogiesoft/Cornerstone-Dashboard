@@ -38,14 +38,13 @@ require ("connection.php");
 	$temp = $_GET['job_id'];
 	$sql = "SELECT * FROM archive_jobs WHERE job_id = '$temp'"; 
 	$result = mysqli_query($conn,$sql); 
-	
+	$_SESSION["job_id"] = $temp;
 	
 	
 	if ($result->num_rows > 0) {
 		$row = $result->fetch_assoc();	
 	
 		$job_id = $row['job_id'];
-		$_SESSION["job_id"] = $job_id;
 		$client_name = $row['client_name'];
 		$project_name = $row['project_name'];
 		$ticket_date = $row['ticket_date'];

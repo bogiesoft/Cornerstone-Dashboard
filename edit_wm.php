@@ -37,14 +37,14 @@ require ("connection.php");
 		session_start();
 		$user_name = $_SESSION['user'];
 		date_default_timezone_set('America/New_York');
-		$today = date("Y-m-d g:i:s");
+		$today = date("Y-m-d G:i:s");
+		$a_p = date("A");
 		$_SESSION['date'] = $today;
-		$job = "updated w&m"; 
+		$job = "updated weights and measure"; 
 
 
 		$job_id = $_POST['job_id'];
 		$received = $_POST['received'];
-		$location = $_POST['location'];
 		$checked_in = $_POST['checked_in'];
 		$material = $_POST['material'];
 		$type = $_POST['type'];
@@ -54,11 +54,10 @@ require ("connection.php");
 		$weight = $_POST['weight'];
 		$size = $_POST['size'];
 		$based_on = $_POST['based_on'];
-		$sql = "UPDATE materials SET location='$location',received='$received',checked_in='$checked_in',material='$material',type='$type',vendor='$vendor',quantity='$quantity',height='$height',weight='$weight',size='$size', based_on = '$based_on' 
-		 WHERE job_id ='$job_id'";
+		$sql = "UPDATE materials SET location='$location',received='$received',checked_in='$checked_in',material='$material',type='$type',vendor='$vendor',quantity='$quantity',height='$height',weight='$weight',size='$size', based_on = '$based_on' WHERE job_id ='$job_id'";
 		$result = $conn->query($sql) or die('Error querying database.');
 
-		$sql6 = "INSERT INTO timestamp (user,time,job) VALUES ('$user_name', '$today','$job')";
+		$sql6 = "INSERT INTO timestamp (user,time,job,a_p) VALUES ('$user_name', '$today','$job', '$a_p')";
 		$result7 = $conn->query($sql6) or die('Error querying database 5.');
 		 
 		$conn->close();
@@ -66,10 +65,20 @@ require ("connection.php");
 		exit();
 	}
 	if(isset($_POST['delete_form'])){
+		session_start();
+		$user_name = $_SESSION['user'];
+		date_default_timezone_set('America/New_York');
+		$today = date("Y-m-d G:i:s");
+		$a_p = date("A");
+		$job = "deleted weights and measure"; 
+		$sql6 = "INSERT INTO timestamp (user,time,job,a_p) VALUES ('$user_name', '$today','$job', '$a_p')";
+		$result7 = $conn->query($sql6) or die('Error querying database 5.');
+		
 		$sql_delete = "DELETE FROM materials WHERE '$job_id' = job_id";
 		mysqli_query($conn, $sql_delete);
 		$conn->close();
 		header("location: http://localhost/crst_dashboard/weights_and_measure.php");
+		exit();
 	}
 	
 ?>
@@ -116,7 +125,16 @@ $(document).ready(function(){
 					</div>
 					<div class="tabinner-detail">
 					<label>Vendor</label>
-					<input name="vendor" type="text" class="contact-prefix" value="<?php echo $vendor; ?>">
+					<select name = "vendor" style = "width:220px;">
+					<option selected><?php echo $vendor; ?></option>
+					<?php
+						$sql = "SELECT vendor_name FROM vendors";
+						$result = mysqli_query($conn, $sql);
+						while($row = $result->fetch_assoc()){
+							echo "<option>" . $row['vendor_name'] . "</option>";
+						}
+					?>
+					</select>
 					</div>
 				</div>
 				<div class="newcontacttab-inner">

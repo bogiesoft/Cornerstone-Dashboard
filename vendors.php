@@ -16,6 +16,7 @@ require ("header.php");
 				<label>Quick Search</label>
 				<input id="search" name="frmSearch" type="text" placeholder="Search for a specific vendor">
 			</form>
+			<div class="search-boxright pull-right"><a href="#" onclick = "document.getElementById('search_form').submit()">Submit</a></div>
 		</div>
 	</div>
 	</div>

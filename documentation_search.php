@@ -23,7 +23,8 @@ require ("header.php");
 <?php
 
 require ("connection.php");
-$result = mysqli_query($conn,"SELECT * FROM documentation");
+$compare = $_POST['frmSearch'];
+$result = mysqli_query($conn,"SELECT * FROM documentation WHERE title LIKE '%{$compare}%' OR text LIKE '%{$compare}%' OR user LIKE '%{$compare}%' OR timestamp LIKE '%{$compare}%'");
 
 if ($result->num_rows > 0) {
     // output data of each row
@@ -40,7 +41,8 @@ if ($result->num_rows > 0) {
 }
 
 $conn->close();
+
 ?>
 </div>
 </div>
-</div>				
+</div>
