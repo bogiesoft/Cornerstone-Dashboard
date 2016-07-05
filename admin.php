@@ -84,46 +84,78 @@
 ?>
 
 
-<div class="content">
+<div class="dashboard-cont" style="padding-top:110px;">
 	<h2>Account Information</h2><br>
-	<p style = "color: #ff0000;"><?php echo $error; $error = "";?></p>
-	<form action="" id="form" method="POST">
-		First Name: <input type = "text" name = "first" placeholder = "First Name" value = "<?php if(isset($_POST['first']) && $pass == FALSE){echo $_POST['first'];}?>"/>
-		 Last Name: <input type = "text" name = "last" placeholder = "Last Name" value = "<?php if(isset($_POST['last']) && $pass == FALSE){echo $_POST['last'];}?>"/><br><br>
-		 User Name: <input type = "text" name = "user" placeholder = "User Name" value = "<?php if(isset($_POST['user'])){if($inUse == FALSE && $pass == FALSE){echo $_POST['user'];} else{echo "";}}?>"/>
-		  Password: <input type = "password" name = "password" placeholder = "Password" value = "<?php if(isset($_POST['password']) && $pass == FALSE){echo $_POST['password'];}?>"/><br><br>
-			 Email: <input type = "text" name = "email" placeholder = "Email" value = "<?php if(isset($_POST['email'])){if($errorAt == FALSE && $pass == FALSE){echo $_POST['email'];} else{echo "";}}?>"/>
-		Department: <select name = "depart">
-						<option selected value>-- Select Dep --</option>
-						<option>Sales</option>
-						<option>Customer Service</option>
-						<option>Project Management</option>
-						<option>Production</option>
-						<option>Development</option>
-					</select> &nbsp;
-			 Title: <select name = "title">
-						<option selected value>-- Select Title --</option>
-						<option>MEMBER</option>
-						<option>ADMIN</option>
-					</select><br><br>
-		
-		  <input type = "submit" name = "account_add" value = "Save Account" onclick = "return confirm('Save Account?')"/>
-	</form><br><br>
-	<p style = "color: #00cc33;"><?php echo $success;?></p>
-<?php
-echo " <div id='table-scroll'><table id='table' border='1' cellspacing='2' cellpadding='2' class='sortable' >"; // start a table tag in the HTML
-echo "<thead>";
-echo "<tr><th>  </th><th> First Name </th><th> Last Name</th><th> Username </th><th> Password </th><th> Initial </th><th> Email </th><th> Department </th><th> Title </th></tr>";
-echo "</thead>";
-echo "<tbody>";
+<div class="dashboard-detail">
+	<div class="newcontactstabs-outer">
+		<div class="tab-content">
+			<div role="tabpanel" class="tab-pane active" id="home">
+			<div class="newcontactstab-detail">
+			<h1 style = "padding-top: 10px; padding-left: 10px">New Account</h1>
+			<p style = "color: #ff0000; background: #f8f8f8; margin-left: 25px; margin-bottom: 15px"><?php echo $error; $error = "";?></p>
+			<form action="" id="form" method="POST">
+				<div class="tabinner-detail">
+				<label style = "margin-left: 50px;">First Name:</label> 
+				<input class = "contact-prefix" type = "text" name = "first" placeholder = "First Name" value = "<?php if(isset($_POST['first']) && $pass == FALSE){echo $_POST['first'];}?>">
+				</div>
+				<div class = "tabinner-detail">
+				<label style = "margin-left: 50px;">Last Name:</label> 
+				<input class = "contact-prefix" type = "text" name = "last" placeholder = "Last Name" value = "<?php if(isset($_POST['last']) && $pass == FALSE){echo $_POST['last'];}?>">
+				</div>
+				<div class = "tabinner-detail">
+				<label style = "margin-left: 50px;">User Name:</label> 
+				<input class = "contact-prefix" type = "text" name = "user" placeholder = "User Name" value = "<?php if(isset($_POST['user'])){if($inUse == FALSE && $pass == FALSE){echo $_POST['user'];} else{echo "";}}?>">
+				</div>
+				<div class = "tabinner-detail">
+				<label style = "margin-left: 50px;">Password:</label> 
+				<input class = "contact-prefix" type = "password" name = "password" placeholder = "Password" value = "<?php if(isset($_POST['password']) && $pass == FALSE){echo $_POST['password'];}?>">
+				</div>
+				<div class = "tabinner-detail">
+				<label style = "margin-left: 50px;">Email:</label> 
+				<input class = "contact-prefix" type = "text" name = "email" placeholder = "Email" value = "<?php if(isset($_POST['email'])){if($errorAt == FALSE && $pass == FALSE){echo $_POST['email'];} else{echo "";}}?>">
+				</div>
+				<div class = "tabinner-detail">
+				<label style = "margin-left: 50px;">Department:</label> 
+					<select name = "depart" style = "width: 150px">
+					<option selected value>-- Select Dep --</option>
+					<option>Sales</option>
+					<option>Customer Service</option>
+					<option>Project Management</option>
+					<option>Production</option>
+					<option>Development</option>
+					</select>
+				</div>
+				<div class="tabinner-detail">
+				<label style = "margin-left: 50px;">Title:</label> 
+					<select name = "title" style = "width: 150px">
+					<option selected value>-- Select Title --</option>
+					<option>MEMBER</option>
+					<option>ADMIN</option>
+				</select>
+				</div><br>
+				</div>
+			<div class="newcontact-tabbtm">	
+				<input style="float: right; width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;" type = "submit" name = "account_add" value = "Save Account" onclick = "return confirm('Save Account?')"/>
+			</div>
+			</form><br><br>
+			<p style = "color: #00cc33;"><?php echo $success;?></p>
+		<?php
+		echo " <div id='table-scroll' class = 'allcontacts-table'><table id='table' border='1' cellspacing='2' cellpadding='2' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
+		echo "<tbody>";
+		echo "<tr valign = 'top'><th class = 'allcontacts-title'>Users<span class = 'allcontacts-subtitle'></span></th></tr>";
+		echo "<tr valign = 'top'><td colspan = '2'><table id = 'client_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='user' data-index='2'> Username </th><th class='maintable-thtwo data-header' data-name='first_name' data-index='0'>First Name</th><th class='maintable-thtwo data-header' data-name='last_name' data-index='1'> Last Name</th><th class='maintable-thtwo data-header' data-name='password' data-index='3'> Password </th><th class='maintable-thtwo data-header' data-name='initial' data-index='4'> Initial </th><th class='maintable-thtwo data-header' data-name='email' data-index='5'> Email </th><th class='maintable-thtwo data-header' data-name='department' data-index='6'> Department </th><th class='maintable-thtwo data-header' data-name='title' data-index='7'> Title </th></tr></thead><tbody>";
 
-$sql = "SELECT * FROM users ORDER BY department ASC";
-$result = mysqli_query($conn, $sql) or die("ERROR");
+		$sql = "SELECT * FROM users ORDER BY department ASC";
+		$result = mysqli_query($conn, $sql) or die("ERROR");
 
-while($row = $result->fetch_assoc()){
-	$user = $row['user'];
-	echo "<tr><th><a href='edit_user.php?user=$user'>Edit</a> </th><th>" . $row['first_name'] . "</th><th>" . $row['last_name'] . "</th><th>" .  $row['user'] .  "</th><th>" . $row['password'] .  "</th><th>" . $row['initial'] .  "</th><th>" . $row['email'] .  "</th><th>" . $row['department'] . "</th><th>" . $row['title'] . "</th></tr>";
-}
+		while($row = $result->fetch_assoc()){
+			$user = $row['user'];
+			echo "<tr><th><a href = 'edit_user.php?user=$user'>" . $row['user'] .  "</a></th><th>" . $row['first_name'] . "</th><th>" . $row['last_name'] . "</th><th>" . $row['password'] .  "</th><th>" . $row['initial'] .  "</th><th>" . $row['email'] .  "</th><th>" . $row['department'] . "</th><th>" . $row['title'] . "</th></tr>";
+		}
 
-?>
-</div>
+		?>
+		</div>
+		</div>
+		</div>
+		</div>
+		</div>

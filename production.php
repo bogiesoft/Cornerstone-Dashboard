@@ -4,7 +4,7 @@ require('header.php');
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 	<h1 class="pull-left">Production</h1>
-	<a class="pull-right" href="#" class="add_button">TimeTracking</a>
+	<a class="pull-right" href="production_data.php" class="add_button">TimeTracking</a>
 	</div>
 <div class="dashboard-detail">
 <div class="search-cont">

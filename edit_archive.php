@@ -137,11 +137,21 @@ require ("connection.php");
 			<div role="tabpanel" class="tab-pane active" id="home">
 			<div class="newcontactstab-detail">
 			<form action="add_job_ticket.php" method="post">
-			<div class="newcontacttab-inner">
-				<div class="tabinner-detail">
-				<label>Client Name</label>
-				<input name="client_name" type="text" value="<?php echo $client_name ; ?>" class="contact-prefix">
-				</div>
+				<?php
+						require ("connection.php");
+						$result = $conn->query("select client_name from client_info");
+						echo("<div class='tabinner-detail'>");
+						echo "<label>Client</label><select name='client_name'>";
+						echo "<option selected = 'selected'>" . $client_name . "</option>";
+						while ($row = $result->fetch_assoc()) {
+									  unset($client_name);
+									  $client_name = $row['client_name']; 
+									  echo '<option value="'.$client_name.'">'.$client_name.'</option>';
+									 
+						}
+						echo "</select>";
+						echo "</div>";
+						?>
 				<div class="tabinner-detail">
 				<label>Job Name</label>
 				<input name="project_name" type="text" value="<?php echo $project_name ; ?>" class="contact-prefix">
@@ -156,7 +166,27 @@ require ("connection.php");
 				</div>
 				<div class="tabinner-detail">
 				<label>Created By</label>
-				<input name='created_by' type="text" value="<?php echo $created_by ; ?>" class="contact-prefix">
+				<?php
+					echo "<select name = 'created_by'>";
+					$sql = "SELECT first_name, last_name, user FROM users WHERE user = '$created_by'";
+					$result = mysqli_query($conn, $sql);
+					 if($result->num_rows > 0){
+						 $row = $result->fetch_assoc();
+						 echo "<option selected = 'selected' value = '" . $row['user'] . "'>" . $row['first_name'] . ' ' . $row['last_name'] . "</option>";
+					 }
+					 else{
+						 echo "<option selected = 'selected'></option>";
+					 }
+					 
+					 $sql = "SELECT first_name, last_name, user FROM users";
+					$result = mysqli_query($conn, $sql);
+				
+					while($row = $result->fetch_assoc()){
+						echo "<option value = '" . $row['user'] . "'>" . $row['first_name'] . ' ' . $row['last_name'] . "</option>";
+					}
+				
+					echo "</select>";
+				?>
 				</div>
 				<div class="tabinner-detail">
 				<label>Estimate Number</label>
@@ -176,9 +206,8 @@ require ("connection.php");
 				</div>
 				<div class="tabinner-detail">
 				<label>Job Status</label>
-				<input name="job_status" type="text"value="<?php echo $job_status ; ?>" class="contact-prefix">
 				<select name='job_status'>
-					<option disabled selected value> -- select an option -- </option>
+					<option selected = "selected"><?php echo $job_status; ?></option>
 					<option value="in P.M.">in P.M.</option>
 					<option value="in Production">in Production</option>
 					<option value="on hold">on hold</option>
@@ -187,7 +216,7 @@ require ("connection.php");
 					<option value="waiting for postage">waiting for postage</option>
 				</select>
 				</div>
-			</div>
+			
 			<div class="newcontacttab-inner">	
 				<div class="tabinner-detail">
 				<label>Mail Class</label>
@@ -256,14 +285,29 @@ require ("connection.php");
 				</div>
 				<div class="tabinner-detail">
 				<label>Assigned to</label>
-				<input name="processed_by" type="text" value="<?php echo $processed_by ; ?>" class="contact-prefix">
-				<select name='processed_by'>
-					<option disabled selected value> -- select an option -- </option>
-					<option value="JS">JS</option>
-					<option value="KM">KM</option>
-					<option value="MB">MB</option>
-					<option value="RP">RP</option>
-				</select>
+				<?php
+				echo "<select name='processed_by'>";
+				$sql = "SELECT first_name, last_name, user FROM users WHERE user = '$processed_by'";
+				$result = mysqli_query($conn, $sql);
+				
+				if($result->num_rows > 0){
+					$row = $result->fetch_assoc();
+					echo "<option selected = 'selected' value = '" . $row['user'] . "'>" . $row['first_name'] . ' ' . $row['last_name'] . "</option>";
+				}
+				else
+				{
+					echo "<option selected = 'selected'></option>";
+				}
+				
+				$sql = "SELECT first_name, last_name, user FROM users";
+				$result = mysqli_query($conn, $sql);
+				
+				while($row = $result->fetch_assoc()){
+					echo "<option value = " . $row['user'] . ">" . $row['first_name'] . ' ' . $row['last_name'] . "</option>";
+				}
+				
+				echo "</select>";
+				?>
 				</div>
 				<div class="tabinner-detail">
 				<label>DQR Sent</label>

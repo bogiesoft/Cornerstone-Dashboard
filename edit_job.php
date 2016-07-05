@@ -182,9 +182,9 @@ require ("connection.php");
 				<form action="update_job.php" method="post">
 				<div class="tabinner-detail">
 				<label>Client Name</label>
-				<select>
+				<select name = "client_name">
 					<?php
-						echo "<option selected>" . $select_client . "</option>";
+						echo "<option selected = 'selected'>" . $select_client . "</option>";
 						
 						$sql = "SELECT client_name FROM client_info WHERE client_name != '$select_client'";
 						$result = mysqli_query($conn, $sql);
@@ -210,7 +210,27 @@ require ("connection.php");
 				</div>
 				<div class="tabinner-detail">
 				<label>Created By</label>
-				<input name='created_by' type="text" value="<?php echo $created_by ; ?>" class="contact-prefix">
+				<?php
+					echo "<select name = 'created_by'>";
+					$sql = "SELECT first_name, last_name, user FROM users WHERE user = '$created_by'";
+					$result = mysqli_query($conn, $sql);
+					 if($result->num_rows > 0){
+						 $row = $result->fetch_assoc();
+						 echo "<option selected = 'selected' value = '" . $row['user'] . "'>" . $row['first_name'] . ' ' . $row['last_name'] . "</option>";
+					 }
+					 else{
+						 echo "<option selected = 'selected'></option>";
+					 }
+					 
+					 $sql = "SELECT first_name, last_name, user FROM users";
+					$result = mysqli_query($conn, $sql);
+				
+					while($row = $result->fetch_assoc()){
+						echo "<option value = '" . $row['user'] . "'>" . $row['first_name'] . ' ' . $row['last_name'] . "</option>";
+					}
+				
+					echo "</select>";
+				?>
 				</div>
 				<div class="tabinner-detail">
 				<label>Estimate Number</label>
@@ -230,9 +250,8 @@ require ("connection.php");
 				</div>
 				<div class="tabinner-detail">
 				<label>Job Status</label>
-				<input name="job_status" type="text"value="<?php echo $job_status ; ?>" class="contact-prefix">
 				<select name='job_status'>
-					<option disabled selected value> -- select an option -- </option>
+					<option selected  = "selected"><?php echo $job_status;?></option>
 					<option value="in P.M.">in P.M.</option>
 					<option value="in Production">in Production</option>
 					<option value="on hold">on hold</option>
@@ -310,15 +329,26 @@ require ("connection.php");
 				</div>
 				<div class="tabinner-detail">
 				<label>Assigned to</label>
-				<input name="processed_by" type="text" value="<?php echo $processed_by ; ?>" class="contact-prefix">
-				<select name='processed_by'>
-					<option disabled selected value> -- select an option -- </option>
-					<option value="JS">JS</option>
-					<option value="KM">KM</option>
-					<option value="MB">MB</option>
-					<option value="RP">RP</option>
-				</select>
-				</div>
+				<?php
+				echo "<select name='processed_by'>";
+				$sql1 = "SELECT first_name, last_name, user FROM users WHERE user = '$processed_by'";
+				$result = mysqli_query($conn, $sql1);
+				if($result->num_rows > 0){
+					$row = $result->fetch_assoc();
+					echo "<option selected = 'selected' value = '" . $row['user'] . "'>" . $row['first_name'] . " " . $row['last_name'] . "</option>";
+				}
+				else{
+					echo "<option selected = 'selected'></option>";
+				}
+				
+				$sql = "SELECT first_name, last_name, user FROM users";
+				$result = mysqli_query($conn, $sql);
+				while($row = $result->fetch_assoc()){
+						echo "<option value = '" . $row['user'] . "'>" . $row['first_name'] . ' ' .  $row['last_name'] . "</option>";
+					
+				}
+				echo "</select>"
+				?>
 				<div class="tabinner-detail">
 				<label>DQR Sent</label>
 				<input name="dqr_sent" type="date" value="<?php echo $dqr_sent ; ?>" class="contact-prefix">

@@ -5,7 +5,19 @@ require("connection.php");
 session_start();
 $temp = $_SESSION["user"];
 
+$conn = new mysqli($servername, $username, $password, $dbname);
 
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+} 
+
+$sql = "SELECT title FROM users WHERE user = '$temp'";
+$result = mysqli_query($conn, $sql);
+
+$row = $result->fetch_assoc();
+
+$title = $row['title'];
+$_SESSION['title'] = $title;
 
 ?>
 <div class="dataconsulate-right">
@@ -23,6 +35,11 @@ $temp = $_SESSION["user"];
 				<a class="dropbtn"><i class="icon"><img src="images/web-icons/user.png"></i><?php echo $temp; ?></a>
 					<div class="dropdown-content">
 					<a href="logout.php">Log Out</a>
+					<?php
+					if($title == "ADMIN"){
+						echo "<a href='admin.php'>Accounts</a>";
+					}
+					?>
 					</div>
 			</li>
 			</div>

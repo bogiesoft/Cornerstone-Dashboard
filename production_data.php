@@ -2,12 +2,12 @@
 require('header.php');
 ?>
 
-<div class='content'>
+<div class="dashboard-cont" style="padding-top:110px;">
 <form action="add_production_data.php" method="post">
-<div>Total Records &nbsp; <br><input name = "records" type = "text" id = "records" style = "width: 80px" value = "1"></input></div><br><br>
+<div>Total Records &nbsp; <br><input name = "records" type = "text" id = "records" style = "width: 80px" value = "1"></input></div><p id = "recs_error" style = "color:red;"></p><br><br>
   <div class = "prod_info">
 	<h1>Task 1: </h1>
-	Time/Unit &nbsp; <input name = "time_number" type = "text" id = "time_number" style = "width: 40px; font-size = 18px;" value = "1"> &nbsp; </input><select name = "time_unit" id = "time_unit"><option>min.</option><option>sec.</option></select>
+	Time/Unit &nbsp; <input name = "time_number" type = "text" id = "time_number" style = "width: 40px; font-size = 18px;" value = "1"><select name = "time_unit" id = "time_unit"><option>min.</option><option>sec.</option><option>hr.</option></select>
 	Records Complete in Time &nbsp; <input name = "per_rec" type = "text" id = "per_rec" style = "width: 50px" value = "1"></input> &nbsp; &nbsp;
 	Number of People &nbsp; <select name = "people" id = "people">
 	<?php
@@ -17,7 +17,7 @@ require('header.php');
 		}
 	?>
 </select>
-Employees &nbsp; <select name = "employee" id = "employee" multiple>
+Employees &nbsp; <select name = "employee[]" id = 'employee' multiple>
 	<?php
 		$sql = "SELECT * FROM users";
 		$result = mysqli_query($conn, $sql);
@@ -64,7 +64,7 @@ progress[value]::-webkit-progress-value {
 	var time_unit = ["time_unit"];
 	var recs_comp = ["per_rec"];
 	var people = ["people"];
-	var employee = ["employee"];
+	var employee = ["employee[]"];
 	var job = ["job"];
 	var errors = ["error"];
 	var employeeOptions = document.getElementById('employee').options;
@@ -73,7 +73,7 @@ progress[value]::-webkit-progress-value {
 	var Task = 2;
 	
 	function addTask(){
-		$(".prod_info").append("<h1>Task " + Task + ":</h1>Time/Unit &nbsp; <input name = 'time_number" + count + "' type = 'text' id = 'time_number" + count + "' style = 'width: 40px; font-size = 18px;' value = '1'> &nbsp; </input><select name = 'time_unit" + count + "' id = 'time_unit" + count + "'><option>min.</option><option>sec.</option></select> Records Complete in Time &nbsp; <input name = 'per_rec" + count + "' type = 'text' id = 'per_rec" + count + "' style = 'width: 50px' value = '1'></input> &nbsp; &nbsp;");
+		$(".prod_info").append("<h1>Task " + Task + ":</h1>Time/Unit &nbsp; <input name = 'time_number" + count + "' type = 'text' id = 'time_number" + count + "' style = 'width: 40px; font-size = 18px;' value = '1'> &nbsp; </input><select name = 'time_unit" + count + "' id = 'time_unit" + count + "'><option>min.</option><option>sec.</option><option>hr.</option></select> Records Complete in Time &nbsp; <input name = 'per_rec" + count + "' type = 'text' id = 'per_rec" + count + "' style = 'width: 50px' value = '1'></input> &nbsp; &nbsp;");
 		$(".prod_info").append("&nbsp;Number of People &nbsp;<select name = 'people" + count + "' id = 'people" + count + "'>");
 		for (var i = 1; i <= 10; i++){
 			var opt = document.createElement('option');
@@ -81,7 +81,7 @@ progress[value]::-webkit-progress-value {
 			opt.innerHTML = i;
 			document.getElementById("people" + count).appendChild(opt);
 		}
-		$(".prod_info").append("</select>&nbsp;Employees &nbsp; <select name = 'employee" + count + "' id = 'employee" + count + "' multiple>");
+		$(".prod_info").append("</select>&nbsp;Employees &nbsp; <select name = 'employee" + count + "[]' id = 'employee" + count + "' multiple>");
 		//$(".prod_info").append("<?php $sql = "SELECT * FROM users"; $result = mysqli_query($conn, $sql); while($row = $result->fetch_assoc()){echo "<option>" . $row['user'] . "</option>";} echo "</select>";?>");
 		for (var i = 0; i < employeeOptions.length; i++){
 			var opt = document.createElement('option');
@@ -131,12 +131,23 @@ progress[value]::-webkit-progress-value {
 			var people = document.getElementById("people");
 			var errorId = document.getElementById(errors[i]);
 			errorId.innerHTML = "";
+			document.getElementById("recs_error").innerHTML = "";
 			
 			if(i > 0){
 				people = document.getElementById("people" + i);
 			}
 			
-			if(/^[0-9]*$/.test(recordsNum) == false || /^[0-9]*$/.test(recsPer) == false || /^[0-9]*$/.test(time) == false){
+			
+			if(/^[0-9]*$/.test(recordsNum) == false || recordsNum.length == 0){
+				displayTime.innerHTML =  "Hours: -1";
+				displayEff.innerHTML = "Efficiency: ";
+				bar.value = "0";
+				displayEff.style.color = "black";
+				document.getElementById("recs_error").innerHTML = "Invalid Input";
+				error = true;
+				break;
+			}
+			else if(/^[0-9]*$/.test(recsPer) == false || /^[0-9]*$/.test(time) == false){
 				
 				displayTime.innerHTML =  "Hours: -1";
 				displayEff.innerHTML = "Efficiency: ";
@@ -148,7 +159,7 @@ progress[value]::-webkit-progress-value {
 				error = true;
 				break;
 			}
-			else if(recordsNum.length == 0 || recsPer.length == 0 || time.length == 0)
+			else if(recsPer.length == 0 || time.length == 0)
 			{
 				displayTime.innerHTML = "Hours: -1";
 				displayEff.innerHTML = "Efficiency: ";
@@ -170,12 +181,12 @@ progress[value]::-webkit-progress-value {
 					var calculation = parseInt(recordsNum) / parseInt(recsPer) * parseInt(time) / 60 / parseInt(people.value);
 					totalCalculation = totalCalculation + calculation;
 				}
-				else if(unit.value = "sec.")
+				else if(unit.value == "sec.")
 				{
 					var calculation = parseInt(recordsNum) / parseInt(recsPer) * parseInt(time) / 3600 / parseInt(people.value);
 					totalCalculation = totalCalculation + calculation;
 				}
-				else
+				else if(unit.value == "hr.")
 				{
 					var calculation = parseInt(recordsNum) / parseInt(recsPer) * parseInt(time) / parseInt(people.value);
 					totalCalculation = totalCalculation + calculation;

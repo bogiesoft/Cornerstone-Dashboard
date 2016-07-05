@@ -52,14 +52,14 @@ require ("header.php");
 					<?php
 					
 						
-						$result1 = $conn->query("select initial from users");
+						$result1 = $conn->query("select first_name, last_name, user from users");
 						echo("<div class='tabinner-detail'>");
 						echo "<label>Created By</label><select name='created_by'>";
 						echo "<option disabled selected value> -- select an option -- </option>";
 						while ($row1 = $result1->fetch_assoc()) {
 									  unset($created_by);
-									  $created_by = $row1['initial']; 
-									  echo '<option value="'.$created_by.'">'.$created_by.'</option>';
+									  $created_by = $row1['first_name'] . ' ' . $row1['last_name']; 
+									  echo '<option value="'.$row1['user'].'">'.$created_by.'</option>';
 									 
 						}
 						echo "</select>";
@@ -164,14 +164,14 @@ require ("header.php");
 					<?php
 					
 						
-						$result2 = $conn->query("select initial from users");
+						$result2 = $conn->query("select first_name, last_name, user from users");
 						echo("<div class='tabinner-detail'>");
 						echo "<label>Assigned to</label><select name='processed_by'>";
 						echo "<option disabled selected value> -- select an option -- </option>";
 						while ($row2 = $result2->fetch_assoc()) {
 									  //unset($pm);
-									  $processed_by = $row2['initial']; 
-									  echo '<option value="'.$processed_by.'">'.$processed_by.'</option>';
+									  $processed_by = $row2['first_name']. ' '. $row2['last_name']; 
+									  echo '<option value="'.$row2['user'].'">'.$processed_by.'</option>';
 									 
 						}
 						echo "</select>";
