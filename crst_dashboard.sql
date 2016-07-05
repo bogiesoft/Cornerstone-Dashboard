@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 21, 2016 at 01:26 AM
+-- Generation Time: Jul 05, 2016 at 02:37 AM
 -- Server version: 5.7.9
 -- PHP Version: 5.6.16
 
@@ -184,7 +184,17 @@ INSERT INTO `blue_sheet` (`job_id`, `completed_date`, `data_hrs`, `gd_hrs`, `ini
 (5522, '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 (5523, '2016-05-26', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 (5524, '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5530, '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+(5530, '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5531, '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5532, '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5551, '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5557, '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5559, '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5562, '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5570, '2016-04-07', 2, 5, 8, 87, 78, 8, 876, 867, 87, 87, 8, 54, 787, 78, 54),
+(5571, '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5574, '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5600, '2016-07-13', 78, 987, 987, 789, 789, 987, 78, 67, 8, 67, 987, 97, 98, 7898, 78);
 
 -- --------------------------------------------------------
 
@@ -200,9 +210,9 @@ CREATE TABLE IF NOT EXISTS `client_info` (
   `contact_phone` varchar(45) NOT NULL,
   `contact_email` varchar(45) NOT NULL,
   `sec1` varchar(70) NOT NULL,
-  `sec2` varchar(70) NOT NULL,
-  `sec3` varchar(70) NOT NULL,
-  `vendor_contact` varchar(70) NOT NULL,
+  `sec2` varchar(70) DEFAULT NULL,
+  `sec3` varchar(70) DEFAULT NULL,
+  `vendor_contact` varchar(70) DEFAULT NULL,
   `category` varchar(80) NOT NULL,
   `website` varchar(90) NOT NULL,
   `notes` text NOT NULL,
@@ -215,11 +225,20 @@ CREATE TABLE IF NOT EXISTS `client_info` (
 --
 
 INSERT INTO `client_info` (`client_name`, `client_add`, `contact_name`, `contact_phone`, `contact_email`, `sec1`, `sec2`, `sec3`, `vendor_contact`, `category`, `website`, `notes`, `title`) VALUES
+('Another Client', 'jkljl', 'lkjlk', 'kjlk', 'jlkj', 'jlkjl', NULL, NULL, NULL, 'lkj', 'kjlkjl', 'kjlkjlkj', 'lkjlk'),
 ('Femina1', '8 Southside Avesdfsf', 'Femina Patel', '1234567890', 'femina@gmail.com', '1231231230', '', '', '', 'student', 'sbdbjsfj.com', 'new note', 'Circular progress bar (canvas)'),
+('Hi', 'lkjl', 'kjlkj', 'kjlk', 'jlkj', 'kjlk', NULL, NULL, NULL, 'lkj', 'jlkj', 'lkjk', 'ljl'),
+('james', '987', 'issac newtron', 'lkjlkjlk', 'lkjlkj', 'kjlk', '', '', '', 'lkjlk', 'lkjlkj', 'llkj', 'lklkj'),
 ('Jill Lewis', 'lkj', 'l', 'lkjlk', 'jlkj', 'lk', '', '', '', 'lkj', 'jlkjlkj', 'lkjlk', 'lkj'),
+('jimmy', 'lkjlk', 'kiki', '098098098', 'lkjlkj', '0980989', '', '', '', 'lkjlkj', 'lkjlkj', 'yooo', 'lkjlkj'),
+('Johny', 'jklj', 'lkjlk', 'klj', 'kljlk', 'jlkj', NULL, NULL, NULL, 'jlk', 'lkjl', 'kjllkj', 'kl'),
 ('Led Zeppelin', 'jlkj', 'lkjlk', 'ljlk', 'jlk', 'jlkj', '', '', '', 'jlk', 'lklkj', 'lkjlkj', 'jlk'),
 ('New Client', 'kljlk', 'Client', 'kljlklkj', 'lkjlklk', 'lkjlkjlkjl', '', '', '', 'lkllkjk', 'lkjlkj', 'lkj', 'lkjlkj'),
+('peeetter', ';lk;lk', ';lkl;k', 'l;k;lk', ';lk;l', 'lkl;', NULL, NULL, NULL, ';lkl;k', 'llk', 'lklk', ';lkl'),
+('pipoi', 'iop', 'oipo', 'ipo', 'ipo', 'ipo', NULL, NULL, NULL, 'ipo', 'ipoi', 'popi', 'ipo'),
+('po pot', 'lkjlkj', 'kjlkj', 'kljlkj', 'lkjlkj', 'ljklj', '', '', '', 'lkjlkj', 'ljlkj', 'lkjlkj', 'lkjlkj'),
 ('Steve', '234 dfsdf', 'Stevo', '233 454 2343', 'T@r.com', '234 676 2342', '', '', '', 'trtert', 'www.gdf.vom', 'dgdfg', 'werw'),
+('uoiuoiu', 'oiuoiuoiu', 'oiuoiuoi', 'oiuoiuiou', 'oiuou', 'oiuoiu', '', '', '', 'oiuoiuoi', 'oiuoiu', 'oiuoiui', 'iuoiu'),
 ('Yo', 'lkj', 'Dude', 'lkj', 'lkj', 'lkj', '', '', '', 'lkj', 'lkj', 'lkj', 'lkj');
 
 -- --------------------------------------------------------
@@ -242,15 +261,19 @@ CREATE TABLE IF NOT EXISTS `documentation` (
 --
 
 INSERT INTO `documentation` (`title`, `text`, `user`, `timestamp`) VALUES
-('Brother Earth', 'hello brother awe', '', '0000-00-00'),
-('Father Earth', 'faaaaaaaaatttttttttttttttttthhhhhhhhhhhhherrrrrrrrrrrrr\r\nmmmmmmmmoooooooooooottttthhhhhherrrrrrrrrr\r\nchild', '', '0000-00-00'),
+('Another Test', 'fixed text', '', '2016-06-29'),
+('Brother Earth', 'hello brother awe', '', '2016-06-29'),
+('Father Earth', 'faaaaaaaaatttttttttttttttttthhhhhhhhhhhhherrrrrrrrrrrrr\r\nmmmmmmmmoooooooooooottttthhhhhherrrrrrrrrr\r\nchild', '', '2016-06-29'),
 ('femina', 'works', 'fpatel', '2016-04-22'),
 ('jezz', 'is adorable', 'fpatel', '2016-04-22'),
 ('kevin', 'rocks', 'fpatel', '2016-04-22'),
 ('lkjlkj', 'lkjlkjlk', 'sayre', '2016-06-13'),
 ('Mother Earth', 'do this awe awe \r\n\r\ndo that awe \r\n\r\nalsoooooooooooooooooooooo do this and this and this\r\nThis is a new line\r\n', 'fpatel', '2016-04-12'),
+('New Title', 'text stuff', '', '2016-06-29'),
 ('Sample', 'Hello', 'sayre', '2016-06-13'),
-('Sister Earth', 'sister', 'fpatel', '0000-00-00');
+('Sister Earth', 'sister', 'fpatel', '0000-00-00'),
+('Sup', 'Sup Dog', 'sayre', '0000-00-00'),
+('Yolo', 'Yoollloooo', 'sayre', '2016-06-29');
 
 -- --------------------------------------------------------
 
@@ -260,14 +283,14 @@ INSERT INTO `documentation` (`title`, `text`, `user`, `timestamp`) VALUES
 
 DROP TABLE IF EXISTS `invoice`;
 CREATE TABLE IF NOT EXISTS `invoice` (
-  `job_id` int(11) NOT NULL,
-  `postage` varchar(3) NOT NULL,
-  `invoice_number` int(11) NOT NULL,
-  `residual_returned` varchar(45) NOT NULL,
-  `2week_followup` varchar(45) NOT NULL,
-  `notes` text NOT NULL,
-  `status` varchar(45) NOT NULL,
-  `reason` varchar(45) NOT NULL,
+  `job_id` int(45) NOT NULL,
+  `postage` varchar(3) DEFAULT NULL,
+  `invoice_number` int(11) DEFAULT NULL,
+  `residual_returned` varchar(45) DEFAULT NULL,
+  `2week_followup` varchar(45) DEFAULT NULL,
+  `notes` text,
+  `status` varchar(45) DEFAULT NULL,
+  `reason` varchar(45) DEFAULT NULL,
   UNIQUE KEY `job_id` (`job_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -288,7 +311,17 @@ INSERT INTO `invoice` (`job_id`, `postage`, `invoice_number`, `residual_returned
 (5522, '', 0, '', '', '', '', ''),
 (5523, '', 0, '', '', '', '', ''),
 (5524, '', 0, '', '', '', '', ''),
-(5530, '', 0, '', '', '', '', '');
+(5530, '', 0, '', '', '', '', ''),
+(5531, '', 0, '', '', '', '', ''),
+(5532, '', 0, '', '', '', '', ''),
+(5551, '', 0, '', '', '', '', ''),
+(5557, '', 0, '', '', '', '', ''),
+(5559, '', 0, '', '', '', '', ''),
+(5562, '', 0, '', '', '', '', ''),
+(5570, '', 0, '', '', '', '', ''),
+(5571, '', 0, '', '', '', '', ''),
+(5574, '', 0, '', '', '', '', ''),
+(5600, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -312,7 +345,7 @@ CREATE TABLE IF NOT EXISTS `job_ticket` (
   `job_status` varchar(45) NOT NULL,
   PRIMARY KEY (`job_id`),
   UNIQUE KEY `jobid` (`job_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5531 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5602 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `job_ticket`
@@ -328,7 +361,7 @@ INSERT INTO `job_ticket` (`job_id`, `client_name`, `project_name`, `ticket_date`
 (5519, 'DickButt', 'Something13', '2016-06-08', '2016-06-08', 'SA', '234', 'sd', '2016-06-15', '2016-06-21', 0, 'on hold'),
 (5520, 'ABC COMPANY', 'nail it', '2016-05-03', '2016-05-21', 'KM', '', '', '0000-00-00', '0000-00-00', 0, 'in Production'),
 (5521, 'john Snow', 'climbes', '2016-05-04', '2016-05-12', 'Jess', '544040', 'Mail Foreigns: Yes\r\nHousehold: NO\r\nNCOA: Yes\r\n\r\nPROJECT MANAGEMENT:\r\n\r\nPRODUCTION:\r\n\r\nCUSTOMER SERVICE:\r\n\r\nfajlkfjealkfjealkjflkeajlkfejkla', '2016-05-04', '2016-05-06', 3000, 'in P.M.'),
-(5522, '$client_name', '', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
+(5522, '$client_name', 'o', '0000-00-00', '0000-00-00', 'werwe', 'werwer', '', '0000-00-00', '0000-00-00', 0, 'werwer'),
 (5523, 'Steve', '', '2016-06-14', '2016-06-21', 'SA', '', '', '2016-06-16', '2016-06-16', 0, 'on hold'),
 (5524, 'Somebody', 'go home', '0000-00-00', '0000-00-00', '', '', 'jdghkjfdhkgllg dbvfjdgkj f dfhg idfjgf\r\nsdfjshjgkhuf  jdflgkjhkj \r\nfgjfdihg\r\n fdgjifjgo fgklhkl\r\n rgkj r jgtfrjgko fdgjthkjgf dslrksltk\r\ndfgkl kh g tkljlo,gfhkolytiu \r\nrtgr myk fgt;l ty', '0000-00-00', '0000-00-00', 0, ''),
 (5525, '$client_name', '', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
@@ -336,7 +369,77 @@ INSERT INTO `job_ticket` (`job_id`, `client_name`, `project_name`, `ticket_date`
 (5527, '$client_name', '', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
 (5528, '$client_name', '', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
 (5529, '$client_name', '', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
-(5530, 'New Client', 'kjlk', '0000-00-00', '0000-00-00', '', 'lkjlkj', '', '0000-00-00', '0000-00-00', 0, '');
+(5530, 'New Client', 'kjlk', '0000-00-00', '0000-00-00', '', 'lkjlkj', '', '0000-00-00', '0000-00-00', 0, 'in Production'),
+(5531, 'ABC COMPANY', 'print it', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '2016-06-24', 0, ''),
+(5532, 'ABC COMPANY', 'print this', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
+(5533, 'ABC COMPANY', 'print this', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
+(5534, 'ABC COMPANY', 'print this', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
+(5535, 'Simpsons', 'Hello There', '2016-05-04', '2016-05-26', 'JS', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, 'waiting for data'),
+(5536, 'ABC COMPANY', 'print this', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
+(5537, 'Simpsons', 'Hello There', '2016-05-04', '2016-05-26', 'JS', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, 'waiting for data'),
+(5538, 'Simpsons', 'Hello There', '2016-05-04', '2016-05-26', 'JS', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, 'waiting for data'),
+(5539, 'Simpsons', 'Hello There', '2016-05-04', '2016-05-26', 'JS', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, 'waiting for data'),
+(5540, 'Simpsons', 'Hello There', '2016-05-04', '2016-05-26', 'JS', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, 'waiting for data'),
+(5541, 'Simpsons', 'Hello There', '2016-05-04', '2016-05-26', 'JS', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, 'waiting for data'),
+(5542, 'Simpsons', 'Hello There', '2016-05-04', '2016-05-26', 'JS', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, 'waiting for data'),
+(5543, 'Simpsons', 'Hello There', '2016-05-04', '2016-05-26', 'JS', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, 'waiting for data'),
+(5544, 'Simpsons', 'Hello There', '2016-05-04', '2016-05-26', 'JS', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, 'waiting for data'),
+(5545, 'Simpsons', 'Hello There', '2016-05-04', '2016-05-26', 'JS', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, 'waiting for data'),
+(5546, 'Simpsons', 'Hello There', '2016-05-04', '2016-05-26', 'JS', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, 'waiting for data'),
+(5547, 'Simpsons', 'Hello There', '2016-05-04', '2016-05-26', 'JS', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, 'waiting for data'),
+(5548, 'Simpsons', 'Hello There', '2016-05-04', '2016-05-26', 'JS', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, 'waiting for data'),
+(5549, 'Simpsons', 'Hello There', '2016-05-04', '2016-05-26', 'JS', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, 'waiting for data'),
+(5550, 'Simpsons', 'Hello There', '2016-05-04', '2016-05-26', 'JS', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, 'waiting for data'),
+(5551, 'Simpsons', 'drinks water', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
+(5552, 'Simpsons', 'drinks water', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
+(5553, 'Simpsons', 'drinks water', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
+(5554, 'ABC COMPANY', 'print this', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
+(5555, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
+(5556, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
+(5557, 'ABC COMPANY', '12345', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
+(5558, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
+(5559, 'john Snow', 'kills', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
+(5560, 'john Snow', 'kills', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
+(5561, 'john Snow', 'kills', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
+(5562, 'Somebody', 'is a ghost', '2016-05-17', '2016-05-28', 'KM', '789', '', '2016-05-04', '0000-00-00', 0, ''),
+(5563, 'Somebody', 'is a ghost', '2016-05-17', '2016-05-28', 'KM', '789', '', '2016-05-04', '0000-00-00', 0, ''),
+(5564, 'Somebody', 'is a ghost', '2016-05-17', '2016-05-28', 'KM', '789', '', '2016-05-04', '0000-00-00', 0, ''),
+(5565, 'ABC COMPANY', 'print it', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
+(5566, 'ABC COMPANY', 'print it', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
+(5567, 'ABC COMPANY', 'nail it', '2016-05-03', '2016-05-21', 'KM', '', '', '0000-00-00', '0000-00-00', 0, 'in Production'),
+(5568, 'Simpsons', 'Hello There', '2016-05-04', '2016-05-26', 'JS', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, 'waiting for data'),
+(5569, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
+(5570, 'DickButt', 'loves to work', '2016-04-07', '2016-04-09', 'AB', '1234', 'fdhj ', '2016-04-23', '2016-04-28', 12, 'on hold'),
+(5571, 'Femina', 'Yellow Sheet', '0000-00-00', '2016-05-19', 'FP', '', '', '0000-00-00', '0000-00-00', 0, 'in P.M.'),
+(5572, 'ABC COMPANY', 'print it', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
+(5573, 'ABC COMPANY', 'nail it', '2016-05-03', '2016-05-21', 'KM', '', '', '0000-00-00', '0000-00-00', 0, 'in Production'),
+(5574, 'Femina', 'makes website', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
+(5575, 'Somebody', 'rebel', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
+(5576, 'Simpsons', 'drinks water', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
+(5577, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
+(5578, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
+(5579, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
+(5580, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
+(5581, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
+(5582, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
+(5583, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
+(5584, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
+(5585, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
+(5586, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
+(5587, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
+(5588, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
+(5589, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
+(5590, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
+(5591, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
+(5592, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
+(5593, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
+(5594, 'Femina', 'Yellow Sheet', '0000-00-00', '2016-05-19', 'FP', '', '', '0000-00-00', '0000-00-00', 0, 'in P.M.'),
+(5595, 'Steve', '', '0000-00-00', '0000-00-00', '', '456', 'dfgdfgdfgdfg', '0000-00-00', '0000-00-00', 654, 'in Production'),
+(5596, 'Steve', '', '0000-00-00', '0000-00-00', '', '456', 'dfgdfgdfgdfg', '0000-00-00', '0000-00-00', 654, 'in Production'),
+(5597, 'Steve', '', '0000-00-00', '0000-00-00', '', '456', 'dfgdfgdfgdfg', '0000-00-00', '0000-00-00', 654, 'in Production'),
+(5598, 'Steve', '', '0000-00-00', '0000-00-00', '', '456', 'dfgdfgdfgdfg', '0000-00-00', '0000-00-00', 654, 'in Production'),
+(5599, 'Steve', '', '0000-00-00', '0000-00-00', '', '456', 'dfgdfgdfgdfg', '0000-00-00', '0000-00-00', 654, 'in Production'),
+(5600, 'Led Zeppelin', 'Get the led out', '2016-07-13', '2016-07-13', 'SA', '34', 'kjhkjhj', '2016-07-13', '2016-07-13', 45, 'in Production');
 
 -- --------------------------------------------------------
 
@@ -346,20 +449,20 @@ INSERT INTO `job_ticket` (`job_id`, `client_name`, `project_name`, `ticket_date`
 
 DROP TABLE IF EXISTS `mail_data`;
 CREATE TABLE IF NOT EXISTS `mail_data` (
-  `job_id` int(11) NOT NULL,
+  `job_id` int(45) NOT NULL,
   `data_loc` text NOT NULL,
-  `records_total` int(11) NOT NULL,
-  `domestic` int(11) NOT NULL,
+  `records_total` int(45) NOT NULL,
+  `domestic` int(45) NOT NULL,
   `foreigns` int(45) NOT NULL,
   `data_source` varchar(45) NOT NULL,
   `data_received` date NOT NULL,
   `data_completed` date NOT NULL,
   `processed_by` varchar(45) DEFAULT NULL,
   `dqr_sent` date NOT NULL,
-  `exact` varchar(3) NOT NULL,
-  `mail_foreigns` varchar(3) NOT NULL,
-  `household` varchar(3) NOT NULL,
-  `ncoa` varchar(3) NOT NULL,
+  `exact` varchar(15) NOT NULL,
+  `mail_foreigns` varchar(15) NOT NULL,
+  `household` varchar(15) NOT NULL,
+  `ncoa` varchar(15) NOT NULL,
   PRIMARY KEY (`job_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -377,10 +480,20 @@ INSERT INTO `mail_data` (`job_id`, `data_loc`, `records_total`, `domestic`, `for
 (5519, 's', 0, 0, 0, 'fsdf', '2016-06-07', '2016-06-03', 'SA', '0000-00-00', 'sdf', 'sdf', 'sdf', 'dsd'),
 (5520, '', 456, 0, 0, '', '0000-00-00', '0000-00-00', 'RP', '0000-00-00', '', '', '', ''),
 (5521, '', 2500, 2000, 500, '', '2016-05-04', '2016-05-05', 'RP', '2016-05-12', '50', 'YES', 'YES', ''),
-(5522, '', 0, 0, 0, '', '0000-00-00', '0000-00-00', '', '0000-00-00', '', '', '', ''),
+(5522, 'erer', 0, 0, 0, 'rer', '0000-00-00', '0000-00-00', 'KM', '0000-00-00', 'wer', 'wew', '', ''),
 (5523, '', 0, 0, 0, '', '2016-06-22', '2016-06-20', 'SA', '2016-06-20', '', '', '', ''),
 (5524, '', 0, 0, 0, '', '0000-00-00', '0000-00-00', 'AB', '0000-00-00', '', '', '', ''),
-(5530, 'lk', 0, 0, 0, 'lk', '0000-00-00', '0000-00-00', '', '0000-00-00', 'lkj', 'ljl', 'kjl', 'kjl');
+(5530, 'lk', 0, 0, 0, 'lk', '0000-00-00', '0000-00-00', 'KM', '0000-00-00', 'lkj', 'ljl', 'kjl', 'kjl'),
+(5531, '', 0, 0, 0, '', '0000-00-00', '0000-00-00', 'AB', '0000-00-00', '', '', '', ''),
+(5532, '', 0, 0, 0, '', '0000-00-00', '0000-00-00', 'AB', '0000-00-00', '', '', '', ''),
+(5551, '', 0, 0, 0, '', '0000-00-00', '0000-00-00', 'AB', '0000-00-00', '', '', '', ''),
+(5557, '', 0, 0, 0, '', '0000-00-00', '0000-00-00', 'RP', '0000-00-00', '', '', '', ''),
+(5559, '', 0, 0, 0, '', '0000-00-00', '0000-00-00', 'AB', '0000-00-00', '', '', '', ''),
+(5562, '', 0, 0, 0, '', '0000-00-00', '0000-00-00', 'AB', '0000-00-00', '', '', '', ''),
+(5570, ' c ll wer vg', 12, 96, 456, 'fgfgt', '2016-04-07', '2016-04-21', 'FP', '2016-04-06', '32', '86', '867', '876'),
+(5571, '', 123, 0, 0, '', '0000-00-00', '0000-00-00', 'KM', '0000-00-00', '', '', '', ''),
+(5574, '', 0, 0, 0, '', '0000-00-00', '0000-00-00', 'KM', '0000-00-00', '', '', '', ''),
+(5600, 'lkj', 234, 98, 89, '89', '2016-07-13', '2016-07-13', '', '2016-07-12', '89', '98', '89', '89');
 
 -- --------------------------------------------------------
 
@@ -408,19 +521,30 @@ CREATE TABLE IF NOT EXISTS `mail_info` (
 --
 
 INSERT INTO `mail_info` (`job_id`, `mail_class`, `rate`, `processing_category`, `mail_dim`, `weights_measures`, `permit`, `bmeu`, `based_on`, `non_profit_number`) VALUES
+(0, '123', '12', '', '', '', '', '', '', 0),
 (5509, '', '', '', '', '', '', '', '', 0),
 (5514, '', '', '', '', '', '', '', '', 0),
 (5515, '123', '12', '', '', '', '', '', '', 0),
 (5516, '', '', '', '', '', '', '', '', 0),
-(5517, '', '', '', '', '', '', '', '', 0),
 (5518, 'fdasdff', '34', 'sdfsadf', 'fdsa', 'gffgh', 'dgf', 'dfgd', 'fgdfg', 0),
 (5519, 'sdf', 'sdf', 'sdf', 'sf', 'sdf', 'sd', 'sa', 's', 0),
 (5520, '', '', '', '', '', '', '', '', 0),
 (5521, 'First Class', 'Auto', 'Letter', '#10 Envelope', '.75 in x .45 lb', '473', 'Newburgh, NY 12550', '50', 103838),
-(5522, '', '', '', '', '', '', '', '', 0),
+(5522, 'werwer', 'wwer', 'wer', 'wer', 'werere', 'wewe', 'wer', 'ree', 0),
 (5523, '', '', '', '', '', '', '', '', 0),
 (5524, '', '', '', '', '', '', '', '', 0),
-(5530, 'lkjlkjl', 'lkj', 'lkj', 'lkj', 'lkl', 'kjl', 'kjlk', 'jlk', 0);
+(5530, 'lkjlkjl', 'lkj', 'lkj', 'lkj', 'lkl', 'kjl', 'kjlk', 'jlk', 0),
+(5531, '1st class', '123', '', '', '', '', '', '', 0),
+(5532, '1st class', '123', '', '', '', '', '', '', 0),
+(5551, '', '', '', '', '', '', '', '', 0),
+(5557, '', '', '', '', '', '', '', '', 0),
+(5559, '', '', '', '', '', '', '', '', 0),
+(5562, '', '', '', '', '', '', '', '', 0),
+(5569, '123', '12', '', '', '', '', '', '', 0),
+(5570, 'asd', 'dsf', 'bf', 'fg', 'gd', 'dg', 'fg', 'fg', 123),
+(5571, '1st class', '1230', '', '', '', '', '', '', 0),
+(5574, '', '', '', '', '', '', '', '', 0),
+(5600, '1st class', '78', 'poi', '89', '98', '98', 'lkj', '89', 980);
 
 -- --------------------------------------------------------
 
@@ -450,9 +574,13 @@ CREATE TABLE IF NOT EXISTS `materials` (
 --
 
 INSERT INTO `materials` (`job_id`, `received`, `location`, `checked_in`, `material`, `type`, `quantity`, `vendor`, `height`, `weight`, `size`, `based_on`) VALUES
-(5509, '2016-05-31', 'somewhere', 'eee', '', '', 1, 'Femina34534', 12, 223, '33', 5),
-(5514, '0000-00-00', '09', '09', '0', '', 0, 'Femina', 0, 0, 'uoiu', 0),
-(5515, '2016-06-24', 'ljljl', 'lkj', 'lk', 'jlkj', 0, 'Femina', 0, 0, 'jlkj', 0);
+(5509, '2016-06-30', '', 'eee', '', '', 1, 'Femina34534', 12, 223, '33', 5),
+(5514, '2016-06-30', '', '09', '0', '', 0, 'Femina', 0, 0, 'uoiu', 0),
+(5515, '2016-06-29', 'ljljl', 'lkj', 'lk', 'jlkj', 0, 'Femina', 0, 0, 'jlkj', 0),
+(5516, '2016-06-14', '', 'sdf', 'sdfsdf', 'sdfsd', 0, 'Sample', 0, 0, 'dsdfsd', 0),
+(5517, '2016-07-20', ' ', 'PO', 'poio', 'popoi', 34, 'Femina', 7, 89, '9', 0),
+(5518, '2016-06-30', '', 'JJ', 'some shit', 'kjlkj', 0, 'Jezz', 0, 0, 'lkj', 0),
+(5519, '2016-07-11', ' ', 'po', 'lkl', '9', 78, 'Femina', 89, 99, '8', 567);
 
 -- --------------------------------------------------------
 
@@ -492,7 +620,44 @@ INSERT INTO `production` (`job_id`, `hold_postage`, `postage_paid`, `print_templ
 (5522, 'no', 'no', '', '', '', '', '', '', ''),
 (5523, 'no', 'no', '', '', '', '', '', '', ''),
 (5524, 'yes', 'yes', '', '', '', '', '', '', ''),
-(5530, 'no', 'no', 'lkj', 'lkj', 'lkj', 'Letter Printing', '', 'lkj', 'lkj');
+(5530, 'no', 'no', 'lkj', 'lkj', 'lkj', 'Letter Printing', '', 'lkj', 'lkj'),
+(5531, 'yes', 'yes', '', '', '', '', '', '', ''),
+(5532, 'yes', 'yes', '', '', '', '', '', '', ''),
+(5551, 'yes', 'yes', '', '', '', '', '', '', ''),
+(5557, 'yes', 'yes', '', '', '', '', '', '', ''),
+(5559, 'yes', 'yes', '', '', '', '', '', '', ''),
+(5562, 'yes', 'yes', '', '', '', '', '', '', ''),
+(5570, 'yes', 'yes', 'sdsfdbv', 'fhghnj', 'ghj', '', 'd', 'dftg', 'trg'),
+(5571, 'yes', 'yes', '', '', '', '', '', '', ''),
+(5574, 'yes', 'yes', '', '', '', '', '', '', ''),
+(5600, 'yes', 'yes', '789', '987', '9878', 'Letter Printing', 'llkjkl', 'lkjlkj', 'lkjlkj');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `production_data`
+--
+
+DROP TABLE IF EXISTS `production_data`;
+CREATE TABLE IF NOT EXISTS `production_data` (
+  `id` varchar(30) NOT NULL,
+  `total_records` int(11) NOT NULL,
+  `records_per` int(11) NOT NULL,
+  `time_number` int(11) NOT NULL,
+  `time_unit` varchar(75) NOT NULL,
+  `people` varchar(50) NOT NULL,
+  `employees` varchar(200) NOT NULL,
+  `job` varchar(75) NOT NULL,
+  `hours` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `production_data`
+--
+
+INSERT INTO `production_data` (`id`, `total_records`, `records_per`, `time_number`, `time_unit`, `people`, `employees`, `job`, `hours`) VALUES
+('1', 10000, 100, 1, 'hr.', '2', 'sayre, jshwat', 'Tabbing', 50),
+('2', 10000, 50, 10, 'min.', '1', 'jshwat', 'Printing', 33.3333);
 
 -- --------------------------------------------------------
 
@@ -536,7 +701,12 @@ CREATE TABLE IF NOT EXISTS `reminder` (
 INSERT INTO `reminder` (`id`, `user`, `text`, `date`, `vendor_name`, `client_name`) VALUES
 ('2', 'sayre', 'ertert', '2016-06-22', 'Femina', 'New Client'),
 ('3', 'sayre', 'Call Jill', '2016-06-16', '', 'Jill Lewis'),
-('4', 'admin', 'Call Jill', '2016-06-14', '', 'Jill Lewis');
+('4', 'admin', 'Call Jill', '2016-06-14', '', 'Jill Lewis'),
+('', 'sayre', 'My new reminder', '2016-06-29', '', ''),
+('', 'sayre', 'Upcoming Reminder', '2016-07-02', '', ''),
+('', 'sayre', 'Theres a thing today', '2016-06-04', '', ''),
+('', 'sayre', 'Heres a thing', '2016-06-01', '', ''),
+('', 'sayre', 'Thing today', '2016-07-03', '', '');
 
 -- --------------------------------------------------------
 
@@ -558,7 +728,7 @@ CREATE TABLE IF NOT EXISTS `timestamp` (
 
 INSERT INTO `timestamp` (`user`, `time`, `job`, `a_p`) VALUES
 ('sayre', '2016-06-09 10:54:43', 'updated client info', 'PM'),
-('sayre', '2016-06-09 10:57:21', 'deleted client info', 'PM'),
+('sayre', '2016-06-28 15:43:12', 'deleted client info', ''),
 ('sayre', '2016-06-09 11:12:57', 'added new client', 'PM'),
 ('sayre', '2016-06-09 11:20:05', 'updated vendor', 'PM'),
 ('sayre', '2016-06-09 11:23:31', 'added new vendor', 'PM'),
@@ -573,8 +743,7 @@ INSERT INTO `timestamp` (`user`, `time`, `job`, `a_p`) VALUES
 ('sayre', '2016-06-13 11:18:56', 'added new client', 'AM'),
 ('sayre', '2016-06-13 11:21:58', 'added new client', 'AM'),
 ('sayre', '2016-06-13 11:22:27', 'added new client', 'AM'),
-('sayre', '2016-06-13 11:23:48', 'deleted client info', 'AM'),
-('sayre', '2016-06-13 11:23:52', 'deleted client info', 'AM'),
+('sayre', '2016-06-28 15:43:12', 'deleted client info', 'PM'),
 ('sayre', '2016-06-13 11:24:16', 'added new weights and measure', 'AM'),
 ('sayre', '2016-06-13 11:25:57', 'added new vendor', 'AM'),
 ('sayre', '2016-06-13 11:26:26', 'added new weights and measure', 'AM'),
@@ -612,7 +781,7 @@ INSERT INTO `timestamp` (`user`, `time`, `job`, `a_p`) VALUES
 ('sayre', '2016-06-13 15:25:09', 'deleted doc', 'PM'),
 ('sayre', '2016-06-13 15:25:24', 'added new client', 'PM'),
 ('sayre', '2016-06-13 15:25:34', 'updated client info', 'PM'),
-('sayre', '2016-06-13 15:25:43', 'deleted client info', 'PM'),
+('sayre', '0000-00-00 00:00:00', 'added new weights and measure', ''),
 ('sayre', '2016-06-13 15:25:55', 'added new vendor', 'PM'),
 ('sayre', '2016-06-13 15:26:04', 'updated vendor', 'PM'),
 ('sayre', '2016-06-13 15:26:13', 'deleted vendor', 'PM'),
@@ -624,14 +793,85 @@ INSERT INTO `timestamp` (`user`, `time`, `job`, `a_p`) VALUES
 ('sayre', '2016-06-13 15:30:36', 'deleted w&m', 'PM'),
 ('sayre', '2016-06-13 15:31:44', 'added new w&m', 'PM'),
 ('sayre', '2016-06-13 15:33:03', 'created job ticket', 'PM'),
-('sayre', '2016-06-13 15:58:41', 'deleted client info', 'PM'),
+('sayre', '0000-00-00 00:00:00', 'added new vendor', ''),
 ('sayre', '2016-06-14 09:48:50', 'updated client info', 'AM'),
 ('sayre', '2016-06-14 13:22:17', 'created job ticket', 'PM'),
-('sayre', '2016-06-14 13:40:51', 'deleted client info', 'PM'),
 ('sayre', '2016-06-14 14:15:21', 'updated client info', 'PM'),
 ('sayre', '2016-06-14 14:16:41', 'updated client info', 'PM'),
 ('admin', '2016-06-15 09:06:46', 'updated client info', 'AM'),
-('admin', '2016-06-15 16:47:27', 'added new client', 'PM');
+('admin', '2016-06-15 16:47:27', 'added new client', 'PM'),
+('sayre', '2016-06-28 09:18:42', 'added new client', 'AM'),
+('sayre', '2016-06-28 09:19:04', 'added new client', 'AM'),
+('sayre', '2016-06-28 09:19:25', 'added new client', 'AM'),
+('sayre', '2016-06-28 09:20:13', 'added new client', 'AM'),
+('sayre', '2016-06-28 09:20:32', 'added new client', 'AM'),
+('sayre', '2016-06-28 09:56:18', 'added new client', 'AM'),
+('sayre', '2016-06-28 15:21:37', 'added new client', 'PM'),
+('sayre', '2016-06-28 15:26:10', 'updated client info', 'PM'),
+('sayre', '2016-06-28 15:26:28', 'updated client info', 'PM'),
+('sayre', '2016-06-28 15:32:21', 'deleted client info', 'PM'),
+('sayre', '2016-06-28 15:28:57', 'added new client', 'PM'),
+('sayre', '2016-06-28 15:32:14', 'added new client', 'PM'),
+('sayre', '2016-06-28 16:01:26', 'updated vendor', 'PM'),
+('sayre', '2016-06-28 16:01:26', 'updated vendor', 'PM'),
+('sayre', '2016-06-28 16:02:23', 'updated vendor', 'PM'),
+('sayre', '2016-06-28 16:02:45', 'deleted vendor', 'PM'),
+('sayre', '2016-06-28 16:04:01', 'added new vendor', 'PM'),
+('sayre', '2016-06-28 16:48:28', 'added popular Weights and Measures', 'PM'),
+('sayre', '0000-00-00 00:00:00', 'added new doc', ''),
+('sayre', '2016-06-29 09:17:53', 'added documentation', 'AM'),
+('sayre', '0000-00-00 00:00:00', 'updated doc', ''),
+('sayre', '2016-06-29 09:19:36', 'added documentation', 'AM'),
+('sayre', '2016-06-29 09:21:04', 'added documentation', 'AM'),
+('sayre', '2016-06-29 09:33:28', 'added documentation', 'AM'),
+('sayre', '2016-06-29 09:34:58', 'deleted documentation', 'AM'),
+('sayre', '2016-06-29 09:35:23', 'updated documentation', 'AM'),
+('sayre', '2016-06-29 09:36:02', 'updated documentation', 'AM'),
+('sayre', '2016-06-29 09:36:05', 'updated documentation', 'AM'),
+('sayre', '0000-00-00 00:00:00', 'added new w&m', ''),
+('sayre', '2016-06-29 10:38:47', 'updated vendor', 'AM'),
+('sayre', '2016-06-29 10:40:26', 'added weights and measure', 'AM'),
+('sayre', '2016-06-29 11:17:24', 'updated weights and measure', 'AM'),
+('sayre', '2016-06-29 11:23:12', 'updated weights and measure', 'AM'),
+('sayre', '2016-06-29 11:25:31', 'updated weights and measure', 'AM'),
+('sayre', '2016-06-29 11:27:15', 'deleted weights and measure', 'AM'),
+('sayre', '0000-00-00 00:00:00', 'created job ticket', ''),
+('sayre', '0000-00-00 00:00:00', 'created job ticket', ''),
+('sayre', '2016-06-29 15:03:46', 'created job ticket', ''),
+('sayre', '2016-06-29 15:13:37', 'created job ticket', 'PM'),
+('sayre', '2016-06-29 15:15:39', 'created job ticket', 'PM'),
+('sayre', '2016-06-29 15:16:09', 'created job ticket', 'PM'),
+('sayre', '2016-06-29 15:23:37', 'created job ticket', 'PM'),
+('sayre', '2016-06-29 15:27:05', 'created job ticket', 'PM'),
+('sayre', '0000-00-00 00:00:00', 'updated job ticket', ''),
+('sayre', '0000-00-00 00:00:00', 'updated job ticket', ''),
+('sayre', '0000-00-00 00:00:00', 'updated job ticket', ''),
+('sayre', '2016-06-29 16:32:01', 'created job ticket', 'PM'),
+('sayre', '2016-06-29 16:37:29', 'created job ticket', 'PM'),
+('sayre', '2016-06-29 16:46:12', 'created job ticket', 'PM'),
+('sayre', '2016-06-29 16:53:16', 'created job ticket', 'PM'),
+('sayre', '0000-00-00 00:00:00', 'updated job ticket', ''),
+('sayre', '2016-07-04 18:01:01', 'added weights and measure', 'PM'),
+('sayre', '2016-07-04 18:01:54', 'added weights and measure', 'PM'),
+('sayre', '2016-07-04 18:03:18', 'added weights and measure', 'PM'),
+('sayre', '2016-07-04 18:04:13', 'added weights and measure', 'PM'),
+('sayre', '2016-07-04 18:05:04', 'added weights and measure', 'PM'),
+('sayre', '2016-07-04 18:07:39', 'added weights and measure', 'PM'),
+('sayre', '2016-07-04 18:08:04', 'added weights and measure', 'PM'),
+('sayre', '2016-07-04 18:09:34', 'added weights and measure', 'PM'),
+('sayre', '2016-07-04 18:11:05', 'added weights and measure', 'PM'),
+('sayre', '2016-07-04 18:16:43', 'added new client', 'PM'),
+('sayre', '2016-07-04 19:14:23', 'added new client', 'PM'),
+('sayre', '2016-07-04 19:14:40', 'added new client', 'PM'),
+('sayre', '2016-07-04 19:18:51', 'added new client', 'PM'),
+('sayre', '2016-07-04 19:19:39', 'added new client', 'PM'),
+('sayre', '2016-07-04 19:20:13', 'added new client', 'PM'),
+('sayre', '2016-07-04 19:21:32', 'added weights and measure', 'PM'),
+('sayre', '2016-07-04 19:22:03', 'added weights and measure', 'PM'),
+('sayre', '2016-07-04 19:27:28', 'deleted client info', 'PM'),
+('sayre', '2016-07-04 19:28:50', 'deleted client info', 'PM'),
+('sayre', '2016-07-04 21:52:09', 'created job ticket', 'PM'),
+('sayre', '2016-07-04 21:57:09', 'created job ticket', 'PM');
 
 -- --------------------------------------------------------
 
@@ -658,7 +898,9 @@ CREATE TABLE IF NOT EXISTS `users` (
 INSERT INTO `users` (`user`, `password`, `initial`, `department`, `email`, `first_name`, `last_name`, `title`) VALUES
 ('admin', 'test', 'AD', 'Sales', 'r@fvf.com', 'Paul', 'Schmidt', 'ADMIN'),
 ('sayre', '1234', 'SA', 'Sales', 'e@aol.com', 'Stephen', 'Ayre', 'MEMBER'),
-('jshwat', 'sdfsdf', 'JJ', 'Customer Service', 'Js@k.com', 'Jim', 'John', 'MEMBER');
+('jshwat', 'sdfsdf', 'JJ', 'Customer Service', 'Js@k.com', 'Jim', 'John', 'MEMBER'),
+('jjones', 'sdfsdf', 'JJ', 'Customer Service', 't@aol.com', 'James', 'Jones', 'MEMBER'),
+('sdfsdf', 'sdfsdf', 'SS', 'Development', '4@asdasd', 'sdfsdf', 'sdfsdf', 'MEMBER');
 
 -- --------------------------------------------------------
 
@@ -687,7 +929,8 @@ INSERT INTO `vendors` (`vendor_name`, `vendor_contact`, `vendor_add`, `vendor_em
 ('Greg', 'kklj', 'kjlk', 'kkkklj', 'jlkjl', 'lkj'),
 ('Jezz', 'jessica treryery', '314 rockavilsdfds', 'sf@fg.com', '123', 's.com'),
 ('Kevin', 'Kevin Mc Awe', '31 crst', 'k@gmail.com', '1234567896', 'k.com'),
-('Sample', 'oiuoiu', 'oiuoiu', 'uoiuoi', 'oioiuo', 'uoiu');
+('Sample', 'oiuoiu', 'oiuoiu', 'uoiuoi', 'oioiuo', 'uoiu'),
+('Venderoni', 'klkj', 'kjlkjl', 'lkjkljlk', 'kjlkj', 'jlkjklj');
 
 -- --------------------------------------------------------
 
@@ -725,7 +968,9 @@ INSERT INTO `w_and_m` (`vendor`, `material`, `size`, `height`, `weight`, `based_
 ('Femina', 'Posts', '56', '7', '8', '1'),
 ('Femina', 'ioi', '3', '12', '12', '1'),
 ('Greg', 'Posts', '23', '1', '123', '1'),
-('Femina', 'po', '2', '3', '9', '1');
+('Femina', 'po', '2', '3', '9', '1'),
+('Vendoroni', 'Post Cards', '5', '3', '2', '1'),
+('Venderoni', 'Posts', '45', '45', '3', '20');
 
 -- --------------------------------------------------------
 
@@ -736,21 +981,21 @@ INSERT INTO `w_and_m` (`vendor`, `material`, `size`, `height`, `weight`, `based_
 DROP TABLE IF EXISTS `yellow_sheet`;
 CREATE TABLE IF NOT EXISTS `yellow_sheet` (
   `job_id` int(11) NOT NULL,
-  `1` tinyint(1) NOT NULL,
-  `2` tinyint(1) NOT NULL,
-  `3` tinyint(1) NOT NULL,
-  `4` tinyint(1) NOT NULL,
-  `5` tinyint(1) NOT NULL,
-  `6` tinyint(1) NOT NULL,
-  `7` tinyint(1) NOT NULL,
-  `8` tinyint(1) NOT NULL,
-  `9` tinyint(1) NOT NULL,
-  `10` tinyint(1) NOT NULL,
-  `11` tinyint(1) NOT NULL,
-  `12` tinyint(1) NOT NULL,
-  `13` tinyint(1) NOT NULL,
-  `14` tinyint(1) NOT NULL,
-  `percent` float NOT NULL,
+  `1` tinyint(1) NOT NULL DEFAULT '0',
+  `2` tinyint(1) NOT NULL DEFAULT '0',
+  `3` tinyint(1) NOT NULL DEFAULT '0',
+  `4` tinyint(1) NOT NULL DEFAULT '0',
+  `5` tinyint(1) NOT NULL DEFAULT '0',
+  `6` tinyint(1) NOT NULL DEFAULT '0',
+  `7` tinyint(1) NOT NULL DEFAULT '0',
+  `8` tinyint(1) NOT NULL DEFAULT '0',
+  `9` tinyint(1) NOT NULL DEFAULT '0',
+  `10` tinyint(1) NOT NULL DEFAULT '0',
+  `11` tinyint(1) NOT NULL DEFAULT '0',
+  `12` tinyint(1) NOT NULL DEFAULT '0',
+  `13` tinyint(1) NOT NULL DEFAULT '0',
+  `14` tinyint(1) NOT NULL DEFAULT '0',
+  `percent` float NOT NULL DEFAULT '0',
   UNIQUE KEY `job_id` (`job_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -771,7 +1016,13 @@ INSERT INTO `yellow_sheet` (`job_id`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9
 (5522, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 (5523, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 (5524, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5530, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+(5530, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5531, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5532, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5551, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5570, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5571, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5600, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

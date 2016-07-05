@@ -96,7 +96,7 @@ while($row3 = $result3->fetch_assoc()){
 	}
 }
 
-$job_id = $count + 1 + "";
+$job_id = $count + 1;
 
 $sql = "INSERT INTO job_ticket(job_id, client_name,project_name,ticket_date,due_date,created_by,special_instructions,materials_ordered,materials_expected,estimate_number,expected_quantity,job_status) VALUES ('$job_id','$client_name', '$project_name', '$ticket_date', '$due_date','$created_by','$special_instructions','$materials_ordered','$materials_expected','$estimate_number','$expected_quantity','$job_status')";
 $result = $conn->query($sql) or die('Error querying database 0.');
@@ -129,7 +129,7 @@ $result9= $conn->query($sql8) or die('Error querying database 8.');
 
 $conn->close();
 
-header("location: http://localhost/crst_dashboard/job_ticket.php");
+header("location: job_ticket.php");
 exit();
 
 ?>

@@ -17,7 +17,7 @@ $result7 = $conn->query($sql6) or die('Error querying database 5.');
 
 $job_id = $_POST['job_id'];
 $received = $_POST['received'];
-$location = $_POST['location'];
+//$location = $_POST['location'];
 $checked_in = $_POST['checked_in'];
 $material = $_POST['material'];
 $type = $_POST['type'];
@@ -28,11 +28,11 @@ $weight = $_POST['weight'];
 $size = $_POST['size'];
 $based_on = $_POST['based_on'];
 
-$sql = "INSERT INTO materials(job_id,received,location,checked_in,material,type,vendor,quantity,height,weight,size,based_on) VALUES ('$job_id','$received','$location','$checked_in','$material','$type','$vendor','$quantity','$height','$weight','$size','$based_on')";
+$sql = "INSERT INTO materials(job_id,received,location,checked_in,material,type,vendor,quantity,height,weight,size,based_on) VALUES ('$job_id','$received',' ','$checked_in','$material','$type','$vendor','$quantity','$height','$weight','$size','$based_on')";
 $result = $conn->query($sql) or die('Error querying database.');
  
 $conn->close();
-header("location: http://localhost/crst_dashboard/weights_and_measure.php ");
+header("location: weights_and_measure.php");
 exit();
 ?>
 </div>

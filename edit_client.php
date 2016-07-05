@@ -42,7 +42,7 @@ if(isset($_POST['delete_form'])){
 	$sql_delete = "DELETE FROM client_info WHERE '$client_name' = client_name";
 	mysqli_query($conn, $sql_delete);
 	$conn->close();
-	header("location: http://localhost/crst_dashboard/clients.php");
+	header("location: clients.php");
 	exit();
 }
 if(isset($_POST['submit_form'])){
@@ -72,7 +72,7 @@ if(isset($_POST['submit_form'])){
 	$result = $conn->query($sql) or die('Error querying database.');
 	 
 	$conn->close();
-	header("location: http://localhost/crst_dashboard/clients.php ");
+	header("location: clients.php ");
 	exit();
 }
 ?>

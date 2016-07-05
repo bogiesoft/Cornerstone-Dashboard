@@ -53,6 +53,7 @@ $conn->close();
 	<div class="allcontacts-breadcrumbsleft pull-left page-control">
 	<nav>
 		<ul class = "pagination" id = "pag">
+			<li id = 'prev_button' class = 'previous' style = 'display:none;' onclick = "prevPage();">Prev</li>
 		</ul>
 	</nav>
 	</div>
@@ -76,6 +77,8 @@ $conn->close();
 <script>
 
 var numPerPage = 10;
+var subtractValue = 3;
+var prevSubValue = 4;
 
 $("#search").keyup(function(){
         _this = this;
@@ -117,19 +120,122 @@ function pageCreator(){
 			}).appendTo($ul).addClass('current');
 			count = count + 1;
 		}
-		if(numPages > 1){
-			$("<li class = 'next' onclick = nextPage();>Next</li>").appendTo($ul);
+		if(numPages > 5){
+			$("<li id = 'next_button' class = 'next' onclick = nextPage();>Next</li>").appendTo($ul);
 		}
 	});
 	document.getElementById("id1").className = "current clickable";
+	var ul = document.getElementById("pag");
+	
+	if(ul.childNodes.length > 5){
+		for(var i = 6; i < ul.childNodes.length - 1; i++){
+			ul.children[i].style.display = "none";
+			document.getElementById("next_button").style.display = "inline";
+		}
+	}
 }
 function changeCount(){
 	numPerPage = parseInt(document.getElementById('item_count').value);
 	$('#pag').empty();
+	$("<li id = 'prev_button' class = 'previous' style = 'display:none;' onclick = prevPage();>Prev</li>").appendTo("#pag");
+	subtractValue = 1;
+	prevSubValue = 2;
 	pageCreator();
 }
+function prevPage(){
+	document.getElementById("next_button").style.display = "inline";
+	var ul = document.getElementById("pag");
+	var length1 = ul.childNodes.length - prevSubValue;
+	var oldDisplayIndex = 0;
+	for(var i = length1; i >= 1; i--){
+		if(ul.children[i].style.display == "inline"){
+			oldDisplayIndex = i;
+			break;
+		}
+	}
+	
+	var newDisplayIndex = 0;
+	for(var i = oldDisplayIndex; i >= 1; i--){
+		newDisplayIndex = i;
+		if(ul.children[i].style.display == "none"){
+			break;
+		}
+		else{
+			ul.children[i].style.display = "none";
+		}
+	}
+	
+	var count = 0;
+	var lastIndex = 0;
+	for(var i = newDisplayIndex; i >= 1; i--){
+		lastIndex = i;
+		if(count == 5){
+			break;
+		}
+		else{
+			//alert("Hi");
+			ul.children[i].style.display = "inline";
+			count = count + 1;
+		}
+	}
+	if(lastIndex == 1){
+		document.getElementById("prev_button").style.display = "none";
+	}
+}
 function nextPage(){
-	//code here
+	document.getElementById("prev_button").style.display = "inline";
+	var ul = document.getElementById("pag");
+	
+	var displayCount = 0;
+	var lastIndexCheck = 0;
+	for(var i = 1; i < ul.childNodes.length - 1; i++){
+		if(ul.children[i].style.display != "none"){
+			displayCount++;
+		}
+		lastIndexCheck = i;
+		if(displayCount == 5){
+			break;
+		}
+	}
+	if(lastIndexCheck != ul.childNodes.length - 2){
+		var oldDisplayIndex = 0;
+		for(var i = 1; i < ul.childNodes.length - 1; i++){
+			if(ul.children[i].style.display != "none"){
+				oldDisplayIndex = i;
+				break;
+			}
+		}
+		
+		var newDisplayIndex = 0;
+		for(var i = oldDisplayIndex; i < ul.childNodes.length - 1; i++){
+			if(ul.children[i].style.display == "none"){
+				newDisplayIndex = i;
+				break;
+			}
+			else{
+				ul.children[i].style.display = "none";
+			}
+		}
+		
+		var count = 0;
+		var lastIndex = 0;
+		for(var i = newDisplayIndex; i < (ul.childNodes.length - subtractValue); i++){
+			if(count == 5){
+				break;
+			}
+			else{
+				ul.children[i].style.display = "inline";
+				count = count + 1;
+				lastIndex = i;
+			}
+			if(i == ul.childNodes.length){
+				break;
+			}
+		}
+		if(count < 5 || ul.children[lastIndex + 1].className == "next"){
+			document.getElementById("next_button").style.display = "none";
+		}
+	}
 }
 </script>
 
