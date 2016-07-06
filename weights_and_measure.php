@@ -66,7 +66,7 @@ $conn->close();
 		</nav>
 	</div>
 	<div class="items-per-page-cont pull-right">
-		<label>Clients Per Page</label>
+		<label>W&M Per Page</label>
 		<select class="per-page-val" id = "item_count" onchange = "changeCount()" >
 			<option value="10">10</option>
 			<option value="25">25</option>

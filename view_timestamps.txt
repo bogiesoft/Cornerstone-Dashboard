@@ -1,0 +1,5 @@
+<?php
+require('header.php');
+require('connection.php');
+?>
+<div class="dashboard-cont" style="padding-top: 110px;">

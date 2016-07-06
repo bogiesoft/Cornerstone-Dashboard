@@ -49,7 +49,7 @@ if ($result->num_rows > 0) {
 		</nav>
 	</div>
 	<div class="items-per-page-cont pull-right">
-		<label>Clients Per Page</label>
+		<label>Jobs Per Page</label>
 		<select class="per-page-val" id = "item_count" onchange = "changeCount()">
 			<option value="10">10</option>
 			<option value="25">25</option>

@@ -22,27 +22,29 @@ require ("connection.php");
 
 
 
-$result = mysqli_query($conn,"SELECT * FROM invoice");
+$result = mysqli_query($conn,"SELECT * FROM users WHERE department = 'Customer Service'");
 
 
 echo " <div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
 echo "<tbody>";
 echo "<tr valign='top'><th class='allcontacts-title'>All Active Jobs<span class='allcontacts-subtitle'></span></th></tr>";
-echo "<tr valign='top'><td colspan='2'><table id = 'customer_s_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='job_id' data-index='0'>Job ID</th><th class='maintable-thtwo data-header' data-name='client_name' data-index='1'>Client Name</th><th class='maintable-thtwo data-header' data-name='project_name' data-index='2'>Job Name</th><th class='maintable-thtwo data-header' data-name='postage' data-index='3'>Postage</th><th class='maintable-thtwo data-header' data-name='invoice_number' data-index='4'>Invoice #</th><th class='maintable-thtwo data-header' data-name='residual_returned' data-index='5'>Residuals Returned</th><th class='maintable-thtwo data-header' data-name='2week_followup' data-index='6'>Follow Up</th><th class='maintable-thtwo data-header' data-name='notes' data-index='7'>Notes</th><th class='maintable-thtwo data-header' data-name='status' data-index='8'>Status</th><th class='maintable-thtwo data-header' data-name='reason' data-index='9'>Reason</th><th class='maintable-thnine'>Actions</th></tr></thead><tbody>";
+echo "<tr valign='top'><td colspan='2'><table id = 'customer_s_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='job_id' data-index='0'>Job ID</th><th class='maintable-thtwo data-header' data-name='client_name' data-index='1'>Client Name</th><th class='maintable-thtwo data-header' data-name='project_name' data-index='2'>Job Name</th><th class='maintable-thtwo data-header' data-name='postage' data-index='3'>Postage</th><th class='maintable-thtwo data-header' data-name='invoice_number' data-index='4'>Invoice #</th><th class='maintable-thtwo data-header' data-name='residual_returned' data-index='5'>Residuals Returned</th><th class='maintable-thtwo data-header' data-name='2week_followup' data-index='6'>Follow Up</th><th class='maintable-thtwo data-header' data-name='notes' data-index='7'>Notes</th><th class='maintable-thtwo data-header' data-name='status' data-index='8'>Status</th><th class='maintable-thtwo data-header' data-name='reason' data-index='9'>Reason</th></tr></thead><tbody>";
 
 
 if ($result->num_rows > 0) {
     // output data of each row
 	
     while($row = $result->fetch_assoc()) {
-		
-
-		$foo=$row['job_id'];
-		
-		$result1 = mysqli_query($conn,"SELECT * FROM job_ticket WHERE job_id = $foo");
-		$row1 = $result1->fetch_assoc();
-		
-		echo "<tr></th><td>".$row["job_id"]."</td><td>". $row1["client_name"]. "</td><td>". $row1["project_name"]. "</td><td>".  $row["postage"]."</td><td>". $row["invoice_number"]. "</td><td>". $row["residual_returned"]. "</td><td>". $row["2week_followup"]."</td><td>". $row["notes"]. "</td><td>". $row["status"]. "</td><td>". $row["reason"]. "</td><th>"."<a href='http://localhost/crst_dashboard/edit_cs.php?job_id=$foo'>"."Edit"."</a></tr>";
+		$temp=$row['user'];
+		$result1 = mysqli_query($conn,"SELECT * FROM job_ticket INNER JOIN mail_data ON job_ticket.job_id = mail_data.job_id AND mail_data.processed_by = '$temp'");
+		while($row1 = $result1->fetch_assoc()){
+			
+			$foo = $row1['job_id'];
+			$result2 = mysqli_query($conn, "SELECT * FROM invoice WHERE job_id = '$foo'");
+			$row2 = $result2->fetch_assoc();
+			
+			echo "<tr></th><td><a href='http://localhost/crst_dashboard/edit_cs.php?job_id=$foo'>".$row1["job_id"]."</a></td><td>". $row1["client_name"]. "</td><td>". $row1["project_name"]. "</td><td>".  $row2["postage"]."</td><td>". $row2["invoice_number"]. "</td><td>". $row2["residual_returned"]. "</td><td>". $row2["2week_followup"]."</td><td>". $row2["notes"]. "</td><td>". $row2["status"]. "</td><td>". $row2["reason"]. "</td></tr>";
+		}
     }
 	echo "</tbody></table></td></tr></tbody></table></div>";
 } else {

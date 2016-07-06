@@ -4,6 +4,11 @@ require ("connection.php");
 session_start();
 $job_id = $_SESSION["job_id"]; 
 
+if(isset($_POST['delete_form_archive'])){
+	mysqli_query($conn, "DELETE FROM archive_jobs WHERE job_id = '$job_id'");
+	header("location: archive.php");
+	exit();
+}
 if(isset($_POST['submit_form'])){
 			//session_start();
 			

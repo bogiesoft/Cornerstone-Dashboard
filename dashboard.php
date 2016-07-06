@@ -53,29 +53,31 @@ $conn->close();
 		<div class="dashboardbox-title"><h2>Sales - :</h2></div>
 		<?php
 		require ("connection.php");
-
+		
 		$result1=mysqli_query($conn,"SELECT * FROM job_ticket WHERE estimate_number != 0  ");
 		$num_rows = mysqli_num_rows($result1);
 
 		$result2=mysqli_query($conn,"SELECT * FROM mail_data WHERE processed_by = ''  ");
 		$num_rows2 = mysqli_num_rows($result2);
 
-		$result3=mysqli_query($conn,"SELECT * FROM mail_data WHERE processed_by = 'KM'  ");
-		$num_rows3 = mysqli_num_rows($result3);
-
-		$result4=mysqli_query($conn,"SELECT * FROM mail_data WHERE processed_by = 'MB'  ");
-		$num_rows4 = mysqli_num_rows($result4);
-
-		$result5=mysqli_query($conn,"SELECT * FROM mail_data WHERE processed_by = 'FP'  ");
-		$num_rows5 = mysqli_num_rows($result5);
-
-		$result6=mysqli_query($conn,"SELECT * FROM mail_data WHERE processed_by = 'RP'  ");
-		$num_rows6 = mysqli_num_rows($result6);
+		$result3=mysqli_query($conn, "SELECT * FROM users WHERE department = 'Project Management'");
+		
+		$result5=mysqli_query($conn, "SELECT * FROM users WHERE department = 'Production'");
+		
+		$count_prod = 0;
+		while($row5 = $result5->fetch_assoc()){
+			$temp = $row5['user'];
+			$result6 = mysqli_query($conn,"SELECT * FROM mail_data WHERE processed_by = '$temp'");
+			$num_rows6 = mysqli_num_rows($result6);
+			$count_prod = $count_prod + $num_rows6;
+		}
 
 		$result7=mysqli_query($conn,"SELECT * FROM invoice WHERE invoice_number != 0  ");
 		$num_rows7 = mysqli_num_rows($result7);
 
-
+		$result8=mysqli_query($conn, "SELECT * FROM archive_jobs WHERE status = 'Closed'");
+		$num_rows8 = mysqli_num_rows($result8);	
+		
 		$conn->close();
 
 		?>
@@ -84,18 +86,35 @@ $conn->close();
 	</div>
 	<div class="dashboardtop-box fundraising-stats">
 		<div class="dashboardbox-title"><h2>Project Management - Current:</h2></div>
-		<h3>Kevin: <span><?php echo "$num_rows3 \n"; ?></span></h3>
-		<h4>Michael: <span><?php echo "$num_rows4 \n"; ?></span></h4>
+		<?php
+			require('connection.php');
+			$count = 1;
+			while($row3 = $result3->fetch_assoc()){
+				
+				$temp = $row3['user'];
+				$result4 = mysqli_query($conn, "SELECT * FROM mail_data WHERE processed_by = '$temp'");
+				$num_rows4 = mysqli_num_rows($result4);
+				if($count % 2 != 0){
+					echo "<h3>" . $row3['first_name'] . ": <span>" . $num_rows4 . "</span></h3>";
+				}
+				else{
+					echo "<h4>" . $row3['first_name'] . ": <span>" . $num_rows4 . "</span></h4>";
+				}
+				
+				$count = $count + 1;
+			}
+			$conn->close();
+		?>
 	</div>
 	<div class="dashboardtop-box fundraising-stats">
 		<div class="dashboardbox-title"><h2>Production - :</h2></div>
-		<h3>Jobs in Production: <span><?php echo "$num_rows6 \n"; ?></span></h3>
+		<h3>Jobs in Production: <span><?php echo "$count_prod \n"; ?></span></h3>
 		<h4>Total Manhours:<span></span></h4>
 	</div>
 	<div class="dashboardtop-box fundraising-stats">
 		<div class="dashboardbox-title"><h2>Customer Service - :</h2></div>
 		<h3>Jobs Invoiced: <span><?php echo "$num_rows7 \n"; ?></span></h3>
-		<h4>Jobs Closed: <span></span></h4>
+		<h4>Jobs Closed: <span><?php echo "$num_rows8 \n"; ?></span></h4>
 	</div>
 	<div class="clear"></div>
 	</div>
@@ -148,7 +167,7 @@ $result_time_query = mysqli_query($conn, $sql_time_query);
 
 echo " <div class='allcontacts-table'><table style = 'width: 850px' border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
 echo "<tbody>";
-echo "<tr valign='top'><th class='allcontacts-title'>Recent Activities<span class='allcontacts-subtitle'></span></th><th class='column-editorbtn'>View All</th></tr>";
+echo "<tr valign='top'><th class='allcontacts-title'>Recent Activities<span class='allcontacts-subtitle'></span></th><th class='column-editorbtn'><a href = 'view_timestamps.php'>View All</a></th></tr>";
 echo "<tr valign='top'><td colspan='2'><table border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list' style = 'width: 850px'><tbody><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='user' data-index='0'>User</th><th class='maintable-thtwo data-header' data-name='job' data-index='1'>Description</th><th class='maintable-thtwo data-header' data-name='time' data-index='2'>Time</th></tr>";
 
 if ($result->num_rows > 0) {
