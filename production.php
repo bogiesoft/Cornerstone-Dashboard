@@ -28,7 +28,7 @@ if ($result->num_rows > 0) {
 echo " <div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
 echo "<tbody>";
 echo "<tr valign='top'><th class='allcontacts-title'>Jobs in Production<span class='allcontacts-subtitle'></span></th></tr>";
-echo "<tr valign='top'><td colspan='2'><table id = 'production_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thnine'>Job ID</th><th class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Client Name</th><th class='maintable-thtwo data-header' data-name='project_name' data-index='1'>Job Name</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='2'>Total Records</th><th class='maintable-thtwo data-header' data-name='quantity' data-index='3'>Quantity</th><th class='maintable-thtwo data-header' data-name='based_on' data-index='4'>Based On</th><th class='maintable-thtwo data-header' data-name='tasks' data-index='5'>Tasks</th><th class='maintable-thtwo data-header' data-name='special_instructions' data-index='6'>Special Instructions</th></tr></thead><tbody>";
+echo "<tr valign='top'><td colspan='2'><table id = 'production_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thnine'>Job ID</th><th class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Client Name</th><th class='maintable-thtwo data-header' data-name='project_name' data-index='1'>Job Name</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='2'>Total Records</th><th class='maintable-thtwo data-header' data-name='quantity' data-index='3'>Quantity</th><th class='maintable-thtwo data-header' data-name='based_on' data-index='4'>Based On</th><th class='maintable-thtwo data-header' data-name='tasks' data-index='5'>Tasks</th><th class='maintable-thtwo data-header' data-name='special_instructions' data-index='6'>Special Instructions</th><th class='maintable-thtwo data-header' data-name='production_data' data-index='7'>Data</th></tr></thead><tbody>";
 
     
 	while($row = $result->fetch_assoc()) {
@@ -55,7 +55,7 @@ echo "<tr valign='top'><td colspan='2'><table id = 'production_table' border='0'
 			$row6 = $result6->fetch_assoc();
 			
 
-			echo "<tr><td><a href='http://localhost/crst_dashboard/edit_job.php?job_id=$temp'>".$temp."</a></td><td>".  $row1["client_name"]."</td><td>".  $row1["project_name"]."</td><td>". $row2['records_total']. "</td><td>". $row4['quantity']. "</td><td>". $row5['based_on']. "</td><td>". $row6['tasks']. "</td><td><a href = 'http://localhost/crst_dashboard/special_instructions.php?job_id=$temp' >"."view". "</a></td></tr>";
+			echo "<tr><td><a href='edit_job.php?job_id=$temp'>".$temp."</a></td><td>".  $row1["client_name"]."</td><td>".  $row1["project_name"]."</td><td>". $row2['records_total']. "</td><td>". $row4['quantity']. "</td><td>". $row5['based_on']. "</td><td>". $row6['tasks']. "</td><td><a href = 'special_instructions.php?job_id=$temp' >"."view". "</a></td><td><a href = 'job_data.php?job_id=$temp'>view</a></td></tr>";
 		}
 	}
 	

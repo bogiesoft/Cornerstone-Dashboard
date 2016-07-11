@@ -14,16 +14,16 @@ if(isset($_POST['submit_form'])){
 	$project_name = $_POST['project_name'];
 	$_SESSION["client_name"] = $client_name;
 	$_SESSION["project_name"] = $project_name;
-	$ticket_date = $_POST['ticket_date'];
-	$due_date = $_POST['due_date'];
+	$ticket_date = date("Y-m-d", strtotime($_POST['ticket_date']));
+	$due_date = date("Y-m-d", strtotime($_POST['due_date']));
 	$created_by = "";
 	if(isset($_POST['created_by'])){
 		$created_by = $_POST['created_by'];
 	}
 	$estimate_number = $_POST['estimate_number'];
 	$special_instructions = $_POST['special_instructions'];
-	$materials_ordered = $_POST['materials_ordered'];
-	$materials_expected = $_POST['materials_expected'];
+	$materials_ordered = date("Y-m-d", strtotime($_POST['materials_ordered']));
+	$materials_expected = date("Y-m-d", strtotime($_POST['materials_expected']));
 	$expected_quantity = $_POST['expected_quantity'];
 	$job_status = $_POST['job_status'];
 
@@ -42,8 +42,8 @@ if(isset($_POST['submit_form'])){
 	$domestic = $_POST['domestic'];
 	$foreigns = $_POST['foreigns'];
 	$data_source = $_POST['data_source'];
-	$data_received = $_POST['data_received'];
-	$data_completed = $_POST['data_completed'];
+	$data_received = date("Y-m-d", strtotime($_POST['data_received']));
+	$data_completed = date("Y-m-d", strtotime($_POST['data_completed']));
 	$processed_by = "";
 	if(isset($_POST['processed_by'])){
 		$processed_by = $_POST['processed_by'];
@@ -57,7 +57,7 @@ if(isset($_POST['submit_form'])){
 		$job = "job assigned to " . $row10['department'];
 		
 	}
-	$dqr_sent = $_POST['dqr_sent'];
+	$dqr_sent = date("Y-m-d", strtotime($_POST['dqr_sent']));
 	$exact = $_POST['exact'];
 	$mail_foreigns = $_POST['mail_foreigns'];
 	$household = $_POST['household'];
@@ -72,13 +72,13 @@ if(isset($_POST['submit_form'])){
 	@$tasks_array= $_POST['tasks']; 
 	$tasks = "";
 	if( is_array($tasks_array)){
-	$tasks = implode(', ', $_POST['tasks']);
+	$tasks = implode(',', $_POST['tasks']);
 	}
 	$task1 = $_POST['task1'];
 	$task2 = $_POST['task2'];
 	$task3 = $_POST['task3'];
 
-	$completed_date = $_POST['completed_date'];
+	$completed_date = date("Y-m-d", strtotime($_POST['completed_date']));
 	$data_hrs = $_POST['data_hrs'];
 	$gd_hrs = $_POST['gd_hrs'];
 	$initialrec_count = $_POST['initialrec_count'];
@@ -106,7 +106,7 @@ if(isset($_POST['submit_form'])){
 	}
 
 	if($count == 0){
-		$job_id = 5000;
+		$job_id = 5001;
 	}
 	else{
 		$job_id = $count + 1;

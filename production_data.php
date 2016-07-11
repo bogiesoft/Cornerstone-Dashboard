@@ -3,36 +3,42 @@ require('header.php');
 ?>
 
 <div class="dashboard-cont" style="padding-top:110px;">
+<div class="contacts-title">
+	<h1 class="pull-left">Production Data Manager</h1>
+	<a class="pull-right" href="production.php" >Back to Production</a>
+	</div><br><br><br><br>
 <form action="add_production_data.php" method="post">
 <div>Total Records &nbsp; <br><input name = "records" type = "text" id = "records" style = "width: 80px" value = "1"></input></div><p id = "recs_error" style = "color:red;"></p><br><br>
   <div class = "prod_info">
 	<h1>Task 1: </h1>
-	Time/Unit &nbsp; <input name = "time_number" type = "text" id = "time_number" style = "width: 40px; font-size = 18px;" value = "1"><select name = "time_unit" id = "time_unit"><option>min.</option><option>sec.</option><option>hr.</option></select>
-	Records Complete in Time &nbsp; <input name = "per_rec" type = "text" id = "per_rec" style = "width: 50px" value = "1"></input> &nbsp; &nbsp;
-	Number of People &nbsp; <select name = "people" id = "people">
+	<label style = "float: left;">Time/Unit</label> &nbsp; <input name = "time_number" type = "text" id = "time_number" style = "float: left; margin-right: 10px; width: 40px; font-size = 18px;" value = "1"></input><select style = "float:left;" name = "time_unit" id = "time_unit"><option>min.</option><option>sec.</option><option>hr.</option></select>
+	<label style = "float: left;">Records Complete in Time</label> &nbsp; <input style = "float: left; width: 40px" name = "per_rec" type = "text" id = "per_rec" value = "1"></input> &nbsp; &nbsp;
+	<label style = "float: left;">Number of People</label> &nbsp; <select style = "float: left;" name = "people" id = "people">
 	<?php
 		for($i = 1; $i <= 10; $i++)
 		{
 			echo "<option>" . $i . "</option>";
 		}
 	?>
-</select>
-Employees &nbsp; <select name = "employee[]" id = 'employee' multiple>
-	<?php
-		$sql = "SELECT * FROM users";
-		$result = mysqli_query($conn, $sql);
-		while($row = $result->fetch_assoc())
-		{
-			echo "<option>" . $row['user'] . "</option>";
-		}
-	?>
 </select> &nbsp;
-Job &nbsp; <select name = "job" id = "job">
-	<option>Insertion</option>
-	<option>Printing</option>
-	<option>Folding</option>
-	<option>Tabbing</option>
-	<option>Packaging</option>
+<label style = "float: left;">Job</label> &nbsp; <select style = "float: left; width: 200px" name = "job" id = "job">
+	<option value="Mail Merge">Mail Merge</option>
+					  <option value="Letter Printing">Letter Printing</option>
+					  <option value="In-House Envelope Printing">In-House Envelope Printing</option>
+					  <option value="Tabbing">Tabbing</option>
+					  <option value="Folding">Folding</option>
+					  <option value="Inserting">Inserting</option>
+					  <option value="Sealing">Sealing</option>
+					  <option value="Collating">Collating</option>
+					  <option value="Labeling">Labeling</option>
+					  <option value="Print Permit">Print Permit</option>
+					  <option value="Correct Permit">Correct Permit</option>
+					  <option value="Carrier Route">Carrier Route</option>
+					  <option value="Endorsement line">Endorsement line</option>
+					  <option value="Address Printing">Address Printing</option>
+					  <option value="Tag as Political">Tag as Political</option>
+					  <option value="Inkjet Printing">Inkjet Printing</option>
+					  <option value="Glue Dots">Glue Dots</option>
 </select><br><br>
 <p id = "error" style = "color: red;"></p>
 </div><br>
@@ -41,7 +47,7 @@ Job &nbsp; <select name = "job" id = "job">
 <h2 id = "eff">Efficiency: </h2><br>
 <input type = "submit" value = "Save Data"></input>
 </form>
-<input type = "submit" onclick = "changeBar();" value = "Submit Data"></input><button type = "button" onclick = "addTask();">Add Task</button>
+<button type = "button" onclick = "changeBar();">Submit Data</button><button type = "button" onclick = "addTask();">Add Task</button>
 <style>
 progress[value]::-webkit-progress-value {
   background-image:
@@ -67,29 +73,21 @@ progress[value]::-webkit-progress-value {
 	var employee = ["employee[]"];
 	var job = ["job"];
 	var errors = ["error"];
-	var employeeOptions = document.getElementById('employee').options;
-	var jobList = ["Insertion", "Printing", "Folding", "Tabbing", "Packaging"];
+	var jobList = ["Mail Merge", "Letter Printing", "In-House Envelope Printing", "Sealing", "Collating", "Labeling", "Print Permit", "Correct Permit", "Carrier Route", "Endorsement Line", "Address Printing", "Tag as Political", "Inkjet Printing", "Glue Dots", "Inserting", "Printing", "Folding", "Tabbing", "Packaging"];
 	var count = 1;
 	var Task = 2;
 	
 	function addTask(){
-		$(".prod_info").append("<h1>Task " + Task + ":</h1>Time/Unit &nbsp; <input name = 'time_number" + count + "' type = 'text' id = 'time_number" + count + "' style = 'width: 40px; font-size = 18px;' value = '1'> &nbsp; </input><select name = 'time_unit" + count + "' id = 'time_unit" + count + "'><option>min.</option><option>sec.</option><option>hr.</option></select> Records Complete in Time &nbsp; <input name = 'per_rec" + count + "' type = 'text' id = 'per_rec" + count + "' style = 'width: 50px' value = '1'></input> &nbsp; &nbsp;");
-		$(".prod_info").append("&nbsp;Number of People &nbsp;<select name = 'people" + count + "' id = 'people" + count + "'>");
+		$(".prod_info").append("<h1>Task " + Task + ":</h1><label style = 'float: left;'>Time/Unit</label> &nbsp; <input name = 'time_number" + count + "' type = 'text' id = 'time_number" + count + "' style = 'float: left; width: 40px; font-size = 18px;' value = '1'> &nbsp; </input><select style = 'float: left;' name = 'time_unit" + count + "' id = 'time_unit" + count + "'><option>min.</option><option>sec.</option><option>hr.</option></select> <label style = 'float: left;'>Records Complete in Time<label> &nbsp; <input name = 'per_rec" + count + "' type = 'text' id = 'per_rec" + count + "' style = 'float: left; width: 40px' value = '1'></input> &nbsp; &nbsp;");
+		$(".prod_info").append("&nbsp;<label style = 'float:left'>Number of People</label> &nbsp;<select style = 'float:left;' name = 'people" + count + "' id = 'people" + count + "'>");
 		for (var i = 1; i <= 10; i++){
 			var opt = document.createElement('option');
 			opt.value = i;
 			opt.innerHTML = i;
 			document.getElementById("people" + count).appendChild(opt);
 		}
-		$(".prod_info").append("</select>&nbsp;Employees &nbsp; <select name = 'employee" + count + "[]' id = 'employee" + count + "' multiple>");
-		//$(".prod_info").append("<?php $sql = "SELECT * FROM users"; $result = mysqli_query($conn, $sql); while($row = $result->fetch_assoc()){echo "<option>" . $row['user'] . "</option>";} echo "</select>";?>");
-		for (var i = 0; i < employeeOptions.length; i++){
-			var opt = document.createElement('option');
-			opt.value = employeeOptions[i].value;
-			opt.innerHTML = employeeOptions[i].value;
-			document.getElementById("employee" + count).appendChild(opt); 
-		}
-		$(".prod_info").append("</select> &nbsp; Job &nbsp; <select name = 'job" + count + "' id = 'job" + count + "'>");
+		$(".prod_info").append("</select>");
+		$(".prod_info").append("&nbsp; <label style = 'float: left;'>Job</label> &nbsp; <select style = 'float: left;width: 200px;' name = 'job" + count + "' id = 'job" + count + "'>");
 		for(var i = 0; i < jobList.length; i++){
 			var opt = document.createElement('option');
 			opt.value = jobList[i];
@@ -97,7 +95,7 @@ progress[value]::-webkit-progress-value {
 			document.getElementById("job" + count).appendChild(opt);
 		}
 		$(".prod_info").append("</select><br>");
-		$(".prod_info").append("<p id = 'error" + count + "' style = 'color:red;'></p>");
+		$(".prod_info").append("<p id = 'error" + count + "' style = 'color:red;'></p><br>");
 		time_number.push("time_number" + count);
 		time_unit.push("time_unit" + count);
 		recs_comp.push("per_rec" + count);
@@ -111,9 +109,6 @@ progress[value]::-webkit-progress-value {
 </script>
 
 <script type = "text/javascript">
-	function test(){
-		document.getElementById("display_time").innerHTML = document.getElementById(people[2]).value;
-	}
 	function changeBar(){
 		var bar = document.getElementById("progress_bar");
 		var recordsNum = document.getElementById("records").value;
