@@ -123,6 +123,33 @@
 	$time_number = implode(",", $time_number_array);
 	$time_unit = implode(",", $time_unit_array);
 	$people = implode(",", $people_array);
+	
+	$sql = "SELECT * FROM production_data";
+	$result = mysqli_query($conn, $sql);
+	
+	while($row = $result->fetch_assoc()){
+		$match = FALSE;
+		$production_array = explode(",", $row['job']);
+		if(count($production_array) == count($job_array)){
+			$contains = TRUE;
+			for($i = 0; $i < count($production_array); $i++){
+				if(!in_array($production_array[$i], $job_array)){
+					$contains = FALSE;
+					break;
+				}
+			}
+			if($contains == TRUE){
+				$match = TRUE;
+			}
+		}
+		if($match == TRUE){
+			$job = $row['job'];
+			mysqli_query($conn, "DELETE FROM production_data WHERE job = '$job'");
+		}
+	}
+	
+	
+	
 	$job = implode(",", $job_array);
 	
 	mysqli_query($conn, "INSERT INTO production_data (id, total_records, records_per, time_number, time_unit, people, job, hours) VALUES ('$id_1', '$total_records', '$records_per', '$time_number', '$time_unit', '$people', '$job', '$hours')") or die("ERROR");

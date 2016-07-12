@@ -354,7 +354,26 @@ require ("connection.php");
 				
 				<div class="tabinner-detail">
 				<label>Tasks</label>
-				<input name="tasks" type="text" value="<?php echo $tasks ; ?>" class="contact-prefix">
+				<select name="tasks[]" multiple>
+					  <option selected = "selected" value = "<?php echo $tasks;?>"><?php echo $tasks; ?></option>
+					  <option value="Mail Merge">Mail Merge</option>
+					  <option value="Letter Printing">Letter Printing</option>
+					  <option value="In-House Envelope Printing">In-House Envelope Printing</option>
+					  <option value="Tabbing">Tabbing</option>
+					  <option value="Folding">Folding</option>
+					  <option value="Inserting">Inserting</option>
+					  <option value="Sealing">Sealing</option>
+					  <option value="Collating">Collating</option>
+					  <option value="Labeling">Labeling</option>
+					  <option value="Print Permit">Print Permit</option>
+					  <option value="Correct Permit">Correct Permit</option>
+					  <option value="Carrier Route">Carrier Route</option>
+					  <option value="Endorsement line">Endorsement line</option>
+					  <option value="Address Printing">Address Printing</option>
+					  <option value="Tag as Political">Tag as Political</option>
+					  <option value="Inkjet Printing">Inkjet Printing</option>
+					  <option value="Glue Dots">Glue Dots</option>
+					</select>
 				</div>
 				<div class="tabinner-detail">
 				<label>Task 1</label>

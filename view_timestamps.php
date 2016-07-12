@@ -23,7 +23,7 @@ require('connection.php');
 	echo " <div id = 'table-scroll' class='allcontacts-table'><table id = 'table' border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
 	echo "<tbody>";
 	echo "<tr valign='top'><th class='allcontacts-title'>All Timestamps<span class='allcontacts-subtitle'></span></th></tr>";
-	echo "<tr valign='top'><td colspan='2'><table id = 'timestamp_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Client Name</th><th id = 'contact_name' class='maintable-thtwo data-header' data-name='contact_name' data-index='1'>Contact Name</th><th id = 'address' class='maintable-thtwo data-header' data-name='client_add' data-index='2'>Address</th></tr></thead><tbody>";
+	echo "<tr valign='top'><td colspan='2'><table style = 'width: 1050px' id = 'timestamp_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='0'>User</th><th id = 'contact_name' class='maintable-thtwo data-header' data-name='contact_name' data-index='1'>Job</th><th id = 'address' class='maintable-thtwo data-header' data-name='client_add' data-index='2'>Timestamp</th></tr></thead><tbody>";
 
 
 	if ($result->num_rows > 0) {
@@ -34,7 +34,7 @@ require('connection.php');
 			$time = strtotime($row['time']);
 			$myFormatForView = date("M d, Y g:i", $time);
 			
-			echo "<tr class = 'hoverTab'><td>" . $row['user'] . "</td><td>" . $row['job'] . "</td><td>" . $myFormatForView . " " . $row['a_p'] . "</td><td></tr>";
+			echo "<tr class = 'hoverTab'><td>" . $row['user'] . "</td><td>" . $row['job'] . "</td><td>" . $myFormatForView . " " . $row['a_p'] . "</td></tr>";
 		}
 		echo "</tbody></table></td></tr></tbody></table></div>";
 	} else {
