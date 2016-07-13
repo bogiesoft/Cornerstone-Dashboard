@@ -22,7 +22,7 @@ echo "<h1>Welcome ".$row['first_name'] ."!</h1><br>";
 
 //echo CURDATE();
 //Retrieves Jobs for User and Reminders
-$sqlJobs = "SELECT project_name FROM job_ticket INNER JOIN mail_data ON job_ticket.job_id = mail_data.job_id WHERE mail_data.processed_by = '$initial' AND job_ticket.due_date = CURDATE()";
+$sqlJobs = "SELECT project_name FROM job_ticket INNER JOIN mail_data ON job_ticket.job_id = mail_data.job_id WHERE mail_data.processed_by = '$user'";
 $resultJobs = mysqli_query($conn, $sqlJobs);
 $num_rows_Jobs = mysqli_num_rows($resultJobs);
 

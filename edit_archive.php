@@ -461,7 +461,6 @@ require ("connection.php");
 				<div class="newcontact-tabbtm">
 					<input class="save-btn" type="submit" value="Save" name="submit_form" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;"/>
 					<input class="save-btn" type="button" value="Print Div" onclick="PrintElem('.dashboard-cont')" style="width:200px; font-size:16px; background-color:#d14700; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px; float:left" />
-					<input class="save-btn" type="submit" value="Delete" name="delete_form_archive" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;"/>
 				</div>
 			</form>
 			</div>
@@ -469,5 +468,8 @@ require ("connection.php");
 	</div>
 	</div>
 </div>	
+<div class="contacts-title">
+	<a class="pull-right" href="add_job_ticket.php?job_id=<?php echo $temp; ?>" class="add_button" style = "margin-right: 15px; padding-left: 10px" onclick = "return confirm('Delete Archive')">Delete</a>
+	</div>
 </div>
 	

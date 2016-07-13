@@ -25,7 +25,10 @@ if(isset($_POST['submit_form'])){
 	$materials_ordered = date("Y-m-d", strtotime($_POST['materials_ordered']));
 	$materials_expected = date("Y-m-d", strtotime($_POST['materials_expected']));
 	$expected_quantity = $_POST['expected_quantity'];
-	$job_status = $_POST['job_status'];
+	$job_status = "none";
+	if(isset($_POST['job_status'])){
+		$job_status = $_POST['job_status'];
+	}
 
 	$mail_class = $_POST['mail_class'];
 	$rate = $_POST['rate'];
@@ -96,28 +99,18 @@ if(isset($_POST['submit_form'])){
 	$bs_domestic = $_POST['bs_domestic'];
 
 
-	$sql3 = "SELECT job_id FROM job_ticket";
-	$result3 = mysqli_query($conn, $sql3);
-	$count = 0;
-	while($row3 = $result3->fetch_assoc()){
-		if((int)$row3['job_id'] > $count){
-			$count = (int)$row3['job_id'];
-		}
-	}
+	
 
-	if($count == 0){
-		$job_id = 5001;
-	}
-	else{
-		$job_id = $count + 1;
-	}
-
-	$sql = "INSERT INTO job_ticket(job_id, client_name,project_name,ticket_date,due_date,created_by,special_instructions,materials_ordered,materials_expected,estimate_number,expected_quantity,job_status) VALUES ('$job_id','$client_name', '$project_name', '$ticket_date', '$due_date','$created_by','$special_instructions','$materials_ordered','$materials_expected','$estimate_number','$expected_quantity','$job_status')";
+	$sql = "INSERT INTO job_ticket(client_name,project_name,ticket_date,due_date,created_by,special_instructions,materials_ordered,materials_expected,estimate_number,expected_quantity,job_status) VALUES ('$client_name', '$project_name', '$ticket_date', '$due_date','$created_by','$special_instructions','$materials_ordered','$materials_expected','$estimate_number','$expected_quantity','$job_status')";
 	$result = $conn->query($sql) or die('Error querying database 0.');
 
 
-	$result1 = mysqli_query($conn,"SELECT job_id from job_ticket WHERE client_name='$client_name' and project_name='$project_name'");
+	$result1 = mysqli_query($conn,"SELECT job_id from job_ticket WHERE client_name='$client_name' and project_name='$project_name' ORDER BY job_id DESC");
 	$row1 = $result1->fetch_assoc();
+	
+	$_SESSION["job_id"] = $row1["job_id"];
+	$job_id = $_SESSION["job_id"];
+	
 
 	$sql1 = "INSERT INTO mail_info(job_id,mail_class,rate,processing_category,mail_dim,weights_measures,permit,bmeu,based_on,non_profit_number) VALUES ('$job_id', '$mail_class', '$rate', '$processing_category','$mail_dim','$weights_measures','$permit','$bmeu','$based_on','$non_profit_number')";
 	$result2 = $conn->query($sql1) or die($job_id);
@@ -145,6 +138,22 @@ if(isset($_POST['submit_form'])){
 
 	header("location: job_ticket.php");
 	exit();
+}
+else{
+	session_start();
+	$user_name = $_SESSION['user'];
+	date_default_timezone_set('America/New_York');
+	$today = date("Y-m-d G:i:s");
+	$a_p = date("A");
+	$job = "deleted archive job";
+	$temp = $_GET['job_id'];
+	mysqli_query($conn, "INSERT INTO timestamp (user,time,job,a_p) VALUES ('$user_name', '$today','$job', '$a_p')");
+	mysqli_query($conn, "DELETE FROM archive_jobs WHERE job_id = '$temp'");
+	$conn->close();
+
+	header("location: archive.php");
+	exit();
+	
 }
 
 ?>

@@ -28,17 +28,33 @@ if(isset($_POST['submit_form'])){
 		
 	$sql100 = "INSERT INTO timestamp (user,time,job, a_p) VALUES ('$user_name', '$today','$job', '$a_p')";
 	$result100 = $conn->query($sql100) or die('Error querying database 101.');
-		
+	
+	$sql3 = "SELECT job_id FROM archive_jobs";
+	$result3 = mysqli_query($conn, $sql3);
+	$count = 0;
+	while($row3 = $result3->fetch_assoc()){
+		if((int)$row3['job_id'] > $count){
+			$count = (int)$row3['job_id'];
+		}
+	}
+
+	if($count == 0){
+		$temp = 5001;
+	}
+	else{
+		$temp = $count + 1;
+	}
+	
 	$sql1 = "INSERT INTO archive_jobs ( job_id,client_name,project_name,ticket_date,due_date,created_by,estimate_number,special_instructions,materials_ordered,materials_expected,expected_quantity,job_status)  SELECT job_id,client_name,project_name,ticket_date,due_date,created_by,estimate_number,special_instructions,materials_ordered,materials_expected,expected_quantity,job_status FROM job_ticket WHERE job_id = '$job_id'";
 	$result = $conn->query($sql1) or die('Error querying database 100.') ;
 	$result1 = mysqli_query($conn,"DELETE FROM job_ticket WHERE job_id = '$job_id'");
 
 
-	$sql2 = "UPDATE archive_jobs, mail_data SET archive_jobs.ncoa = mail_data.ncoa ,archive_jobs.data_loc = mail_data.data_loc ,archive_jobs.records_total = mail_data.records_total ,archive_jobs.domestic = mail_data.domestic ,archive_jobs.foreigns = mail_data.foreigns ,archive_jobs.data_source = mail_data.data_source ,archive_jobs.data_received = mail_data.data_received ,archive_jobs.data_completed = mail_data.data_completed ,archive_jobs.processed_by = mail_data.processed_by ,archive_jobs.dqr_sent = mail_data.dqr_sent ,archive_jobs.exact = mail_data.exact ,archive_jobs.mail_foreigns = mail_data.mail_foreigns ,archive_jobs.household = mail_data.household WHERE archive_jobs.job_id = mail_data.job_id AND mail_data.job_id = '$job_id'";	
+	$sql2 = "UPDATE archive_jobs, mail_data SET archive_jobs.ncoa = mail_data.ncoa ,archive_jobs.data_loc = mail_data.data_loc ,archive_jobs.records_total = mail_data.records_total ,archive_jobs.domestic = mail_data.domestic ,archive_jobs.foreigns = mail_data.foreigns ,archive_jobs.data_source = mail_data.data_source ,archive_jobs.data_received = mail_data.data_received ,archive_jobs.data_completed = mail_data.data_completed ,archive_jobs.processed_by = mail_data.processed_by ,archive_jobs.dqr_sent = mail_data.dqr_sent ,archive_jobs.exact = mail_data.exact ,archive_jobs.mail_foreigns = mail_data.mail_foreigns ,archive_jobs.household = mail_data.household WHERE archive_jobs.job_id = mail_data.job_id AND mail_data.job_id = '$temp'";	
 	$result2 = $conn->query($sql2) or die('Error querying database 1.') ;
 	$result3 = mysqli_query($conn,"DELETE FROM mail_data WHERE job_id = '$job_id'");
 
-	$result4 = mysqli_query($conn,"UPDATE archive_jobs, mail_info SET archive_jobs.mail_class = mail_info.mail_class,archive_jobs.rate = mail_info.rate,archive_jobs.processing_category = mail_info.processing_category,archive_jobs.mail_dim = mail_info.mail_dim,archive_jobs.weights_measures = mail_info.weights_measures,archive_jobs.permit = mail_info.permit,archive_jobs.bmeu = mail_info.bmeu,archive_jobs.based_on = mail_info.based_on,archive_jobs.non_profit_number = mail_info.non_profit_number WHERE archive_jobs.job_id = mail_info.job_id AND mail_info.job_id = '$job_id'");
+	$result4 = mysqli_query($conn,"UPDATE archive_jobs, mail_info SET archive_jobs.mail_class = mail_info.mail_class,archive_jobs.rate = mail_info.rate,archive_jobs.processing_category = mail_info.processing_category,archive_jobs.mail_dim = mail_info.mail_dim,archive_jobs.weights_measures = mail_info.weights_measures,archive_jobs.permit = mail_info.permit,archive_jobs.bmeu = mail_info.bmeu,archive_jobs.based_on = mail_info.based_on,archive_jobs.non_profit_number = mail_info.non_profit_number WHERE archive_jobs.job_id = mail_info.job_id AND mail_info.job_id = '$temp'");
 	$result5 = mysqli_query($conn,"DELETE FROM mail_info WHERE job_id = '$job_id'");
 
 	$sql3 = "UPDATE archive_jobs, materials SET 
@@ -52,7 +68,7 @@ if(isset($_POST['submit_form'])){
 	archive_jobs.height = materials.height,
 	archive_jobs.weight = materials.weight,
 	archive_jobs.size = materials.size
-	 WHERE archive_jobs.job_id = materials.job_id AND materials.job_id = '$job_id'";
+	 WHERE archive_jobs.job_id = materials.job_id AND materials.job_id = '$temp'";
 	 $result6 = $conn->query($sql3) or die('Error querying database 2.') ;
 	 
 	$result7 = mysqli_query($conn,"DELETE FROM materials WHERE job_id = '$job_id'");
@@ -74,7 +90,7 @@ if(isset($_POST['submit_form'])){
 	archive_jobs.bs_exact = blue_sheet.bs_exact,
 	archive_jobs.bs_ncoa = blue_sheet.bs_ncoa,
 	archive_jobs.bs_domestic = blue_sheet.bs_domestic
-	 WHERE archive_jobs.job_id = blue_sheet.job_id AND blue_sheet.job_id = '$job_id'";
+	 WHERE archive_jobs.job_id = blue_sheet.job_id AND blue_sheet.job_id = '$temp'";
 	 $result8 = $conn->query($sql4) or die('Error querying database 3.');
 	$result9 = mysqli_query($conn,"DELETE FROM blue_sheet WHERE job_id = '$job_id'");
 
@@ -86,7 +102,7 @@ if(isset($_POST['submit_form'])){
 	archive_jobs.notes = invoice.notes,
 	archive_jobs.status = invoice.status,
 	archive_jobs.reason = invoice.reason
-	 WHERE archive_jobs.job_id = invoice.job_id AND invoice.job_id = '$job_id'");
+	 WHERE archive_jobs.job_id = invoice.job_id AND invoice.job_id = '$temp'");
 	$result11 = mysqli_query($conn,"DELETE FROM invoice WHERE job_id = '$job_id'");
 
 	$result12 = mysqli_query($conn,"UPDATE archive_jobs, production SET 
@@ -100,11 +116,11 @@ if(isset($_POST['submit_form'])){
 	archive_jobs.task1 = production.task1,
 	archive_jobs.task2 = production.task2,
 	archive_jobs.task3 = production.task3
-	 WHERE archive_jobs.job_id = production.job_id AND production.job_id = '$job_id'");
+	 WHERE archive_jobs.job_id = production.job_id AND production.job_id = '$temp'");
 	$result13 = mysqli_query($conn,"DELETE FROM production WHERE job_id = '$job_id'");
 	$result15 = mysqli_query($conn,"DELETE FROM yellow_sheet WHERE job_id = '$job_id'");
 
-	$result14 = mysqli_query($conn,"UPDATE archive_jobs SET archive_date = '$today' WHERE job_id = '$job_id'");
+	$result14 = mysqli_query($conn,"UPDATE archive_jobs SET archive_date = '$today' WHERE job_id = '$temp'");
 
 	
 	}

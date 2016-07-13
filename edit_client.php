@@ -39,6 +39,7 @@ if(isset($_POST['delete_form'])){
 	$job = "deleted client info";
 	$sql6 = "INSERT INTO timestamp (user,time,job, a_p) VALUES ('$user_name', '$today','$job', '$a_p')";
 	$result7 = $conn->query($sql6) or die('Error querying database 5.');
+	
 	$sql_delete = "DELETE FROM client_info WHERE '$client_name' = client_name";
 	mysqli_query($conn, $sql_delete);
 	$conn->close();
