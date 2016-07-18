@@ -31,7 +31,7 @@ if ($result->num_rows > 0) {
 	
     while($row = $result->fetch_assoc()) {
 		$foo = $row['job_id'];
-		echo "<tr><td><a href='http://localhost/crst_dashboard/edit_job.php?job_id=$foo'>".$row["job_id"]."</a></td><td>".  $row["client_name"]."</td><td>". $row["project_name"]. "</td><td>". $row["due_date"]. "</td><td>". $row["estimate_number"]."</td><td>". $row["records_total"]. "</td></tr>";
+		echo "<tr><td><a href='edit_job.php?job_id=$foo'>".$row["job_id"]."</a></td><td>".  $row["client_name"]."</td><td>". $row["project_name"]. "</td><td>". $row["due_date"]. "</td><td>". $row["estimate_number"]."</td><td>". $row["records_total"]. "</td></tr>";
     }
 	echo "</tbody></table></td></tr></tbody></table></div>";
 } else {

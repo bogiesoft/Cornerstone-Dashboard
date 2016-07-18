@@ -6,6 +6,8 @@ require ("connection.php");
 
 session_start();
 
+echo "<div class='dashboard-cont' style='padding-top:110px;'>";
+
 $occurence = $_POST['occurence'];
 $day = "None";
 $date = $_POST['date'];
@@ -27,8 +29,9 @@ $user = $_SESSION['user'];
 
 $sql = "INSERT INTO reminder(user,date,text,vendor_name,client_name,occurence,current_day) VALUES ('$user','$date','$text','$vendor_name','$client_name','$occurence','$day')";
 $result = $conn->query($sql) or die('Error querying database.');
- 
+
+echo "</div>"; 
 $conn->close();
-header("location: http://localhost/crst_dashboard/reminders.php ");
+header("location: reminders.php");
 exit();
 ?>

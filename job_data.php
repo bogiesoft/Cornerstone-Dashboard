@@ -97,6 +97,7 @@ input { border: 1px solid #666; background: #333; color: #fff; padding: 0.5em; b
 	$match = FALSE;
 	$count = 1;
 	
+	
 	while($row2 = $result->fetch_assoc()){
 		$production_record = (int)$row2['total_records'];
 		$match = FALSE;

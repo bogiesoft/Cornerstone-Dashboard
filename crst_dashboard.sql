@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.2
+-- version 4.5.1
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 11, 2016 at 08:13 PM
--- Server version: 5.7.9
--- PHP Version: 5.6.16
+-- Generation Time: Jul 18, 2016 at 09:08 PM
+-- Server version: 10.1.13-MariaDB
+-- PHP Version: 7.0.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -26,8 +26,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `archive_jobs`
 --
 
-DROP TABLE IF EXISTS `archive_jobs`;
-CREATE TABLE IF NOT EXISTS `archive_jobs` (
+CREATE TABLE `archive_jobs` (
   `job_id` int(11) NOT NULL,
   `client_name` varchar(45) NOT NULL,
   `project_name` varchar(45) NOT NULL,
@@ -104,8 +103,7 @@ CREATE TABLE IF NOT EXISTS `archive_jobs` (
   `task1` varchar(45) NOT NULL,
   `task2` varchar(45) NOT NULL,
   `task3` varchar(45) NOT NULL,
-  `archive_date` varchar(100) NOT NULL,
-  UNIQUE KEY `job_id` (`job_id`)
+  `archive_date` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -143,11 +141,12 @@ INSERT INTO `archive_jobs` (`job_id`, `client_name`, `project_name`, `ticket_dat
 (5530, 'New Client', 'kjlk', '0000-00-00', '0000-00-00', '', 'lkjlkj', '', '0000-00-00', '0000-00-00', 0, 'in Production', 'lk', 0, 0, 0, 'lk', '0000-00-00', '0000-00-00', 'KM', '0000-00-00', 'lkj', 'ljl', 'kjl', 'kjl', 'lkjlkjl', 'lkj', 'lkj', 'lkj', 'lkl', 'kjl', 'kjlk', 'jlk', 0, '0000-00-00', '', '', '', '', 0, '', 0, 0, '', '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, '', '', '', 'Closed', '', '', '', '', '', '', '', '', '', '', 'July 6, 2016, 11:22 am'),
 (5600, '', 'Yellow Sheet', '0000-00-00', '2016-05-19', '', '', '', '0000-00-00', '0000-00-00', 0, 'in P.M.', '', 123, 0, 0, '', '0000-00-00', '0000-00-00', 'jshwa', '0000-00-00', '', '', '', '', '1st class', '1230', '', '', '', '', '', '', 0, '0000-00-00', '', '', '', '', 0, '', 0, 0, '', '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, '', '', '', 'Closed', '', '', '', '', '', '', '', '', '', '', '2016-07-06 14:04:51'),
 (5606, 'Another Client', 'go there and come back', '2016-04-06', '2016-04-15', 'JS', '123', 'fgjhd sdfkjjk\r\ndfdg', '2016-04-12', '2016-04-21', 12, '', 'C drive', 12, 2, 2, '4', '2016-04-14', '2016-04-22', '', '2016-04-08', '2', '2', '3', '5', '12', '12', '452', '54', '7', '5', '74', '57', 74, '0000-00-00', '', '', '', '', 0, '', 0, 0, '', '2016-04-06', 3, 1, 12, 63, 5, 4, 5, 8, 546, 5, 5, 45, 7, 5, 54, '', 0, '', '', '', 'Closed', '', '', '', '', '', '', '', '', '', '', '2016-07-06 12:38:23'),
-(5611, 'Johny', 'Yellow Sheet', '0000-00-00', '2016-05-19', 'sdfsd', '', '', '0000-00-00', '0000-00-00', 0, 'in P.M.', '', 123, 0, 0, '', '0000-00-00', '0000-00-00', 'jshmo', '0000-00-00', '', '', '', '', '1st class', '1230', '', '', '', '', '', '', 0, '0000-00-00', '', '', '', '', 0, '', 0, 0, '', '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, '', '', '', 'Closed', 'Job complete', '', '', '', '', '', '', '', '', '', '2016-07-06 13:35:17'),
 (5613, 'ABC COMPANY', '12345', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, '', '', 0, 0, 0, '', '0000-00-00', '0000-00-00', 'jjone', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', 0, '0000-00-00', '', '', '', '', 0, '', 0, 0, '', '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, '', '', '', 'Closed', '', '', '', '', '', '', '', '', '', '', '2016-07-06 12:47:32'),
 (5614, 'Steve', 'This is a new job', '2016-07-20', '2016-07-20', 'tturn', '67', '98980', '2016-07-21', '2016-07-13', 45, 'waiting for materials', '45', 34, 789, 789, '789', '2016-07-19', '2016-07-19', 'admin', '2016-07-22', '809', '98', '98', '098', '645', '456', '45645', '456456', '456', '6565', '5645', '456546', 454, '0000-00-00', '', '', '', '', 0, '', 0, 0, '', '2016-07-19', 89, 980, 98908, 908, 90890, 88, 989, 89, 98, 980, 980, 89, 9, 98, 9098, '', 5, '', '', '', 'Closed', '', '', '', '', '', '', '', '', '', '', '2016-07-06 12:44:43'),
 (5615, '', 'Yellow Sheet', '0000-00-00', '2016-05-19', 'djeff', '', '', '0000-00-00', '0000-00-00', 0, 'in P.M.', '', 123, 0, 0, '', '0000-00-00', '0000-00-00', 'jshmo', '0000-00-00', '', '', '', '', '1st class', '1230', '', '', '', '', '', '', 0, '0000-00-00', '', '', '', '', 0, '', 0, 0, '', '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, '', '', '', 'Closed', '', '', '', '', '', '', '', '', '', '', '2016-07-06 11:36:50'),
-(5616, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', '', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production', '', 0, 0, 0, '', '0000-00-00', '0000-00-00', 'jshmo', '0000-00-00', '', '', '', '', '1st class', '123', '', '', '', '', '', '', 0, '0000-00-00', '', '', '', '', 0, '', 0, 0, '', '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, '', '', '', 'Closed', '', '', '', '', '', '', '', '', '', '', '2016-07-06 12:29:47');
+(5640, '', 'Yellow Sheet', '1969-12-31', '2016-05-19', '', '', '', '1969-12-31', '1969-12-31', 0, 'in P.M.', '', 0, 0, 0, '', '0000-00-00', '0000-00-00', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', 0, '0000-00-00', '', '', '', '', 0, '', 0, 0, '', '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(5641, 'New Client', 'Hello There', '2016-05-04', '2016-05-26', '', '123', ' hee hee hee ', '2016-05-11', '2016-05-11', 1263, 'waiting for data', '', 500, 0, 0, '', '1969-12-31', '1969-12-31', 'jshmo', '1969-12-31', '', '', '', '', '123', '12', '', '', '', '', '', '', 0, '0000-00-00', '', '', '', '', 0, '', 0, 0, '', '1969-12-31', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 2, '', '', 'asdasdas', 'Closed', 'Reasons', '', '', '', '', '', '', '', '', '', '2016-07-13 10:25:26'),
+(5647, 'Jill Lewis', '', '1969-12-31', '1969-12-31', '', '', '', '1969-12-31', '1969-12-31', 0, 'waiting for materials', '', 0, 0, 0, '', '0000-00-00', '0000-00-00', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', 0, '0000-00-00', '', '', '', '', 0, '', 0, 0, '', '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -155,8 +154,7 @@ INSERT INTO `archive_jobs` (`job_id`, `client_name`, `project_name`, `ticket_dat
 -- Table structure for table `blue_sheet`
 --
 
-DROP TABLE IF EXISTS `blue_sheet`;
-CREATE TABLE IF NOT EXISTS `blue_sheet` (
+CREATE TABLE `blue_sheet` (
   `job_id` int(11) NOT NULL,
   `completed_date` date NOT NULL,
   `data_hrs` int(11) NOT NULL DEFAULT '0',
@@ -173,8 +171,7 @@ CREATE TABLE IF NOT EXISTS `blue_sheet` (
   `ncoa_errors` int(11) NOT NULL DEFAULT '0',
   `bs_ncoa` int(11) NOT NULL DEFAULT '0',
   `final_count` int(11) NOT NULL DEFAULT '0',
-  `bs_domestic` int(11) NOT NULL DEFAULT '0',
-  UNIQUE KEY `job_id` (`job_id`)
+  `bs_domestic` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -182,33 +179,9 @@ CREATE TABLE IF NOT EXISTS `blue_sheet` (
 --
 
 INSERT INTO `blue_sheet` (`job_id`, `completed_date`, `data_hrs`, `gd_hrs`, `initialrec_count`, `manual`, `uncorrected`, `unverifiable`, `bs_foreigns`, `bs_exact`, `loose`, `householded`, `basic`, `ncoa_errors`, `bs_ncoa`, `final_count`, `bs_domestic`) VALUES
-(5515, '0000-00-00', 0, 0, 0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5516, '1969-12-31', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5517, '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5518, '2016-06-22', 5, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5519, '2016-06-10', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0),
-(5521, '0000-00-00', 2, 0, 2091, 5, 2, 1, 10, 2, 1, 0, 4, 10, 25, 2000, 2500),
-(5522, '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5523, '2016-05-26', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5524, '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5531, '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5532, '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5551, '1969-12-31', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5559, '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5601, '2016-07-15', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5603, '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5604, '2016-04-07', 2, 5, 8, 87, 78, 8, 876, 867, 87, 87, 8, 54, 787, 78, 54),
-(5605, '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5607, '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5608, '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5610, '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5612, '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5613, '2016-04-07', 2, 5, 8, 87, 78, 8, 876, 867, 87, 87, 8, 54, 787, 78, 54),
-(5614, '1969-12-31', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5615, '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5616, '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5617, '1969-12-31', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5618, '1969-12-31', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+(5649, '1969-12-31', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5650, '1969-12-31', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5651, '1969-12-31', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -216,8 +189,7 @@ INSERT INTO `blue_sheet` (`job_id`, `completed_date`, `data_hrs`, `gd_hrs`, `ini
 -- Table structure for table `client_info`
 --
 
-DROP TABLE IF EXISTS `client_info`;
-CREATE TABLE IF NOT EXISTS `client_info` (
+CREATE TABLE `client_info` (
   `client_name` varchar(45) NOT NULL,
   `client_add` varchar(45) NOT NULL,
   `contact_name` varchar(45) NOT NULL,
@@ -230,8 +202,7 @@ CREATE TABLE IF NOT EXISTS `client_info` (
   `category` varchar(80) NOT NULL,
   `website` varchar(90) NOT NULL,
   `notes` text NOT NULL,
-  `title` varchar(45) NOT NULL,
-  UNIQUE KEY `clientname` (`client_name`)
+  `title` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -243,6 +214,7 @@ INSERT INTO `client_info` (`client_name`, `client_add`, `contact_name`, `contact
 ('Femina1', '8 Southside Avesdfsf', 'Femina Patel', '1234567890', 'femina@gmail.com', '1231231230', '', '', '', 'student', 'sbdbjsfj.com', 'new note', 'Circular progress bar (canvas)'),
 ('Hi', 'lkjl', 'kjlkj', 'kjlk', 'jlkj', 'kjlk', NULL, NULL, NULL, 'lkj', 'jlkj', 'lkjk', 'ljl'),
 ('james', '987', 'issac newtron', 'lkjlkjlk', 'lkjlkj', 'kjlk', '', '', '', 'lkjlk', 'lkjlkj', 'llkj', 'lklkj'),
+('Jello', '2343 Jello', 'Jelloman', '123123434323', 'Tr@ello.com', '2346541235', NULL, NULL, NULL, 'dsf', 'p.com', 'dsfsdf', 'tret'),
 ('Jill Lewis', 'lkj', 'l', 'lkjlk', 'jlkj', 'lk', '', '', '', 'lkj', 'jlkjlkj', 'lkjlk', 'lkj'),
 ('jimmy', 'lkjlk', 'kiki', '098098098', 'lkjlkj', '0980989', '', '', '', 'lkjlkj', 'lkjlkj', 'yooo', 'lkjlkj'),
 ('Johny', 'jklj', 'lkjlk', 'klj', 'kljlk', 'jlkj', NULL, NULL, NULL, 'jlk', 'lkjl', 'kjllkj', 'kl'),
@@ -261,13 +233,11 @@ INSERT INTO `client_info` (`client_name`, `client_add`, `contact_name`, `contact
 -- Table structure for table `documentation`
 --
 
-DROP TABLE IF EXISTS `documentation`;
-CREATE TABLE IF NOT EXISTS `documentation` (
+CREATE TABLE `documentation` (
   `title` varchar(45) NOT NULL,
   `text` varchar(500) NOT NULL,
   `user` varchar(15) NOT NULL,
-  `timestamp` date NOT NULL,
-  UNIQUE KEY `title` (`title`)
+  `timestamp` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -294,8 +264,7 @@ INSERT INTO `documentation` (`title`, `text`, `user`, `timestamp`) VALUES
 -- Table structure for table `invoice`
 --
 
-DROP TABLE IF EXISTS `invoice`;
-CREATE TABLE IF NOT EXISTS `invoice` (
+CREATE TABLE `invoice` (
   `job_id` int(45) NOT NULL,
   `postage` varchar(3) DEFAULT NULL,
   `invoice_number` int(11) DEFAULT '0',
@@ -303,8 +272,7 @@ CREATE TABLE IF NOT EXISTS `invoice` (
   `2week_followup` varchar(45) DEFAULT NULL,
   `notes` text,
   `status` varchar(45) DEFAULT NULL,
-  `reason` varchar(45) DEFAULT NULL,
-  UNIQUE KEY `job_id` (`job_id`)
+  `reason` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -312,33 +280,9 @@ CREATE TABLE IF NOT EXISTS `invoice` (
 --
 
 INSERT INTO `invoice` (`job_id`, `postage`, `invoice_number`, `residual_returned`, `2week_followup`, `notes`, `status`, `reason`) VALUES
-(5515, '', 0, '', '', '', '', ''),
-(5516, '', 0, '', '', '', '', ''),
-(5517, '', 0, '', '', '', '', ''),
-(5518, '', 0, '', '', '', '', ''),
-(5519, '', 0, '', '', '', '', ''),
-(5521, '', 0, '', '', '', '', ''),
-(5522, '', 0, '', '', '', '', ''),
-(5523, '', 0, '', '', '', '', ''),
-(5524, '', 0, '', '', '', '', ''),
-(5531, '', 98, '54', '', '', '', ''),
-(5532, '', 0, '', '', '', '', ''),
-(5551, '', 0, '', '', '', '', ''),
-(5559, '', 0, '', '', '', '', ''),
-(5601, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(5603, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(5604, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(5605, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(5607, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(5608, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(5610, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(5612, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(5613, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(5614, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(5615, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(5616, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(5617, NULL, 0, NULL, NULL, NULL, NULL, NULL),
-(5618, NULL, 0, NULL, NULL, NULL, NULL, NULL);
+(5649, NULL, 0, NULL, NULL, NULL, NULL, NULL),
+(5650, NULL, 0, NULL, NULL, NULL, NULL, NULL),
+(5651, NULL, 0, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -346,9 +290,8 @@ INSERT INTO `invoice` (`job_id`, `postage`, `invoice_number`, `residual_returned
 -- Table structure for table `job_ticket`
 --
 
-DROP TABLE IF EXISTS `job_ticket`;
-CREATE TABLE IF NOT EXISTS `job_ticket` (
-  `job_id` int(45) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `job_ticket` (
+  `job_id` int(45) NOT NULL,
   `client_name` varchar(45) NOT NULL,
   `project_name` varchar(45) NOT NULL,
   `ticket_date` date DEFAULT NULL,
@@ -359,108 +302,17 @@ CREATE TABLE IF NOT EXISTS `job_ticket` (
   `materials_ordered` date DEFAULT NULL,
   `materials_expected` date DEFAULT NULL,
   `expected_quantity` int(11) NOT NULL DEFAULT '0',
-  `job_status` varchar(45) NOT NULL,
-  PRIMARY KEY (`job_id`),
-  UNIQUE KEY `jobid` (`job_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5619 DEFAULT CHARSET=latin1;
+  `job_status` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `job_ticket`
 --
 
 INSERT INTO `job_ticket` (`job_id`, `client_name`, `project_name`, `ticket_date`, `due_date`, `created_by`, `estimate_number`, `special_instructions`, `materials_ordered`, `materials_expected`, `expected_quantity`, `job_status`) VALUES
-(5515, '', 'Hello There', '2016-05-04', '2016-05-26', '', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, 'waiting for data'),
-(5516, '', 'comes back', '1969-12-31', '1969-12-31', '', '', '', '1969-12-31', '1969-12-31', 0, ''),
-(5517, 'Somebody', 'rebel', '2016-05-09', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
-(5518, 'jimmy', 'doodoo', '2016-06-07', '2016-06-14', 'KM', '3', 'hhh', '0000-00-00', '0000-00-00', 5, 'on hold'),
-(5519, 'DickButt', 'Something13', '2016-06-08', '2016-06-08', 'SA', '234', 'sd', '2016-06-15', '2016-06-21', 0, 'on hold'),
-(5521, '', 'climbes', '2016-05-04', '2016-05-12', '', '544040', 'Mail Foreigns: Yes\r\nHousehold: NO\r\nNCOA: Yes\r\n\r\nPROJECT MANAGEMENT:\r\n\r\nPRODUCTION:\r\n\r\nCUSTOMER SERVICE:\r\n\r\nfajlkfjealkfjealkjflkeajlkfejkla', '2016-05-04', '2016-05-06', 3000, 'waiting for materials'),
-(5522, '$client_name', 'o', '0000-00-00', '0000-00-00', 'werwe', 'werwer', '', '0000-00-00', '0000-00-00', 0, 'werwer'),
-(5523, 'Steve', '', '2016-06-14', '2016-06-21', 'SA', '', '', '2016-06-16', '2016-06-16', 0, 'on hold'),
-(5524, 'Somebody', 'go home', '0000-00-00', '0000-00-00', '', '', 'jdghkjfdhkgllg dbvfjdgkj f dfhg idfjgf\r\nsdfjshjgkhuf  jdflgkjhkj \r\nfgjfdihg\r\n fdgjifjgo fgklhkl\r\n rgkj r jgtfrjgko fdgjthkjgf dslrksltk\r\ndfgkl kh g tkljlo,gfhkolytiu \r\nrtgr myk fgt;l ty', '0000-00-00', '0000-00-00', 0, ''),
-(5525, '$client_name', '', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
-(5526, '$client_name', '', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
-(5527, '$client_name', '', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
-(5528, '$client_name', '', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
-(5529, '$client_name', '', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
-(5531, 'Led Zeppelin', 'print it', '0000-00-00', '0000-00-00', 'jshmo', '', '', '0000-00-00', '2016-06-24', 0, 'waiting for postage'),
-(5532, 'ABC COMPANY', 'print this', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
-(5533, 'ABC COMPANY', 'print this', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
-(5534, 'ABC COMPANY', 'print this', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
-(5535, 'Simpsons', 'Hello There', '2016-05-04', '2016-05-26', 'JS', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, 'waiting for data'),
-(5536, 'ABC COMPANY', 'print this', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
-(5537, 'Simpsons', 'Hello There', '2016-05-04', '2016-05-26', 'JS', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, 'waiting for data'),
-(5538, 'Simpsons', 'Hello There', '2016-05-04', '2016-05-26', 'JS', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, 'waiting for data'),
-(5539, 'Simpsons', 'Hello There', '2016-05-04', '2016-05-26', 'JS', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, 'waiting for data'),
-(5540, 'Simpsons', 'Hello There', '2016-05-04', '2016-05-26', 'JS', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, 'waiting for data'),
-(5541, 'Simpsons', 'Hello There', '2016-05-04', '2016-05-26', 'JS', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, 'waiting for data'),
-(5542, 'Simpsons', 'Hello There', '2016-05-04', '2016-05-26', 'JS', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, 'waiting for data'),
-(5543, 'Simpsons', 'Hello There', '2016-05-04', '2016-05-26', 'JS', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, 'waiting for data'),
-(5544, 'Simpsons', 'Hello There', '2016-05-04', '2016-05-26', 'JS', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, 'waiting for data'),
-(5545, 'Simpsons', 'Hello There', '2016-05-04', '2016-05-26', 'JS', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, 'waiting for data'),
-(5546, 'Simpsons', 'Hello There', '2016-05-04', '2016-05-26', 'JS', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, 'waiting for data'),
-(5547, 'Simpsons', 'Hello There', '2016-05-04', '2016-05-26', 'JS', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, 'waiting for data'),
-(5548, 'Simpsons', 'Hello There', '2016-05-04', '2016-05-26', 'JS', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, 'waiting for data'),
-(5549, 'Simpsons', 'Hello There', '2016-05-04', '2016-05-26', 'JS', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, 'waiting for data'),
-(5550, 'Simpsons', 'Hello There', '2016-05-04', '2016-05-26', 'JS', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, 'waiting for data'),
-(5551, 'New Client', 'drinks water', '1969-12-31', '1969-12-31', '', '', '    Howdy Partner. Hello', '1969-12-31', '1969-12-31', 0, ''),
-(5552, 'Simpsons', 'drinks water', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
-(5553, 'Simpsons', 'drinks water', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
-(5554, 'ABC COMPANY', 'print this', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
-(5555, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
-(5556, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
-(5558, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
-(5559, '', 'kills', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, 'waiting for data'),
-(5560, 'john Snow', 'kills', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
-(5561, 'john Snow', 'kills', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
-(5563, 'Somebody', 'is a ghost', '2016-05-17', '2016-05-28', 'KM', '789', '', '2016-05-04', '0000-00-00', 0, ''),
-(5564, 'Somebody', 'is a ghost', '2016-05-17', '2016-05-28', 'KM', '789', '', '2016-05-04', '0000-00-00', 0, ''),
-(5565, 'ABC COMPANY', 'print it', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
-(5566, 'ABC COMPANY', 'print it', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
-(5567, 'ABC COMPANY', 'nail it', '2016-05-03', '2016-05-21', 'KM', '', '', '0000-00-00', '0000-00-00', 0, 'in Production'),
-(5568, 'Simpsons', 'Hello There', '2016-05-04', '2016-05-26', 'JS', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, 'waiting for data'),
-(5569, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
-(5572, 'ABC COMPANY', 'print it', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
-(5573, 'ABC COMPANY', 'nail it', '2016-05-03', '2016-05-21', 'KM', '', '', '0000-00-00', '0000-00-00', 0, 'in Production'),
-(5575, 'Somebody', 'rebel', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
-(5576, 'Simpsons', 'drinks water', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, ''),
-(5577, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
-(5578, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
-(5579, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
-(5580, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
-(5581, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
-(5582, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
-(5583, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
-(5584, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
-(5585, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
-(5586, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
-(5587, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
-(5588, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
-(5589, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
-(5590, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
-(5591, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
-(5592, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
-(5593, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', 'JS', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
-(5594, 'Femina', 'Yellow Sheet', '0000-00-00', '2016-05-19', 'FP', '', '', '0000-00-00', '0000-00-00', 0, 'in P.M.'),
-(5595, 'Steve', '', '0000-00-00', '0000-00-00', '', '456', 'dfgdfgdfgdfg', '0000-00-00', '0000-00-00', 654, 'in Production'),
-(5596, 'Steve', '', '0000-00-00', '0000-00-00', '', '456', 'dfgdfgdfgdfg', '0000-00-00', '0000-00-00', 654, 'in Production'),
-(5597, 'Steve', '', '0000-00-00', '0000-00-00', '', '456', 'dfgdfgdfgdfg', '0000-00-00', '0000-00-00', 654, 'in Production'),
-(5598, 'Steve', '', '0000-00-00', '0000-00-00', '', '456', 'dfgdfgdfgdfg', '0000-00-00', '0000-00-00', 654, 'in Production'),
-(5599, 'Steve', '', '0000-00-00', '0000-00-00', '', '456', 'dfgdfgdfgdfg', '0000-00-00', '0000-00-00', 654, 'in Production'),
-(5601, 'peeetter', 'print it', '2016-07-11', '2016-07-14', 'jshwat', '0', '  Make a special instruction', '2016-07-06', '2016-07-16', 0, 'on hold'),
-(5603, 'Simpsons', 'Hello There', '2016-05-04', '2016-05-26', 'JS', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, 'waiting for data'),
-(5604, 'Another Client', 'loves to work', '2016-04-07', '2016-04-09', 'AB', '1234', 'fdhj ', '2016-04-23', '2016-04-28', 12, 'on hold'),
-(5605, 'pipoi', 'Yellow Sheet', '0000-00-00', '2016-05-19', 'FP', '', '', '0000-00-00', '0000-00-00', 0, 'in P.M.'),
-(5607, 'Another Client', 'Hello There', '2016-05-04', '2016-05-26', 'JS', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, ''),
-(5608, 'Another Client', 'Yellow Sheet', '0000-00-00', '2016-05-19', 'FP', '', '', '0000-00-00', '0000-00-00', 0, 'in P.M.'),
-(5610, '', '12345', '0000-00-00', '0000-00-00', '', '', '', '0000-00-00', '0000-00-00', 0, 'on hold'),
-(5612, '', 'Yellow Sheet', '0000-00-00', '2016-05-19', '', '', '', '0000-00-00', '0000-00-00', 0, 'in P.M.'),
-(5613, 'Led Zeppelin', 'loves to work', '2016-04-07', '2016-04-09', '', '1234', 'fdhj ', '2016-04-23', '2016-04-28', 12, 'on hold'),
-(5614, 'jimmy', 'kills', '1969-12-31', '1969-12-31', '', '', '', '1969-12-31', '1969-12-31', 0, ''),
-(5615, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', '', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
-(5616, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', '', '45', '', '0000-00-00', '2016-05-18', 0, 'in Production'),
-(5617, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', '', '45', '', '1969-12-31', '2016-05-18', 0, 'in Production'),
-(5618, 'ABC COMPANY', 'print it', '2016-05-11', '2016-05-21', '', '45', '', '1969-12-31', '2016-05-18', 0, 'in Production');
+(5649, 'james', '', '1969-12-31', '2016-07-15', '', '', '  poop', '1969-12-31', '1969-12-31', 300, 'none'),
+(5650, 'james', '', '1969-12-31', '2016-07-31', '', '', '', '1969-12-31', '1969-12-31', 0, 'none'),
+(5651, 'Another Client', '', '1969-12-31', '1969-12-31', '', '', '', '1969-12-31', '1969-12-31', 0, 'none');
 
 -- --------------------------------------------------------
 
@@ -468,8 +320,7 @@ INSERT INTO `job_ticket` (`job_id`, `client_name`, `project_name`, `ticket_date`
 -- Table structure for table `mail_data`
 --
 
-DROP TABLE IF EXISTS `mail_data`;
-CREATE TABLE IF NOT EXISTS `mail_data` (
+CREATE TABLE `mail_data` (
   `job_id` int(45) NOT NULL,
   `data_loc` text NOT NULL,
   `records_total` int(45) NOT NULL DEFAULT '0',
@@ -483,8 +334,7 @@ CREATE TABLE IF NOT EXISTS `mail_data` (
   `exact` varchar(15) NOT NULL,
   `mail_foreigns` varchar(15) NOT NULL,
   `household` varchar(15) NOT NULL,
-  `ncoa` varchar(15) NOT NULL,
-  PRIMARY KEY (`job_id`)
+  `ncoa` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -492,33 +342,9 @@ CREATE TABLE IF NOT EXISTS `mail_data` (
 --
 
 INSERT INTO `mail_data` (`job_id`, `data_loc`, `records_total`, `domestic`, `foreigns`, `data_source`, `data_received`, `data_completed`, `processed_by`, `dqr_sent`, `exact`, `mail_foreigns`, `household`, `ncoa`) VALUES
-(5515, '', 0, 0, 0, '', '0000-00-00', '0000-00-00', '', '0000-00-00', '', '', '', ''),
-(5516, '', 0, 0, 0, '', '1969-12-31', '1969-12-31', '', '1969-12-31', '', '', '', ''),
-(5517, '', 0, 0, 0, '', '0000-00-00', '0000-00-00', 'KM', '0000-00-00', '', '', '', ''),
-(5518, 'dfg', 0, 0, 0, 'fhg', '2016-06-15', '2016-06-21', 'FP', '2016-06-10', 'tgf', 'gfd', 'dfg', 'asa'),
-(5519, 's', 0, 0, 0, 'fsdf', '2016-06-07', '2016-06-03', 'SA', '0000-00-00', 'sdf', 'sdf', 'sdf', 'dsd'),
-(5521, '', 2500, 2000, 500, '', '2016-05-04', '2016-05-05', '', '2016-05-12', '50', 'YES', 'YES', ''),
-(5522, 'erer', 0, 0, 0, 'rer', '0000-00-00', '0000-00-00', 'KM', '0000-00-00', 'wer', 'wew', '', ''),
-(5523, '', 0, 0, 0, '', '2016-06-22', '2016-06-20', 'SA', '2016-06-20', '', '', '', ''),
-(5524, '', 0, 0, 0, '', '0000-00-00', '0000-00-00', 'AB', '0000-00-00', '', '', '', ''),
-(5531, '', 0, 0, 0, '', '0000-00-00', '0000-00-00', 'jshwat', '0000-00-00', '', '', '', ''),
-(5532, '', 0, 0, 0, '', '0000-00-00', '0000-00-00', 'AB', '0000-00-00', '', '', '', ''),
-(5551, '', 10000, 0, 0, '', '1969-12-31', '1969-12-31', 'igadge', '1969-12-31', '', '', '', ''),
-(5559, '', 0, 0, 0, '', '0000-00-00', '0000-00-00', 'ghgfhgf', '0000-00-00', '', '', '', ''),
-(5601, '', 0, 0, 0, '', '2016-07-15', '2016-07-19', 'djefferson', '2016-07-20', '', '', '', ''),
-(5603, '', 0, 0, 0, '', '0000-00-00', '0000-00-00', '', '0000-00-00', '', '', '', ''),
-(5604, ' c ll wer vg', 12, 96, 456, 'fgfgt', '2016-04-07', '2016-04-21', '', '2016-04-06', '32', '86', '867', '876'),
-(5605, '', 123, 0, 0, '', '0000-00-00', '0000-00-00', '', '0000-00-00', '', '', '', ''),
-(5607, '', 0, 0, 0, '', '0000-00-00', '0000-00-00', '', '0000-00-00', '', '', '', ''),
-(5608, '', 123, 0, 0, '', '0000-00-00', '0000-00-00', '', '0000-00-00', '', '', '', ''),
-(5610, '', 0, 0, 0, '', '0000-00-00', '0000-00-00', 'sayre', '0000-00-00', '', '', '', ''),
-(5612, '', 123, 0, 0, '', '0000-00-00', '0000-00-00', 'sayre', '0000-00-00', '', '', '', ''),
-(5613, ' c ll wer vg', 12, 96, 456, 'fgfgt', '2016-04-07', '2016-04-21', 'djefferson', '2016-04-06', '32', '86', '867', '876'),
-(5614, '', 500, 0, 0, '', '1969-12-31', '1969-12-31', 'djefferson', '1969-12-31', '', '', '', ''),
-(5615, '', 0, 0, 0, '', '0000-00-00', '0000-00-00', 'jshmo', '0000-00-00', '', '', '', ''),
-(5616, '', 0, 0, 0, '', '0000-00-00', '0000-00-00', 'jshmo', '0000-00-00', '', '', '', ''),
-(5617, '', 0, 0, 0, '', '1969-12-31', '1969-12-31', 'jshmo', '1969-12-31', '', '', '', ''),
-(5618, '', 0, 0, 0, '', '1969-12-31', '1969-12-31', 'jshmo', '1969-12-31', '', '', '', '');
+(5649, '', 1000, 0, 0, '', '1969-12-31', '1969-12-31', 'djefferson', '1969-12-31', '', '', '', ''),
+(5650, '', 4000, 0, 0, '', '1969-12-31', '1969-12-31', 'igadge', '1969-12-31', '', '', '', ''),
+(5651, '', 5000, 0, 0, '', '1969-12-31', '1969-12-31', 'djefferson', '1969-12-31', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -526,8 +352,7 @@ INSERT INTO `mail_data` (`job_id`, `data_loc`, `records_total`, `domestic`, `for
 -- Table structure for table `mail_info`
 --
 
-DROP TABLE IF EXISTS `mail_info`;
-CREATE TABLE IF NOT EXISTS `mail_info` (
+CREATE TABLE `mail_info` (
   `job_id` int(11) NOT NULL,
   `mail_class` varchar(45) NOT NULL,
   `rate` varchar(45) NOT NULL,
@@ -537,8 +362,7 @@ CREATE TABLE IF NOT EXISTS `mail_info` (
   `permit` varchar(45) NOT NULL,
   `bmeu` varchar(45) NOT NULL,
   `based_on` varchar(45) NOT NULL,
-  `non_profit_number` int(11) NOT NULL DEFAULT '0',
-  UNIQUE KEY `job_id` (`job_id`)
+  `non_profit_number` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -546,34 +370,9 @@ CREATE TABLE IF NOT EXISTS `mail_info` (
 --
 
 INSERT INTO `mail_info` (`job_id`, `mail_class`, `rate`, `processing_category`, `mail_dim`, `weights_measures`, `permit`, `bmeu`, `based_on`, `non_profit_number`) VALUES
-(0, '123', '12', '', '', '', '', '', '', 0),
-(5515, '123', '12', '', '', '', '', '', '', 0),
-(5516, '', '', '', '', '', '', '', '', 0),
-(5518, 'fdasdff', '34', 'sdfsadf', 'fdsa', 'gffgh', 'dgf', 'dfgd', 'fgdfg', 0),
-(5519, 'sdf', 'sdf', 'sdf', 'sf', 'sdf', 'sd', 'sa', 's', 0),
-(5521, 'First Class', 'Auto', 'Letter', '#10 Envelope', '.75 in x .45 lb', '473', 'Newburgh, NY 12550', '50', 103838),
-(5522, 'werwer', 'wwer', 'wer', 'wer', 'werere', 'wewe', 'wer', 'ree', 0),
-(5523, '', '', '', '', '', '', '', '', 0),
-(5524, '', '', '', '', '', '', '', '', 0),
-(5531, '1st class', '123', '', '', '', '', '', '', 0),
-(5532, '1st class', '123', '', '', '', '', '', '', 0),
-(5551, '', '', '', '', '', '', '', '', 0),
-(5559, '', '', '', '', '', '', '', '', 0),
-(5569, '123', '12', '', '', '', '', '', '', 0),
-(5601, '', '', '', '', '', '', '', '45', 0),
-(5603, '123', '12', '', '', '', '', '', '', 0),
-(5604, 'asd', 'dsf', 'bf', 'fg', 'gd', 'dg', 'fg', 'fg', 123),
-(5605, '1st class', '1230', '', '', '', '', '', '', 0),
-(5607, '123', '12', '', '', '', '', '', '', 0),
-(5608, '1st class', '1230', '', '', '', '', '', '', 0),
-(5610, '', '', '', '', '', '', '', '', 0),
-(5612, '1st class', '1230', '', '', '', '', '', '', 0),
-(5613, 'asd', 'dsf', 'bf', 'fg', 'gd', 'dg', 'fg', 'fg', 123),
-(5614, '', '', '', '', '', '', '', '', 0),
-(5615, '1st class', '123', '', '', '', '', '', '', 0),
-(5616, '1st class', '123', '', '', '', '', '', '', 0),
-(5617, '1st class', '123', '', '', '', '', '', '', 0),
-(5618, '1st class', '123', '', '', '', '', '', '', 0);
+(5649, '', '', '', '', '', '', '', '', 0),
+(5650, '', '', '', '', '', '', '', '', 0),
+(5651, '', '', '', '', '', '', '', '', 0);
 
 -- --------------------------------------------------------
 
@@ -581,8 +380,7 @@ INSERT INTO `mail_info` (`job_id`, `mail_class`, `rate`, `processing_category`, 
 -- Table structure for table `materials`
 --
 
-DROP TABLE IF EXISTS `materials`;
-CREATE TABLE IF NOT EXISTS `materials` (
+CREATE TABLE `materials` (
   `job_id` int(11) NOT NULL,
   `received` date NOT NULL,
   `location` varchar(15) NOT NULL,
@@ -594,8 +392,7 @@ CREATE TABLE IF NOT EXISTS `materials` (
   `height` int(11) NOT NULL,
   `weight` int(11) NOT NULL,
   `size` varchar(50) NOT NULL,
-  `based_on` int(11) NOT NULL,
-  UNIQUE KEY `job_id` (`job_id`)
+  `based_on` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -603,12 +400,27 @@ CREATE TABLE IF NOT EXISTS `materials` (
 --
 
 INSERT INTO `materials` (`job_id`, `received`, `location`, `checked_in`, `material`, `type`, `quantity`, `vendor`, `height`, `weight`, `size`, `based_on`) VALUES
-(5515, '2016-06-29', 'ljljl', 'lkj', 'lk', 'jlkj', 0, 'Femina', 0, 0, 'jlkj', 0),
-(5516, '2016-06-14', '', 'sdf', 'sdfsdf', 'sdfsd', 0, 'Sample', 0, 0, 'dsdfsd', 0),
-(5517, '2016-07-20', ' ', 'PO', 'poio', 'popoi', 34, 'Femina', 7, 89, '9', 0),
-(5518, '2016-06-30', '', 'JJ', 'some shit', 'kjlkj', 0, 'Jezz', 0, 0, 'lkj', 0),
-(5519, '2016-07-11', ' ', 'po', 'lkl', '9', 78, 'Femina', 89, 99, '8', 567),
-(5601, '0000-00-00', ' ', 'TA', 'Copper', 'Copper', 45, 'Jezz', 3, 45, '54', 6);
+(5649, '2016-07-15', ' ', 'yu', 'oiui', 'kjhkjhj', 56, 'Kevin', 34, 34, '23', 234);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `priority_level`
+--
+
+CREATE TABLE `priority_level` (
+  `job_id` int(45) NOT NULL,
+  `priority` int(5) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `priority_level`
+--
+
+INSERT INTO `priority_level` (`job_id`, `priority`) VALUES
+(5649, 0),
+(5650, 0),
+(5651, 0);
 
 -- --------------------------------------------------------
 
@@ -616,8 +428,7 @@ INSERT INTO `materials` (`job_id`, `received`, `location`, `checked_in`, `materi
 -- Table structure for table `production`
 --
 
-DROP TABLE IF EXISTS `production`;
-CREATE TABLE IF NOT EXISTS `production` (
+CREATE TABLE `production` (
   `job_id` int(11) NOT NULL,
   `hold_postage` varchar(45) NOT NULL,
   `postage_paid` varchar(45) NOT NULL,
@@ -627,8 +438,7 @@ CREATE TABLE IF NOT EXISTS `production` (
   `tasks` text NOT NULL,
   `task1` varchar(45) NOT NULL,
   `task2` varchar(45) NOT NULL,
-  `task3` varchar(45) NOT NULL,
-  UNIQUE KEY `job_id` (`job_id`)
+  `task3` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -636,33 +446,9 @@ CREATE TABLE IF NOT EXISTS `production` (
 --
 
 INSERT INTO `production` (`job_id`, `hold_postage`, `postage_paid`, `print_template`, `special_address`, `delivery`, `tasks`, `task1`, `task2`, `task3`) VALUES
-(5515, 'yes', 'yes', '', '', '', '', '', '', ''),
-(5516, 'yes', 'yes', '', '', '', '', '', '', ''),
-(5517, 'yes', 'yes', '', '', '', '', '', '', ''),
-(5518, 'no', 'yes', 'jhkh', 'fghfg', 'fghfd', 'Letter Printing', 't', 'r', 'e'),
-(5519, 'no', 'yes', 'sdf', 'sdf', 'sdf', 'In-House Envelope Printing', 'sdf', 'sad', 'sdf'),
-(5521, 'yes', 'yes', '', '', '', 'yoooooo', '', '', ''),
-(5522, 'no', 'no', '', '', '', '', '', '', ''),
-(5523, 'no', 'no', '', '', '', '', '', '', ''),
-(5524, 'yes', 'yes', '', '', '', '', '', '', ''),
-(5531, 'yes', 'yes', '', '', '', '', '', '', ''),
-(5532, 'yes', 'yes', '', '', '', '', '', '', ''),
-(5551, 'yes', 'yes', '', '', '', 'Folding,Sealing', '', '', ''),
-(5559, 'yes', 'yes', '', '', '', '', '', '', ''),
-(5601, 'yes', 'yes', '', '', '', 'Mail Merge,Letter Printing', '', '', ''),
-(5603, 'yes', 'yes', '', '', '', '', '', '', ''),
-(5604, 'yes', 'yes', 'sdsfdbv', 'fhghnj', 'ghj', '', 'd', 'dftg', 'trg'),
-(5605, 'yes', 'yes', '', '', '', '', '', '', ''),
-(5607, 'yes', 'yes', '', '', '', '', '', '', ''),
-(5608, 'yes', 'yes', '', '', '', '', '', '', ''),
-(5610, 'yes', 'yes', '', '', '', '', '', '', ''),
-(5612, 'yes', 'yes', '', '', '', '', '', '', ''),
-(5613, 'yes', 'yes', 'sdsfdbv', 'fhghnj', 'ghj', 'Folding, Inserting', 'd', 'dftg', 'trg'),
-(5614, 'yes', 'yes', '', '', '', 'Letter Printing', '', '', ''),
-(5615, 'yes', 'yes', '', '', '', '', '', '', ''),
-(5616, 'yes', 'yes', '', '', '', '', '', '', ''),
-(5617, 'yes', 'yes', '', '', '', '', '', '', ''),
-(5618, 'yes', 'yes', '', '', '', '', '', '', '');
+(5649, 'no', 'no', '', '', '', 'In-House Envelope Printing', '', '', ''),
+(5650, 'no', 'no', '', '', '', 'Tabbing,Folding', '', '', ''),
+(5651, 'no', 'no', '', '', '', 'Mail Merge', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -670,8 +456,7 @@ INSERT INTO `production` (`job_id`, `hold_postage`, `postage_paid`, `print_templ
 -- Table structure for table `production_data`
 --
 
-DROP TABLE IF EXISTS `production_data`;
-CREATE TABLE IF NOT EXISTS `production_data` (
+CREATE TABLE `production_data` (
   `id` varchar(30) NOT NULL DEFAULT '0',
   `total_records` int(11) NOT NULL,
   `records_per` varchar(150) NOT NULL,
@@ -687,14 +472,15 @@ CREATE TABLE IF NOT EXISTS `production_data` (
 --
 
 INSERT INTO `production_data` (`id`, `total_records`, `records_per`, `time_number`, `time_unit`, `people`, `job`, `hours`) VALUES
-('0', 1, '1,1,1', '1,1,1', 'min.,min.,min.', '1,1,1', 'Mail Merge,Labeling,Letter Printing', 0.05),
-('0', 12, '1,1', '1,1', 'min.,min.', '1,1', 'Folding,Inserting', 0.4),
-('0', 12, '1,1', '1,1', 'min.,min.', '2,1', 'Folding,Inserting', 0.3),
-('0', 10000, '500,500', '30,1', 'min.,hr.', '2,2', 'Sealing,Folding', 15),
-('0', 500, '10', '10', 'min.', '1', 'Letter Printing', 8.33333),
-('0', 1, '1', '0', 'min.', '1', 'Mail Merge', 0),
-('0', 0, '1', '1', 'min.', '1', 'Mail Merge', 0),
-('5001', 1, '1', '1', 'min.', '1', 'Mail Merge', 0.0166667);
+('5002', 1, '40', '1', 'hr.', '1', 'Letter Printing', 0.025),
+('5004', 1000, '200,200', '30,1', 'sec.,hr.', '1,1', 'Sealing,Folding', 5.04167),
+('5005', 10000, '100,100', '1,1', 'hr.,hr.', '1,1', 'Folding,Inserting', 200),
+('5007', 500, '50,100', '1,1', 'hr.,hr.', '2,1', 'Mail Merge,Letter Printing', 10),
+('5008', 1, '1,1', '1,1', 'hr.,hr.', '1,3', 'Mail Merge,Mail Merge', 1.33333),
+('5009', 500, '50', '1', 'hr.', '1', 'Folding', 10),
+('5012', 1000, '100', '1', 'hr.', '1', 'In-House Envelope Printing', 10),
+('5013', 4000, '200,150', '1,1', 'hr.,hr.', '1,2', 'Folding,Tabbing', 33.3333),
+('5014', 1000, '10', '1', 'hr.', '1', 'Mail Merge', 100);
 
 -- --------------------------------------------------------
 
@@ -702,8 +488,7 @@ INSERT INTO `production_data` (`id`, `total_records`, `records_per`, `time_numbe
 -- Table structure for table `projectmanager`
 --
 
-DROP TABLE IF EXISTS `projectmanager`;
-CREATE TABLE IF NOT EXISTS `projectmanager` (
+CREATE TABLE `projectmanager` (
   `pm` varchar(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -721,30 +506,32 @@ INSERT INTO `projectmanager` (`pm`) VALUES
 -- Table structure for table `reminder`
 --
 
-DROP TABLE IF EXISTS `reminder`;
-CREATE TABLE IF NOT EXISTS `reminder` (
-  `id` varchar(30) NOT NULL,
+CREATE TABLE `reminder` (
+  `id` int(11) NOT NULL,
   `user` varchar(45) NOT NULL,
   `text` text NOT NULL,
   `date` date NOT NULL,
   `vendor_name` varchar(30) NOT NULL,
-  `client_name` varchar(30) NOT NULL
+  `client_name` varchar(30) NOT NULL,
+  `occurence` varchar(30) NOT NULL,
+  `current_day` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `reminder`
 --
 
-INSERT INTO `reminder` (`id`, `user`, `text`, `date`, `vendor_name`, `client_name`) VALUES
-('2', 'sayre', 'ertert', '2016-06-22', 'Femina', 'New Client'),
-('3', 'sayre', 'Call Jill', '2016-06-16', '', 'Jill Lewis'),
-('4', 'admin', 'Call Jill', '2016-06-14', '', 'Jill Lewis'),
-('', 'sayre', 'My new reminder', '2016-06-29', '', ''),
-('', 'sayre', 'Upcoming Reminder', '2016-07-02', '', ''),
-('', 'sayre', 'Theres a thing today', '2016-06-04', '', ''),
-('', 'sayre', 'Heres a thing', '2016-06-01', '', ''),
-('', 'sayre', 'Thing today', '2016-07-03', '', ''),
-('', 'admin', 'call client', '2016-07-05', '', '');
+INSERT INTO `reminder` (`id`, `user`, `text`, `date`, `vendor_name`, `client_name`, `occurence`, `current_day`) VALUES
+(15, 'admin', 'Call Jill Lewis', '0000-00-00', 'None', 'Jill Lewis', 'Weekly', 'Thu'),
+(16, 'admin', 'heeeeello', '2016-07-14', 'Kevin', 'jimmy', 'Once', 'None'),
+(17, 'admin', 'Call New Client', '2016-07-13', 'None', 'New Client', 'Weekly', 'Wed'),
+(18, 'admin', 'Call Sample and Led Zeppelin', '2016-07-13', 'Sample', 'Steve', 'Once', 'None'),
+(19, 'admin', 'Call them', '2016-07-13', 'Jezz', 'Led Zeppelin', 'Once', 'None'),
+(20, 'admin', 'Change Text', '2016-07-13', 'Femina', 'None', 'Once', 'None'),
+(21, 'admin', 'Monthly Reminder', '0000-00-00', 'Venderoni', 'Johny', 'Monthly', 'None'),
+(22, 'admin', 'Weekly Reminder for Thursday', '0000-00-00', 'None', 'jimmy', 'Weekly', 'Thu'),
+(23, 'admin', 'call jimmy', '2016-07-15', 'None', 'jimmy', 'Once', 'None'),
+(24, 'admin', 'Hello', '0000-00-00', 'None', 'None', 'Weekly', 'Sun');
 
 -- --------------------------------------------------------
 
@@ -752,8 +539,7 @@ INSERT INTO `reminder` (`id`, `user`, `text`, `date`, `vendor_name`, `client_nam
 -- Table structure for table `timestamp`
 --
 
-DROP TABLE IF EXISTS `timestamp`;
-CREATE TABLE IF NOT EXISTS `timestamp` (
+CREATE TABLE `timestamp` (
   `user` varchar(30) NOT NULL,
   `time` datetime NOT NULL,
   `job` varchar(70) NOT NULL,
@@ -1037,7 +823,94 @@ INSERT INTO `timestamp` (`user`, `time`, `job`, `a_p`) VALUES
 ('sayre', '2016-07-11 15:28:12', 'updated job ticket', 'PM'),
 ('sayre', '2016-07-11 15:32:29', 'updated job ticket', 'PM'),
 ('sayre', '2016-07-11 15:33:43', 'updated job ticket', 'PM'),
-('sayre', '2016-07-11 16:08:54', 'job assigned to Customer Service', 'PM');
+('sayre', '2016-07-11 16:08:54', 'job assigned to Customer Service', 'PM'),
+('sayre', '2016-07-12 12:35:14', 'updated job ticket', 'PM'),
+('sayre', '2016-07-12 13:27:06', 'updated job ticket', 'PM'),
+('sayre', '2016-07-12 13:32:29', 'updated job ticket', 'PM'),
+('sayre', '2016-07-12 13:33:01', 'updated job ticket', 'PM'),
+('sayre', '2016-07-12 14:40:39', 'updated job ticket', 'PM'),
+('sayre', '2016-07-12 14:41:45', 'updated job ticket', 'PM'),
+('sayre', '2016-07-12 14:58:09', 'created job ticket', 'PM'),
+('sayre', '2016-07-12 14:59:19', 'updated job ticket', 'PM'),
+('sayre', '2016-07-12 15:00:06', 'archived job', 'PM'),
+('admin', '2016-07-12 15:02:19', 'updated job ticket', 'PM'),
+('admin', '2016-07-12 15:03:10', 'updated job ticket', 'PM'),
+('admin', '2016-07-12 15:04:12', 'updated job ticket', 'PM'),
+('admin', '2016-07-12 15:05:10', 'updated job ticket', 'PM'),
+('admin', '2016-07-12 16:06:05', 'updated job ticket', 'PM'),
+('admin', '2016-07-12 16:35:33', 'updated job ticket', 'PM'),
+('sayre', '2016-07-13 09:08:28', 'updated job ticket', 'AM'),
+('sayre', '2016-07-13 09:26:45', 'deleted archive job', 'AM'),
+('sayre', '2016-07-13 09:27:08', 'deleted archive job', 'AM'),
+('sayre', '2016-07-13 09:27:42', 'deleted job ticket', 'AM'),
+('sayre', '2016-07-13 09:27:53', 'deleted job ticket', 'AM'),
+('sayre', '2016-07-13 09:28:21', 'deleted job ticket', 'AM'),
+('sayre', '2016-07-13 09:28:40', 'updated job ticket', 'AM'),
+('sayre', '2016-07-13 09:29:07', 'updated job ticket', 'AM'),
+('admin', '2016-07-13 09:29:56', 'updated job ticket', 'AM'),
+('admin', '2016-07-13 09:30:05', 'archived job', 'AM'),
+('admin', '2016-07-13 09:30:17', 'archived job', 'AM'),
+('admin', '2016-07-13 09:34:31', 'archived job', 'AM'),
+('admin', '2016-07-13 09:35:00', 'archived job', 'AM'),
+('admin', '2016-07-13 09:39:30', 'archived job', 'AM'),
+('admin', '2016-07-13 09:40:02', 'archived job', 'AM'),
+('admin', '2016-07-13 09:42:14', 'updated job ticket', 'AM'),
+('admin', '2016-07-13 09:42:21', 'archived job', 'AM'),
+('admin', '2016-07-13 09:48:10', 'created job ticket', 'AM'),
+('admin', '2016-07-13 09:50:45', 'job assigned to Customer Service', 'AM'),
+('admin', '2016-07-13 09:57:01', 'archived job', 'AM'),
+('admin', '2016-07-13 09:57:20', 'archived job', 'AM'),
+('admin', '2016-07-13 10:00:13', 'job assigned to Customer Service', 'AM'),
+('admin', '2016-07-13 10:02:22', 'created job ticket', 'AM'),
+('admin', '2016-07-13 10:03:00', 'created job ticket', 'AM'),
+('admin', '2016-07-13 10:03:47', 'created job ticket', 'AM'),
+('admin', '2016-07-13 10:04:29', 'updated job ticket', 'AM'),
+('admin', '2016-07-13 10:05:21', 'created job ticket', 'AM'),
+('admin', '2016-07-13 10:05:34', 'created job ticket', 'AM'),
+('admin', '2016-07-13 10:06:26', 'deleted archive job', 'AM'),
+('admin', '2016-07-13 10:19:25', 'job assigned to Customer Service', 'AM'),
+('admin', '2016-07-13 10:19:44', 'archived job', 'AM'),
+('admin', '2016-07-13 10:20:06', 'created job ticket', 'AM'),
+('admin', '2016-07-13 10:20:28', 'updated job ticket', 'AM'),
+('admin', '2016-07-13 10:20:42', 'updated job ticket', 'AM'),
+('admin', '2016-07-13 10:21:06', 'updated job ticket', 'AM'),
+('admin', '2016-07-13 10:22:12', 'updated job ticket', 'AM'),
+('admin', '2016-07-13 10:23:10', 'updated job ticket', 'AM'),
+('admin', '2016-07-13 10:23:52', 'updated job ticket', 'AM'),
+('admin', '2016-07-13 10:24:54', 'updated job ticket', 'AM'),
+('admin', '2016-07-13 10:25:26', 'archived job', 'AM'),
+('admin', '2016-07-13 10:25:53', 'created job ticket', 'AM'),
+('admin', '2016-07-13 10:32:34', 'created job ticket', 'AM'),
+('admin', '2016-07-13 10:33:25', 'updated job ticket', 'AM'),
+('admin', '2016-07-13 10:33:31', 'archived job', 'AM'),
+('admin', '2016-07-13 10:33:48', 'deleted archive job', 'AM'),
+('admin', '2016-07-13 10:34:29', 'updated job ticket', 'AM'),
+('admin', '2016-07-13 10:35:04', 'updated job ticket', 'AM'),
+('admin', '2016-07-13 10:38:10', 'updated job ticket', 'AM'),
+('admin', '2016-07-13 10:38:17', 'archived job', 'AM'),
+('admin', '2016-07-13 10:40:26', 'deleted archive job', 'AM'),
+('admin', '2016-07-13 10:45:15', 'added new client', 'AM'),
+('admin', '2016-07-13 10:51:31', 'created job ticket', 'AM'),
+('admin', '2016-07-13 10:51:50', 'updated job ticket', 'AM'),
+('admin', '2016-07-13 10:52:22', 'updated job ticket', 'AM'),
+('admin', '2016-07-13 10:52:50', 'updated job ticket', 'AM'),
+('admin', '2016-07-13 10:53:11', 'updated job ticket', 'AM'),
+('admin', '2016-07-13 11:07:13', 'created job ticket', 'AM'),
+('admin', '2016-07-13 11:07:36', 'updated job ticket', 'AM'),
+('admin', '2016-07-13 11:08:27', 'updated job ticket', 'AM'),
+('admin', '2016-07-13 11:16:08', 'created job ticket', 'AM'),
+('admin', '2016-07-13 11:16:21', 'updated job ticket', 'AM'),
+('admin', '2016-07-13 12:06:03', 'updated job ticket', 'PM'),
+('admin', '2016-07-13 12:10:54', 'added weights and measure', 'PM'),
+('admin', '2016-07-13 14:39:57', 'updated job ticket', 'PM'),
+('admin', '2016-07-13 14:40:14', 'updated job ticket', 'PM'),
+('admin', '2016-07-13 14:40:25', 'updated job ticket', 'PM'),
+('admin', '2016-07-13 16:42:41', 'updated job ticket', 'PM'),
+('admin', '2016-07-13 16:43:03', 'updated job ticket', 'PM'),
+('admin', '2016-07-17 14:19:59', 'created job ticket', 'PM'),
+('sayre', '2016-07-18 12:22:12', 'updated job ticket', 'PM'),
+('sayre', '2016-07-18 12:23:48', 'updated job ticket', 'PM'),
+('sayre', '2016-07-18 14:49:23', 'deleted job ticket', 'PM');
 
 -- --------------------------------------------------------
 
@@ -1045,8 +918,7 @@ INSERT INTO `timestamp` (`user`, `time`, `job`, `a_p`) VALUES
 -- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE IF NOT EXISTS `users` (
+CREATE TABLE `users` (
   `user` varchar(45) NOT NULL,
   `password` varchar(45) NOT NULL,
   `initial` varchar(45) NOT NULL,
@@ -1079,16 +951,13 @@ INSERT INTO `users` (`user`, `password`, `initial`, `department`, `email`, `firs
 -- Table structure for table `vendors`
 --
 
-DROP TABLE IF EXISTS `vendors`;
-CREATE TABLE IF NOT EXISTS `vendors` (
+CREATE TABLE `vendors` (
   `vendor_name` varchar(45) NOT NULL,
   `vendor_contact` varchar(45) NOT NULL,
   `vendor_add` varchar(45) NOT NULL,
   `vendor_email` varchar(45) NOT NULL,
   `vendor_phone` varchar(45) NOT NULL,
-  `vendor_website` varchar(45) NOT NULL,
-  PRIMARY KEY (`vendor_name`),
-  UNIQUE KEY `vendor_name` (`vendor_name`)
+  `vendor_website` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1109,8 +978,7 @@ INSERT INTO `vendors` (`vendor_name`, `vendor_contact`, `vendor_add`, `vendor_em
 -- Table structure for table `w_and_m`
 --
 
-DROP TABLE IF EXISTS `w_and_m`;
-CREATE TABLE IF NOT EXISTS `w_and_m` (
+CREATE TABLE `w_and_m` (
   `vendor` varchar(45) NOT NULL,
   `material` varchar(45) NOT NULL,
   `size` varchar(45) NOT NULL,
@@ -1149,8 +1017,7 @@ INSERT INTO `w_and_m` (`vendor`, `material`, `size`, `height`, `weight`, `based_
 -- Table structure for table `yellow_sheet`
 --
 
-DROP TABLE IF EXISTS `yellow_sheet`;
-CREATE TABLE IF NOT EXISTS `yellow_sheet` (
+CREATE TABLE `yellow_sheet` (
   `job_id` int(11) NOT NULL,
   `1` tinyint(1) NOT NULL DEFAULT '0',
   `2` tinyint(1) NOT NULL DEFAULT '0',
@@ -1166,8 +1033,7 @@ CREATE TABLE IF NOT EXISTS `yellow_sheet` (
   `12` tinyint(1) NOT NULL DEFAULT '0',
   `13` tinyint(1) NOT NULL DEFAULT '0',
   `14` tinyint(1) NOT NULL DEFAULT '0',
-  `percent` float NOT NULL DEFAULT '0',
-  UNIQUE KEY `job_id` (`job_id`)
+  `percent` float NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1175,34 +1041,108 @@ CREATE TABLE IF NOT EXISTS `yellow_sheet` (
 --
 
 INSERT INTO `yellow_sheet` (`job_id`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`, `13`, `14`, `percent`) VALUES
-(5515, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5516, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5517, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5518, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5519, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5521, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5522, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5523, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5524, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5531, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5532, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5551, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5559, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5601, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5603, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5604, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5605, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5607, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5608, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5610, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5612, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5613, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5614, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5615, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5616, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5617, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5618, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+(5649, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5650, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5651, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `archive_jobs`
+--
+ALTER TABLE `archive_jobs`
+  ADD UNIQUE KEY `job_id` (`job_id`);
+
+--
+-- Indexes for table `blue_sheet`
+--
+ALTER TABLE `blue_sheet`
+  ADD UNIQUE KEY `job_id` (`job_id`);
+
+--
+-- Indexes for table `client_info`
+--
+ALTER TABLE `client_info`
+  ADD UNIQUE KEY `clientname` (`client_name`);
+
+--
+-- Indexes for table `documentation`
+--
+ALTER TABLE `documentation`
+  ADD UNIQUE KEY `title` (`title`);
+
+--
+-- Indexes for table `invoice`
+--
+ALTER TABLE `invoice`
+  ADD UNIQUE KEY `job_id` (`job_id`);
+
+--
+-- Indexes for table `job_ticket`
+--
+ALTER TABLE `job_ticket`
+  ADD PRIMARY KEY (`job_id`),
+  ADD UNIQUE KEY `jobid` (`job_id`);
+
+--
+-- Indexes for table `mail_data`
+--
+ALTER TABLE `mail_data`
+  ADD PRIMARY KEY (`job_id`);
+
+--
+-- Indexes for table `mail_info`
+--
+ALTER TABLE `mail_info`
+  ADD UNIQUE KEY `job_id` (`job_id`);
+
+--
+-- Indexes for table `materials`
+--
+ALTER TABLE `materials`
+  ADD UNIQUE KEY `job_id` (`job_id`);
+
+--
+-- Indexes for table `production`
+--
+ALTER TABLE `production`
+  ADD UNIQUE KEY `job_id` (`job_id`);
+
+--
+-- Indexes for table `reminder`
+--
+ALTER TABLE `reminder`
+  ADD UNIQUE KEY `id` (`id`);
+
+--
+-- Indexes for table `vendors`
+--
+ALTER TABLE `vendors`
+  ADD PRIMARY KEY (`vendor_name`),
+  ADD UNIQUE KEY `vendor_name` (`vendor_name`);
+
+--
+-- Indexes for table `yellow_sheet`
+--
+ALTER TABLE `yellow_sheet`
+  ADD UNIQUE KEY `job_id` (`job_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `job_ticket`
+--
+ALTER TABLE `job_ticket`
+  MODIFY `job_id` int(45) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5652;
+--
+-- AUTO_INCREMENT for table `reminder`
+--
+ALTER TABLE `reminder`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

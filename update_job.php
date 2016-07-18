@@ -125,6 +125,7 @@ else if(isset($_POST['delete_form'])){
 	mysqli_query($conn, $sql1);
 	$sql1 = "INSERT INTO timestamp (user,time,job, a_p) VALUES ('$user_name', '$today','$job', '$a_p')";
 	mysqli_query($conn, $sql1);
+	mysqli_query($conn,"DELETE FROM priority_level WHERE job_id = '$job_id'");
 	$conn->close();
 	header("location: dashboard.php");
 	exit();

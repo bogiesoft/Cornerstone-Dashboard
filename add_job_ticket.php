@@ -133,6 +133,9 @@ if(isset($_POST['submit_form'])){
 
 	$sql8 = "INSERT INTO yellow_sheet (job_id) VALUES ('$job_id')";
 	$result9= $conn->query($sql8) or die('Error querying database 8.');
+	
+	$sql9 = "INSERT INTO priority_level (job_id) VALUES ('$job_id')";
+	mysqli_query($conn, $sql9);
 
 	$conn->close();
 
