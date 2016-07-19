@@ -66,14 +66,55 @@ html {  height: 100%;}
 <div class="clear"></div>
 
 <?php
+//change priorities here
+if(isset($_POST['frmSearch'])){
+	$compare = $_POST['frmSearch'];
+}
+else{
+	$compare = $_SESSION['compare_production'];
+}
+$_SESSION['compare_production'] = $compare;
+if($compare == "None"){
+	$compare = 0;
+	$job_result = mysqli_query($conn,"SELECT job_id, client_name, project_name, due_date, priority FROM job_ticket WHERE priority LIKE '%{$compare}%' ORDER BY priority DESC, due_date ASC");
+}
+else if($compare == "Low"){
+	$compare = 1;
+	$job_result = mysqli_query($conn,"SELECT job_id, client_name, project_name, due_date, priority FROM job_ticket WHERE priority LIKE '%{$compare}%' ORDER BY priority DESC, due_date ASC");
+}
+else if($compare == "Medium"){
+	$compare = 2;
+	$job_result = mysqli_query($conn,"SELECT job_id, client_name, project_name, due_date, priority FROM job_ticket WHERE priority LIKE '%{$compare}%' ORDER BY priority DESC, due_date ASC");
+}
+else if($compare == "High"){
+	$compare = 3;
+	$job_result = mysqli_query($conn,"SELECT job_id, client_name, project_name, due_date, priority FROM job_ticket WHERE priority LIKE '%{$compare}%' ORDER BY priority DESC, due_date ASC");
+}
+else{
+	$job_result = mysqli_query($conn,"SELECT job_id, client_name, project_name, due_date, priority FROM job_ticket WHERE job_id LIKE '%{$compare}%' OR project_name LIKE '%{$compare}%' OR due_date LIKE '%{$compare}%' OR client_name LIKE '%{$compare}%' OR priority LIKE '%{$compare}%' ORDER BY priority DESC, due_date ASC");
+}
+$job_count = 1;
+while($row = $job_result->fetch_assoc()){
+	$job_id = $row['job_id'];
+	if(isset($_POST['priority' . $job_count])){
+		$priority = $_POST['priority' . $job_count];
+		mysqli_query($conn, "UPDATE job_ticket SET priority = '$priority' WHERE job_id = '$job_id'");
+	}
+	$job_count = $job_count + 1;
+}
 
-$compare = $_POST['frmSearch'];
-$result = mysqli_query($conn,"SELECT job_id, client_name, project_name, due_date FROM job_ticket WHERE job_id LIKE '%{$compare}%' OR project_name LIKE '%{$compare}%' OR due_date LIKE '%{$compare}%' OR client_name LIKE '%{$compare}%'");
+//----------------------------------------------------------
+if($compare == 0 || $compare == 1 || $compare == 2 || $compare == 3){
+	$result = mysqli_query($conn,"SELECT job_id, client_name, project_name, due_date, priority FROM job_ticket WHERE priority LIKE '%{$compare}%' ORDER BY priority DESC, due_date ASC");
+}
+else{
+	$result = mysqli_query($conn,"SELECT job_id, client_name, project_name, due_date, priority FROM job_ticket WHERE job_id LIKE '%{$compare}%' OR project_name LIKE '%{$compare}%' OR due_date LIKE '%{$compare}%' OR client_name LIKE '%{$compare}%' OR priority LIKE '%{$compare}%' ORDER BY priority DESC, due_date ASC");
+}
 
 
 if ($result->num_rows > 0) {
     // output data of each row
-
+	$job_count = 1;
     while($row = $result->fetch_assoc()) {
 		
 		$job_id = $row["job_id"];
@@ -83,17 +124,36 @@ if ($result->num_rows > 0) {
 		$assigned_to = $row1["processed_by"];
 		$result2 = mysqli_query($conn, "SELECT department, first_name, last_name FROM users WHERE user = '$assigned_to'");
 		$row2 = $result2->fetch_assoc();
-		$job_count = 1;
 		
 		if($row2["department"] == "Production"){
+			
+			$result_priority = mysqli_query($conn, "SELECT priority FROM job_ticket WHERE job_id = '$job_id'");
+			$prow = $result_priority->fetch_assoc();
+			$level = $prow['priority'];
+			
+			$color_priority = "#e9eced";
+			$value = "None";
+			
+			if($level == 1){
+				$color_priority = "#80ff80";
+				$value = "Low";
+			}
+			else if($level == 2){
+				$value = "Medium";
+				$color_priority = "#ffdb4d";
+			}
+			else if($level == 3){
+				$color_priority = "#ffb3b3";
+				$value = "High";
+			}
 			echo "<div data-role='main' class='ui-content'>";
-				echo "<div class='vendor-left'>";
+				echo "<div class='vendor-left' style = 'background: " . $color_priority . "'>";
 					$x = $row["job_id"];
 					echo "<h3><a href='edit_job.php?job_id=$x'>".$row["job_id"]."</a></h1>";
 					echo "<p>Client name: ".$row["client_name"]."</p>";
 					echo "<p>Project name: ".$row["project_name"]."</p>";
 				echo "</div>";
-				echo "<div class='vendor-right'>";
+				echo "<div class='vendor-right' style = 'background: " . $color_priority . "'>";
 					echo "<p>Due date: ".$row["due_date"]."</p>";
 					echo "<p>Records total: ".$row1["records_total"]."</p>";
 					$name = $row2["first_name"] . " " . $row2["last_name"];
@@ -141,53 +201,35 @@ if ($result->num_rows > 0) {
 								for($i = 0; $i < count($time_unit_array); $i++){
 									if((int)$records_per_array[$i] != 0 && (int)$time_number_array[$i] != 0){
 										if($time_unit_array[$i] == "hr."){
-											if(isset($_POST["job" . $job_count])){
-												$temp = (int)$_POST["job" . $job_count];
-												$add_hours = $records_total / (int)$records_per_array[$i] * (int)$time_number_array[$i] / (int)$temp;
-												$hours = $hours + $add_hours;
-											}
-											else{
+											
 												$add_hours = $records_total / (int)$records_per_array[$i] * (int)$time_number_array[$i] / (int)$people_array[$i];
 												$hours = $hours + $add_hours;
-											}
+											
 										}
 										else if($time_unit_array[$i] == "min."){
-											if(isset($_POST["job" . $job_count])){
-												$temp = (int)$_POST["job" . $job_count];
-												$add_hours = $records_total / (int)$records_per_array[$i] * (int)$time_number_array[$i] / 60 / (int)$temp;
-												$hours = $hours + $add_hours;
-											}
-											else{
+											
 												$add_hours = $records_total / (int)$records_per_array[$i] * (int)$time_number_array[$i] / 60 / (int)$people_array[$i];
 												$hours = $hours + $add_hours;
-											}
+											
 										}
 										else if($time_unit_array[$i] == "sec."){
-											if(isset($_POST["job" . $job_count])){
-												$temp = (int)$_POST["job" . $job_count];
-												$add_hours = $records_total / (int)$records_per_array[$i] * (int)$time_number_array[$i] / 3600 / (int)$temp;
-												$hours = $hours + $add_hours;
-											}
-											else{
+											
+											
 												$add_hours = $records_total / (int)$records_per_array[$i] * (int)$time_number_array[$i] / 3600 / (int)$people_array[$i];
 												$hours = $hours + $add_hours;
-											}
+											
 										}
 									}
-									
-									$job_count = $job_count + 1;
 								}
 									
 								echo "<ul style = 'list-style-type: none;'>";
-								$job_count = 1;
-								echo "<form action = '' method = 'post'>";
+								//$job_count = 1;
 								for($i = 0; $i < count($records_per_array); $i++){
 									echo "<li style = 'margin-left: 75px'>" . $production_tasks_array[$i] . ": " . $records_per_array[$i] . " record(s) in " . $time_number_array[$i] . " " . $time_unit_array[$i] . " with " . $people_array[$i] . " person/people";
 									//$job_count = $job_count + 1;
 								}
-								echo "</form>";
 								echo "<li style = 'margin-left: 75px'><h2 value = '" . $hours . "'>Total Hours: " . $hours . "</h2></li>";
-								echo "<li style = 'margin-left: 75px;'><a href = 'job_data.php?job_id=$job_id'>add people</a></li>";
+								echo "<li style = 'margin-left: 75px; margin-top: 30px'><div class='search-boxright'><a href='job_data.php?job_id=$job_id'>Add People</a></div></li>";
 								$efficiency = "High";
 								$color = "#FFFFFF";
 								if($hours < 50){
@@ -202,7 +244,7 @@ if ($result->num_rows > 0) {
 									$efficiency = "Low";
 									$color = "#FF4000";
 								}
-								echo "<li style = 'margin-left: 750px; margin-top: -100px;'><h2 style = 'margin-bottom: 135px;'>Efficiency: " . $efficiency . "</h2></li>";
+								echo "<li style = 'margin-left: 580px; margin-top: -100px;'><h2 style = 'margin-bottom: 135px;'>Efficiency: " . $efficiency . "</h2></li>";
 								
 								$hours2 = $hours + 50;
 									
@@ -227,7 +269,10 @@ if ($result->num_rows > 0) {
 								</svg>
 								</div></li>";
 								echo "</ul>";
+								echo "<form style = 'margin-left: 70px;' action = '' method = 'post'><select style = 'margin-top: -150px; margin-right: 1073px; width: 95px' name = 'priority" . $job_count . "' onchange = 'this.form.submit()'>";
+								echo "<option selected = 'selected' value = '" . $level . "'>" . $value . "<option value = '0'>None</option><option value = '1'>Low</option><option value = '2'>Medium</option><option value = '3'>High</option></select></form>";
 								$count = $count + 1;
+								$job_count = $job_count + 1;
 							}
 						}
 	
@@ -237,7 +282,7 @@ if ($result->num_rows > 0) {
 				echo "</div>";
 		}
 		
-		$job_count = $job_count + 1;
+		//$job_count = $job_count + 1;
     }
 } else {
     echo "0 results";

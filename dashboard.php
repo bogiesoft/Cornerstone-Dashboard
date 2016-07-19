@@ -2,7 +2,6 @@
 require('header.php');
 require('connection.php');
 ?>
-
 <div id="popup" onclick="hide('popup')">
 <p id="demo"></p>
 
@@ -189,7 +188,6 @@ $conn->close();
 	</div>
 	</div>
 </div>
-
 <script src="jquery.js"></script>
 <script>
 var d = new Date();

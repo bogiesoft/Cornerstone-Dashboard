@@ -31,7 +31,7 @@ echo "<tr valign='top'><td colspan='2'><table id = 'project_m_table' border='0' 
 	while($row = $result->fetch_assoc()) {
 		
 		$temp = $row['user'];
-		$sql1 = "SELECT * FROM job_ticket INNER JOIN mail_data ON job_ticket.job_id = mail_data.job_id AND mail_data.processed_by = '$temp'";
+		$sql1 = "SELECT * FROM job_ticket INNER JOIN mail_data ON job_ticket.job_id = mail_data.job_id AND mail_data.processed_by = '$temp' ORDER BY priority DESC, due_date ASC";
 		$result1 = mysqli_query($conn, $sql1);
 		while($row1 = $result1->fetch_assoc()){
 			$temp = $row1['job_id'];

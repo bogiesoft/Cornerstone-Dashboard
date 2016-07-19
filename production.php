@@ -68,7 +68,38 @@ html {  height: 100%;}
 <?php
 
 
-$result = mysqli_query($conn,"SELECT job_id, client_name, project_name, due_date FROM job_ticket");
+//change priorities here
+
+$result_prod_users = mysqli_query($conn, "SELECT user FROM users WHERE department = 'Production'");
+$sql = "";
+$count = 1;
+while($prod_row = $result_prod_users->fetch_assoc()){
+	$user = $prod_row['user'];
+	if($count == 1){
+		$sql = $sql . "SELECT * FROM job_ticket INNER JOIN mail_data ON job_ticket.job_id = mail_data.job_id WHERE processed_by = '$user'";
+	}
+	else{
+		$sql = $sql . " UNION SELECT * FROM job_ticket INNER JOIN mail_data ON job_ticket.job_id = mail_data.job_id WHERE processed_by = '$user'";
+	}
+	
+	$count = $count + 1;
+}
+
+$sql = $sql . " ORDER BY priority DESC, due_date ASC";
+
+$job_result =  mysqli_query($conn,$sql) or die("error");
+$job_count = 1;
+while($row = $job_result->fetch_assoc()){
+	$job_id = $row['job_id'];
+	if(isset($_POST['priority' . $job_count])){
+		$priority = $_POST['priority' . $job_count];
+		mysqli_query($conn, "UPDATE job_ticket SET priority = '$priority' WHERE job_id = '$job_id'");
+	}
+	$job_count = $job_count + 1;
+}
+
+//----------------------------------------------------------
+$result = mysqli_query($conn,$sql);
 
 
 if ($result->num_rows > 0) {
@@ -86,13 +117,8 @@ if ($result->num_rows > 0) {
 		
 		if($row2["department"] == "Production"){
 			
-			if(isset($_POST['priority' . $job_count])){
-				$priority = $_POST['priority' . $job_count];
-				mysqli_query($conn, "UPDATE priority_level SET priority = '$priority' WHERE job_id = '$job_id'");
-			}
-			
-			$priority_result = mysqli_query($conn, "SELECT priority FROM priority_level WHERE job_id = '$job_id'");
-			$prow = $priority_result->fetch_assoc();
+			$result_priority = mysqli_query($conn, "SELECT priority FROM job_ticket WHERE job_id = '$job_id'");
+			$prow = $result_priority->fetch_assoc();
 			$level = $prow['priority'];
 			
 			$color_priority = "#e9eced";
@@ -208,7 +234,7 @@ if ($result->num_rows > 0) {
 									$efficiency = "Low";
 									$color = "#FF4000";
 								}
-								echo "<li style = 'margin-left: 750px; margin-top: -100px;'><h2 style = 'margin-bottom: 135px;'>Efficiency: " . $efficiency . "</h2></li>";
+								echo "<li style = 'margin-left: 580px; margin-top: -100px;'><h2 style = 'margin-bottom: 135px;'>Efficiency: " . $efficiency . "</h2></li>";
 								
 								$hours2 = $hours + 50;
 									
