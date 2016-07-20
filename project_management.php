@@ -1,6 +1,38 @@
 <?php
 require('header.php');
 ?>
+<style>
+#blue_sheet_labels p{
+	margin-right: 380px;
+}
+.input_fields{
+	height: 20px;
+}
+.label_margin_bottom{
+	margin-bottom: 5px;
+}
+
+.tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 11000;
+	position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.hover_info:hover .tooltiptext{
+    visibility: visible;
+}
+</style>
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 	<h1 class="pull-left">Project Management</h1>
@@ -18,222 +50,208 @@ require('header.php');
 <?php
 require ("connection.php");
 	 
-$sql = "SELECT * FROM users WHERE department = 'Project Management'";
-$result = mysqli_query($conn,$sql); 
+$result_prod_users = mysqli_query($conn, "SELECT user FROM users WHERE department = 'Project Management'");
+$sql = "";
+$count = 1;
+while($prod_row = $result_prod_users->fetch_assoc()){
+	$user = $prod_row['user'];
+	if($count == 1){
+		$sql = $sql . "SELECT * FROM job_ticket INNER JOIN mail_data ON job_ticket.job_id = mail_data.job_id WHERE processed_by = '$user'";
+	}
+	else{
+		$sql = $sql . " UNION SELECT * FROM job_ticket INNER JOIN mail_data ON job_ticket.job_id = mail_data.job_id WHERE processed_by = '$user'";
+	}
+	
+	$count = $count + 1;
+}
+
+$sql = $sql . " ORDER BY priority DESC, due_date ASC";
+
+$job_result =  mysqli_query($conn,$sql) or die("error");
+$job_count = 1;
+while($row = $job_result->fetch_assoc()){
+	$job_id = $row['job_id'];
+	if(isset($_POST['priority' . $job_count])){
+		$priority = $_POST['priority' . $job_count];
+		mysqli_query($conn, "UPDATE job_ticket SET priority = '$priority' WHERE job_id = '$job_id'");
+	}
+	$job_count = $job_count + 1;
+}
+
+//----------------------------------------------------------
+$result = mysqli_query($conn,$sql);
+$job_id_array = array();
 
 if ($result->num_rows > 0) {
-	
-echo " <div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
-echo "<tbody>";
-echo "<tr valign='top'><th class='allcontacts-title'>All Active Jobs<span class='allcontacts-subtitle'></span></th></tr>";
-echo "<tr valign='top'><td colspan='2'><table id = 'project_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='job_id' data-index='0'>Job ID</th><th class='maintable-thtwo data-header' data-name='client_name' data-index='1'>Client Name</th><th class='maintable-thtwo data-header' data-name='project_name' data-index='2'>Job Name</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='3'>Total Records</th><th class='maintable-thtwo data-header' data-name='job_status' data-index='4'>Status</th><th class='maintable-thtwo data-header' data-name='percent' data-index='5'>% Complete</th><th class='maintable-thtwo data-header' data-name='due_date' data-index='6'>Due Date</th><th class='maintable-thtwo data-header' data-name='processed_by' data-index='7'>Processed By</th></tr></thead><tbody>";
-    
-	while($row = $result->fetch_assoc()) {
+    // output data of each row
+	$job_count = 1;
+    while($row = $result->fetch_assoc()) {
 		
-		$temp = $row['user'];
-		$sql1 = "SELECT * FROM job_ticket INNER JOIN mail_data ON job_ticket.job_id = mail_data.job_id AND mail_data.processed_by = '$temp' ORDER BY priority DESC, due_date ASC";
-		$result1 = mysqli_query($conn, $sql1);
-		while($row1 = $result1->fetch_assoc()){
-			$temp = $row1['job_id'];
-			$sql2 = "SELECT * FROM mail_data WHERE job_id = '$temp'"; 
-			$result2 = mysqli_query($conn,$sql2);
-			$row2 = $result2->fetch_assoc();
-			$foo = $row1['client_name'];
-			$sql3 = "SELECT * FROM yellow_sheet WHERE job_id = '$temp'"; 
-			$result3 = mysqli_query($conn,$sql3);
-			$row3 = $result3->fetch_assoc();
-			$full_name = $row['first_name'] . ' ' . $row['last_name'];
-
-			echo "<tr><td><a href='http://localhost/crst_dashboard/edit_job.php?job_id=$temp'>".$temp."</a></td><td><a href='http://localhost/crst_dashboard/edit_client.php?client_name=$foo'>".$row1["client_name"]."</a></td><td>".  $row1["project_name"]."</td><td>". $row2['records_total']. "</td><td>". $row1['job_status']. "</td><td><a href='http://localhost/crst_dashboard/yellow_sheet.php?job_id=$temp'>". $row3['percent']."</a></td><td>". $row1['due_date']. "</td><td>". $full_name. "</td></tr>";
+		$job_id = $row["job_id"];
+		$result1 = mysqli_query($conn, "SELECT * FROM mail_data WHERE job_id = '$job_id'");
+		$row1 = $result1->fetch_assoc();
+		$records_total = (int)$row1['records_total'];
+		$assigned_to = $row1["processed_by"];
+		$result2 = mysqli_query($conn, "SELECT department, first_name, last_name FROM users WHERE user = '$assigned_to'");
+		$row2 = $result2->fetch_assoc();
+		
+		if($row2["department"] == "Project Management"){
+			
+			$result_priority = mysqli_query($conn, "SELECT priority FROM job_ticket WHERE job_id = '$job_id'");
+			$prow = $result_priority->fetch_assoc();
+			$level = $prow['priority'];
+			
+			$color_priority = "#e9eced";
+			$value = "None";
+			
+			if($level == 1){
+				$color_priority = "#80ff80";
+				$value = "Low";
+			}
+			else if($level == 2){
+				$value = "Medium";
+				$color_priority = "#ffdb4d";
+			}
+			else if($level == 3){
+				$color_priority = "#ffb3b3";
+				$value = "High";
+			}
+			echo "<div data-role='main' class='ui-content'>";
+				echo "<div class='vendor-left' style = 'background: " . $color_priority . "'>";
+					$x = $row["job_id"];
+					echo "<h3><a href='edit_job.php?job_id=$x'>".$row["job_id"]."</a></h1>";
+					echo "<p>Client name: ".$row["client_name"]."</p>";
+					echo "<p>Job name: ".$row["project_name"]."</p>";
+					echo "<p style = 'margin-bottom: -80px;'><form action = '' method = 'post'><select style = 'width: 95px' name = 'priority" . $job_count . "' onchange = 'this.form.submit()'>";
+					echo "<option selected = 'selected' value = '" . $level . "'>" . $value . "<option value = '0'>None</option><option value = '1'>Low</option><option value = '2'>Medium</option><option value = '3'>High</option></select></form>";
+					$id = "show" . $job_count;
+					$id2 = "button" . $job_count;
+					echo "<p style = 'margin-right: 400px'><button id = 'button" . $job_count . "' style = 'width: 30px; height: 50px' onclick = 'showJob(\"" . $id . "\", \"" . $id2 . "\")'>Info</button></p>";
+				echo "</div>";
+				echo "<div class='vendor-right' style = 'background: " . $color_priority . "'>";
+					echo "<p style = 'margin-right: 215px'>Due date: ".$row["due_date"]."</p>";
+					echo "<p class = 'hover_info'>Records total: ".$row1["records_total"]."<span style = 'height: 20px; width: 250px' class = 'tooltiptext'>Foreigns: " . $row1['foreigns'] . ", Domestic: " . $row1['domestic'] . "</span></p>";
+					$name = $row2["first_name"] . " " . $row2["last_name"];
+					echo "<p style = 'margin-right: 190px'>Assigned to: ".$name."</p><br>";
+					
+					$client_name = $row['client_name'];
+					$result_clients = mysqli_query($conn, "SELECT * FROM client_info WHERE client_name = '$client_name'");
+					$row_clients = $result_clients->fetch_assoc();
+					
+				echo "<div id = 'show" . $job_count . "' style = 'display: none'>";	
+				echo "<div class='vendor-left' style = 'background: " . $color_priority . "; '>";
+					echo "<h3 style = 'margin-right: 200px'><p><i>Client Info:</i></p></h3>";
+					echo "<p>Address: ".$row_clients["client_add"]."</p>";
+					echo "<p>Email: ".$row_clients["contact_email"]."</p>";
+					echo "<p>Contact name: ".$row_clients["contact_name"]."</p>";
+					
+				echo "</div>";
+				echo "<div class='vendor-right' style = 'background: " . $color_priority . "; '>";
+					echo "<p style = 'visibility: hidden;'>Here</p>";
+					echo "<p>Phone: ".$row_clients["contact_phone"]."</p>";
+					echo "<p>Phone 2: ".$row_clients["sec1"]."</p>";
+					echo "<p>Website: ".$row_clients["website"]."</p>";
+				echo "</div><br>";
+				
+				$result_mail_info = mysqli_query($conn, "SELECT * FROM mail_info WHERE job_id = '$job_id'");
+				$row_mail_info = $result_mail_info->fetch_assoc();
+				
+				echo "<div class='vendor-left' style = 'background: " . $color_priority . "; '>";
+					echo "<h3 style = 'margin-right: 200px'><p><i>Job Info:</i></p></h3>";
+					echo "<p>Class: ".$row_mail_info["mail_class"]."</p>";
+					echo "<p>Category: ".$row_mail_info["processing_category"]."</p>";
+					echo "<p>BMEU: ".$row_mail_info["bmeu"]."</p>";
+					
+				echo "</div>";
+				echo "<div class='vendor-right' style = 'background: " . $color_priority . "; '>";
+					echo "<p style = 'visibility: hidden;'>Here</p>";
+					echo "<p>Rate: ".$row_mail_info["rate"]."</p>";
+					echo "<p>Permit: ".$row_mail_info["permit"]."</p>";
+					echo "<p>Non-Profit: ".$row_mail_info["non_profit_number"]."</p>";
+				echo "</div><br>";
+				echo "<div class='vendor-left' style = 'background: " . $color_priority . "; '>";
+					echo "<h3 style = 'margin-right: 200px'><p><i>Data Info:</i></p></h3>";
+					echo "<p>Source: ".$row1["data_source"]."</p>";
+					echo "<p>Location: ".$row1["data_loc"]."</p>";
+					echo "<p>Processed by: ".$name."</p>";
+					
+				echo "</div>";
+				echo "<div class='vendor-right' style = 'background: " . $color_priority . "; '>";
+					echo "<p style = 'visibility: hidden;'>Here</p>";
+					echo "<p>Received: ".$row1["data_received"]."</p>";
+					echo "<p>Date complete: ".$row1["data_completed"]."</p>";
+					echo "<p>DQR date: ".$row1["dqr_sent"]."</p>";
+				echo "</div><br>";
+				
+				$result_blue_sheet = mysqli_query($conn, "SELECT * FROM blue_sheet WHERE job_id = '$job_id'");
+				$row_blue_sheet = $result_blue_sheet->fetch_assoc();
+				
+				echo "<div id = 'blue_sheet_inputs' class='vendor-left' style = 'background: " . $color_priority . "; width: 40% '>";
+					echo "<h3 style = 'margin-right: 200px'><p><i>Blue Sheet</i></p></h3>";
+					echo "<form style = 'margin-left: 50px' action = 'update_blue_sheet.php' method = 'post'>";
+					echo "<p style = 'margin-bottom: 5px'><input class = 'input_fields' name = 'initialrec_count' value = '" . $row_blue_sheet['initialrec_count'] . "'></p>";
+					echo "<p style = 'margin-bottom: 5px'><input class = 'input_fields' name = 'bs_domestic' value = '" . $row_blue_sheet['bs_domestic'] . "'></p>";
+					echo "<p style = 'margin-bottom: 5px'><input class = 'input_fields' name = 'bs_foreigns' value = '" . $row_blue_sheet['bs_foreigns'] . "'></p>";
+					echo "<p style = 'margin-bottom: 5px'><input class = 'input_fields' name = 'manual' value = '" . $row_blue_sheet['manual'] . "'></p>";
+					echo "<p style = 'margin-bottom: 5px'><input class = 'input_fields' name = 'uncorrected' value = '" . $row_blue_sheet['uncorrected'] . "'></p>";
+					echo "<p style = 'margin-bottom: 5px'><input class = 'input_fields' name = 'unverifiable' value = '" . $row_blue_sheet['unverifiable'] . "'></p>";
+					echo "<p style = 'margin-bottom: 5px'><input class = 'input_fields' name = 'bs_exact' value = '" . $row_blue_sheet['bs_exact'] . "'></p>";
+					echo "<p style = 'margin-bottom: 5px'><input class = 'input_fields' name = 'loose' value = '" . $row_blue_sheet['loose'] . "'></p>";
+					echo "<p style = 'margin-bottom: 5px'><input class = 'input_fields' name = 'householded' value = '" . $row_blue_sheet['householded'] . "'></p>";
+					echo "<p style = 'margin-bottom: 5px'><input class = 'input_fields' name = 'basic' value = '" . $row_blue_sheet['basic'] . "'></p>";
+					echo "<p style = 'margin-bottom: 5px'><input class = 'input_fields' name = 'ncoa_errors' value = '" . $row_blue_sheet['ncoa_errors'] . "'></p>";
+					echo "<p style = 'margin-bottom: 5px'><input class = 'input_fields' name = 'bs_ncoa' value = '" . $row_blue_sheet['bs_ncoa'] . "'></p>";
+					echo "<p style = 'margin-bottom: 5px'><input class = 'input_fields' name = 'final_count' value = '" . $row_blue_sheet['final_count'] . "'></p>";
+					echo "<p style = 'margin-bottom: 5px'><input class = 'input_fields' name = 'gd_hrs' value = '" . $row_blue_sheet['gd_hrs'] . "'></p>";
+					echo "<p style = 'margin-bottom: 5px'><input class = 'input_fields' name = 'data_hrs' value = '" . $row_blue_sheet['data_hrs'] . "'></p>";
+					echo "<p style = 'margin-bottom: 5px'><input type = 'date' class = 'input_fields' name = 'completed_date' value = '" . $row_blue_sheet['completed_date'] . "'></p>";
+					echo "<input type = 'submit' name = 'submit_form" . $job_count . "' value = 'Save'>";
+					echo "</form>";
+					
+				echo "</div>";
+				echo "<div id = 'blue_sheet_labels' class='vendor-right' style = 'background: " . $color_priority . "'>";
+					echo "<p style = 'visibility: hidden;'>Here</p>";
+					echo "<p class = 'label_margin_bottom'>Starting records</p>";
+					echo "<p class = 'label_margin_bottom'>Domestic</p>";
+					echo "<p class = 'label_margin_bottom'>Foreigns</p>";
+					echo "<p class = 'label_margin_bottom'>Manual</p>";
+					echo "<p class = 'label_margin_bottom'>Uncorrected</p>";
+					echo "<p class = 'label_margin_bottom'>Unverifiable</p>";
+					echo "<p class = 'label_margin_bottom'>Exact</p>";
+					echo "<p class = 'label_margin_bottom'>Loose</p>";
+					echo "<p class = 'label_margin_bottom'>House Holded</p>";
+					echo "<p class = 'label_margin_bottom'>Basic</p>";
+					echo "<p class = 'label_margin_bottom'>NCOA errors</p>";
+					echo "<p class = 'label_margin_bottom'>NCOA</p>";
+					echo "<p class = 'label_margin_bottom'>Final count</p>";
+					echo "<p class = 'label_margin_bottom'>Graphic Des. hrs.</p>";
+					echo "<p class = 'label_margin_bottom'>Data hrs.</p>";
+					echo "<p class = 'label_margin_bottom'>Completed</p>";
+				echo "</div><br>";
+				echo "</div>";
+				echo "</div>";
+				$job_count = $job_count + 1;
+				array_push($job_id_array, $job_id);
 		}
 	}
 	
-	echo "</tbody></table></td></tr></tbody></table></div>";
-	
+	$_SESSION['blue_sheet_job_ids'] = $job_id_array;
 }
 ?>
-<div class="allcontacts-breadcrumbs">
-	<div class="allcontacts-breadcrumbsleft pull-left page-control">
-		<nav>
-			<ul class="pagination" id = "pag">
-				<li id = 'prev_button' class = 'previous' style = 'display:none;' onclick = "prevPage();">Prev</li>
-			</ul>
-		</nav>
-	</div>
-	<div class="items-per-page-cont pull-right">
-		<label>Jobs Per Page</label>
-		<select class="per-page-val" id = "item_count" onchange = "changeCount()">
-			<option value="10">10</option>
-			<option value="25">25</option>
-			<option value="50">50</option>
-			<option value="100">100</option>
-		</select>
-	</div>
-</div>
 </div>
 </div>
 <script src="sorttable.js"></script>
 <script type="text/javascript" src="jquery-latest.js"></script> 
 <script type="text/javascript" src="jquery.tablesorter.js"></script> 
 <script>
-
-var subtractValue = 3;
-var prevSubValue = 4;
-
-$("#search").keyup(function(){
-        _this = this;
-        // Show only matching TR, hide rest of them
-        $.each($("#project_m_table tbody tr"), function() {
-            if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
-               $(this).hide();
-            else
-               $(this).show();                
-        });
-    }); 
-$(document).ready(function() 
-    { 
-        $("#project_m_table").tablesorter(); 
-		pageCreator();
-    } 
-);
-function pageCreator(){
-	$('table.table-striped.main-table.contacts-list').each(function() {
-		var currentPage = 0;
-		numPerPage = parseInt(document.getElementById('item_count').value);
-		var $table = $(this);
-		var $ul = $('ul.pagination');
-		$table.bind('repaginate', function() {
-			$table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
-		});
-		$table.trigger('repaginate');
-		var numRows = $table.find('tbody tr').length;
-		var numPages = Math.ceil(numRows / numPerPage);
-		var count = 1;
-		for (var page = 0; page < numPages; page++) {
-			var i = $('<li id = id' + count + ' class = "current"></li>').text(page + 1).bind('click', {
-				newPage: page
-			}, function(event) {
-				currentPage = event.data['newPage'];
-				$table.trigger('repaginate');
-				$(this).addClass('clickable').siblings().removeClass('clickable');
-			}).appendTo($ul).addClass('current');
-			count = count + 1;
-		}
-		if(numPages > 5){
-			$("<li id = 'next_button' class = 'next' onclick = nextPage();>Next</li>").appendTo($ul);
-		}
-	});
-	document.getElementById("id1").className = "current clickable";
-	var ul = document.getElementById("pag");
-	
-	if(ul.childNodes.length > 5){
-		for(var i = 6; i < ul.childNodes.length - 1; i++){
-			ul.children[i].style.display = "none";
-			document.getElementById("next_button").style.display = "inline";
-		}
+function showJob(div, button){
+	if(document.getElementById(button).innerHTML == "Info"){
+		document.getElementById(div).style.display = "block";
+		document.getElementById(button).innerHTML = "Hide";
 	}
-}
-function changeCount(){
-	numPerPage = parseInt(document.getElementById('item_count').value);
-	$('#pag').empty();
-	$("<li id = 'prev_button' class = 'previous' style = 'display:none;' onclick = prevPage();>Prev</li>").appendTo("#pag");
-	subtractValue = 1;
-	prevSubValue = 2;
-	pageCreator();
-}
-function prevPage(){
-	document.getElementById("next_button").style.display = "inline";
-	var ul = document.getElementById("pag");
-	var length1 = ul.childNodes.length - prevSubValue;
-	var oldDisplayIndex = 0;
-	for(var i = length1; i >= 1; i--){
-		if(ul.children[i].style.display == "inline"){
-			oldDisplayIndex = i;
-			break;
-		}
-	}
-	
-	var newDisplayIndex = 0;
-	for(var i = oldDisplayIndex; i >= 1; i--){
-		newDisplayIndex = i;
-		if(ul.children[i].style.display == "none"){
-			break;
-		}
-		else{
-			ul.children[i].style.display = "none";
-		}
-	}
-	
-	var count = 0;
-	var lastIndex = 0;
-	for(var i = newDisplayIndex; i >= 1; i--){
-		lastIndex = i;
-		if(count == 5){
-			break;
-		}
-		else{
-			//alert("Hi");
-			ul.children[i].style.display = "inline";
-			count = count + 1;
-		}
-	}
-	if(lastIndex == 1){
-		document.getElementById("prev_button").style.display = "none";
-	}
-}
-function nextPage(){
-	document.getElementById("prev_button").style.display = "inline";
-	var ul = document.getElementById("pag");
-	
-	var displayCount = 0;
-	var lastIndexCheck = 0;
-	for(var i = 1; i < ul.childNodes.length - 1; i++){
-		if(ul.children[i].style.display != "none"){
-			displayCount++;
-		}
-		lastIndexCheck = i;
-		if(displayCount == 5){
-			break;
-		}
-	}
-	if(lastIndexCheck != ul.childNodes.length - 2){
-		var oldDisplayIndex = 0;
-		for(var i = 1; i < ul.childNodes.length - 1; i++){
-			if(ul.children[i].style.display != "none"){
-				oldDisplayIndex = i;
-				break;
-			}
-		}
-		
-		var newDisplayIndex = 0;
-		for(var i = oldDisplayIndex; i < ul.childNodes.length - 1; i++){
-			if(ul.children[i].style.display == "none"){
-				newDisplayIndex = i;
-				break;
-			}
-			else{
-				ul.children[i].style.display = "none";
-			}
-		}
-		
-		var count = 0;
-		var lastIndex = 0;
-		for(var i = newDisplayIndex; i < (ul.childNodes.length - subtractValue); i++){
-			if(count == 5){
-				break;
-			}
-			else{
-				ul.children[i].style.display = "inline";
-				count = count + 1;
-				lastIndex = i;
-			}
-			if(i == ul.childNodes.length){
-				break;
-			}
-		}
-		if(ul.children[lastIndex + 1].className == "next" || count < 5){
-			document.getElementById("next_button").style.display = "none";
-		}
+	else{
+		document.getElementById(div).style.display = "none";
+		document.getElementById(button).innerHTML = "Info";
 	}
 }
 </script>

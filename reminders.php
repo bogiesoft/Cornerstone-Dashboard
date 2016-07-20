@@ -13,14 +13,14 @@ require('header.php');
 require ("connection.php");
 //session_start();
 
-
-$result = mysqli_query($conn,"SELECT * FROM reminder WHERE date = CURDATE() AND occurence = 'Once'");
-$result1 = mysqli_query($conn,"SELECT * FROM reminder WHERE date BETWEEN DATE_ADD(CURDATE(),INTERVAL 1 DAY) AND DATE_ADD(CURDATE(), INTERVAL 5 DAY) AND occurence = 'Once'");
+$user = $_SESSION['user'];
+$result = mysqli_query($conn,"SELECT * FROM reminder WHERE date = CURDATE() AND occurence = 'Once' AND user = '$user'");
+$result1 = mysqli_query($conn,"SELECT * FROM reminder WHERE date BETWEEN DATE_ADD(CURDATE(),INTERVAL 1 DAY) AND DATE_ADD(CURDATE(), INTERVAL 5 DAY) AND occurence = 'Once' AND user = '$user'");
 date_default_timezone_set('America/New_York');
 $day = date("D");
-$result2 = mysqli_query($conn, "SELECT * FROM reminder WHERE occurence = 'Weekly' AND current_day = '$day'");
-$result3 = mysqli_query($conn, "SELECT * FROM reminder WHERE occurence = 'Monthly'");
-$result4 = mysqli_query($conn, "SELECT * FROM reminder WHERE occurence = 'Yearly'");
+$result2 = mysqli_query($conn, "SELECT * FROM reminder WHERE occurence = 'Weekly' AND current_day = '$day' AND user = '$user'");
+$result3 = mysqli_query($conn, "SELECT * FROM reminder WHERE occurence = 'Monthly' AND user = '$user'");
+$result4 = mysqli_query($conn, "SELECT * FROM reminder WHERE occurence = 'Yearly' AND user = '$user'");
 
 $count = 1;
 

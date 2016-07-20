@@ -4,7 +4,6 @@ require('connection.php');
 ?>
 <div id="popup" onclick="hide('popup')">
 <p id="demo"></p>
-
 <?php
 //session_start();
 
