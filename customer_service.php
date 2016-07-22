@@ -43,7 +43,7 @@ if ($result->num_rows > 0) {
 			$result2 = mysqli_query($conn, "SELECT * FROM invoice WHERE job_id = '$foo'");
 			$row2 = $result2->fetch_assoc();
 			
-			echo "<tr></th><td><a href='http://localhost/crst_dashboard/edit_cs.php?job_id=$foo'>".$row1["job_id"]."</a></td><td>". $row1["client_name"]. "</td><td>". $row1["project_name"]. "</td><td>".  $row2["postage"]."</td><td>". $row2["invoice_number"]. "</td><td>". $row2["residual_returned"]. "</td><td>". $row2["2week_followup"]."</td><td>". $row2["notes"]. "</td><td>". $row2["status"]. "</td><td>". $row2["reason"]. "</td></tr>";
+			echo "<tr></th><td><a href='edit_cs.php?job_id=$foo'>".$row1["job_id"]."</a></td><td>". $row1["client_name"]. "</td><td>". $row1["project_name"]. "</td><td>".  $row2["postage"]."</td><td>". $row2["invoice_number"]. "</td><td>". $row2["residual_returned"]. "</td><td>". $row2["2week_followup"]."</td><td>". $row2["notes"]. "</td><td>". $row2["status"]. "</td><td>". $row2["reason"]. "</td></tr>";
 		}
     }
 	echo "</tbody></table></td></tr></tbody></table></div>";

@@ -142,6 +142,8 @@ if ($result->num_rows > 0) {
 					echo "<h3><a href='edit_job.php?job_id=$x'>".$row["job_id"]."</a></h1>";
 					echo "<p>Client name: ".$row["client_name"]."</p>";
 					echo "<p>Project name: ".$row["project_name"]."</p>";
+					echo "<p style = 'margin-bottom: -80px;'><form action = '' method = 'post'><select style = 'width: 95px' name = 'priority" . $job_count . "' onchange = 'this.form.submit()'>";
+					echo "<option selected = 'selected' value = '" . $level . "'>" . $value . "<option value = '0'>None</option><option value = '1'>Low</option><option value = '2'>Medium</option><option value = '3'>High</option></select></form>";
 				echo "</div>";
 				echo "<div class='vendor-right' style = 'background: " . $color_priority . "'>";
 					echo "<p>Due date: ".$row["due_date"]."</p>";
@@ -259,8 +261,6 @@ if ($result->num_rows > 0) {
 								</svg>
 								</div></li>";
 								echo "</ul>";
-								echo "<form style = 'margin-left: 70px;' action = '' method = 'post'><select style = 'margin-top: -150px; margin-right: 1073px; width: 95px' name = 'priority" . $job_count . "' onchange = 'this.form.submit()'>";
-								echo "<option selected = 'selected' value = '" . $level . "'>" . $value . "<option value = '0'>None</option><option value = '1'>Low</option><option value = '2'>Medium</option><option value = '3'>High</option></select></form>";
 								$count = $count + 1;
 								$job_count = $job_count + 1;
 							}

@@ -119,7 +119,7 @@ if(isset($_POST['submit_form'])){
 	 WHERE archive_jobs.job_id = production.job_id AND production.job_id = '$temp'");
 	$result13 = mysqli_query($conn,"DELETE FROM production WHERE job_id = '$job_id'");
 	$result15 = mysqli_query($conn,"DELETE FROM yellow_sheet WHERE job_id = '$job_id'");
-
+	$today = date("Y-m-d");
 	$result14 = mysqli_query($conn,"UPDATE archive_jobs SET archive_date = '$today' WHERE job_id = '$temp'");
 
 	
@@ -127,7 +127,7 @@ if(isset($_POST['submit_form'])){
 	 
 	$conn->close();
 
-	header("location: http://localhost/crst_dashboard/customer_service.php ");
+	header("location: customer_service.php ");
 	exit();
 }
 if(isset($_POST['delete_form'])){
@@ -149,7 +149,7 @@ if(isset($_POST['delete_form'])){
 	
 	$conn->close();
 
-	header("location: http://localhost/crst_dashboard/customer_service.php ");
+	header("location: customer_service.php");
 	exit();
 }
 ?>

@@ -79,10 +79,9 @@ $result13 = mysqli_query($conn,"DELETE FROM production WHERE job_id = '$job_id'"
 
 $result14 = mysqli_query($conn,"DELETE FROM yellow_sheet WHERE job_id = '$job_id'");
 
-
 $conn->close();
 
-header("location: http://localhost/crst_dashboard/archive.php ");
+header("location: archive.php");
 exit();
 
 ?>

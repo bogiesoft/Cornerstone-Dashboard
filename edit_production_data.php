@@ -148,6 +148,10 @@ if(isset($_POST['save_form'])){
 	
 	header("location: production_data.php");
 }
+else if(isset($_POST['delete_form'])){
+	mysqli_query($conn, "DELETE FROM production_data WHERE id = '$id'");
+	header("location: production_data.php");
+}
 
 ?>
 <script>
@@ -195,8 +199,8 @@ if(isset($_POST['save_form'])){
 
 <div class="dashboard-cont" style="padding-top:110px;">
 <div class="contacts-title">
-	<h1 class="pull-left">Production Data Manager</h1>
-	<a class="pull-right" href="production.php" >Back to Production</a>
+	<h1 class="pull-left">Edit Production Data</h1>
+	<a class="pull-right" href="production_data.php" >Back to Time Tracking</a>
 	</div><br><br><br><br>
 <form action="" method="post">
 <div>Total Records &nbsp; <br><input name = "records" type = "text" id = "records" style = "width: 80px" value = <?php echo $row['total_records']; ?>></input></div><p id = "recs_error" style = "color:red;"></p><br><br>
@@ -240,6 +244,7 @@ if(isset($_POST['save_form'])){
 <h2 id = "display_time">Hours: 0</h2><br>
 <h2 id = "eff">Efficiency: </h2><br>
 <input type = "submit" value = "Save Data" name = "save_form"></input>
+<input type = "submit" value = "Delete" name = "delete_form" onclick = 'return confirm("Delete Data")'></input>
 </form>
 <button type = "button" onclick = "changeBar();">Submit Data</button><button type = "button" onclick = "addTask();">Add Task</button>
 <style>

@@ -12,7 +12,7 @@
 	<link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 	<script src="jquery.js"></script>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-	<script src="jquery.chart.js"></script>
+	<script src="Chart.js"></script>
 	
 	<!---- Bootstrap CDN Scripts  ---->
 
