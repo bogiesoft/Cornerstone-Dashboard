@@ -1,22 +1,57 @@
-<script src="sorttable.js"></script>
 <?php
 require ("header.php");
 ?>
+<style>
+ul.tab {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+/* Float the list items side by side */
+ul.tab li {float: left;}
+
+/* Style the links inside the list items */
+ul.tab li a {
+    display: inline-block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of links on hover */
+ul.tab li a:hover {background-color: #ddd;}
+
+/* Create an active/current tablink class */
+ul.tab li a:focus, .active {background-color: #ccc;}
+
+/* Style the tab content */
+.tab-content {
+    display: none;
+}
+#internal{
+	display: block;
+}
+</style>
 <div class="dashboard-cont" style="padding-top:110px;">
-	<div class="contacts-title">
+<div class="contacts-title">
 	<h1 class="pull-left">Sales</h1>
 	</div>
 <div class="dashboard-detail">
-	<div class="search-cont">
-	<div class="searchcont-detail">
-		<div class="search-boxleft">
-				<label>Quick Search</label>
-				<input id="search" name="frmSearch" type="text" placeholder="Search for a specific job">
-		</div>
-	</div>
-	</div>
-<div class="clear"></div>
-<?php
+<div class="newcontacts-tabs">
+<ul class="nav nav-tabs" role="tablist">
+  <li><a href="#" class="tablinks" onclick="changeTab(event, 'internal')">Internal</a></li>
+  <li><a href="#" class="tablinks" onclick="changeTab(event, 'CRM')">CRM</a></li>
+  <li><a href="#" class="tablinks" onclick="changeTab(event, 'statistics')">Statistics</a></li>
+</ul>
+<div id="internal" class="tab-content">
+ <?php
 require ("connection.php");
 
 $result = mysqli_query($conn,"SELECT job_ticket.job_id, job_ticket.client_name, job_ticket.project_name, job_ticket.due_date, job_ticket.estimate_number, mail_data.records_total FROM job_ticket INNER JOIN mail_data ON job_ticket.job_id = mail_data.job_id AND mail_data.processed_by = ''");
@@ -58,25 +93,48 @@ if ($result->num_rows > 0) {
 	</div>
 </div>
 </div>
+
+<div id="CRM" class="tab-content">
+<h3>CRM</h3>
+<p>Under Construction</p>
 </div>
+
+<div id="statistics" class="tab-content">
+  <h3>Statistics</h3>
+  <p>Under Construction</p>
+</div>
+</div>
+</div>
+</div>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="sorttable.js"></script>
 <script type="text/javascript" src="jquery-latest.js"></script> 
 <script type="text/javascript" src="jquery.tablesorter.js"></script> 
 <script>
 
+function changeTab(evt, cityName) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tab-content");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the link that opened the tab
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
 var subtractValue = 3;
 var prevSubValue = 4;
 
-$("#search").keyup(function(){
-        _this = this;
-        // Show only matching TR, hide rest of them
-        $.each($("#sales_table tbody tr"), function() {
-            if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
-               $(this).hide();
-            else
-               $(this).show();                
-        });
-    }); 
 $(document).ready(function() 
     { 
         $("#sales_table").tablesorter(); 

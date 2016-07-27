@@ -21,8 +21,9 @@ $today = date("Y-m-d G:i:s");
 $a_p = date("A");
 $_SESSION['date'] = $today;
 $job = "added new client";
+$today2 = date("Y-m-d");
 
-$sql = "INSERT INTO client_info (client_name,client_add,contact_name,contact_phone,contact_email,sec1, website,notes,category,title) VALUES ('$client_name', '$client_add', '$contact_name', '$contact_phone','$contact_email','$sec1','$website','$notes','$category','$title')";
+$sql = "INSERT INTO client_info (client_name,client_add,contact_name,contact_phone,contact_email,sec1, website,notes,category,title,date_added) VALUES ('$client_name', '$client_add', '$contact_name', '$contact_phone','$contact_email','$sec1','$website','$notes','$category','$title','$today2')";
 $result = $conn->query($sql) or die('error');
 
 $sql6 = "INSERT INTO timestamp (user,time,job, a_p) VALUES ('$user_name', '$today','$job', '$a_p')";

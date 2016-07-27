@@ -25,11 +25,17 @@ $names_pm = array();
 //customer service closed jobs data
 
 $jobs_closed_monthly = array();
+$jobs_invoiced_monthly = array();
 
 //production manhours data
 
 $hours = 0;
 $free_hours = 0;
+
+//sales date
+
+$monthly_estimates = array();
+$clients_added_monthly = array();
 
 //echo CURDATE();
 //Retrieves Jobs for User and Reminders
@@ -89,11 +95,44 @@ $conn->close();
 		//$result8=mysqli_query($conn, "SELECT * FROM archive_jobs WHERE status = 'Closed'");
 		//$num_rows8 = mysqli_num_rows($result8);	
 		
-		$conn->close();
 
 		?>
-		<h3>Estimates given: <span><?php echo "$num_rows"; ?></span></h3>
-		<h4>Job Tickets in Process: <span><?php echo "$num_rows2"; ?></span></h4>
+		<div style = 'float: right'>
+			<ul>
+				<li style = 'font-size: 11px'>Estimates = Blue</li>
+				<li style = 'font-size: 11px'>New Clients = Purple</li>
+			</ul>
+		</div>
+		<?php
+			$currentMonth = date("m");
+			$currentYear = date("Y");
+			$count = 0;
+			while($count < 5){
+				$date = $currentYear . "-" . $currentMonth;
+				$result1=mysqli_query($conn,"SELECT * FROM archive_jobs WHERE estimate_number != 0 AND archive_date LIKE '%{$date}%'") or die("error");
+				$result2=mysqli_query($conn, "SELECT * FROM client_info WHERE date_added LIKE '%{$date}%'");
+				$estimates = mysqli_num_rows($result1);
+				$clients_added = mysqli_num_rows($result2);
+				array_push($monthly_estimates, $estimates);
+				array_push($clients_added_monthly, $clients_added);
+				$count = $count + 1;
+				
+				if($currentMonth == 0){
+					$currentMonth = 12;
+					$currentYear = $currentYear - 1;
+				}
+				if($currentMonth < 10){
+					$currentMonth = 0 . $currentMonth;
+				}
+			}
+		?>
+		
+		<div style="width: 70%; ">
+			<canvas id="canvas_sales" height="315" width="700"></canvas>
+		</div>
+		
+		<!--<h3>Estimates given: <span><?php echo "$num_rows"; ?></span></h3>!-->
+		<!--<h4>Job Tickets in Process: <span><?php echo "$num_rows2"; ?></span></h4> !-->
 	</div>
 	<div id = "project_management_box" class="dashboardtop-box fundraising-stats">
 		<div class="dashboardbox-title"><h2>Project Management - Current:</h2></div>
@@ -220,8 +259,13 @@ $conn->close();
 		</div>
 	</div>
 	<div class="dashboardtop-box fundraising-stats">
-		<div class="dashboardbox-title"><h2>Customer Service - : Jobs Closed</h2></div>
-		
+		<div class="dashboardbox-title"><h2>Jobs Closed vs Jobs Invoiced</h2></div>
+		<div style = 'float: right'>
+			<ul>
+				<li>Closed = Green</li>
+				<li>Invoiced = Red</li>
+			</ul>
+		</div>
 		<?php
 			$currentMonth = date("m");
 			$currentYear = date("Y");
@@ -229,10 +273,13 @@ $conn->close();
 			while($count < 5){
 				$date = $currentYear . "-" . $currentMonth;
 				$result_closed_jobs = mysqli_query($conn, "SELECT * FROM archive_jobs WHERE status = 'Closed' AND archive_date LIKE '%{$date}%'");
+				$result_invoiced_jobs = mysqli_query($conn, "SELECT * FROM archive_jobs WHERE invoice_number != 0 AND archive_date LIKE '%{$date}%'");
 				$count = $count + 1;
 				$currentMonth = $currentMonth - 1;
 				$jobs_closed = mysqli_num_rows($result_closed_jobs);
+				$jobs_invoiced = mysqli_num_rows($result_invoiced_jobs);
 				array_push($jobs_closed_monthly, $jobs_closed);
+				array_push($jobs_invoiced_monthly, $jobs_invoiced);
 				
 				if($currentMonth == 0){
 					$currentMonth = 12;
@@ -243,7 +290,6 @@ $conn->close();
 				}
 			}
 		?>
-		
 		<div style="width: 70%; ">
 			<canvas id="canvas_cs" height="315" width="700"></canvas>
 		</div>
@@ -340,26 +386,6 @@ $(document).ready(function(e)
 }
 });
 
-var jobs_pm = <?php echo json_encode($number_jobs_pm); ?>;
-var names_pm = <?php echo json_encode($names_pm) ?>;
-var jobs_pm_colors = ["#ff4d4d", "#3399ff", "#66ff66"];
-var jobs_pm_highlights = ["#ff6666", "#4da6ff", "#80ff80"];
-var pieData = [];
-
-for(var i = 0; i < jobs_pm.length; i++){
-	pieData[i] = {
-		value: jobs_pm[i],
-		color: jobs_pm_colors[i],
-		highlight: jobs_pm_highlights[i],
-		label: names_pm[i]
-	};
-}
-$(".pm_labels").append("<ul>");
-for(var i = 0; i < jobs_pm.length; i++){
-	$(".pm_labels").append("<li style = 'color: " + jobs_pm_colors[i] + "'>" + names_pm[i] + "</li>");
-}
-$(".pm_labels").append("</ul>");
-
 var date = new Date();
 var currentMonth = date.getMonth();
 var monthLabels = [];
@@ -410,7 +436,53 @@ while(count < 5){
 	currentMonth = currentMonth - 1;
 }
 
+var estimates_monthly = <?php echo json_encode($monthly_estimates); ?>;
+var clients_added_monthly = <?php echo json_encode($clients_added_monthly); ?>;
+
+	var barChartData_sales = {
+		labels : [monthLabels[4],monthLabels[3],monthLabels[2],monthLabels[1],monthLabels[0]],
+		datasets : [
+			{
+				fillColor : "rgba(110,155,200,0.5)",
+				strokeColor : "rgba(220,220,220,0.8)",
+				highlightFill: "rgba(220,220,220,0.75)",
+				highlightStroke: "rgba(220,220,220,1)",
+				data : [estimates_monthly[4],estimates_monthly[3],estimates_monthly[2],estimates_monthly[1],estimates_monthly[0]]
+			},
+			{
+				fillColor : "rgba(205,163,209,0.5)",
+				strokeColor : "rgba(220,220,220,0.8)",
+				highlightFill: "rgba(220,220,220,0.75)",
+				highlightStroke: "rgba(220,220,220,1)",
+				data : [clients_added_monthly[4],clients_added_monthly[3],clients_added_monthly[2],clients_added_monthly[1],clients_added_monthly[0]]
+			}
+		]
+
+	}
+
+var jobs_pm = <?php echo json_encode($number_jobs_pm); ?>;
+var names_pm = <?php echo json_encode($names_pm) ?>;
+var jobs_pm_colors = ["#ff4d4d", "#3399ff", "#66ff66"];
+var jobs_pm_highlights = ["#ff6666", "#4da6ff", "#80ff80"];
+var pieData = [];
+
+for(var i = 0; i < jobs_pm.length; i++){
+	pieData[i] = {
+		value: jobs_pm[i],
+		color: jobs_pm_colors[i],
+		highlight: jobs_pm_highlights[i],
+		label: names_pm[i]
+	};
+}
+$(".pm_labels").append("<ul>");
+for(var i = 0; i < jobs_pm.length; i++){
+	$(".pm_labels").append("<li style = 'color: " + jobs_pm_colors[i] + "'>" + names_pm[i] + "</li>");
+}
+$(".pm_labels").append("</ul>");
+
+
 var jobs_closed_monthly = <?php echo json_encode($jobs_closed_monthly); ?>;
+var jobs_invoiced_monthly = <?php echo json_encode($jobs_invoiced_monthly); ?>;
 
 	var barChartData = {
 		labels : [monthLabels[4],monthLabels[3],monthLabels[2],monthLabels[1],monthLabels[0]],
@@ -421,6 +493,13 @@ var jobs_closed_monthly = <?php echo json_encode($jobs_closed_monthly); ?>;
 				highlightFill: "rgba(220,220,220,0.75)",
 				highlightStroke: "rgba(220,220,220,1)",
 				data : [jobs_closed_monthly[4],jobs_closed_monthly[3],jobs_closed_monthly[2],jobs_closed_monthly[1],jobs_closed_monthly[0]]
+			},
+			{
+				fillColor : "rgba(226,79,79,0.5)",
+				strokeColor : "rgba(220,220,220,0.8)",
+				highlightFill: "rgba(220,220,220,0.75)",
+				highlightStroke: "rgba(220,220,220,1)",
+				data : [jobs_invoiced_monthly[4],jobs_invoiced_monthly[3],jobs_invoiced_monthly[2],jobs_invoiced_monthly[1],jobs_invoiced_monthly[0]]
 			}
 		]
 
@@ -481,6 +560,10 @@ var jobs_closed_monthly = <?php echo json_encode($jobs_closed_monthly); ?>;
 				});
 				var ctx3 = document.getElementById("canvas_prod").getContext("2d");
 				window.myDoughnut = new Chart(ctx3).Doughnut(doughnutData, {responsive : true});
+				var ctx4 = document.getElementById("canvas_sales").getContext("2d");
+				window.myBar = new Chart(ctx4).Bar(barChartData_sales, {
+					responsive : true
+				});
 			};
 
 </script>

@@ -183,6 +183,31 @@ if ($result->num_rows > 0) {
 					echo "<p>DQR date: ".$row1["dqr_sent"]."</p>";
 				echo "</div><br>";
 				
+				$result_wandm = mysqli_query($conn, "SELECT * FROM materials WHERE job_id = '$job_id'");
+				
+				if(mysqli_num_rows($result_wandm) > 0){
+					
+					$row_wm = $result_wandm->fetch_assoc();
+					
+					echo "<div class='vendor-left' style = 'background: " . $color_priority . "; '>";
+						echo "<h3 style = 'margin-right: 75px'><p><i>Weights and Measure:</i></p></h3>";
+						echo "<p>Location: ".$row_wm["location"]."</p>";
+						echo "<p>Checked in: ".$row_wm["checked_in"]."</p>";
+						echo "<p>Material: ".$row_wm["material"]."</p>";
+						echo "<p>Height: ".$row_wm["height"]."</p>";
+						echo "<p>Size: ".$row_wm["size"]."</p>";
+						
+					echo "</div>";
+					echo "<div class='vendor-right' style = 'background: " . $color_priority . "; '>";
+						echo "<p style = 'visibility: hidden;'>Here</p>";
+						echo "<p>Type: ".$row_wm["type"]."</p>";
+						echo "<p>Quantity: ".$row_wm["quantity"]."</p>";
+						echo "<p>Vendor: ".$row_wm["vendor"]."</p>";
+						echo "<p>Weight: ".$row_wm["weight"]."</p>";
+						echo "<p>Based On: ".$row_wm["based_on"]."</p>";
+					echo "</div><br>";
+				}
+				
 				$result_blue_sheet = mysqli_query($conn, "SELECT * FROM blue_sheet WHERE job_id = '$job_id'");
 				$row_blue_sheet = $result_blue_sheet->fetch_assoc();
 				

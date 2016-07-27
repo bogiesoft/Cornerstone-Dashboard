@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 18, 2016 at 09:08 PM
+-- Generation Time: Jul 27, 2016 at 10:56 PM
 -- Server version: 10.1.13-MariaDB
--- PHP Version: 7.0.8
+-- PHP Version: 5.6.23
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -146,7 +146,12 @@ INSERT INTO `archive_jobs` (`job_id`, `client_name`, `project_name`, `ticket_dat
 (5615, '', 'Yellow Sheet', '0000-00-00', '2016-05-19', 'djeff', '', '', '0000-00-00', '0000-00-00', 0, 'in P.M.', '', 123, 0, 0, '', '0000-00-00', '0000-00-00', 'jshmo', '0000-00-00', '', '', '', '', '1st class', '1230', '', '', '', '', '', '', 0, '0000-00-00', '', '', '', '', 0, '', 0, 0, '', '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, '', '', '', 'Closed', '', '', '', '', '', '', '', '', '', '', '2016-07-06 11:36:50'),
 (5640, '', 'Yellow Sheet', '1969-12-31', '2016-05-19', '', '', '', '1969-12-31', '1969-12-31', 0, 'in P.M.', '', 0, 0, 0, '', '0000-00-00', '0000-00-00', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', 0, '0000-00-00', '', '', '', '', 0, '', 0, 0, '', '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
 (5641, 'New Client', 'Hello There', '2016-05-04', '2016-05-26', '', '123', ' hee hee hee ', '2016-05-11', '2016-05-11', 1263, 'waiting for data', '', 500, 0, 0, '', '1969-12-31', '1969-12-31', 'jshmo', '1969-12-31', '', '', '', '', '123', '12', '', '', '', '', '', '', 0, '0000-00-00', '', '', '', '', 0, '', 0, 0, '', '1969-12-31', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 2, '', '', 'asdasdas', 'Closed', 'Reasons', '', '', '', '', '', '', '', '', '', '2016-07-13 10:25:26'),
-(5647, 'Jill Lewis', '', '1969-12-31', '1969-12-31', '', '', '', '1969-12-31', '1969-12-31', 0, 'waiting for materials', '', 0, 0, 0, '', '0000-00-00', '0000-00-00', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', 0, '0000-00-00', '', '', '', '', 0, '', 0, 0, '', '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
+(5647, 'Jill Lewis', '', '1969-12-31', '1969-12-31', '', '', '', '1969-12-31', '1969-12-31', 0, 'waiting for materials', '', 0, 0, 0, '', '0000-00-00', '0000-00-00', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', 0, '0000-00-00', '', '', '', '', 0, '', 0, 0, '', '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(5649, 'james', 'test job', '1969-12-31', '2016-07-15', '', '', '  poop', '1969-12-31', '1969-12-31', 300, 'none', '', 0, 0, 0, '', '0000-00-00', '0000-00-00', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', 0, '0000-00-00', '', '', '', '', 0, '', 0, 0, '', '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(5650, 'james', '', '1969-12-31', '2016-07-31', '', '', '', '1969-12-31', '1969-12-31', 0, 'none', '', 0, 0, 0, '', '0000-00-00', '0000-00-00', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', 0, '0000-00-00', '', '', '', '', 0, '', 0, 0, '', '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, '', '', '', 'Closed', '', '', '', '', '', '', '', '', '', '', '2016-07-27'),
+(5651, 'Another Client', '', '2016-07-28', '2016-07-28', '', '', '', '1969-12-31', '1969-12-31', 0, 'none', '', 0, 0, 0, '', '0000-00-00', '0000-00-00', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', 0, '0000-00-00', '', '', '', '', 0, '', 0, 0, '', '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, '', '', '', 'Closed', '', '', '', '', '', '', '', '', '', '', '2016-07-27'),
+(5652, '', 'Hello There', '2016-05-04', '2016-05-26', '', '123', 'la la la la', '2016-05-11', '2016-05-11', 1263, 'waiting for data', '', 0, 0, 0, '', '0000-00-00', '0000-00-00', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', 0, '0000-00-00', '', '', '', '', 0, '', 0, 0, '', '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, '', '', '', 'Closed', '', '', '', '', '', '', '', '', '', '', '2016-07-27'),
+(5661, '', 'print it', '1969-12-31', '1969-12-31', '', '', '', '1969-12-31', '1969-12-31', 0, '', '', 0, 0, 0, '', '0000-00-00', '0000-00-00', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', 0, '0000-00-00', '', '', '', '', 0, '', 0, 0, '', '0000-00-00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, '', '', '', 'Closed', '', '', '', '', '', '', '', '', '', '', '2016-07-27');
 
 -- --------------------------------------------------------
 
@@ -179,9 +184,12 @@ CREATE TABLE `blue_sheet` (
 --
 
 INSERT INTO `blue_sheet` (`job_id`, `completed_date`, `data_hrs`, `gd_hrs`, `initialrec_count`, `manual`, `uncorrected`, `unverifiable`, `bs_foreigns`, `bs_exact`, `loose`, `householded`, `basic`, `ncoa_errors`, `bs_ncoa`, `final_count`, `bs_domestic`) VALUES
-(5649, '1969-12-31', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5650, '1969-12-31', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5651, '1969-12-31', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+(5657, '1969-12-31', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5658, '1969-12-31', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5659, '2016-07-21', 0, 0, 90, 94, 90, 95, 0, 0, 0, 0, 34, 0, 45, 0, 0),
+(5660, '2016-07-18', 0, 0, 0, 78, 84, 0, 0, 0, 0, 0, 6, 9, 0, 0, 0),
+(5662, '1969-12-31', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5663, '1969-12-31', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -196,36 +204,38 @@ CREATE TABLE `client_info` (
   `contact_phone` varchar(45) NOT NULL,
   `contact_email` varchar(45) NOT NULL,
   `sec1` varchar(70) NOT NULL,
-  `sec2` varchar(70) DEFAULT NULL,
+  `sec2` varchar(70) DEFAULT 'None',
   `sec3` varchar(70) DEFAULT NULL,
   `vendor_contact` varchar(70) DEFAULT NULL,
   `category` varchar(80) NOT NULL,
   `website` varchar(90) NOT NULL,
   `notes` text NOT NULL,
-  `title` varchar(45) NOT NULL
+  `title` varchar(45) NOT NULL,
+  `date_added` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `client_info`
 --
 
-INSERT INTO `client_info` (`client_name`, `client_add`, `contact_name`, `contact_phone`, `contact_email`, `sec1`, `sec2`, `sec3`, `vendor_contact`, `category`, `website`, `notes`, `title`) VALUES
-('Another Client', 'jkljl', 'lkjlk', 'kjlk', 'jlkj', 'jlkjl', NULL, NULL, NULL, 'lkj', 'kjlkjl', 'kjlkjlkj', 'lkjlk'),
-('Femina1', '8 Southside Avesdfsf', 'Femina Patel', '1234567890', 'femina@gmail.com', '1231231230', '', '', '', 'student', 'sbdbjsfj.com', 'new note', 'Circular progress bar (canvas)'),
-('Hi', 'lkjl', 'kjlkj', 'kjlk', 'jlkj', 'kjlk', NULL, NULL, NULL, 'lkj', 'jlkj', 'lkjk', 'ljl'),
-('james', '987', 'issac newtron', 'lkjlkjlk', 'lkjlkj', 'kjlk', '', '', '', 'lkjlk', 'lkjlkj', 'llkj', 'lklkj'),
-('Jello', '2343 Jello', 'Jelloman', '123123434323', 'Tr@ello.com', '2346541235', NULL, NULL, NULL, 'dsf', 'p.com', 'dsfsdf', 'tret'),
-('Jill Lewis', 'lkj', 'l', 'lkjlk', 'jlkj', 'lk', '', '', '', 'lkj', 'jlkjlkj', 'lkjlk', 'lkj'),
-('jimmy', 'lkjlk', 'kiki', '098098098', 'lkjlkj', '0980989', '', '', '', 'lkjlkj', 'lkjlkj', 'yooo', 'lkjlkj'),
-('Johny', 'jklj', 'lkjlk', 'klj', 'kljlk', 'jlkj', NULL, NULL, NULL, 'jlk', 'lkjl', 'kjllkj', 'kl'),
-('Led Zeppelin', 'jlkj', 'lkjlk', 'ljlk', 'jlk', 'jlkj', '', '', '', 'jlk', 'lklkj', 'lkjlkj', 'jlk'),
-('New Client', 'kljlk', 'Client', 'kljlklkj', 'lkjlklk', 'lkjlkjlkjl', '', '', '', 'lkllkjk', 'lkjlkj', 'lkj', 'lkjlkj'),
-('peeetter', ';lk;lk', ';lkl;k', 'l;k;lk', ';lk;l', 'lkl;', NULL, NULL, NULL, ';lkl;k', 'llk', 'lklk', ';lkl'),
-('pipoi', 'iop', 'oipo', 'ipo', 'ipo', 'ipo', NULL, NULL, NULL, 'ipo', 'ipoi', 'popi', 'ipo'),
-('po pot', 'lkjlkj', 'kjlkj', 'kljlkj', 'lkjlkj', 'ljklj', '', '', '', 'lkjlkj', 'ljlkj', 'lkjlkj', 'lkjlkj'),
-('Steve', '234 dfsdf', 'Stevo', '233 454 2343', 'T@r.com', '234 676 2342', '', '', '', 'trtert', 'www.gdf.vom', 'dgdfg', 'werw'),
-('uoiuoiu', 'oiuoiuoiu', 'oiuoiuoi', 'oiuoiuiou', 'oiuou', 'oiuoiu', '', '', '', 'oiuoiuoi', 'oiuoiu', 'oiuoiui', 'iuoiu'),
-('Yo', 'lkj', 'Dude', 'lkj', 'lkj', 'lkj', '', '', '', 'lkj', 'lkj', 'lkj', 'lkj');
+INSERT INTO `client_info` (`client_name`, `client_add`, `contact_name`, `contact_phone`, `contact_email`, `sec1`, `sec2`, `sec3`, `vendor_contact`, `category`, `website`, `notes`, `title`, `date_added`) VALUES
+('Another Client', 'jkljl', 'lkjlk', 'kjlk', 'jlkj', 'jlkjl', NULL, NULL, NULL, 'lkj', 'kjlkjl', 'kjlkjlkj', 'lkjlk', '0000-00-00'),
+('Femina1', '8 Southside Avesdfsf', 'Femina Patel', '1234567890', 'femina@gmail.com', '1231231230', '', '', '', 'student', 'sbdbjsfj.com', 'new note', 'Circular progress bar (canvas)', '0000-00-00'),
+('Gary', '34 Gary drive', 'Gare Gare', '8973423234', 'gar@yahoo.com', '9083428783', 'None', NULL, NULL, 'sadfas', 'tret.com', 'yooooo', 'dude', '2016-07-27'),
+('Hi', 'lkjl', 'kjlkj', 'kjlk', 'jlkj', 'kjlk', NULL, NULL, NULL, 'lkj', 'jlkj', 'lkjk', 'ljl', '0000-00-00'),
+('james', '987', 'issac newtron', 'lkjlkjlk', 'lkjlkj', 'kjlk', '', '', '', 'lkjlk', 'lkjlkj', 'llkj', 'lklkj', '0000-00-00'),
+('Jello', '2343 Jello', 'Jelloman', '123123434323', 'Tr@ello.com', '2346541235', NULL, NULL, NULL, 'dsf', 'p.com', 'dsfsdf', 'tret', '0000-00-00'),
+('Jill Lewis', 'lkj', 'l', 'lkjlk', 'jlkj', 'lk', '', '', '', 'lkj', 'jlkjlkj', 'lkjlk', 'lkj', '0000-00-00'),
+('jimmy', 'lkjlk', 'kiki', '098098098', 'lkjlkj', '0980989', '', '', '', 'lkjlkj', 'lkjlkj', 'yooo', 'lkjlkj', '0000-00-00'),
+('Johny', 'jklj', 'lkjlk', 'klj', 'kljlk', 'jlkj', NULL, NULL, NULL, 'jlk', 'lkjl', 'kjllkj', 'kl', '0000-00-00'),
+('Led Zeppelin', 'jlkj', 'lkjlk', 'ljlk', 'jlk', 'jlkj', '', '', '', 'jlk', 'lklkj', 'lkjlkj', 'jlk', '0000-00-00'),
+('New Client', 'kljlk', 'Client', 'kljlklkj', 'lkjlklk', 'lkjlkjlkjl', '', '', '', 'lkllkjk', 'lkjlkj', 'lkj', 'lkjlkj', '0000-00-00'),
+('peeetter', ';lk;lk', ';lkl;k', 'l;k;lk', ';lk;l', 'lkl;', NULL, NULL, NULL, ';lkl;k', 'llk', 'lklk', ';lkl', '0000-00-00'),
+('pipoi', 'iop', 'oipo', 'ipo', 'ipo', 'ipo', NULL, NULL, NULL, 'ipo', 'ipoi', 'popi', 'ipo', '0000-00-00'),
+('po pot', 'lkjlkj', 'kjlkj', 'kljlkj', 'lkjlkj', 'ljklj', '', '', '', 'lkjlkj', 'ljlkj', 'lkjlkj', 'lkjlkj', '0000-00-00'),
+('Steve', '234 dfsdf', 'Stevo', '233 454 2343', 'T@r.com', '234 676 2342', '', '', '', 'trtert', 'www.gdf.vom', 'dgdfg', 'werw', '0000-00-00'),
+('uoiuoiu', 'oiuoiuoiu', 'oiuoiuoi', 'oiuoiuiou', 'oiuou', 'oiuoiu', '', '', '', 'oiuoiuoi', 'oiuoiu', 'oiuoiui', 'iuoiu', '0000-00-00'),
+('Yo', 'lkj', 'Dude', 'lkj', 'lkj', 'lkj', '', '', '', 'lkj', 'lkj', 'lkj', 'lkj', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -280,9 +290,12 @@ CREATE TABLE `invoice` (
 --
 
 INSERT INTO `invoice` (`job_id`, `postage`, `invoice_number`, `residual_returned`, `2week_followup`, `notes`, `status`, `reason`) VALUES
-(5649, NULL, 0, NULL, NULL, NULL, NULL, NULL),
-(5650, NULL, 0, NULL, NULL, NULL, NULL, NULL),
-(5651, NULL, 0, NULL, NULL, NULL, NULL, NULL);
+(5657, NULL, 0, NULL, NULL, NULL, NULL, NULL),
+(5658, NULL, 0, NULL, NULL, NULL, NULL, NULL),
+(5659, NULL, 0, NULL, NULL, NULL, NULL, NULL),
+(5660, NULL, 0, NULL, NULL, NULL, NULL, NULL),
+(5662, NULL, 0, NULL, NULL, NULL, NULL, NULL),
+(5663, NULL, 0, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -302,17 +315,21 @@ CREATE TABLE `job_ticket` (
   `materials_ordered` date DEFAULT NULL,
   `materials_expected` date DEFAULT NULL,
   `expected_quantity` int(11) NOT NULL DEFAULT '0',
-  `job_status` varchar(45) NOT NULL
+  `job_status` varchar(45) NOT NULL,
+  `priority` int(9) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `job_ticket`
 --
 
-INSERT INTO `job_ticket` (`job_id`, `client_name`, `project_name`, `ticket_date`, `due_date`, `created_by`, `estimate_number`, `special_instructions`, `materials_ordered`, `materials_expected`, `expected_quantity`, `job_status`) VALUES
-(5649, 'james', '', '1969-12-31', '2016-07-15', '', '', '  poop', '1969-12-31', '1969-12-31', 300, 'none'),
-(5650, 'james', '', '1969-12-31', '2016-07-31', '', '', '', '1969-12-31', '1969-12-31', 0, 'none'),
-(5651, 'Another Client', '', '1969-12-31', '1969-12-31', '', '', '', '1969-12-31', '1969-12-31', 0, 'none');
+INSERT INTO `job_ticket` (`job_id`, `client_name`, `project_name`, `ticket_date`, `due_date`, `created_by`, `estimate_number`, `special_instructions`, `materials_ordered`, `materials_expected`, `expected_quantity`, `job_status`, `priority`) VALUES
+(5657, 'Femina', 'Yellow Sheet', '1969-12-31', '2016-05-19', '', '', '', '1969-12-31', '1969-12-31', 0, 'in P.M.', 0),
+(5658, 'New Client', 'Hello There', '2016-05-04', '2016-05-26', '', '123', ' hee hee hee ', '2016-05-11', '2016-05-11', 1263, 'waiting for data', 0),
+(5659, 'Jill Lewis', '', '1969-12-31', '1969-12-31', '', '', '', '1969-12-31', '1969-12-31', 0, 'waiting for materials', 0),
+(5660, 'ABC COMPANY', '12345', '1969-12-31', '1969-12-31', '', '', '', '1969-12-31', '1969-12-31', 0, '', 0),
+(5662, '', 'Yellow Sheet', '1969-12-31', '2016-05-19', '', '', '', '1969-12-31', '1969-12-31', 0, 'in P.M.', 0),
+(5663, '', 'Yellow Sheet', '1969-12-31', '2016-05-19', '', '', '', '1969-12-31', '1969-12-31', 0, 'in P.M.', 0);
 
 -- --------------------------------------------------------
 
@@ -342,9 +359,12 @@ CREATE TABLE `mail_data` (
 --
 
 INSERT INTO `mail_data` (`job_id`, `data_loc`, `records_total`, `domestic`, `foreigns`, `data_source`, `data_received`, `data_completed`, `processed_by`, `dqr_sent`, `exact`, `mail_foreigns`, `household`, `ncoa`) VALUES
-(5649, '', 1000, 0, 0, '', '1969-12-31', '1969-12-31', 'djefferson', '1969-12-31', '', '', '', ''),
-(5650, '', 4000, 0, 0, '', '1969-12-31', '1969-12-31', 'igadge', '1969-12-31', '', '', '', ''),
-(5651, '', 5000, 0, 0, '', '1969-12-31', '1969-12-31', 'djefferson', '1969-12-31', '', '', '', '');
+(5657, '', 123, 0, 0, '', '1969-12-31', '1969-12-31', 'mbroc', '1969-12-31', '', '', '', ''),
+(5658, '', 500, 0, 0, '', '1969-12-31', '1969-12-31', 'ghgfhgf', '1969-12-31', '', '', '', ''),
+(5659, '', 0, 0, 867, '', '1969-12-31', '1969-12-31', 'ghgfhgf', '1969-12-31', '', '', '', ''),
+(5660, '', 0, 0, 0, '', '1969-12-31', '1969-12-31', 'mbroc', '1969-12-31', '', '', '', ''),
+(5662, '', 123, 0, 0, '', '1969-12-31', '1969-12-31', 'igadge', '1969-12-31', '', '', '', ''),
+(5663, '', 123, 0, 0, '', '1969-12-31', '1969-12-31', '', '1969-12-31', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -370,9 +390,12 @@ CREATE TABLE `mail_info` (
 --
 
 INSERT INTO `mail_info` (`job_id`, `mail_class`, `rate`, `processing_category`, `mail_dim`, `weights_measures`, `permit`, `bmeu`, `based_on`, `non_profit_number`) VALUES
-(5649, '', '', '', '', '', '', '', '', 0),
-(5650, '', '', '', '', '', '', '', '', 0),
-(5651, '', '', '', '', '', '', '', '', 0);
+(5657, '1st class', '1230', '', '', '', '', '', '', 0),
+(5658, '123', '12', '', '', '', '', '', '', 0),
+(5659, '', '', '', '', '', '', '234', '', 0),
+(5660, '', '', '', '', '', '', '', '', 0),
+(5662, '1st class', '1230', '', '', '', '', '', '', 0),
+(5663, '1st class', '1230', '', '', '', '', '', '', 0);
 
 -- --------------------------------------------------------
 
@@ -400,27 +423,7 @@ CREATE TABLE `materials` (
 --
 
 INSERT INTO `materials` (`job_id`, `received`, `location`, `checked_in`, `material`, `type`, `quantity`, `vendor`, `height`, `weight`, `size`, `based_on`) VALUES
-(5649, '2016-07-15', ' ', 'yu', 'oiui', 'kjhkjhj', 56, 'Kevin', 34, 34, '23', 234);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `priority_level`
---
-
-CREATE TABLE `priority_level` (
-  `job_id` int(45) NOT NULL,
-  `priority` int(5) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `priority_level`
---
-
-INSERT INTO `priority_level` (`job_id`, `priority`) VALUES
-(5649, 0),
-(5650, 0),
-(5651, 0);
+(5659, '2016-07-28', ' ', 'oi', 'Trifold brochure', 'brochure', 500, 'Sample', 0, 1, '6 X 9', 25);
 
 -- --------------------------------------------------------
 
@@ -446,9 +449,12 @@ CREATE TABLE `production` (
 --
 
 INSERT INTO `production` (`job_id`, `hold_postage`, `postage_paid`, `print_template`, `special_address`, `delivery`, `tasks`, `task1`, `task2`, `task3`) VALUES
-(5649, 'no', 'no', '', '', '', 'In-House Envelope Printing', '', '', ''),
-(5650, 'no', 'no', '', '', '', 'Tabbing,Folding', '', '', ''),
-(5651, 'no', 'no', '', '', '', 'Mail Merge', '', '', '');
+(5657, 'yes', 'yes', '', '', '', '', '', '', ''),
+(5658, 'yes', 'yes', '', '', '', '', '', '', ''),
+(5659, 'yes', 'yes', '', '', '', '', '', '', ''),
+(5660, 'yes', 'yes', '', '', '', '', '', '', ''),
+(5662, 'yes', 'yes', '', '', '', 'Mail Merge', '', '', ''),
+(5663, 'yes', 'yes', '', '', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -472,15 +478,19 @@ CREATE TABLE `production_data` (
 --
 
 INSERT INTO `production_data` (`id`, `total_records`, `records_per`, `time_number`, `time_unit`, `people`, `job`, `hours`) VALUES
-('5002', 1, '40', '1', 'hr.', '1', 'Letter Printing', 0.025),
-('5004', 1000, '200,200', '30,1', 'sec.,hr.', '1,1', 'Sealing,Folding', 5.04167),
-('5005', 10000, '100,100', '1,1', 'hr.,hr.', '1,1', 'Folding,Inserting', 200),
-('5007', 500, '50,100', '1,1', 'hr.,hr.', '2,1', 'Mail Merge,Letter Printing', 10),
-('5008', 1, '1,1', '1,1', 'hr.,hr.', '1,3', 'Mail Merge,Mail Merge', 1.33333),
-('5009', 500, '50', '1', 'hr.', '1', 'Folding', 10),
-('5012', 1000, '100', '1', 'hr.', '1', 'In-House Envelope Printing', 10),
-('5013', 4000, '200,150', '1,1', 'hr.,hr.', '1,2', 'Folding,Tabbing', 33.3333),
-('5014', 1000, '10', '1', 'hr.', '1', 'Mail Merge', 100);
+('5014', 1000, '10', '1', 'hr.', '1', 'Mail Merge', 100),
+('5016', 1000, '10', '1', 'hr.', '2', 'Labeling', 50),
+('5017', 500, '200,200', '30,1', 'sec.,hr.', '1,1', 'Sealing,Folding', 2.52083),
+('5018', 100, '50,100', '1,1', 'hr.,hr.', '2,1', 'Mail Merge,Tabbing', 2),
+('5019', 100, '50,100', '1,1', 'hr.,hr.', '2,1', 'Mail Merge,Glue Dots', 2),
+('5020', 1000, '10,1', '1,1', 'hr.,min.', '1,1', 'Mail Merge,Labeling', 116.667),
+('5021', 500, '50,50', '1,1', 'hr.,hr.', '1,1', 'Folding,Tabbing', 20),
+('5005', 10000, '1000,100', '1,1', 'hr.,hr.', '1,1', 'Folding,Inserting', 110),
+('5009', 500, '50', '1', 'hr.', '1', 'Glue Dots', 10),
+('5022', 5000, '100,100', '1,1', 'hr.,hr.', '1,3', 'Collating,Address Printing', 66.6667),
+('5015', 1000, '1000', '1', 'hr.', '1', 'Correct Permit', 1),
+('5012', 1000, '100', '2', 'hr.', '1', 'In-House Envelope Printing', 20),
+('5002', 10, '100', '1', 'hr.', '1', 'Letter Printing', 0.1);
 
 -- --------------------------------------------------------
 
@@ -531,7 +541,10 @@ INSERT INTO `reminder` (`id`, `user`, `text`, `date`, `vendor_name`, `client_nam
 (21, 'admin', 'Monthly Reminder', '0000-00-00', 'Venderoni', 'Johny', 'Monthly', 'None'),
 (22, 'admin', 'Weekly Reminder for Thursday', '0000-00-00', 'None', 'jimmy', 'Weekly', 'Thu'),
 (23, 'admin', 'call jimmy', '2016-07-15', 'None', 'jimmy', 'Once', 'None'),
-(24, 'admin', 'Hello', '0000-00-00', 'None', 'None', 'Weekly', 'Sun');
+(24, 'admin', 'Hello', '0000-00-00', 'None', 'None', 'Weekly', 'Sun'),
+(25, 'sayre', 'call both', '0000-00-00', 'Jezz', 'Johny', 'Weekly', 'Mon'),
+(26, 'sayre', 'call both', '0000-00-00', 'Jezz', 'james', 'Weekly', 'Tue'),
+(27, 'sayre', 'Call her', '0000-00-00', 'None', 'Jill Lewis', 'Weekly', 'Wed');
 
 -- --------------------------------------------------------
 
@@ -910,7 +923,46 @@ INSERT INTO `timestamp` (`user`, `time`, `job`, `a_p`) VALUES
 ('admin', '2016-07-17 14:19:59', 'created job ticket', 'PM'),
 ('sayre', '2016-07-18 12:22:12', 'updated job ticket', 'PM'),
 ('sayre', '2016-07-18 12:23:48', 'updated job ticket', 'PM'),
-('sayre', '2016-07-18 14:49:23', 'deleted job ticket', 'PM');
+('sayre', '2016-07-18 14:49:23', 'deleted job ticket', 'PM'),
+('sayre', '2016-07-19 09:23:45', 'updated job ticket', 'AM'),
+('sayre', '2016-07-19 10:23:14', 'created job ticket', 'AM'),
+('sayre', '2016-07-19 10:23:41', 'updated job ticket', 'AM'),
+('sayre', '2016-07-19 10:36:15', 'updated job ticket', 'AM'),
+('sayre', '2016-07-19 10:44:47', 'updated job ticket', 'AM'),
+('sayre', '2016-07-19 10:45:18', 'updated job ticket', 'AM'),
+('sayre', '2016-07-19 14:51:53', 'job assigned to Project Management', 'PM'),
+('sayre', '2016-07-19 14:52:10', 'job assigned to Project Management', 'PM'),
+('sayre', '2016-07-19 14:52:47', 'job assigned to Development', 'PM'),
+('sayre', '2016-07-19 14:52:58', 'job assigned to Project Management', 'PM'),
+('sayre', '2016-07-19 14:53:28', 'updated job ticket', 'PM'),
+('sayre', '2016-07-19 15:06:06', 'deleted job ticket', 'PM'),
+('sayre', '2016-07-19 15:06:12', 'deleted job ticket', 'PM'),
+('sayre', '2016-07-19 15:06:19', 'deleted job ticket', 'PM'),
+('sayre', '2016-07-19 15:06:25', 'deleted job ticket', 'PM'),
+('sayre', '2016-07-19 15:27:20', 'job assigned to Project Management', 'PM'),
+('sayre', '2016-07-19 15:28:53', 'job assigned to Project Management', 'PM'),
+('sayre', '2016-07-19 15:29:16', 'job assigned to Project Management', 'PM'),
+('sayre', '2016-07-19 15:30:31', 'job assigned to Project Management', 'PM'),
+('sayre', '2016-07-19 15:33:34', 'job assigned to Production', 'PM'),
+('sayre', '2016-07-19 15:33:49', 'updated job ticket', 'PM'),
+('admin', '2016-07-20 12:36:46', 'updated job ticket', 'PM'),
+('sayre', '2016-07-20 14:38:25', 'added weights and measure', 'PM'),
+('sayre', '2016-07-20 16:39:23', 'updated job ticket', 'PM'),
+('admin', '2016-07-27 09:11:12', 'updated job ticket', 'AM'),
+('admin', '2016-07-27 09:19:01', 'archived job', 'AM'),
+('admin', '2016-07-27 09:19:59', 'updated job ticket', 'AM'),
+('admin', '2016-07-27 09:25:17', 'archived job', 'AM'),
+('admin', '2016-07-27 09:27:23', 'updated job ticket', 'AM'),
+('admin', '2016-07-27 09:27:36', 'archived job', 'AM'),
+('admin', '2016-07-27 09:33:29', 'updated job ticket', 'AM'),
+('admin', '2016-07-27 09:33:45', 'archived job', 'AM'),
+('sayre', '2016-07-27 12:14:48', 'added new client', 'PM'),
+('sayre', '2016-07-27 15:02:29', 'created job ticket', 'PM'),
+('sayre', '2016-07-27 15:15:18', 'created job ticket', 'PM'),
+('sayre', '2016-07-27 15:31:53', 'updated job ticket', 'PM'),
+('sayre', '2016-07-27 15:32:20', 'updated job ticket', 'PM'),
+('sayre', '2016-07-27 16:37:37', 'updated job ticket', 'PM'),
+('sayre', '2016-07-27 16:37:52', 'archived job', 'PM');
 
 -- --------------------------------------------------------
 
@@ -1041,9 +1093,12 @@ CREATE TABLE `yellow_sheet` (
 --
 
 INSERT INTO `yellow_sheet` (`job_id`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`, `13`, `14`, `percent`) VALUES
-(5649, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5650, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5651, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+(5657, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5658, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5659, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5660, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5662, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5663, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 --
 -- Indexes for dumped tables
@@ -1137,12 +1192,12 @@ ALTER TABLE `yellow_sheet`
 -- AUTO_INCREMENT for table `job_ticket`
 --
 ALTER TABLE `job_ticket`
-  MODIFY `job_id` int(45) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5652;
+  MODIFY `job_id` int(45) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5664;
 --
 -- AUTO_INCREMENT for table `reminder`
 --
 ALTER TABLE `reminder`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

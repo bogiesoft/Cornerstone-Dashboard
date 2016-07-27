@@ -102,7 +102,7 @@ if(isset($_POST['submit_form'])){
 	archive_jobs.notes = invoice.notes,
 	archive_jobs.status = invoice.status,
 	archive_jobs.reason = invoice.reason
-	 WHERE archive_jobs.job_id = invoice.job_id AND invoice.job_id = '$temp'");
+	 WHERE archive_jobs.job_id = invoice.job_id AND invoice.job_id = '$job_id'");
 	$result11 = mysqli_query($conn,"DELETE FROM invoice WHERE job_id = '$job_id'");
 
 	$result12 = mysqli_query($conn,"UPDATE archive_jobs, production SET 
@@ -120,7 +120,7 @@ if(isset($_POST['submit_form'])){
 	$result13 = mysqli_query($conn,"DELETE FROM production WHERE job_id = '$job_id'");
 	$result15 = mysqli_query($conn,"DELETE FROM yellow_sheet WHERE job_id = '$job_id'");
 	$today = date("Y-m-d");
-	$result14 = mysqli_query($conn,"UPDATE archive_jobs SET archive_date = '$today' WHERE job_id = '$temp'");
+	$result14 = mysqli_query($conn,"UPDATE archive_jobs SET archive_date = '$today' WHERE job_id = '$job_id'");
 
 	
 	}
