@@ -90,6 +90,10 @@ while($row = $job_result->fetch_assoc()){
 		$priority = $_POST['priority' . $job_count];
 		mysqli_query($conn, "UPDATE job_ticket SET priority = '$priority' WHERE job_id = '$job_id'");
 	}
+	if(isset($_POST['assign_to' . $job_count])){
+		$user = $_POST['assign_to' . $job_count];
+		mysqli_query($conn, "UPDATE mail_data SET processed_by = '$user' WHERE job_id = '$job_id'");
+	}
 	$job_count = $job_count + 1;
 }
 
@@ -145,6 +149,18 @@ if ($result->num_rows > 0) {
 					echo "<p>Records total: ".$row1["records_total"]."</p>";
 					$name = $row2["first_name"] . " " . $row2["last_name"];
 					echo "<p>Assigned to: ".$name."</p>";
+					echo "<form style = 'margin-left: 650px;' action = '' method = 'post'><select onchange = 'this.form.submit()' name = 'assign_to" . $job_count . "' style = 'width: 150px'><option selected disabled value = 'None'>--Assign To--</option>";
+					
+					$result_users = mysqli_query($conn, "SELECT user FROM users");
+					while($row_users = $result_users->fetch_assoc()){
+						$user = $row_users['user'];
+						$get_name = mysqli_query($conn, "SELECT first_name, last_name FROM users WHERE user = '$user'");
+						$row_name = $get_name->fetch_assoc();
+						$name = $row_name['first_name'] . " " . $row_name['last_name'];
+						echo "<option value = '" . $user . "'>" . $name . "</option>";
+					}
+					
+					echo "</select></form>";
 				echo "</div>";
 					
 		
@@ -275,7 +291,7 @@ $conn->close();
 			
 			if(percent > 70){
 				color = "#80ff80";
-				highlight = "#99ff99"
+				highlight = "#99ff99";
 			}
 			else if(percent > 40){
 				color = "#ffe066";
@@ -283,7 +299,7 @@ $conn->close();
 			}
 			else if(percent > 10){
 				color = "#ff4d4d";
-				highlight = "#ff6666"
+				highlight = "#ff6666";
 			}
 		
 			var doughnutData = [

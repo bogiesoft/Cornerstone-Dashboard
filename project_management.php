@@ -1,5 +1,11 @@
 <?php
 require('header.php');
+
+//project management
+
+$percent_array = array();
+$id_array = array();
+
 ?>
 <style>
 #blue_sheet_labels p{
@@ -75,6 +81,10 @@ while($row = $job_result->fetch_assoc()){
 		$priority = $_POST['priority' . $job_count];
 		mysqli_query($conn, "UPDATE job_ticket SET priority = '$priority' WHERE job_id = '$job_id'");
 	}
+	if(isset($_POST['assign_to' . $job_count])){
+		$user = $_POST['assign_to' . $job_count];
+		mysqli_query($conn, "UPDATE mail_data SET processed_by = '$user' WHERE job_id = '$job_id'");
+	}
 	$job_count = $job_count + 1;
 }
 
@@ -133,6 +143,28 @@ if ($result->num_rows > 0) {
 					echo "<p class = 'hover_info'>Records total: ".$row1["records_total"]."<span style = 'height: 20px; width: 250px' class = 'tooltiptext'>Foreigns: " . $row1['foreigns'] . ", Domestic: " . $row1['domestic'] . "</span></p>";
 					$name = $row2["first_name"] . " " . $row2["last_name"];
 					echo "<p style = 'margin-right: 190px'>Assigned to: ".$name."</p><br>";
+					echo "<form style = 'margin-left: 800px;' action = '' method = 'post'><select onchange = 'this.form.submit()' name = 'assign_to" . $job_count . "' style = 'width: 150px'><option selected disabled value = 'None'>--Assign To--</option>";
+					
+					$result_users = mysqli_query($conn, "SELECT user FROM users");
+					while($row_users = $result_users->fetch_assoc()){
+						$user = $row_users['user'];
+						$get_name = mysqli_query($conn, "SELECT first_name, last_name FROM users WHERE user = '$user'");
+						$row_name = $get_name->fetch_assoc();
+						$name = $row_name['first_name'] . " " . $row_name['last_name'];
+						echo "<option value = '" . $user . "'>" . $name . "</option>";
+					}
+					
+					echo "</select></form>";
+					echo "
+					<a href='yellow_sheet.php?job_id=$job_id'><div id='canvas-holder' style = 'width: 15%; float: right; margin-top:-200px'>
+						<canvas id='canvas_pm" . $job_count . "' width='1' height='1'/>
+					</div></a>";
+					
+					array_push($id_array, 'canvas_pm' . $job_count);
+					
+					$result_ys_percent = mysqli_query($conn, "SELECT percent FROM yellow_sheet WHERE job_id = '$job_id'");
+					$row_ys_percent = $result_ys_percent->fetch_assoc();
+					array_push($percent_array, $row_ys_percent["percent"]);
 					
 					$client_name = $row['client_name'];
 					$result_clients = mysqli_query($conn, "SELECT * FROM client_info WHERE client_name = '$client_name'");
@@ -252,6 +284,9 @@ if ($result->num_rows > 0) {
 					echo "<p class = 'label_margin_bottom'>Graphic Des. hrs.</p>";
 					echo "<p class = 'label_margin_bottom'>Data hrs.</p>";
 					echo "<p class = 'label_margin_bottom'>Completed</p>";
+					echo "<div class='contacts-title'>
+					</div>";
+				echo "</div>";
 				echo "</div><br>";
 				echo "</div>";
 				echo "</div>";
@@ -279,4 +314,58 @@ function showJob(div, button){
 		document.getElementById(button).innerHTML = "Info";
 	}
 }
+
+
+var percent = <?php echo json_encode($percent_array); ?>;
+var id = <?php echo json_encode($id_array); ?>;
+var data = [];
+
+for(var i = 0; i < percent.length; i++){
+
+	var toDo = 100 - percent[i];
+	var color = "#FFFFFF";
+	var highlight = "#FFFFFF";
+	
+	if(percent[i] < 30){
+		color = "#ff4d4d";
+		highlight = "#ff6666";
+	}
+	else if(percent[i] < 70){
+		color = "#ffe066";
+		highlight = "#ffe680";
+	}
+	else if(percent[i] < 100){
+		color = "#80ff80";
+		highlight = "#99ff99";
+	}
+	else{
+		color = "#ccffcc";
+		highlight = "#e6ffe6";
+	}
+	
+	var doughnutData = [
+					{
+						value: toDo,
+						color: "#d9d9d9",
+						highlight: "#d9d9d9",
+						label: "% To do"
+					},
+					{
+						value: percent[i],
+						color: color,
+						highlight: highlight,
+						label: "% Complete"
+					}
+				];
+				
+	data[i] = doughnutData;
+}
+
+window.onload = function(){
+				
+for(var i = 0; i < id.length; i++){
+	var ctx = document.getElementById(id[i]).getContext("2d");
+	window.myDoughnut = new Chart(ctx).Doughnut(data[i], {responsive : true});
+}
+};
 </script>

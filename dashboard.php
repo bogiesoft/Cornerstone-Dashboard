@@ -67,7 +67,7 @@ $conn->close();
 	<div class="dashboard-detail">
 	<div class="dashboard-top">
 	<div class="dashboardtop-box contact-stats">
-		<div class="dashboardbox-title"><h2>Sales - :</h2></div>
+		<div class="dashboardbox-title"><h2>Sales - : Estimates and Clients Added</h2></div>
 		<?php
 		require ("connection.php");
 		
@@ -116,13 +116,14 @@ $conn->close();
 				array_push($monthly_estimates, $estimates);
 				array_push($clients_added_monthly, $clients_added);
 				$count = $count + 1;
+				$currentMonth = $currentMonth - 1;
 				
 				if($currentMonth == 0){
 					$currentMonth = 12;
 					$currentYear = $currentYear - 1;
 				}
 				if($currentMonth < 10){
-					$currentMonth = 0 . $currentMonth;
+					$currentMonth = '0' . $currentMonth;
 				}
 			}
 		?>
@@ -135,7 +136,7 @@ $conn->close();
 		<!--<h4>Job Tickets in Process: <span><?php echo "$num_rows2"; ?></span></h4> !-->
 	</div>
 	<div id = "project_management_box" class="dashboardtop-box fundraising-stats">
-		<div class="dashboardbox-title"><h2>Project Management - Current:</h2></div>
+		<div class="dashboardbox-title"><h2>Project Management - Current: Jobs</h2></div>
 		<?php
 			require('connection.php');
 			while($row3 = $result3->fetch_assoc()){
@@ -286,7 +287,7 @@ $conn->close();
 					$currentYear = $currentYear - 1;
 				}
 				if($currentMonth < 10){
-					$currentMonth = 0 . $currentMonth;
+					$currentMonth = '0' . $currentMonth;
 				}
 			}
 		?>
@@ -343,10 +344,10 @@ $result = mysqli_query($conn,"SELECT * FROM timestamp ORDER BY time DESC LIMIT 5
 $sql_time_query = "SELECT date_trunc('second', now()::timestamp) FROM timestamp ORDER BY time DESC LIMIT 5";
 $result_time_query = mysqli_query($conn, $sql_time_query);
 
-echo " <div class='allcontacts-table'><table style = 'width: 850px' border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
+echo " <div class='allcontacts-table'><table style = 'width: 100%' border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
 echo "<tbody>";
 echo "<tr valign='top'><th class='allcontacts-title'>Recent Activities<span class='allcontacts-subtitle'></span></th><th class='column-editorbtn'><a href = 'view_timestamps.php'>View All</a></th></tr>";
-echo "<tr valign='top'><td colspan='2'><table border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list' style = 'width: 850px'><tbody><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='user' data-index='0'>User</th><th class='maintable-thtwo data-header' data-name='job' data-index='1'>Description</th><th class='maintable-thtwo data-header' data-name='time' data-index='2'>Time</th></tr>";
+echo "<tr valign='top'><td colspan='2'><table border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list' style = 'width: 100%'><tbody><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='user' data-index='0'>User</th><th class='maintable-thtwo data-header' data-name='job' data-index='1'>Description</th><th class='maintable-thtwo data-header' data-name='time' data-index='2'>Time</th></tr>";
 
 if ($result->num_rows > 0) {
     // output data of each row
