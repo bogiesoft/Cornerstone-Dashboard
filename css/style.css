@@ -229,7 +229,7 @@ li.current { color: #0033cc !important; background: #ffffff; width: 25px; paddin
 .dataconsulate-detail .dataconsulate-right .go-topage-cont .page-no { display:inline-block; width:60px; height:38px; line-height:38px; text-align:center; color:#222; font-weight:300; background-color:#fff; margin:0 0 0 28px; }
 select {float:right; width:50px; height:36px; border:0; background: url(/images/down-arrow.png) 90% center no-repeat #fff; } 
 .application-status { float: none;}
-#table-scroll {height:auto;width:850px;overflow:auto;   }
+#table-scroll {height:auto;width:100%;overflow:auto;   }
 div.pager span {display: inline-block;width: 1.8em;height: 1.8em;line-height: 1.8;text-align: center;cursor: pointer;margin-right: 0.5em;}
 div.pager span.active {background: #c00;}
 
@@ -292,7 +292,9 @@ font-weight:400; }
 
 /* Reminders */
 .reminders h2 {color:#356CAC; padding-bottom:15px;}
-/* Media Queries */
+
+/*media queries */
+
 @media screen and (max-width:1640px) {
 .dataconsulate-detail .dataconsulate-right .dashboard-cont { width:70%; }
 .dataconsulate-detail .dataconsulate-right .dashboard-detail { padding:15px 15px;}
@@ -449,3 +451,4 @@ font-weight:400; }
     min-height: 500px;
     min-width: 1000px;
 }
+*/
