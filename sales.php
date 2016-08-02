@@ -50,29 +50,38 @@ ul.tab li a:focus, .active {background-color: #ccc;}
   <li><a href="#" class="tablinks" onclick="changeTab(event, 'CRM')">CRM</a></li>
   <li><a href="#" class="tablinks" onclick="changeTab(event, 'statistics')">Statistics</a></li>
 </ul>
-<div id="internal" class="tab-content">
- <?php
-require ("connection.php");
 
-$result = mysqli_query($conn,"SELECT job_ticket.job_id, job_ticket.client_name, job_ticket.project_name, job_ticket.due_date, job_ticket.estimate_number, mail_data.records_total FROM job_ticket INNER JOIN mail_data ON job_ticket.job_id = mail_data.job_id AND mail_data.processed_by = ''");
+</div>
+<div id="CRM" class="tab-content">
+<div class="search-cont">
+	<div class="searchcont-detail">
+		<div class="search-boxleft">
+			<form id = "search_form" action="vendor_search.php" method="post" >
+				<label>Quick Search</label>
+				<input id="search" name="frmSearch" type="text" placeholder="Search for a specific client">
+			</form>
+			<div class="search-boxright pull-right"><a href="#" onclick = "document.getElementById('search_form').submit()">Submit</a></div>
+		</div>
+	</div>
+<?php
+
+$result = mysqli_query($conn, "SELECT * FROM sales");
 
 echo " <div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
 echo "<tbody>";
-echo "<tr valign='top'><th class='allcontacts-title'>Job Tickets in Process<span class='allcontacts-subtitle'></span></th></tr>";
-echo "<tr valign='top'><td colspan='2'><table id = 'sales_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='job_id' data-index='0'>Job ID</th><th class='maintable-thtwo data-header' data-name='client_name' data-index='1'>Client Name</th><th class='maintable-thtwo data-header' data-name='project_name' data-index='2'>Job Name</th><th class='maintable-thtwo data-header' data-name='due_date' data-index='3'>Due Date</th><th class='maintable-thtwo data-header' data-name='estimate_number' data-index='4'>Estimate #</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='5'>Total Records</th></tr></thead><tbody>";
+echo "<tr valign='top'><th class='allcontacts-title'>CRM<span class='allcontacts-subtitle'></span></th></tr>";
+echo "<tr valign='top'><td colspan='2'><table id = 'crm_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='job_id' data-index='0'>Name</th><th class='maintable-thtwo data-header' data-name='client_name' data-index='1'>Title</th><th class='maintable-thtwo data-header' data-name='project_name' data-index='2'>Phone#</th><th class='maintable-thtwo data-header' data-name='due_date' data-index='3'>Fax</th><th class='maintable-thtwo data-header' data-name='estimate_number' data-index='4'>Web Address</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='5'>Business</th></tr></thead><tbody>";
 
 if ($result->num_rows > 0) {
     // output data of each row
 	
     while($row = $result->fetch_assoc()) {
-		$foo = $row['job_id'];
-		echo "<tr><td><a href='edit_job.php?job_id=$foo'>".$row["job_id"]."</a></td><td>".  $row["client_name"]."</td><td>". $row["project_name"]. "</td><td>". $row["due_date"]. "</td><td>". $row["estimate_number"]."</td><td>". $row["records_total"]. "</td></tr>";
+		echo "<tr><td>" .$row["full_name"]."</td><td>".  $row["title"]."</td><td>". $row["phone"]. "</td><td>". $row["fax"]. "</td><td>". $row["web_address"]."</td><td>". $row["business"]. "</td></tr>";
     }
 	echo "</tbody></table></td></tr></tbody></table></div>";
 } else {
     echo "0 results";
 }
-//class='paginated'
 ?>
 <div class="allcontacts-breadcrumbs">
 	<div class="allcontacts-breadcrumbsleft pull-left page-control">
@@ -93,15 +102,39 @@ if ($result->num_rows > 0) {
 	</div>
 </div>
 </div>
-
-<div id="CRM" class="tab-content">
-<h3>CRM</h3>
-<p>Under Construction</p>
 </div>
 
 <div id="statistics" class="tab-content">
   <h3>Statistics</h3>
   <p>Under Construction</p>
+</div>
+<div id="internal" class="tab-content">
+<h3>In Process</h3><br>
+ <?php
+$result = mysqli_query($conn,"SELECT * FROM job_ticket WHERE processed_by = ''");
+
+
+if ($result->num_rows > 0) {
+    // output data of each row
+
+    while($row = $result->fetch_assoc()) {
+		
+		echo "<div data-role='main' class='ui-content'>";
+			echo "<div class='vendor-left'>";
+				$x = $row["job_id"];
+				echo "<h3><a href='http://localhost/dashboard/edit_job.php?job_id=$x'>".$row["job_id"]."</a></h1>";
+				echo "<p>Client Name: ".$row["client_name"]."</p>";
+				echo "<p>Project Name: ".$row["project_name"]."</p>";
+			echo "</div>";
+			echo "<div class='vendor-right'>";
+				echo "<p>Due Date: ".$row["due_date"]."</p>";
+				echo "<p>Estimate Number: ".$row["estimate_number"]."</p>";
+				echo "<p>Job Status: ".$row["job_status"]."</p>";
+			echo "</div>";
+	}
+}
+?>
+
 </div>
 </div>
 </div>
@@ -132,12 +165,24 @@ function changeTab(evt, cityName) {
     document.getElementById(cityName).style.display = "block";
     evt.currentTarget.className += " active";
 }
+
+$("#search").keyup(function(){
+        _this = this;
+        // Show only matching TR, hide rest of them
+        $.each($("#crm_table tbody tr"), function() {
+            if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+               $(this).hide();
+            else
+               $(this).show();                
+        });
+    }); 
+
 var subtractValue = 3;
 var prevSubValue = 4;
 
 $(document).ready(function() 
     { 
-        $("#sales_table").tablesorter(); 
+		$("#crm_table").tablesorter();
 		pageCreator();
     } 
 );

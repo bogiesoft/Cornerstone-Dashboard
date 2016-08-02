@@ -132,22 +132,9 @@ require ("header.php");
 					<label>Non Profit Number</label>
 					<input name="non_profit_number" type="text" class="contact-prefix">
 					</div>
-					
-					<div class="tabinner-detail">
-					<label>Data Location</label>
-					<input name="data_loc" type="text" class="contact-prefix">
-					</div>
 					<div class="tabinner-detail">
 					<label>Records Total</label>
 					<input name="records_total" type="text" class="contact-prefix">
-					</div>
-					<div class="tabinner-detail">
-					<label>Domestic</label>
-					<input name="domestic" type="text" class="contact-prefix">
-					</div>
-					<div class="tabinner-detail">
-					<label>Foreigns</label>
-					<input name="foreigns" type="text" class="contact-prefix">
 					</div>
 					<div class="tabinner-detail">
 					<label>Data Source</label>
@@ -181,22 +168,6 @@ require ("header.php");
 					<div class="tabinner-detail">
 					<label>DQR Sent</label>
 					<input name="dqr_sent" type="date" class="contact-prefix">
-					</div>
-					<div class="tabinner-detail">
-					<label>Exact</label>
-					<input name="exact" type="text" class="contact-prefix">
-					</div>
-					<div class="tabinner-detail">
-					<label>Mail Foreigns</label>
-					<input name="mail_foreigns" type="text" class="contact-prefix">
-					</div>
-					<div class="tabinner-detail">
-					<label>Household</label>
-					<input name="household" type="text" class="contact-prefix">
-					</div>
-					<div class="tabinner-detail">
-					<label>NCOA</label>
-					<input name="ncoa" type="text" class="contact-prefix">
 					</div>
 					
 					<div class="tabinner-detail">
@@ -238,18 +209,6 @@ require ("header.php");
 					  <option value="Inkjet Printing">Inkjet Printing</option>
 					  <option value="Glue Dots">Glue Dots</option>
 					</select>
-					</div>
-					<div class="tabinner-detail">
-					<label>Task 1</label>
-					<input name="task1" type="text" class="contact-prefix">
-					</div>
-					<div class="tabinner-detail">
-					<label>Task 2</label>
-					<input name="task2" type="text" class="contact-prefix">
-					</div>
-					<div class="tabinner-detail">
-					<label>Task 3</label>
-					<input name="task3" type="text" class="contact-prefix">
 					</div>
 					
 					<div class="tabinner-detail">

@@ -63,7 +63,7 @@ input { border: 1px solid #666; background: #333; color: #fff; padding: 0.5em; b
 	$row = $result->fetch_assoc();  //production
 	$job_tasks = $row['tasks'];
 	
-	$sql = "SELECT * FROM mail_data WHERE job_id = '$job_id'";
+	$sql = "SELECT * FROM job_ticket WHERE job_id = '$job_id'";
 	$result = mysqli_query($conn, $sql);
 	$row1 = $result->fetch_assoc(); //mail data
 	$records_total = $row1['records_total'];

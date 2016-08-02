@@ -88,9 +88,6 @@ require ("connection.php");
 		$delivery = $row['delivery'];
 		//$completed = $row['completed'];
 		$tasks = $row['tasks']; 
-		$task1 = $row['task1'];
-		$task2 = $row['task2'];
-		$task3 = $row['task3'];
 		
 		$completed_date = $row['completed_date'];
 		$data_hrs = $row['data_hrs'];
@@ -254,22 +251,9 @@ require ("connection.php");
 				<label>Non Profit Number</label>
 				<input name="non_profit_number" type="text" value="<?php echo $non_profit_number ; ?>" class="contact-prefix">
 				</div>
-				
-				<div class="tabinner-detail">
-				<label>Data Location</label>
-				<input type="text" name="data_loc" value="<?php echo $data_loc ; ?>" class="contact-prefix">
-				</div>
 				<div class="tabinner-detail">
 				<label>Records Total</label>
 				<input name="records_total" type="text" value="<?php echo $records_total ; ?>" class="contact-prefix">
-				</div>
-				<div class="tabinner-detail">
-				<label>Domestic</label>
-				<input name="domestic" type="text" value="<?php echo $domestic; ?>" class="contact-prefix">
-				</div>
-				<div class="tabinner-detail">
-				<label>Foreigns</label>
-				<input name="foreigns" type="text" value="<?php echo $foreigns ; ?>" class="contact-prefix">
 				</div>
 				<div class="tabinner-detail">
 				<label>Data Source</label>
@@ -312,22 +296,6 @@ require ("connection.php");
 				<div class="tabinner-detail">
 				<label>DQR Sent</label>
 				<input name="dqr_sent" type="date" value="<?php echo $dqr_sent ; ?>" class="contact-prefix">
-				</div>
-				<div class="tabinner-detail">
-				<label>Exact</label>
-				<input name="exact" type="text" value="<?php echo $exact ; ?>" class="contact-prefix">
-				</div>
-				<div class="tabinner-detail">
-				<label>Mail Foreigns</label>
-				<input name="mail_foreigns" type="text" value="<?php echo $mail_foreigns ; ?>" class="contact-prefix">
-				</div>
-				<div class="tabinner-detail">
-				<label>Household</label>
-				<input name="household" type="text" value="<?php echo $household ; ?>" class="contact-prefix">
-				</div>
-				<div class="tabinner-detail">
-				<label>NCOA</label>
-				<input name="ncoa" type="text" value="<?php echo $ncoa ; ?>" class="contact-prefix">
 				</div>
 			</div>
 			<div class="newcontacttab-inner">
@@ -374,18 +342,6 @@ require ("connection.php");
 					  <option value="Inkjet Printing">Inkjet Printing</option>
 					  <option value="Glue Dots">Glue Dots</option>
 					</select>
-				</div>
-				<div class="tabinner-detail">
-				<label>Task 1</label>
-				<input name="task1" type="text" value="<?php echo $task1 ; ?>" class="contact-prefix">
-				</div>
-				<div class="tabinner-detail">
-				<label>Task 2</label>
-				<input name="task2" type="text" value="<?php echo $task2 ; ?>" class="contact-prefix">
-				</div>
-				<div class="tabinner-detail">
-				<label>Task 3</label>
-				<input name="task3" type="text" value="<?php echo $task3 ; ?>" class="contact-prefix">
 				</div>
 				
 				<div class="tabinner-detail">

@@ -71,10 +71,10 @@ $count = 1;
 while($prod_row = $result_prod_users->fetch_assoc()){
 	$user = $prod_row['user'];
 	if($count == 1){
-		$sql = $sql . "SELECT * FROM job_ticket INNER JOIN mail_data ON job_ticket.job_id = mail_data.job_id WHERE processed_by = '$user'";
+		$sql = $sql . "SELECT * FROM job_ticket WHERE processed_by = '$user'";
 	}
 	else{
-		$sql = $sql . " UNION SELECT * FROM job_ticket INNER JOIN mail_data ON job_ticket.job_id = mail_data.job_id WHERE processed_by = '$user'";
+		$sql = $sql . " UNION SELECT * FROM job_ticket WHERE processed_by = '$user'";
 	}
 	
 	$count = $count + 1;
@@ -91,8 +91,18 @@ while($row = $job_result->fetch_assoc()){
 		mysqli_query($conn, "UPDATE job_ticket SET priority = '$priority' WHERE job_id = '$job_id'");
 	}
 	if(isset($_POST['assign_to' . $job_count])){
+		$user_name = $_SESSION['user'];
+		date_default_timezone_set('America/New_York');
+		$today = date("Y-m-d G:i:s");
+		$a_p = date("A");
+		$job = "updated job ticket " . $job_id;
 		$user = $_POST['assign_to' . $job_count];
-		mysqli_query($conn, "UPDATE mail_data SET processed_by = '$user' WHERE job_id = '$job_id'");
+		mysqli_query($conn, "UPDATE job_ticket SET processed_by = '$user' WHERE job_id = '$job_id'");
+		$result_processed_by = mysqli_query($conn, "SELECT processed_by FROM job_ticket WHERE job_id = '$job_id'");
+		$row_processed_by = $result_processed_by->fetch_assoc();
+		$processed_by = $row_processed_by['processed_by'];
+		$sql100 = "INSERT INTO timestamp (user,time,job, a_p,processed_by) VALUES ('$user_name', '$today','$job', '$a_p','$processed_by')";
+		$result100 = $conn->query($sql100) or die('Error querying database 101.');
 	}
 	$job_count = $job_count + 1;
 }
@@ -107,7 +117,7 @@ if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
 		
 		$job_id = $row["job_id"];
-		$result1 = mysqli_query($conn, "SELECT records_total, processed_by FROM mail_data WHERE job_id = '$job_id'");
+		$result1 = mysqli_query($conn, "SELECT records_total, processed_by FROM job_ticket WHERE job_id = '$job_id'");
 		$row1 = $result1->fetch_assoc();
 		$records_total = (int)$row1['records_total'];
 		$assigned_to = $row1["processed_by"];
@@ -284,6 +294,12 @@ $conn->close();
 		for(var i = 0; i < hours.length; i++){
 			var efficiency = hours[i] / 40 * 100;
 			var percent = 100 - efficiency;
+			if(percent < 0){
+				percent = 0;
+			}
+			else if(percent > 100){
+				percent = 100;
+			}
 			var leftover = 100 - percent;
 			
 			var color = "#FFFFFF";
@@ -297,7 +313,7 @@ $conn->close();
 				color = "#ffe066";
 				highlight = "#ffe680";
 			}
-			else if(percent > 10){
+			else{
 				color = "#ff4d4d";
 				highlight = "#ff6666";
 			}

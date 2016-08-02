@@ -74,7 +74,7 @@ $conn->close();
 		$result1=mysqli_query($conn,"SELECT * FROM job_ticket WHERE estimate_number != 0  ");
 		$num_rows = mysqli_num_rows($result1);
 
-		$result2=mysqli_query($conn,"SELECT * FROM mail_data WHERE processed_by = ''  ");
+		$result2=mysqli_query($conn,"SELECT * FROM job_ticket WHERE processed_by = ''  ");
 		$num_rows2 = mysqli_num_rows($result2);
 
 		$result3=mysqli_query($conn, "SELECT * FROM users WHERE department = 'Project Management'");
@@ -84,7 +84,7 @@ $conn->close();
 		$count_prod = 0;
 		while($row5 = $result5->fetch_assoc()){
 			$temp = $row5['user'];
-			$result6 = mysqli_query($conn,"SELECT * FROM mail_data WHERE processed_by = '$temp'");
+			$result6 = mysqli_query($conn,"SELECT * FROM job_ticket WHERE processed_by = '$temp'");
 			$num_rows6 = mysqli_num_rows($result6);
 			$count_prod = $count_prod + $num_rows6;
 		}
@@ -97,12 +97,6 @@ $conn->close();
 		
 
 		?>
-		<div style = 'float: right'>
-			<ul>
-				<li style = 'font-size: 11px'>Estimates = Blue</li>
-				<li style = 'font-size: 11px'>New Clients = Purple</li>
-			</ul>
-		</div>
 		<?php
 			$currentMonth = date("m");
 			$currentYear = date("Y");
@@ -142,7 +136,7 @@ $conn->close();
 			while($row3 = $result3->fetch_assoc()){
 				
 				$temp = $row3['user'];
-				$result4 = mysqli_query($conn, "SELECT * FROM mail_data WHERE processed_by = '$temp'");
+				$result4 = mysqli_query($conn, "SELECT * FROM job_ticket WHERE processed_by = '$temp'");
 				$num_rows4 = mysqli_num_rows($result4);
 				$result_name = mysqli_query($conn, "SELECT first_name FROM users WHERE user = '$temp'");
 				$row_name = $result_name->fetch_assoc();
@@ -172,10 +166,10 @@ $conn->close();
 			while($row_prod_users = $result_prod_users->fetch_assoc()){ //get all jobs in production
 				$temp = $row_prod_users['user'];
 				if($count == 1){
-					$sql_prod_jobs = $sql_prod_jobs . "SELECT * FROM mail_data WHERE processed_by = '$temp'";
+					$sql_prod_jobs = $sql_prod_jobs . "SELECT * FROM job_ticket WHERE processed_by = '$temp'";
 				}
 				else{
-					$sql_prod_jobs = $sql_prod_jobs . "UNION SELECT * FROM mail_data WHERE processed_by = '$temp'";
+					$sql_prod_jobs = $sql_prod_jobs . "UNION SELECT * FROM job_ticket WHERE processed_by = '$temp'";
 				}
 				
 				$count = $count + 1;
@@ -203,52 +197,57 @@ $conn->close();
 				$count = $count + 1;
 			}
 			
-			$result_tasks = mysqli_query($conn, $sql_prod_tasks) or die("error 3");
+			$result_tasks = null;
+			
+			if($sql_prod_tasks != ""){
+				$result_tasks = mysqli_query($conn, $sql_prod_tasks) or die("error 3");
+			}
 			$index = 0;
 			
 			//calculate hours
-			
-			while($row_tasks = $result_tasks->fetch_assoc()){
-				$records_total = $records_total_array[$index];
-				$result_data_tasks = mysqli_query($conn, "SELECT * FROM production_data");
-				while($data_tasks = $result_data_tasks->fetch_assoc()){
-					$job_task_array = explode(",", $row_tasks['tasks']);
-					$data_task_array = explode(",", $data_tasks['job']);
-					$data_array = $data_task_array;
-					sort($job_task_array);
-					sort($data_task_array);
-					if($job_task_array == $data_task_array){
-						$records_per_array = explode(",", $data_tasks['records_per']);
-						$time_unit_array = explode(",", $data_tasks['time_unit']);
-						$time_number_array = explode(",", $data_tasks['time_number']);
-						$people_array = explode(",", $data_tasks['people']);
+			if($result_tasks != null){
+				while($row_tasks = $result_tasks->fetch_assoc()){
+					$records_total = $records_total_array[$index];
+					$result_data_tasks = mysqli_query($conn, "SELECT * FROM production_data");
+					while($data_tasks = $result_data_tasks->fetch_assoc()){
+						$job_task_array = explode(",", $row_tasks['tasks']);
+						$data_task_array = explode(",", $data_tasks['job']);
+						$data_array = $data_task_array;
+						sort($job_task_array);
+						sort($data_task_array);
+						if($job_task_array == $data_task_array){
+							$records_per_array = explode(",", $data_tasks['records_per']);
+							$time_unit_array = explode(",", $data_tasks['time_unit']);
+							$time_number_array = explode(",", $data_tasks['time_number']);
+							$people_array = explode(",", $data_tasks['people']);
 
-						for($i = 0; $i < count($time_unit_array); $i++){
-							if((int)$records_per_array[$i] != 0 && (int)$time_number_array[$i] != 0){
-								if($time_unit_array[$i] == "hr."){
-									$add_hours = $records_total / (int)$records_per_array[$i] * (int)$time_number_array[$i] / (int)$people_array[$i];
-									$hours = $hours + $add_hours;
-											
-								}
-								else if($time_unit_array[$i] == "min."){
-											
-									$add_hours = $records_total / (int)$records_per_array[$i] * (int)$time_number_array[$i] / 60 / (int)$people_array[$i];
-									$hours = $hours + $add_hours;
-											
-								}
-								else if($time_unit_array[$i] == "sec."){
-											
-											
-									$add_hours = $records_total / (int)$records_per_array[$i] * (int)$time_number_array[$i] / 3600 / (int)$people_array[$i];
-									$hours = $hours + $add_hours;
-											
+							for($i = 0; $i < count($time_unit_array); $i++){
+								if((int)$records_per_array[$i] != 0 && (int)$time_number_array[$i] != 0){
+									if($time_unit_array[$i] == "hr."){
+										$add_hours = $records_total / (int)$records_per_array[$i] * (int)$time_number_array[$i] / (int)$people_array[$i];
+										$hours = $hours + $add_hours;
+												
+									}
+									else if($time_unit_array[$i] == "min."){
+												
+										$add_hours = $records_total / (int)$records_per_array[$i] * (int)$time_number_array[$i] / 60 / (int)$people_array[$i];
+										$hours = $hours + $add_hours;
+												
+									}
+									else if($time_unit_array[$i] == "sec."){
+												
+												
+										$add_hours = $records_total / (int)$records_per_array[$i] * (int)$time_number_array[$i] / 3600 / (int)$people_array[$i];
+										$hours = $hours + $add_hours;
+												
+									}
 								}
 							}
 						}
 					}
+					
+					$index = $index + 1;
 				}
-				
-				$index = $index + 1;
 			}
 			
 			$hours = (int)$hours;
@@ -261,12 +260,6 @@ $conn->close();
 	</div>
 	<div class="dashboardtop-box fundraising-stats">
 		<div class="dashboardbox-title"><h2>Jobs Closed vs Jobs Invoiced</h2></div>
-		<div style = 'float: right'>
-			<ul>
-				<li>Closed = Green</li>
-				<li>Invoiced = Red</li>
-			</ul>
-		</div>
 		<?php
 			$currentMonth = date("m");
 			$currentYear = date("Y");
@@ -300,7 +293,7 @@ $conn->close();
 <?php
 
 require ("connection.php");
-$result9 = mysqli_query($conn,"SELECT * FROM mail_data WHERE processed_by != ''");
+$result9 = mysqli_query($conn,"SELECT * FROM job_ticket WHERE processed_by != ''");
 
 // all current jobs
 echo " <div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
@@ -475,11 +468,6 @@ for(var i = 0; i < jobs_pm.length; i++){
 		label: names_pm[i]
 	};
 }
-$(".pm_labels").append("<ul>");
-for(var i = 0; i < jobs_pm.length; i++){
-	$(".pm_labels").append("<li style = 'color: " + jobs_pm_colors[i] + "'>" + names_pm[i] + "</li>");
-}
-$(".pm_labels").append("</ul>");
 
 
 var jobs_closed_monthly = <?php echo json_encode($jobs_closed_monthly); ?>;
