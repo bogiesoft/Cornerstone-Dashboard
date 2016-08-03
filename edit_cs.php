@@ -6,7 +6,7 @@ require ("connection.php");
 
 	$temp=$_GET['job_id'];
 	
-	$sql = "SELECT * FROM invoice WHERE job_id = '$temp'"; 
+	$sql = "SELECT * FROM customer_service WHERE job_id = '$temp'"; 
 	$result = mysqli_query($conn,$sql); 
 	
 	

@@ -96,7 +96,7 @@ require ("connection.php");
 				$tasks = $row3['tasks']; 
 		}
 		
-		$sql4 = "SELECT * FROM blue_sheet WHERE job_id = '$job_id'"; 
+		$sql4 = "SELECT * FROM customer_service WHERE job_id = '$job_id'"; 
 		$result4 = mysqli_query($conn,$sql4);
 		if ($result4->num_rows > 0) {
 			$row4 = $result4->fetch_assoc();	

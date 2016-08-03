@@ -99,12 +99,9 @@ if(isset($_POST['submit_form'])){
 	$sql3 = "INSERT INTO production(job_id,hold_postage,postage_paid,print_template,special_address ,delivery,tasks) VALUES ('$job_id', '$hold_postage', '$postage_paid', '$print_template','$special_address','$delivery','$tasks')";
 	$result4 = $conn->query($sql3) or die('Error querying database 3.');
 
-	$sql4 = "INSERT INTO blue_sheet(job_id,completed_date,data_hrs,gd_hrs,initialrec_count,manual,uncorrected,unverifiable,bs_foreigns,bs_exact,loose,
+	$sql4 = "INSERT INTO customer_service(job_id,completed_date,data_hrs,gd_hrs,initialrec_count,manual,uncorrected,unverifiable,bs_foreigns,bs_exact,loose,
 	householded,basic, ncoa_errors,bs_ncoa,final_count,bs_domestic) VALUES ('$job_id','$completed_date','$data_hrs','$gd_hrs','$initialrec_count','$manual','$uncorrected','$unverifiable','$bs_foreigns','$bs_exact','$loose','$householded','$basic','$ncoa_errors','$bs_ncoa','$final_count','$bs_domestic' )";
 	$result5 = $conn->query($sql4) or die('Error querying database 4.');
-
-	$sql5 = "INSERT INTO invoice(job_id) VALUES ('$job_id')";
-	$result6 = $conn->query($sql5) or die('Error querying database 5.');
 
 	$result_processed_by = mysqli_query($conn, "SELECT processed_by FROM job_ticket WHERE job_id = '$job_id'");
 	$row_processed_by = $result_processed_by->fetch_assoc();

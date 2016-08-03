@@ -20,30 +20,54 @@ require ("header.php");
 
 require ("connection.php");
 
-
-
 $result = mysqli_query($conn,"SELECT * FROM users WHERE department = 'Customer Service'");
-
 
 echo " <div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
 echo "<tbody>";
 echo "<tr valign='top'><th class='allcontacts-title'>All Active Jobs<span class='allcontacts-subtitle'></span></th></tr>";
-echo "<tr valign='top'><td colspan='2'><table id = 'customer_s_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='job_id' data-index='0'>Job ID</th><th class='maintable-thtwo data-header' data-name='client_name' data-index='1'>Client Name</th><th class='maintable-thtwo data-header' data-name='project_name' data-index='2'>Job Name</th><th class='maintable-thtwo data-header' data-name='postage' data-index='3'>Postage</th><th class='maintable-thtwo data-header' data-name='invoice_number' data-index='4'>Invoice #</th><th class='maintable-thtwo data-header' data-name='residual_returned' data-index='5'>Residuals Returned</th><th class='maintable-thtwo data-header' data-name='2week_followup' data-index='6'>Follow Up</th><th class='maintable-thtwo data-header' data-name='notes' data-index='7'>Notes</th><th class='maintable-thtwo data-header' data-name='status' data-index='8'>Status</th><th class='maintable-thtwo data-header' data-name='reason' data-index='9'>Reason</th></tr></thead><tbody>";
+echo "<tr valign='top'><td colspan='2'><table id = 'customer_s_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='job_id' data-index='0'>Job ID</th><th class='maintable-thtwo data-header' data-name='client_name' data-index='1'>Client Name</th><th class='maintable-thtwo data-header' data-name='client_name' data-index='2'>Assign To</th><th class='maintable-thtwo data-header' data-name='project_name' data-index='2'>Job Name</th><th class='maintable-thtwo data-header' data-name='postage' data-index='3'>Postage</th><th class='maintable-thtwo data-header' data-name='invoice_number' data-index='4'>Invoice #</th><th class='maintable-thtwo data-header' data-name='residual_returned' data-index='5'>Residuals Returned</th><th class='maintable-thtwo data-header' data-name='2week_followup' data-index='6'>Follow Up</th><th class='maintable-thtwo data-header' data-name='notes' data-index='7'>Notes</th><th class='maintable-thtwo data-header' data-name='status' data-index='8'>Status</th><th class='maintable-thtwo data-header' data-name='reason' data-index='9'>Reason</th></tr></thead><tbody>";
 
 
 if ($result->num_rows > 0) {
     // output data of each row
-	
+	$job_count = 1;
     while($row = $result->fetch_assoc()) {
 		$temp=$row['user'];
 		$result1 = mysqli_query($conn,"SELECT * FROM job_ticket WHERE processed_by = '$temp'");
 		while($row1 = $result1->fetch_assoc()){
+			$job_id = $row1['job_id'];
+			if(isset($_POST['assign_to' . $job_count])){
+				$processed_by = $_POST['assign_to' . $job_count];
+				mysqli_query($conn, "UPDATE job_ticket SET processed_by = '$processed_by' WHERE job_id = '$job_id'");
+			}
 			
 			$foo = $row1['job_id'];
-			$result2 = mysqli_query($conn, "SELECT * FROM invoice WHERE job_id = '$foo'");
+			$result2 = mysqli_query($conn, "SELECT * FROM customer_service WHERE job_id = '$foo'");
 			$row2 = $result2->fetch_assoc();
 			
-			echo "<tr></th><td><a href='edit_cs.php?job_id=$foo'>".$row1["job_id"]."</a></td><td>". $row1["client_name"]. "</td><td>". $row1["project_name"]. "</td><td>".  $row2["postage"]."</td><td>". $row2["invoice_number"]. "</td><td>". $row2["residual_returned"]. "</td><td>". $row2["2week_followup"]."</td><td>". $row2["notes"]. "</td><td>". $row2["status"]. "</td><td>". $row2["reason"]. "</td></tr>";
+			echo "<tr></th><td><a href='edit_cs.php?job_id=$foo'>".$row1["job_id"]."</a></td><td>". $row1["client_name"]. "</td><td>";
+			echo "<form method = 'post' action = ''>";
+			echo "<select name = 'assign_to" . $job_count . "' style = 'font-size: 10px; width: 80px' onchange = 'this.form.submit()'>";
+			$processed_by = $row1['processed_by'];
+			$sql1 = "SELECT first_name, last_name, user FROM users WHERE user = '$processed_by'";
+			$result = mysqli_query($conn, $sql1);
+			if($result->num_rows > 0){
+				$row = $result->fetch_assoc();
+				echo "<option selected = 'selected' value = '" . $row['user'] . "'>" . $row['first_name'] . " " . $row['last_name'] . "</option>";
+			}
+			else{
+				echo "<option selected = 'selected'></option>";
+			}
+				
+			$sql = "SELECT first_name, last_name, user FROM users";
+			$result = mysqli_query($conn, $sql);
+			while($row = $result->fetch_assoc()){
+				echo "<option value = '" . $row['user'] . "'>" . $row['first_name'] . ' ' .  $row['last_name'] . "</option>";
+					
+			}
+			echo "</select></form>";
+			echo "</td><td>". $row1["project_name"]. "</td><td>".  $row2["postage"]."</td><td>". $row2["invoice_number"]. "</td><td>". $row2["residual_returned"]. "</td><td>". $row2["2week_followup"]."</td><td>". $row2["notes"]. "</td><td>". $row2["status"]. "</td><td>". $row2["reason"]. "</td></tr>";
+			$job_count = $job_count + 1;
 		}
     }
 	echo "</tbody></table></td></tr></tbody></table></div>";

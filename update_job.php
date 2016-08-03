@@ -77,7 +77,7 @@ if(isset($_POST['submit_form'])){
 			$sql3 = "UPDATE production SET  hold_postage = '$hold_postage',postage_paid = '$postage_paid',print_template = '$print_template' , special_address = '$special_address',delivery = '$delivery',tasks = '$tasks' WHERE job_id = '$job_id' ";
 			$result3 = $conn->query($sql3) or die('Error querying database 3.');
 			
-			$sql4 = "UPDATE blue_sheet SET  completed_date = '$completed_date',data_hrs = '$data_hrs',gd_hrs = '$gd_hrs',initialrec_count = '$initialrec_count',manual = '$manual',uncorrected = '$uncorrected',unverifiable = '$unverifiable',bs_foreigns = '$bs_foreigns',bs_exact = '$bs_exact',loose = '$loose',householded = '$householded',basic = '$basic',ncoa_errors = '$ncoa_errors',bs_ncoa = '$bs_ncoa',final_count = '$final_count',bs_domestic = '$bs_domestic' WHERE job_id = '$job_id' ";
+			$sql4 = "UPDATE customer_service SET  completed_date = '$completed_date',data_hrs = '$data_hrs',gd_hrs = '$gd_hrs',initialrec_count = '$initialrec_count',manual = '$manual',uncorrected = '$uncorrected',unverifiable = '$unverifiable',bs_foreigns = '$bs_foreigns',bs_exact = '$bs_exact',loose = '$loose',householded = '$householded',basic = '$basic',ncoa_errors = '$ncoa_errors',bs_ncoa = '$bs_ncoa',final_count = '$final_count',bs_domestic = '$bs_domestic' WHERE job_id = '$job_id' ";
 			$result4 = $conn->query($sql4) or die('Error querying database 4.');
 			
 			$result_processed_by = mysqli_query($conn, "SELECT processed_by FROM job_ticket WHERE job_id = '$job_id'");
@@ -102,10 +102,6 @@ else if(isset($_POST['delete_form'])){
 	
 	$sql1 = "DELETE FROM job_ticket WHERE job_id = '$job_id'";
 	mysqli_query($conn, $sql1);
-	$sql1 = "DELETE FROM blue_sheet WHERE job_id = '$job_id'";
-	mysqli_query($conn, $sql1);
-	$sql1 = "DELETE FROM invoice WHERE job_id = '$job_id'";
-	mysqli_query($conn, $sql1);
 	
 	$result_processed_by = mysqli_query($conn, "SELECT processed_by FROM job_ticket WHERE job_id = '$job_id'");
 	$row_processed_by = $result_processed_by->fetch_assoc();
@@ -117,6 +113,8 @@ else if(isset($_POST['delete_form'])){
 	$sql1 = "DELETE FROM project_management WHERE job_id = '$job_id'";
 	mysqli_query($conn, $sql1);
 	$sql1 = "DELETE FROM production WHERE job_id = '$job_id'";
+	mysqli_query($conn, $sql1);
+	$sql1 = "DELETE FROM customer_service WHERE job_id = '$job_id'";
 	mysqli_query($conn, $sql1);
 	$sql1 = "INSERT INTO timestamp (user,time,job, a_p) VALUES ('$user_name', '$today','$job', '$a_p')";
 	mysqli_query($conn, $sql1);
