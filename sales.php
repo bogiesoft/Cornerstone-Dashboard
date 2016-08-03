@@ -42,6 +42,7 @@ ul.tab li a:focus, .active {background-color: #ccc;}
 <div class="dashboard-cont" style="padding-top:110px;">
 <div class="contacts-title">
 	<h1 class="pull-left">Sales</h1>
+	<div><a href="uploadForm.php">upload</a></div>
 	</div>
 <div class="dashboard-detail">
 <div class="newcontacts-tabs">
