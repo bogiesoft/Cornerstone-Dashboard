@@ -109,7 +109,7 @@ if ($result->num_rows > 0) {
 		
 		$job_id = $row["job_id"];
 		$result1 = mysqli_query($conn, "SELECT * FROM job_ticket WHERE job_id = '$job_id'");
-		$result_blue_sheet = mysqli_query($conn, "SELECT * FROM blue_sheet WHERE job_id = '$job_id'");
+		$result_blue_sheet = mysqli_query($conn, "SELECT * FROM customer_service WHERE job_id = '$job_id'");
 		$row_blue_sheet = $result_blue_sheet->fetch_assoc();
 		$row1 = $result1->fetch_assoc();
 		$records_total = (int)$row1['records_total'];
@@ -255,7 +255,7 @@ if ($result->num_rows > 0) {
 					echo "</div><br>";
 				}
 				
-				$result_blue_sheet = mysqli_query($conn, "SELECT * FROM blue_sheet WHERE job_id = '$job_id'");
+				$result_blue_sheet = mysqli_query($conn, "SELECT * FROM customer_service WHERE job_id = '$job_id'");
 				$row_blue_sheet = $result_blue_sheet->fetch_assoc();
 				
 				echo "<div id = 'blue_sheet_inputs' class='vendor-left' style = 'background: " . $color_priority . "; width: 40% '>";
