@@ -122,7 +122,7 @@ if ($result->num_rows > 0) {
 		echo "<div data-role='main' class='ui-content'>";
 			echo "<div class='vendor-left'>";
 				$x = $row["job_id"];
-				echo "<h3><a href='http://localhost/dashboard/edit_job.php?job_id=$x'>".$row["job_id"]."</a></h1>";
+				echo "<h3><a href='http://localhost/Cornerstone-Dashboard/edit_job.php?job_id=$x'>".$row["job_id"]."</a></h1>";
 				echo "<p>Client Name: ".$row["client_name"]."</p>";
 				echo "<p>Project Name: ".$row["project_name"]."</p>";
 			echo "</div>";

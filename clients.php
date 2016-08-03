@@ -23,7 +23,7 @@ require ("header.php");
 
 require ("connection.php");
 
-$result = mysqli_query($conn,"SELECT * FROM client_info");
+$result = mysqli_query($conn,"SELECT * FROM sales WHERE type = 'Client'");
 
 
 echo " <div id = 'table-scroll' class='allcontacts-table'><table id = 'table' border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
@@ -39,7 +39,7 @@ if ($result->num_rows > 0) {
 		
 
 		$foo=$row['client_name'];
-		echo "<tr class = 'hoverTab'><td><a href = 'edit_client.php?client_name=$foo'>".$row["client_name"]."</a></td><td>".  $row["contact_name"]."</td><td>". $row["client_add"]. "</td><td>". $row["contact_phone"]. "</td><td>". $row["contact_email"]."</td><td>". $row["website"]. "</td><td>". $row["category"]. "</td><td>". $row["title"]. "</td></tr>";
+		echo "<tr class = 'hoverTab'><td><a href = 'edit_client.php?client_name=$foo'>".$row["full_name"]."</a></td><td>".  $row["contact_name"]."</td><td>". $row["client_add"]. "</td><td>". $row["contact_phone"]. "</td><td>". $row["contact_email"]."</td><td>". $row["website"]. "</td><td>". $row["category"]. "</td><td>". $row["title"]. "</td></tr>";
     }
 	echo "</tbody></table></td></tr></tbody></table></div>";
 } else {

@@ -23,7 +23,7 @@ $_SESSION['date'] = $today;
 $job = "added new client";
 $today2 = date("Y-m-d");
 
-$check=mysqli_query($conn,"select * from client_info where client_name='$client_name' and client_add='$client_add'");
+$check=mysqli_query($conn,"select * from client_info where (client_name='$client_name' and client_add='$client_add') or client_name = '$client_name'");
     $checkrows=mysqli_num_rows($check);
 
     if ($checkrows>0){
