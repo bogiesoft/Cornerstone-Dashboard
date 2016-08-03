@@ -115,7 +115,6 @@ if(isset($_POST['submit_form'])){
 	archive_jobs.tasks = production.tasks
 	 WHERE archive_jobs.job_id = production.job_id AND production.job_id = '$temp'");
 	$result13 = mysqli_query($conn,"DELETE FROM production WHERE job_id = '$job_id'");
-	$result15 = mysqli_query($conn,"DELETE FROM yellow_sheet WHERE job_id = '$job_id'");
 	$today = date("Y-m-d");
 	$result14 = mysqli_query($conn,"UPDATE archive_jobs SET archive_date = '$today' WHERE job_id = '$job_id'");
 
@@ -138,10 +137,9 @@ if(isset($_POST['delete_form'])){
 	mysqli_query($conn,"DELETE FROM blue_sheet WHERE job_id = '$job_id'")or die("error1");
 	mysqli_query($conn,"DELETE FROM invoice WHERE job_id = '$job_id'")or die("error2");
 	mysqli_query($conn,"DELETE FROM job_ticket WHERE job_id = '$job_id'")or die("error3");
-	mysqli_query($conn,"DELETE FROM mail_data WHERE job_id = '$job_id'")or die("error4");
+	mysqli_query($conn,"DELETE FROM project_management WHERE job_id = '$job_id'")or die("error4");
 	mysqli_query($conn,"DELETE FROM mail_info WHERE job_id = '$job_id'")or die("error5");
 	mysqli_query($conn,"DELETE FROM production WHERE job_id = '$job_id'")or die("error6");
-	mysqli_query($conn,"DELETE FROM yellow_sheet WHERE job_id = '$job_id'")or die("error7");
 	mysqli_query($conn,"DELETE FROM priority_level WHERE job_id = '$job_id'") or die("error8");
 	
 	$conn->close();

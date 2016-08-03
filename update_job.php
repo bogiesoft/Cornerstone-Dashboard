@@ -107,18 +107,16 @@ else if(isset($_POST['delete_form'])){
 	$sql1 = "DELETE FROM invoice WHERE job_id = '$job_id'";
 	mysqli_query($conn, $sql1);
 	
-	$result_processed_by = mysqli_query($conn, "SELECT processed_by FROM mail_data WHERE job_id = '$job_id'");
+	$result_processed_by = mysqli_query($conn, "SELECT processed_by FROM job_ticket WHERE job_id = '$job_id'");
 	$row_processed_by = $result_processed_by->fetch_assoc();
 	$processed_by = $row_processed_by['processed_by'];
 	
 	$sql5 = "INSERT INTO timestamp (user,time,job, a_p,processed_by) VALUES ('$user_name', '$today','$job', '$a_p','$processed_by')";
 	$result5 = $conn->query($sql5) or die('Error querying database 5.');
 	
-	$sql1 = "DELETE FROM mail_data WHERE job_id = '$job_id'";
+	$sql1 = "DELETE FROM project_management WHERE job_id = '$job_id'";
 	mysqli_query($conn, $sql1);
 	$sql1 = "DELETE FROM production WHERE job_id = '$job_id'";
-	mysqli_query($conn, $sql1);
-	$sql1 = "DELETE FROM yellow_sheet WHERE job_id = '$job_id'";
 	mysqli_query($conn, $sql1);
 	$sql1 = "INSERT INTO timestamp (user,time,job, a_p) VALUES ('$user_name', '$today','$job', '$a_p')";
 	mysqli_query($conn, $sql1);

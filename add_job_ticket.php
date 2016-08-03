@@ -113,9 +113,6 @@ if(isset($_POST['submit_form'])){
 	$sql100 = "INSERT INTO timestamp (user,time,job, a_p,processed_by) VALUES ('$user_name', '$today','$job', '$a_p','$processed_by')";
 
 	$result7 = $conn->query($sql100) or die('Error querying database 6.');
-
-	$sql8 = "INSERT INTO yellow_sheet (job_id) VALUES ('$job_id')";
-	$result9= $conn->query($sql8) or die('Error querying database 8.');
 	
 
 	$conn->close();

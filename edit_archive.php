@@ -301,7 +301,7 @@ require ("connection.php");
 			<div class="newcontacttab-inner">
 				<div class="tabinner-detail">
 				<label>Hold Postage</label>
-				<input type="text" name="hold_postage" value="<?php echo $hold_postage ; ?>" class="contact-prefix" >
+				<input type="text" name="hold_postage" value="<?php echo $hold_postage ; ?>" class="contact-prefix">
 				</div>
 				<div class="tabinner-detail">
 				<label>Postage Paid</label>

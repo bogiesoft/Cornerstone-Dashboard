@@ -39,7 +39,7 @@ $clients_added_monthly = array();
 
 //echo CURDATE();
 //Retrieves Jobs for User and Reminders
-$sqlJobs = "SELECT project_name FROM job_ticket INNER JOIN mail_data ON job_ticket.job_id = mail_data.job_id WHERE mail_data.processed_by = '$user'";
+$sqlJobs = "SELECT project_name FROM job_ticket WHERE processed_by = '$user'";
 $resultJobs = mysqli_query($conn, $sqlJobs);
 $num_rows_Jobs = mysqli_num_rows($resultJobs);
 

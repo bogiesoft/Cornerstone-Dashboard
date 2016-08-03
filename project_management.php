@@ -175,7 +175,7 @@ if ($result->num_rows > 0) {
 					
 					array_push($id_array, 'canvas_pm' . $job_count);
 					
-					$result_ys_percent = mysqli_query($conn, "SELECT percent FROM yellow_sheet WHERE job_id = '$job_id'");
+					$result_ys_percent = mysqli_query($conn, "SELECT percent FROM project_management WHERE job_id = '$job_id'");
 					$row_ys_percent = $result_ys_percent->fetch_assoc();
 					array_push($percent_array, $row_ys_percent["percent"]);
 					
