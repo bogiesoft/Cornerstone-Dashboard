@@ -23,13 +23,12 @@ $_SESSION['date'] = $today;
 $job = "added new client";
 $today2 = date("Y-m-d");
 
-$check=mysqli_query($conn,"select * from client_info where client_name='$client_name' and client_add='$client_add'");
+$check=mysqli_query($conn,"SELECT * FROM client_info where (client_name='$client_name' and client_add='$client_add') or client_name = '$client_name'");
     $checkrows=mysqli_num_rows($check);
 
     if ($checkrows>0){
 	   echo '<script>alert("This record has already been added.");
-	   window.location.href = "clients.php";
-	   </script>';  
+	   window.location.href = "clients.php";</script>';
    }
 
 $sql = "INSERT INTO client_info (client_name,client_add,contact_name,contact_phone,contact_email,sec1, website,notes,category,title,date_added) VALUES ('$client_name', '$client_add', '$contact_name', '$contact_phone','$contact_email','$sec1','$website','$notes','$category','$title','$today2')";
