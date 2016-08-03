@@ -20,7 +20,7 @@ if(isset($_POST['submit_form'])){
 	$_SESSION['date'] = $today;
 	$job = $status . " job " . $job_id;
 
-	$sql = "UPDATE invoice SET postage='$postage',invoice_number='$invoice_number',residual_returned='$residual_returned',2week_followup='$week_followup',notes='$notes',status='$status',reason='$reason' WHERE job_id = '$job_id'";
+	$sql = "UPDATE customer_service SET postage='$postage',invoice_number='$invoice_number',residual_returned='$residual_returned',2week_followup='$week_followup',notes='$notes',status='$status',reason='$reason' WHERE job_id = '$job_id'";
 
 	$result0 = $conn->query($sql) or die('Error querying database.');
 
@@ -73,37 +73,37 @@ if(isset($_POST['submit_form'])){
 	 
 	$result7 = mysqli_query($conn,"DELETE FROM materials WHERE job_id = '$job_id'");
 
-	$sql4 = "UPDATE archive_jobs, blue_sheet SET 
-	archive_jobs.completed_date = blue_sheet.completed_date,
-	archive_jobs.data_hrs = blue_sheet.data_hrs,
-	archive_jobs.gd_hrs = blue_sheet.gd_hrs,
-	archive_jobs.initialrec_count = blue_sheet.initialrec_count,
-	archive_jobs.manual = blue_sheet.manual,
-	archive_jobs.uncorrected = blue_sheet.uncorrected,
-	archive_jobs.unverifiable = blue_sheet.unverifiable,
-	archive_jobs.loose = blue_sheet.loose,
-	archive_jobs.householded = blue_sheet.householded,
-	archive_jobs.basic = blue_sheet.basic,
-	archive_jobs.ncoa_errors = blue_sheet.ncoa_errors,
-	archive_jobs.final_count = blue_sheet.final_count,
-	archive_jobs.bs_foreigns = blue_sheet.bs_foreigns,
-	archive_jobs.bs_exact = blue_sheet.bs_exact,
-	archive_jobs.bs_ncoa = blue_sheet.bs_ncoa,
-	archive_jobs.bs_domestic = blue_sheet.bs_domestic
-	 WHERE archive_jobs.job_id = blue_sheet.job_id AND blue_sheet.job_id = '$temp'";
+	$sql4 = "UPDATE archive_jobs, customer_service SET 
+	archive_jobs.completed_date = customer_service.completed_date,
+	archive_jobs.data_hrs = customer_service.data_hrs,
+	archive_jobs.gd_hrs = customer_service.gd_hrs,
+	archive_jobs.initialrec_count = customer_service.initialrec_count,
+	archive_jobs.manual = customer_service.manual,
+	archive_jobs.uncorrected = customer_service.uncorrected,
+	archive_jobs.unverifiable = customer_service.unverifiable,
+	archive_jobs.loose = customer_service.loose,
+	archive_jobs.householded = customer_service.householded,
+	archive_jobs.basic = customer_service.basic,
+	archive_jobs.ncoa_errors = customer_service.ncoa_errors,
+	archive_jobs.final_count = customer_service.final_count,
+	archive_jobs.bs_foreigns = customer_service.bs_foreigns,
+	archive_jobs.bs_exact = customer_service.bs_exact,
+	archive_jobs.bs_ncoa = customer_service.bs_ncoa,
+	archive_jobs.bs_domestic = customer_service.bs_domestic
+	 WHERE archive_jobs.job_id = customer_service.job_id AND customer_service.job_id = '$temp'";
 	 $result8 = $conn->query($sql4) or die('Error querying database 3.');
-	$result9 = mysqli_query($conn,"DELETE FROM blue_sheet WHERE job_id = '$job_id'");
+	$result9 = mysqli_query($conn,"DELETE FROM customer_service WHERE job_id = '$job_id'");
 
-	$result10 = mysqli_query($conn,"UPDATE archive_jobs, invoice SET 
-	archive_jobs.postage = invoice.postage,
-	archive_jobs.invoice_number = invoice.invoice_number,
-	archive_jobs.residual_returned = invoice.residual_returned,
-	archive_jobs.2week_followup = invoice.2week_followup,
-	archive_jobs.notes = invoice.notes,
-	archive_jobs.status = invoice.status,
-	archive_jobs.reason = invoice.reason
-	 WHERE archive_jobs.job_id = invoice.job_id AND invoice.job_id = '$job_id'");
-	$result11 = mysqli_query($conn,"DELETE FROM invoice WHERE job_id = '$job_id'");
+	$result10 = mysqli_query($conn,"UPDATE archive_jobs, customer_service SET 
+	archive_jobs.postage = customer_service.postage,
+	archive_jobs.invoice_number = customer_service.invoice_number,
+	archive_jobs.residual_returned = customer_service.residual_returned,
+	archive_jobs.2week_followup = customer_service.2week_followup,
+	archive_jobs.notes = customer_service.notes,
+	archive_jobs.status = customer_service.status,
+	archive_jobs.reason = customer_service.reason
+	 WHERE archive_jobs.job_id = customer_service.job_id AND customer_service.job_id = '$job_id'");
+	$result11 = mysqli_query($conn,"DELETE FROM customer_service WHERE job_id = '$job_id'");
 
 	$result12 = mysqli_query($conn,"UPDATE archive_jobs, production SET 
 	archive_jobs.hold_postage = production.hold_postage,
@@ -134,13 +134,11 @@ if(isset($_POST['delete_form'])){
 	$a_p = date("A");
 	$job = "deleted job ticket";
 	mysqli_query($conn, "INSERT INTO timestamp (user,time,job, a_p) VALUES ('$user_name', '$today','$job', '$a_p')") or die("error8");
-	mysqli_query($conn,"DELETE FROM blue_sheet WHERE job_id = '$job_id'")or die("error1");
-	mysqli_query($conn,"DELETE FROM invoice WHERE job_id = '$job_id'")or die("error2");
+	mysqli_query($conn,"DELETE FROM customer_service WHERE job_id = '$job_id'")or die("error1");
 	mysqli_query($conn,"DELETE FROM job_ticket WHERE job_id = '$job_id'")or die("error3");
 	mysqli_query($conn,"DELETE FROM project_management WHERE job_id = '$job_id'")or die("error4");
 	mysqli_query($conn,"DELETE FROM mail_info WHERE job_id = '$job_id'")or die("error5");
 	mysqli_query($conn,"DELETE FROM production WHERE job_id = '$job_id'")or die("error6");
-	mysqli_query($conn,"DELETE FROM priority_level WHERE job_id = '$job_id'") or die("error8");
 	
 	$conn->close();
 

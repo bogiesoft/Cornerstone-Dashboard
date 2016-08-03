@@ -49,6 +49,7 @@ $sql="SELECT text FROM reminder WHERE user='$user' and date = CURDATE()  ";
 $result=mysqli_query($conn,$sql);
 
 
+$currentDate_display = date("M Y");
 
 echo "<br><br><h4 style = 'color: #ffffff';>Reminders</h4>";
 
@@ -67,7 +68,7 @@ $conn->close();
 	<div class="dashboard-detail">
 	<div class="dashboard-top">
 	<div class="dashboardtop-box contact-stats">
-		<div class="dashboardbox-title"><h2>Sales - : Estimates and Clients Added</h2></div>
+		<div class="dashboardbox-title"><h2><?php echo "Sales Estimates and Clients Added: " . $currentDate_display; ?></h2></div>
 		<?php
 		require ("connection.php");
 		
@@ -89,7 +90,7 @@ $conn->close();
 			$count_prod = $count_prod + $num_rows6;
 		}
 
-		$result7=mysqli_query($conn,"SELECT * FROM invoice WHERE invoice_number != 0");
+		$result7=mysqli_query($conn,"SELECT * FROM customer_service WHERE invoice_number != 0");
 		$num_rows7 = mysqli_num_rows($result7);
 
 		//$result8=mysqli_query($conn, "SELECT * FROM archive_jobs WHERE status = 'Closed'");
@@ -130,7 +131,7 @@ $conn->close();
 		<!--<h4>Job Tickets in Process: <span><?php echo "$num_rows2"; ?></span></h4> !-->
 	</div>
 	<div id = "project_management_box" class="dashboardtop-box fundraising-stats">
-		<div class="dashboardbox-title"><h2>Project Management - Current: Jobs</h2></div>
+		<div class="dashboardbox-title"><h2>Project Management Current Jobs:</h2></div>
 		<?php
 			require('connection.php');
 			while($row3 = $result3->fetch_assoc()){
@@ -154,7 +155,7 @@ $conn->close();
 		</div>
 	</div>
 	<div class="dashboardtop-box fundraising-stats">
-		<div class="dashboardbox-title"><h2>Production - :</h2></div>
+		<div class="dashboardbox-title"><h2>Weekly Production</h2></div>
 		<h5>Jobs in Production: <span><?php echo "$count_prod \n"; ?></span></h5><br>
 		<h5>Total Manhours:<span id = "manhours"></span></h5>
 		
@@ -259,7 +260,7 @@ $conn->close();
 		</div>
 	</div>
 	<div class="dashboardtop-box fundraising-stats">
-		<div class="dashboardbox-title"><h2>Jobs Closed vs Jobs Invoiced</h2></div>
+		<div class="dashboardbox-title"><h2><?php echo "Customer Service Jobs Closed and Invoiced: " . $currentDate_display;?></h2></div>
 		<?php
 			$currentMonth = date("m");
 			$currentYear = date("Y");
