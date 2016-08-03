@@ -69,7 +69,6 @@ $result = mysqli_query($conn, "SELECT * FROM sales");
 
 echo " <div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
 echo "<tbody>";
-echo "<tr valign='top'><th class='allcontacts-title'>CRM<span class='allcontacts-subtitle'></span></th></tr>";
 echo "<tr valign='top'><td colspan='2'><table id = 'crm_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='job_id' data-index='0'>Name</th><th class='maintable-thtwo data-header' data-name='client_name' data-index='1'>Title</th><th class='maintable-thtwo data-header' data-name='project_name' data-index='2'>Phone#</th><th class='maintable-thtwo data-header' data-name='due_date' data-index='3'>Fax</th><th class='maintable-thtwo data-header' data-name='estimate_number' data-index='4'>Web Address</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='5'>Business</th></tr></thead><tbody>";
 
 if ($result->num_rows > 0) {

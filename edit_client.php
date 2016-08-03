@@ -4,10 +4,12 @@ require ("header.php");
 <?php
 require ("connection.php");
 
-	$temp=$_GET['client_name'];
+	$temp=unserialize($_GET['client_info']);
+	$full_name = $temp[0];
+	$address_line_1 = $temp[1];
 	
-	$sql = "SELECT * FROM client_info WHERE client_name = '$temp'"; 
-	$result = mysqli_query($conn,$sql); 
+	$sql = "SELECT * FROM sales WHERE full_name = '$full_name' AND address_line_1 = '$address_line_1'"; 
+	$result = mysqli_query($conn,$sql) or die("error"); 
 	
 	
 	
@@ -16,22 +18,22 @@ require ("connection.php");
 		$row = $result->fetch_assoc();	
 	
 
-		$client_name = $row["client_name"];
-		$contact_name=$row["contact_name"];
-		$contact_phone=$row["contact_phone"];
-		$contact_email=$row["contact_email"];
-		$website=$row["website"];
-		$category=$row["category"];
+		$full_name = $row["full_name"];
+		$business=$row["business"];
+		$phone=$row["phone"];
+		$email1=$row["email1"];
+		$web_address=$row["web_address"];
+		$source=$row["source"];
 		$title=$row["title"];
 		$notes=$row["notes"];
-		$client_add =$row["client_add"];
-		$sec1 = $row["sec1"];
+		$address_line_1 =$row["address_line_1"];
+		$city = $row["city"];
+		$state = $row["state"];
 		$display = "yes";
 		
 
 }
 if(isset($_POST['delete_form'])){
-	session_start();
 	$user_name = $_SESSION['user'];
 	date_default_timezone_set('America/New_York');
 	$today = date("Y-m-d G:i:s");
@@ -40,7 +42,7 @@ if(isset($_POST['delete_form'])){
 	$sql6 = "INSERT INTO timestamp (user,time,job, a_p) VALUES ('$user_name', '$today','$job', '$a_p')";
 	$result7 = $conn->query($sql6) or die('Error querying database 5.');
 	
-	$sql_delete = "DELETE FROM client_info WHERE '$client_name' = client_name";
+	$sql_delete = "DELETE FROM sales WHERE full_name = '$full_name' AND address_line_1 = '$address_line_1'";
 	mysqli_query($conn, $sql_delete);
 	$conn->close();
 	header("location: clients.php");
@@ -110,34 +112,34 @@ $(document).ready(function(){
 				<div class="newcontacttab-inner">
 					<div class="tabinner-detail">
 					<label>Client Name</label>
-					<input name="client_name" type="text" value="<?php echo $client_name; ?>" class="contact-prefix">
+					<input name="full_name" type="text" value="<?php echo $full_name; ?>" class="contact-prefix">
 					<div class="clear"></div>
 					</div>
 					<div class="tabinner-detail">
-					<label>Contact Name</label>
-					<input name="contact_name" type="text" value="<?php echo $contact_name; ?>" class="contact-prefix">
+					<label>Business</label>
+					<input name="business" type="text" value="<?php echo $business; ?>" class="contact-prefix">
 					<div class="clear"></div>
 					</div>
 					<div class="tabinner-detail">
 					<label>Contact Address</label>
-					<input name="client_add" type="text" value="<?php echo $client_add; ?>" class="contact-prefix">
+					<input name="address_line_1" type="text" value="<?php echo $address_line_1; ?>" class="contact-prefix">
 					<div class="clear"></div>
 					</div>
 					<div class="tabinner-detail">
 					<label>Phone Number</label>
-					<input name="contact_phone" type="text" value="<?php echo $contact_phone; ?>" class="contact-prefix">
+					<input name="phone" type="text" value="<?php echo $phone; ?>" class="contact-prefix">
 					<div class="clear"></div>
 					</div>
 					<div class="tabinner-detail">
 					<label>Email</label>
-					<input name="contact_email" type="text" value="<?php echo $contact_email; ?>" class="contact-prefix">
+					<input name="email1" type="text" value="<?php echo $email1; ?>" class="contact-prefix">
 					<div class="clear"></div>
 					</div>
 				</div>
 				<div class="newcontacttab-inner">
 					<div class="tabinner-detail">
-					<label>Category</label>
-					<input name="category" type="text" value="<?php echo $category; ?>" class="contact-prefix">
+					<label>Source</label>
+					<input name="source" type="text" value="<?php echo $source; ?>" class="contact-prefix">
 					<div class="clear"></div>
 					</div>
 					<div class="tabinner-detail">
@@ -146,13 +148,13 @@ $(document).ready(function(){
 					<div class="clear"></div>
 					</div>
 					<div class="tabinner-detail">
-					<label>Phone Number 2</label>
-					<input name="sec1" type="text" value="<?php echo $sec1; ?>" class="contact-prefix">
+					<label>City</label>
+					<input name="city" type="text" value="<?php echo $city; ?>" class="contact-prefix">
 					<div class="clear"></div>
 					</div>
 					<div class="tabinner-detail">
-					<label>Website</label>
-					<input name="website" type="text" value="<?php echo $website; ?>" class="contact-prefix">
+					<label>State</label>
+					<input name="state" type="text" value="<?php echo $state; ?>" class="contact-prefix">
 					<div class="clear"></div>
 					</div>
 				</div>

@@ -23,20 +23,10 @@ require ("header.php");
 			<div class="newcontactstab-detail">
 			<form action="add_job_ticket.php" method="post">
 				<div class="newclienttab-inner">
-				<?php
-						require ("connection.php");
-						$result = $conn->query("select client_name from client_info");
-						echo("<div class='tabinner-detail'>");
-						echo "<label>Client</label><select name='client_name'>";
-						while ($row = $result->fetch_assoc()) {
-									  unset($client_name);
-									  $client_name = $row['client_name']; 
-									  echo '<option value="'.$client_name.'">'.$client_name.'</option>';
-									 
-						}
-						echo "</select>";
-						echo "</div>";
-						?>
+					<div class="tabinner-detail">
+					<label>Client</label>
+					<input name="client_name" type="text" class="contact-prefix">
+					</div>
 					<div class="tabinner-detail">
 					<label>Job Name</label>
 					<input name="project_name" type="text" class="contact-prefix">

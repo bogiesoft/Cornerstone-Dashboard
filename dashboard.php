@@ -105,7 +105,7 @@ $conn->close();
 			while($count < 5){
 				$date = $currentYear . "-" . $currentMonth;
 				$result1=mysqli_query($conn,"SELECT * FROM archive_jobs WHERE estimate_number != 0 AND archive_date LIKE '%{$date}%'") or die("error");
-				$result2=mysqli_query($conn, "SELECT * FROM client_info WHERE date_added LIKE '%{$date}%'");
+				$result2=mysqli_query($conn, "SELECT * FROM sales WHERE date_added LIKE '%{$date}%'");
 				$estimates = mysqli_num_rows($result1);
 				$clients_added = mysqli_num_rows($result2);
 				array_push($monthly_estimates, $estimates);

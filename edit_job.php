@@ -163,20 +163,8 @@ require ("connection.php");
 			<div class="newcontactstab-detail">
 				<form action="update_job.php" method="post">
 				<div class="tabinner-detail">
-				<label>Client Name</label>
-				<select name = "client_name">
-					<?php
-						echo "<option selected = 'selected'>" . $select_client . "</option>";
-						
-						$sql = "SELECT client_name FROM client_info WHERE client_name != '$select_client'";
-						$result = mysqli_query($conn, $sql);
-						
-						while($row = $result->fetch_assoc())
-						{
-							echo "<option>" . $row['client_name'] . "</option>";
-						}
-					?>
-				</select>
+				<label>Client</label>
+				<input name="client_name" type="text" value="<?php echo $client_name ; ?>" class="contact-prefix">
 				</div>
 				<div class="tabinner-detail">
 				<label>Job Name</label>
