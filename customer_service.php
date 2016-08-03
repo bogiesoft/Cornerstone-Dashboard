@@ -36,7 +36,7 @@ if ($result->num_rows > 0) {
 	
     while($row = $result->fetch_assoc()) {
 		$temp=$row['user'];
-		$result1 = mysqli_query($conn,"SELECT * FROM job_ticket INNER JOIN mail_data ON job_ticket.job_id = mail_data.job_id AND mail_data.processed_by = '$temp'");
+		$result1 = mysqli_query($conn,"SELECT * FROM job_ticket WHERE processed_by = '$temp'");
 		while($row1 = $result1->fetch_assoc()){
 			
 			$foo = $row1['job_id'];

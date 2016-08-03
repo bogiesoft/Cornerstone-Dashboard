@@ -59,42 +59,27 @@ require ("connection.php");
 		$expected_quantity = $row['expected_quantity'];
 		$job_status = $row['job_status'];
 		$display = "yes";
-		
-		$sql1 = "SELECT * FROM mail_info WHERE job_id = '$job_id'"; 
-		$result1 = mysqli_query($conn,$sql1);
-		if ($result1->num_rows > 0) {
-			$row1 = $result1->fetch_assoc();	
-		
-				$mail_class = $row1['mail_class'];
-				$rate = $row1['rate'];
-				$processing_category = $row1['processing_category'];
-				$mail_dim = $row1['mail_dim'];
-				$weights_measures = $row1['weights_measures'];
-				$permit = $row1['permit'];
-				$bmeu = $row1['bmeu'];
-				$based_on = $row1['based_on'];
-				$non_profit_number = $row1['non_profit_number'];
+		$mail_class = $row['mail_class'];
+		$rate = $row['rate'];
+		$processing_category = $row['processing_category'];
+		$mail_dim = $row['mail_dim'];
+		$weights_measures = $row['weights_measures'];
+		$permit = $row['permit'];
+		$bmeu = $row['bmeu'];
+		$based_on = $row['based_on'];
+		$non_profit_number = $row['non_profit_number'];
+		$processed_by = $row['processed_by'];
+		$records_total = $row['records_total'];
 				
-		}
 		
-		$sql2 = "SELECT * FROM mail_data WHERE job_id = '$job_id'"; 
+		$sql2 = "SELECT * FROM project_management WHERE job_id = '$job_id'"; 
 		$result2 = mysqli_query($conn,$sql2);
 		if ($result2->num_rows > 0) {
 			$row2 = $result2->fetch_assoc();	
-		
-				$data_loc = $row2['data_loc'];
-				$records_total = $row2['records_total'];
-				$domestic = $row2['domestic'];
-				$foreigns = $row2['foreigns'];
 				$data_source = $row2['data_source'];
 				$data_received = $row2['data_received'];
 				$data_completed = $row2['data_completed'];
-				$processed_by = $row2['processed_by'];
 				$dqr_sent = $row2['dqr_sent'];
-				$exact = $row2['exact'];
-				$mail_foreigns = $row2['mail_foreigns'];
-				$household = $row2['household'];
-				$ncoa = $row2['ncoa'];
 
 		}
 		
@@ -109,9 +94,6 @@ require ("connection.php");
 				$special_address = $row3['special_address'];
 				$delivery = $row3['delivery'];
 				$tasks = $row3['tasks']; 
-				$task1 = $row3['task1'];
-				$task2 = $row3['task2'];
-				$task3 = $row3['task3'];
 		}
 		
 		$sql4 = "SELECT * FROM blue_sheet WHERE job_id = '$job_id'"; 
@@ -298,22 +280,9 @@ require ("connection.php");
 				<label>Non Profit Number</label>
 				<input name="non_profit_number" type="text" value="<?php echo $non_profit_number ; ?>" class="contact-prefix">
 				</div>
-				
-				<div class="tabinner-detail">
-				<label>Data Location</label>
-				<input type="text" name="data_loc" value="<?php echo $data_loc ; ?>" class="contact-prefix">
-				</div>
 				<div class="tabinner-detail">
 				<label>Records Total</label>
 				<input name="records_total" type="text" value="<?php echo $records_total ; ?>" class="contact-prefix">
-				</div>
-				<div class="tabinner-detail">
-				<label>Domestic</label>
-				<input name="domestic" type="text" value="<?php echo $domestic; ?>" class="contact-prefix">
-				</div>
-				<div class="tabinner-detail">
-				<label>Foreigns</label>
-				<input name="foreigns" type="text" value="<?php echo $foreigns ; ?>" class="contact-prefix">
 				</div>
 				<div class="tabinner-detail">
 				<label>Data Source</label>
@@ -353,23 +322,6 @@ require ("connection.php");
 				<label>DQR Sent</label>
 				<input name="dqr_sent" type="date" value="<?php echo $dqr_sent ; ?>" class="contact-prefix">
 				</div>
-				<div class="tabinner-detail">
-				<label>Exact</label>
-				<input name="exact" type="text" value="<?php echo $exact ; ?>" class="contact-prefix">
-				</div>
-				<div class="tabinner-detail">
-				<label>Mail Foreigns</label>
-				<input name="mail_foreigns" type="text" value="<?php echo $mail_foreigns ; ?>" class="contact-prefix">
-				</div>
-				<div class="tabinner-detail">
-				<label>Household</label>
-				<input name="household" type="text" value="<?php echo $household ; ?>" class="contact-prefix">
-				</div>
-				<div class="tabinner-detail">
-				<label>NCOA</label>
-				<input name="ncoa" type="text" value="<?php echo $ncoa ; ?>" class="contact-prefix">
-				</div>
-				
 				<div class="tabinner-detail">
 				<label>Hold Postage</label>
 				<input type="text" name="hold_postage" value="<?php echo $hold_postage ; ?>" class="contact-prefix" >
@@ -413,18 +365,6 @@ require ("connection.php");
 					  <option value="Inkjet Printing">Inkjet Printing</option>
 					  <option value="Glue Dots">Glue Dots</option>
 					</select>
-				</div>
-				<div class="tabinner-detail">
-				<label>Task 1</label>
-				<input name="task1" type="text" value="<?php echo $task1 ; ?>" class="contact-prefix">
-				</div>
-				<div class="tabinner-detail">
-				<label>Task 2</label>
-				<input name="task2" type="text" value="<?php echo $task2 ; ?>" class="contact-prefix">
-				</div>
-				<div class="tabinner-detail">
-				<label>Task 3</label>
-				<input name="task3" type="text" value="<?php echo $task3 ; ?>" class="contact-prefix">
 				</div>
 				
 				<div class="tabinner-detail">

@@ -62,10 +62,10 @@ $count = 1;
 while($prod_row = $result_prod_users->fetch_assoc()){
 	$user = $prod_row['user'];
 	if($count == 1){
-		$sql = $sql . "SELECT * FROM job_ticket INNER JOIN mail_data ON job_ticket.job_id = mail_data.job_id WHERE processed_by = '$user'";
+		$sql = $sql . "SELECT * FROM job_ticket WHERE processed_by = '$user'";
 	}
 	else{
-		$sql = $sql . " UNION SELECT * FROM job_ticket INNER JOIN mail_data ON job_ticket.job_id = mail_data.job_id WHERE processed_by = '$user'";
+		$sql = $sql . " UNION SELECT * FROM job_ticket WHERE processed_by = '$user'";
 	}
 	
 	$count = $count + 1;
@@ -82,8 +82,18 @@ while($row = $job_result->fetch_assoc()){
 		mysqli_query($conn, "UPDATE job_ticket SET priority = '$priority' WHERE job_id = '$job_id'");
 	}
 	if(isset($_POST['assign_to' . $job_count])){
+		$user_name = $_SESSION['user'];
+		date_default_timezone_set('America/New_York');
+		$today = date("Y-m-d G:i:s");
+		$a_p = date("A");
+		$job = "updated job ticket " . $job_id;
 		$user = $_POST['assign_to' . $job_count];
-		mysqli_query($conn, "UPDATE mail_data SET processed_by = '$user' WHERE job_id = '$job_id'");
+		mysqli_query($conn, "UPDATE job_ticket SET processed_by = '$user' WHERE job_id = '$job_id'");
+		$result_processed_by = mysqli_query($conn, "SELECT processed_by FROM job_ticket WHERE job_id = '$job_id'");
+		$row_processed_by = $result_processed_by->fetch_assoc();
+		$processed_by = $row_processed_by['processed_by'];
+		$sql100 = "INSERT INTO timestamp (user,time,job, a_p,processed_by) VALUES ('$user_name', '$today','$job', '$a_p','$processed_by')";
+		$result100 = $conn->query($sql100) or die('Error querying database 101.');
 	}
 	$job_count = $job_count + 1;
 }
@@ -98,7 +108,9 @@ if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
 		
 		$job_id = $row["job_id"];
-		$result1 = mysqli_query($conn, "SELECT * FROM mail_data WHERE job_id = '$job_id'");
+		$result1 = mysqli_query($conn, "SELECT * FROM job_ticket WHERE job_id = '$job_id'");
+		$result_blue_sheet = mysqli_query($conn, "SELECT * FROM blue_sheet WHERE job_id = '$job_id'");
+		$row_blue_sheet = $result_blue_sheet->fetch_assoc();
 		$row1 = $result1->fetch_assoc();
 		$records_total = (int)$row1['records_total'];
 		$assigned_to = $row1["processed_by"];
@@ -140,10 +152,11 @@ if ($result->num_rows > 0) {
 				echo "</div>";
 				echo "<div class='vendor-right' style = 'background: " . $color_priority . "'>";
 					echo "<p style = 'margin-right: 215px'>Due date: ".$row["due_date"]."</p>";
-					echo "<p class = 'hover_info'>Records total: ".$row1["records_total"]."<span style = 'height: 20px; width: 250px' class = 'tooltiptext'>Foreigns: " . $row1['foreigns'] . ", Domestic: " . $row1['domestic'] . "</span></p>";
+					echo "<p class = 'hover_info'>Records total: ".$row1["records_total"]."<span style = 'height: 20px; width: 250px' class = 'tooltiptext'>Foreigns: " . $row_blue_sheet['bs_foreigns'] . ", Domestic: " . $row_blue_sheet['bs_domestic'] . "</span></p>";
 					$name = $row2["first_name"] . " " . $row2["last_name"];
 					echo "<p style = 'margin-right: 190px'>Assigned to: ".$name."</p><br>";
-					echo "<form style = 'margin-left: 800px;' action = '' method = 'post'><select onchange = 'this.form.submit()' name = 'assign_to" . $job_count . "' style = 'width: 150px'><option selected disabled value = 'None'>--Assign To--</option>";
+					echo "<form style = 'margin-left: 750px;' action = '' method = 'post'><select onchange = 'this.form.submit()' name = 'assign_to" . $job_count . "' style = 'width: 120px'><option selected disabled value = 'None'>--Assign To--</option>";
+					$processed_by = $name;
 					
 					$result_users = mysqli_query($conn, "SELECT user FROM users");
 					while($row_users = $result_users->fetch_assoc()){
@@ -162,7 +175,7 @@ if ($result->num_rows > 0) {
 					
 					array_push($id_array, 'canvas_pm' . $job_count);
 					
-					$result_ys_percent = mysqli_query($conn, "SELECT percent FROM yellow_sheet WHERE job_id = '$job_id'");
+					$result_ys_percent = mysqli_query($conn, "SELECT percent FROM project_management WHERE job_id = '$job_id'");
 					$row_ys_percent = $result_ys_percent->fetch_assoc();
 					array_push($percent_array, $row_ys_percent["percent"]);
 					
@@ -185,7 +198,7 @@ if ($result->num_rows > 0) {
 					echo "<p>Website: ".$row_clients["website"]."</p>";
 				echo "</div><br>";
 				
-				$result_mail_info = mysqli_query($conn, "SELECT * FROM mail_info WHERE job_id = '$job_id'");
+				$result_mail_info = mysqli_query($conn, "SELECT * FROM job_ticket WHERE job_id = '$job_id'");
 				$row_mail_info = $result_mail_info->fetch_assoc();
 				
 				echo "<div class='vendor-left' style = 'background: " . $color_priority . "; '>";
@@ -201,18 +214,20 @@ if ($result->num_rows > 0) {
 					echo "<p>Permit: ".$row_mail_info["permit"]."</p>";
 					echo "<p>Non-Profit: ".$row_mail_info["non_profit_number"]."</p>";
 				echo "</div><br>";
+				$result_pm = mysqli_query($conn, "SELECT * FROM project_management WHERE job_id = '$job_id'");
+				$row_pm = $result_pm->fetch_assoc();
 				echo "<div class='vendor-left' style = 'background: " . $color_priority . "; '>";
 					echo "<h3 style = 'margin-right: 200px'><p><i>Data Info:</i></p></h3>";
-					echo "<p>Source: ".$row1["data_source"]."</p>";
-					echo "<p>Location: ".$row1["data_loc"]."</p>";
-					echo "<p>Processed by: ".$name."</p>";
+					echo "<p>Source: ".$row_pm["data_source"]."</p>";
+					echo "<p>Processed by: ".$processed_by."</p>";
+					echo "<p style = 'visibility:hidden'>   </p>";
 					
 				echo "</div>";
 				echo "<div class='vendor-right' style = 'background: " . $color_priority . "; '>";
 					echo "<p style = 'visibility: hidden;'>Here</p>";
-					echo "<p>Received: ".$row1["data_received"]."</p>";
-					echo "<p>Date complete: ".$row1["data_completed"]."</p>";
-					echo "<p>DQR date: ".$row1["dqr_sent"]."</p>";
+					echo "<p>Received: ".$row_pm["data_received"]."</p>";
+					echo "<p>Date complete: ".$row_pm["data_completed"]."</p>";
+					echo "<p>DQR date: ".$row_pm["dqr_sent"]."</p>";
 				echo "</div><br>";
 				
 				$result_wandm = mysqli_query($conn, "SELECT * FROM materials WHERE job_id = '$job_id'");

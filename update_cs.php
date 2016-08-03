@@ -18,15 +18,18 @@ if(isset($_POST['submit_form'])){
 	$today = date("Y-m-d G:i:s");
 	$a_p = date("A");
 	$_SESSION['date'] = $today;
-	$job = "archived job";
+	$job = $status . " job " . $job_id;
 
 	$sql = "UPDATE invoice SET postage='$postage',invoice_number='$invoice_number',residual_returned='$residual_returned',2week_followup='$week_followup',notes='$notes',status='$status',reason='$reason' WHERE job_id = '$job_id'";
 
 	$result0 = $conn->query($sql) or die('Error querying database.');
 
 	if($status != NULL){
-		
-	$sql100 = "INSERT INTO timestamp (user,time,job, a_p) VALUES ('$user_name', '$today','$job', '$a_p')";
+	
+	$result_processed_by = mysqli_query($conn, "SELECT processed_by FROM job_ticket WHERE job_id = '$job_id'");
+	$row_processed_by = $result_processed_by->fetch_assoc();
+	$processed_by = $row_processed_by['processed_by'];
+	$sql100 = "INSERT INTO timestamp (user,time,job, a_p,processed_by) VALUES ('$user_name', '$today','$job', '$a_p','$processed_by')";
 	$result100 = $conn->query($sql100) or die('Error querying database 101.');
 	
 	$sql3 = "SELECT job_id FROM archive_jobs";
@@ -45,17 +48,14 @@ if(isset($_POST['submit_form'])){
 		$temp = $count + 1;
 	}
 	
-	$sql1 = "INSERT INTO archive_jobs ( job_id,client_name,project_name,ticket_date,due_date,created_by,estimate_number,special_instructions,materials_ordered,materials_expected,expected_quantity,job_status)  SELECT job_id,client_name,project_name,ticket_date,due_date,created_by,estimate_number,special_instructions,materials_ordered,materials_expected,expected_quantity,job_status FROM job_ticket WHERE job_id = '$job_id'";
+	$sql1 = "INSERT INTO archive_jobs ( job_id,processed_by,client_name,project_name,ticket_date,due_date,created_by,estimate_number,special_instructions,materials_ordered,materials_expected,expected_quantity,records_total,job_status, mail_class, rate, processing_category, mail_dim, weights_measures, permit, bmeu, based_on, non_profit_number)  SELECT job_id,processed_by,client_name,project_name,ticket_date,due_date,created_by,estimate_number,special_instructions,materials_ordered,materials_expected,expected_quantity,records_total,job_status, mail_class, rate, processing_category, mail_dim, weights_measures, permit, bmeu, based_on, non_profit_number FROM job_ticket WHERE job_id = '$job_id'";
 	$result = $conn->query($sql1) or die('Error querying database 100.') ;
 	$result1 = mysqli_query($conn,"DELETE FROM job_ticket WHERE job_id = '$job_id'");
 
 
-	$sql2 = "UPDATE archive_jobs, mail_data SET archive_jobs.ncoa = mail_data.ncoa ,archive_jobs.data_loc = mail_data.data_loc ,archive_jobs.records_total = mail_data.records_total ,archive_jobs.domestic = mail_data.domestic ,archive_jobs.foreigns = mail_data.foreigns ,archive_jobs.data_source = mail_data.data_source ,archive_jobs.data_received = mail_data.data_received ,archive_jobs.data_completed = mail_data.data_completed ,archive_jobs.processed_by = mail_data.processed_by ,archive_jobs.dqr_sent = mail_data.dqr_sent ,archive_jobs.exact = mail_data.exact ,archive_jobs.mail_foreigns = mail_data.mail_foreigns ,archive_jobs.household = mail_data.household WHERE archive_jobs.job_id = mail_data.job_id AND mail_data.job_id = '$temp'";	
+	$sql2 = "UPDATE archive_jobs, project_management SET archive_jobs.data_source = project_management.data_source ,archive_jobs.data_received = project_management.data_received ,archive_jobs.data_completed = project_management.data_completed,archive_jobs.dqr_sent = project_management.dqr_sent WHERE archive_jobs.job_id = project_management.job_id AND project_management.job_id = '$temp'";	
 	$result2 = $conn->query($sql2) or die('Error querying database 1.') ;
-	$result3 = mysqli_query($conn,"DELETE FROM mail_data WHERE job_id = '$job_id'");
-
-	$result4 = mysqli_query($conn,"UPDATE archive_jobs, mail_info SET archive_jobs.mail_class = mail_info.mail_class,archive_jobs.rate = mail_info.rate,archive_jobs.processing_category = mail_info.processing_category,archive_jobs.mail_dim = mail_info.mail_dim,archive_jobs.weights_measures = mail_info.weights_measures,archive_jobs.permit = mail_info.permit,archive_jobs.bmeu = mail_info.bmeu,archive_jobs.based_on = mail_info.based_on,archive_jobs.non_profit_number = mail_info.non_profit_number WHERE archive_jobs.job_id = mail_info.job_id AND mail_info.job_id = '$temp'");
-	$result5 = mysqli_query($conn,"DELETE FROM mail_info WHERE job_id = '$job_id'");
+	$result3 = mysqli_query($conn,"DELETE FROM project_management WHERE job_id = '$job_id'");
 
 	$sql3 = "UPDATE archive_jobs, materials SET 
 	archive_jobs.received = materials.received,
@@ -112,13 +112,9 @@ if(isset($_POST['submit_form'])){
 	archive_jobs.special_address = production.special_address,
 	archive_jobs.delivery = production.delivery,
 	archive_jobs.completed = production.completed,
-	archive_jobs.tasks = production.tasks,
-	archive_jobs.task1 = production.task1,
-	archive_jobs.task2 = production.task2,
-	archive_jobs.task3 = production.task3
+	archive_jobs.tasks = production.tasks
 	 WHERE archive_jobs.job_id = production.job_id AND production.job_id = '$temp'");
 	$result13 = mysqli_query($conn,"DELETE FROM production WHERE job_id = '$job_id'");
-	$result15 = mysqli_query($conn,"DELETE FROM yellow_sheet WHERE job_id = '$job_id'");
 	$today = date("Y-m-d");
 	$result14 = mysqli_query($conn,"UPDATE archive_jobs SET archive_date = '$today' WHERE job_id = '$job_id'");
 
@@ -141,10 +137,9 @@ if(isset($_POST['delete_form'])){
 	mysqli_query($conn,"DELETE FROM blue_sheet WHERE job_id = '$job_id'")or die("error1");
 	mysqli_query($conn,"DELETE FROM invoice WHERE job_id = '$job_id'")or die("error2");
 	mysqli_query($conn,"DELETE FROM job_ticket WHERE job_id = '$job_id'")or die("error3");
-	mysqli_query($conn,"DELETE FROM mail_data WHERE job_id = '$job_id'")or die("error4");
+	mysqli_query($conn,"DELETE FROM project_management WHERE job_id = '$job_id'")or die("error4");
 	mysqli_query($conn,"DELETE FROM mail_info WHERE job_id = '$job_id'")or die("error5");
 	mysqli_query($conn,"DELETE FROM production WHERE job_id = '$job_id'")or die("error6");
-	mysqli_query($conn,"DELETE FROM yellow_sheet WHERE job_id = '$job_id'")or die("error7");
 	mysqli_query($conn,"DELETE FROM priority_level WHERE job_id = '$job_id'") or die("error8");
 	
 	$conn->close();

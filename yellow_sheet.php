@@ -9,36 +9,36 @@ if(isset($_POST['submit_form'])){
 	while($count <= 14){
 		$went_up = FALSE;
 		if(isset($_POST[$count])){
-			mysqli_query($conn, "UPDATE yellow_sheet SET `" . $count . "` = 1 WHERE job_id = '$job_id'");
+			mysqli_query($conn, "UPDATE project_management SET `" . $count . "` = 1 WHERE job_id = '$job_id'");
 			$check_count = $check_count + 1;
 			$went_up = TRUE;
 		}
 		else{
-			mysqli_query($conn, "UPDATE yellow_sheet SET `" . $count . "` = 0 WHERE job_id = '$job_id'");
+			mysqli_query($conn, "UPDATE project_management SET `" . $count . "` = 0 WHERE job_id = '$job_id'");
 		}
 		
 		if(isset($_POST['na_' . $count])){
-			mysqli_query($conn, "UPDATE yellow_sheet SET na_" . $count . " = 1 WHERE job_id = '$job_id'");
-			mysqli_query($conn, "UPDATE yellow_sheet SET `" . $count . "` = 0 WHERE job_id = '$job_id'");
+			mysqli_query($conn, "UPDATE project_management SET na_" . $count . " = 1 WHERE job_id = '$job_id'");
+			mysqli_query($conn, "UPDATE project_management SET `" . $count . "` = 0 WHERE job_id = '$job_id'");
 			$max = $max - 1;
 			if($went_up == TRUE){
 				$check_count = $check_count - 1;
 			}
 		}
 		else{
-			mysqli_query($conn, "UPDATE yellow_sheet SET na_" . $count . " = 0 WHERE job_id = '$job_id'");
+			mysqli_query($conn, "UPDATE project_management SET na_" . $count . " = 0 WHERE job_id = '$job_id'");
 		}
 		$count = $count + 1;
 	}
 	
 	$percent = (int)($check_count / $max * 100);
 	
-	mysqli_query($conn, "UPDATE yellow_sheet SET percent = '$percent' WHERE job_id = '$job_id'") or die("error");
+	mysqli_query($conn, "UPDATE project_management SET percent = '$percent' WHERE job_id = '$job_id'") or die("error");
 	header("location: project_management.php");
 }
 $job_id = $_GET['job_id'];
 $_SESSION['yellow_sheet_job_id'] = $job_id;
-$result = mysqli_query($conn, "SELECT * FROM yellow_sheet WHERE job_id = '$job_id'");
+$result = mysqli_query($conn, "SELECT * FROM project_management WHERE job_id = '$job_id'");
 $row = $result->fetch_assoc();
 ?>
 
