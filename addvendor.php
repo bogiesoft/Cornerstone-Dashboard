@@ -1,5 +1,5 @@
 <?php
-
+//delete this line if you want
 require ("connection.php");
 
 
