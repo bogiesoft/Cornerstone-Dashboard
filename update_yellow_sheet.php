@@ -32,6 +32,6 @@ $result = $conn->query($sql) or die('Error querying database 0.');
 //, 2 = $_POST[2], 3 = '$_POST['3']', 4 = '$_POST['4']', 5 = '$_POST['5']', 6 = '$_POST['6']', 7 = '$_POST['7']', 8 = '$_POST['8']', 9 = '$_POST['9']', 10 = '$_POST['10']', 11 = '$_POST['11']', 12 = '$_POST['12']', 13 = '$_POST['13']', 14 = '$_POST['14']'
 
 $conn->close();
-header("location: http://localhost/crst_dashboard/project_management.php ");
+header("location: project_management.php ");
 exit();
 ?>
