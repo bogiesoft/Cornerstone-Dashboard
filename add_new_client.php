@@ -36,6 +36,7 @@ $check=mysqli_query($conn,"select * from sales where (full_name='$full_name' and
 	   window.location.href = "clients.php";
 	   </script>';  
    }
+   
    else{
 	   $sql = "INSERT INTO sales (full_name,address_line_1,business,phone,cell_phone,city,state,zipcode,source,second_contact,rep,title,fax,web_address,notes,type,date_added) VALUES ('$full_name', '$address_line_1', '$business', '$phone','$cell_phone','$city','$state','$zipcode','$source','$second_contact','$rep', '$title', '$fax', '$web_address', '$notes', 'Client', '$today2')";
 		$result = $conn->query($sql) or die('error');
