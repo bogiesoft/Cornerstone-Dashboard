@@ -34,7 +34,7 @@ else{
 	mysqli_query($conn, $sql);
 	
 	$conn->close();
-	header("location: http://localhost/crst_dashboard/documentation.php ");
+	header("location: documentation.php ");
 	exit();
 }
 ?>

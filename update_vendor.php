@@ -34,7 +34,7 @@ if(isset($_POST['submit_form'])){
 	 
 	$conn->close();
 
-	header("location: http://localhost/crst_dashboard/vendors.php ");
+	header("location: vendors.php ");
 
 	exit();
 }
