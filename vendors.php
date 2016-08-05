@@ -38,7 +38,7 @@ if ($result->num_rows > 0) {
 		echo "<div data-role='main' class='ui-content'>";
 			echo "<div class='vendor-left'>";
 				$x = $row["vendor_name"];
-				echo "<h3><a href='http://localhost/crst_dashboard/search_vendor.php?vendor_name=$x'>".$row["vendor_name"]."</a></h1>";
+				echo "<h3><a href='http://localhost/Cornerstone-Dashboard/search_vendor.php?vendor_name=$x'>".$row["vendor_name"]."</a></h1>";
 				echo "<p>Contact Name: ".$row["vendor_contact"]."</p>";
 				echo "<p>Address: ".$row["vendor_add"]."</p>";
 			echo "</div>";
