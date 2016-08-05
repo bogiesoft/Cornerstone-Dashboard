@@ -49,7 +49,7 @@ require ("header.php");
 							 
 							$conn->close();
 
-							header("location: http://localhost/crst_dashboard/vendors.php ");
+							header("location: vendors.php ");
 
 							exit();
 						}
@@ -65,7 +65,7 @@ require ("header.php");
 							$sql_delete = "DELETE FROM vendors WHERE '$vendor_name' = vendor_name";
 							mysqli_query($conn, $sql_delete);
 							$conn->close();
-							header("location: http://localhost/crst_dashboard/vendors.php");
+							header("location: vendors.php");
 							exit();
 						}
 
@@ -125,7 +125,7 @@ require ("header.php");
 			</div>
 				<div class="newcontact-tabbtm">
 					<input class="save-btn" type="submit" value="Save" name="submit_form" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
-					<input class="save-btn" type = "submit" value = "Delete" name = "delete_form" onClick = "return confirm('Are you sure you want to delete vendor?')" style="width:200px; font-size:16px; background-color:#d14700; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px; float:left">
+					<input class="save-btn delete-btn" type = "submit" value = "Delete" name = "delete_form" style="width:200px; font-size:16px; background-color:#d14700; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px; float:left">
 				</div>
 			</form>
 			</div>
