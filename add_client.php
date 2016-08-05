@@ -22,34 +22,61 @@ require ("header.php");
 				<div class="newcontacttab-inner">
 					<div class="tabinner-detail">
 					<label>Client Name</label>
-					<input name="client_name" type="text" class="contact-prefix">
+					<input name="full_name" type="text" class="contact-prefix">
 					<div class="clear"></div>
 					</div>
 					<div class="tabinner-detail">
-					<label>Contact Name</label>
-					<input name="contact_name" type="text" class="contact-prefix">
+					<label>Business</label>
+					<input name="business" type="text" class="contact-prefix">
 					<div class="clear"></div>
 					</div>
 					<div class="tabinner-detail">
 					<label>Contact Address</label>
-					<input name="client_add" type="text" class="contact-prefix">
+					<input name="address_line_1" type="text" class="contact-prefix">
 					<div class="clear"></div>
 					</div>
 					<div class="tabinner-detail">
 					<label>Phone Number</label>
-					<input name="contact_phone" type="text" class="contact-prefix">
+					<input name="phone" type="text" class="contact-prefix">
 					<div class="clear"></div>
 					</div>
 					<div class="tabinner-detail">
-					<label>Email</label>
-					<input name="contact_email" type="text" class="contact-prefix">
+					<label>Cell Phone</label>
+					<input name="cell_phone" type="text" class="contact-prefix">
 					<div class="clear"></div>
 					</div>
 				</div>
 				<div class="newcontacttab-inner">
 					<div class="tabinner-detail">
-					<label>Category</label>
-					<input name="category" type="text" class="contact-prefix">
+					<label>City</label>
+					<input name="city" type="text" class="contact-prefix">
+					<div class="clear"></div>
+					</div>
+					<div class="tabinner-detail">
+					<label>State</label>
+					<input name="state" type="text" class="contact-prefix">
+					<div class="clear"></div>
+					</div>
+					<div class="tabinner-detail">
+					<label>Zip</label>
+					<input name="zipcode" type="text" class="contact-prefix">
+					<div class="clear"></div>
+					</div>
+					<div class="tabinner-detail">
+					<label>Source</label>
+					<input name="source" type="text" class="contact-prefix">
+					<div class="clear"></div>
+					</div>
+					<div class="tabinner-detail">
+					<label>Second Contact</label>
+					<input name="second_contact" type="text" class="contact-prefix">
+					<div class="clear"></div>
+					</div>
+				</div>
+				<div class="newcontacttab-inner">
+					<div class="tabinner-detail">
+					<label>REP</label>
+					<input name="rep" type="text" class="contact-prefix">
 					<div class="clear"></div>
 					</div>
 					<div class="tabinner-detail">
@@ -58,13 +85,13 @@ require ("header.php");
 					<div class="clear"></div>
 					</div>
 					<div class="tabinner-detail">
-					<label>Phone Number 2</label>
-					<input name="sec1" type="text" class="contact-prefix">
+					<label>Fax</label>
+					<input name="fax" type="text" class="contact-prefix">
 					<div class="clear"></div>
 					</div>
 					<div class="tabinner-detail">
 					<label>Website</label>
-					<input name="website" type="text" class="contact-prefix">
+					<input name="web_address" type="text" class="contact-prefix">
 					<div class="clear"></div>
 					</div>
 				</div>
