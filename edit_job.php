@@ -162,7 +162,7 @@ require ("connection.php");
 		<div class="tab-content">
 			<div role="tabpanel" class="tab-pane active" id="home">
 			<div class="newcontactstab-detail">
-				<form id="job-form" action="update_job.php" method="post">
+				<form action="update_job.php" method="post">
 				<div class="tabinner-detail">
 				<label>Client Name</label>
 				<select name = "client_name">
@@ -439,7 +439,7 @@ require ("connection.php");
 				</div>
 				</div>
 				<div class="newcontact-tabbtm">
-					<input class="save-btn" type="submit" value="Save" name="submit_form" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
+					<input class="save-btn store-btn" type="submit" value="Save" name="submit_form" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
 					<input class="save-btn delete-btn" type = "submit" value = "Delete" name = "delete_form" style="width:200px; font-size:16px; background-color:#d14700; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px; float:left">
 					<input type="button" class="save-btn" value="Print" onclick="PrintElem('.dashboard-cont')" style="width:200px; font-size:16px; background-color:black; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px; float:right"/>
 				</div>
