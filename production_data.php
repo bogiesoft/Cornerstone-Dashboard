@@ -42,12 +42,12 @@ require('header.php');
 </select><br><br>
 <p id = "error" style = "color: red;"></p>
 </div><br>
-<h1><progress id = "progress_bar" value = "1" max = "250" style = "background-color: red"></progress></h1><br>
+<h1><progress id = "progress_bar" value = "0" max = "40" style = "background-color: red"></progress></h1><br>
 <h2 id = "display_time">Hours: 0</h2><br>
 <h2 id = "eff">Efficiency: </h2><br>
 <input type = "submit" value = "Save Data"></input>
 </form>
-<button type = "button" onclick = "changeBar();">Submit Data</button><button type = "button" onclick = "addTask();">Add Task</button><br><br><br>
+<button type = "button" onclick = "changeBar();">Submit Data</button><button type = "button" onclick = "addTask();">Add Task</button><button type = "button" onclick = "removeTask();">Remove Task</button><br><br><br>
 <div class="contacts-title">
 	<h1 class="pull-left">Production Time Data</h1>
 	</div>
@@ -298,24 +298,24 @@ function nextPage(){
 	var Task = 2;
 	
 	function addTask(){
-		$(".prod_info").append("<h1>Task " + Task + ":</h1><label style = 'float: left;'>Time/Unit</label> &nbsp; <input name = 'time_number" + count + "' type = 'text' id = 'time_number" + count + "' style = 'float: left; width: 40px; font-size = 18px;' value = '1'> &nbsp; </input><select style = 'float: left;' name = 'time_unit" + count + "' id = 'time_unit" + count + "'><option>min.</option><option>sec.</option><option>hr.</option></select> <label style = 'float: left;'>Records Complete in Time<label> &nbsp; <input name = 'per_rec" + count + "' type = 'text' id = 'per_rec" + count + "' style = 'float: left; width: 40px' value = '1'></input> &nbsp; &nbsp;");
-		$(".prod_info").append("&nbsp;<label style = 'float:left'>Number of People</label> &nbsp;<select style = 'float:left;' name = 'people" + count + "' id = 'people" + count + "'>");
+		$(".prod_info").append("<div class = 'new_task" + count + "'><h1>Task " + Task + ":</h1><label style = 'float: left;'>Time/Unit</label> &nbsp; <input name = 'time_number" + count + "' type = 'text' id = 'time_number" + count + "' style = 'float: left; width: 40px; font-size = 18px;' value = '1'> &nbsp; </input><select style = 'float: left;' name = 'time_unit" + count + "' id = 'time_unit" + count + "'><option>min.</option><option>sec.</option><option>hr.</option></select> <label style = 'float: left;'>Records Complete in Time<label> &nbsp; <input name = 'per_rec" + count + "' type = 'text' id = 'per_rec" + count + "' style = 'float: left; width: 40px' value = '1'></input> &nbsp; &nbsp;&nbsp;<label style = 'float:left'>Number of People</label> &nbsp;<select style = 'float:left;' name = 'people" + count + "' id = 'people" + count + "'></select>&nbsp; <label style = 'float: left;'>Job</label> &nbsp; <select style = 'float: left;width: 200px;' name = 'job" + count + "' id = 'job" + count + "'></select><br><p id = 'error" + count + "' style = 'color:red;'></p></div>");
+		//$(".prod_info").append("&nbsp;<label style = 'float:left'>Number of People</label> &nbsp;<select style = 'float:left;' name = 'people" + count + "' id = 'people" + count + "'>");
 		for (var i = 1; i <= 10; i++){
 			var opt = document.createElement('option');
 			opt.value = i;
 			opt.innerHTML = i;
 			document.getElementById("people" + count).appendChild(opt);
 		}
-		$(".prod_info").append("</select>");
-		$(".prod_info").append("&nbsp; <label style = 'float: left;'>Job</label> &nbsp; <select style = 'float: left;width: 200px;' name = 'job" + count + "' id = 'job" + count + "'>");
+		//$(".prod_info").append("</select>");
+		//$(".prod_info").append("&nbsp; <label style = 'float: left;'>Job</label> &nbsp; <select style = 'float: left;width: 200px;' name = 'job" + count + "' id = 'job" + count + "'>");
 		for(var i = 0; i < jobList.length; i++){
 			var opt = document.createElement('option');
 			opt.value = jobList[i];
 			opt.innerHTML = jobList[i];
 			document.getElementById("job" + count).appendChild(opt);
 		}
-		$(".prod_info").append("</select><br>");
-		$(".prod_info").append("<p id = 'error" + count + "' style = 'color:red;'></p><br>");
+		//$(".prod_info").append("</select><br>");
+		//$(".prod_info").append("<p id = 'error" + count + "' style = 'color:red;'></p><br>");
 		time_number.push("time_number" + count);
 		time_unit.push("time_unit" + count);
 		recs_comp.push("per_rec" + count);
@@ -407,20 +407,14 @@ function nextPage(){
 					totalCalculation = totalCalculation + calculation;
 				}
 			}
-			
-		}
-		
-		if(!error){
-		
-			bar.value = 250.0 - totalCalculation;
+			bar.value = 40 - totalCalculation;
 			displayTime.innerHTML = "Hours: " + totalCalculation;
-			
-			if(totalCalculation <= 50)
+			if(totalCalculation <= 12)
 			{
 				displayEff.innerHTML = "Efficiency: High";
 				displayEff.style.color = "green";
 			}
-			else if(totalCalculation <= 150)
+			else if(totalCalculation <= 36)
 			{
 				displayEff.innerHTML = "Efficiency: Medium";
 				displayEff.style.color = "orange";
@@ -431,6 +425,17 @@ function nextPage(){
 				displayEff.style.color = "red";
 			}
 		}
+}
+function removeTask(){
+	count = count - 1;
+	Task = Task - 1;
+	if(count != 0){
+		$(".new_task" + count).remove();
+	}
+	else{
+		count = count + 1;
+		Task = Task + 1;
+	}
 }
 </script>
 

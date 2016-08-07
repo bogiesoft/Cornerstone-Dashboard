@@ -2,14 +2,6 @@
 	require("header.php");
 ?>
 <style>
-	#svg circle {
-  transition: stroke-dashoffset 1s linear;
-  stroke: #666;
-  stroke-width: 1em;
-}
-#svg #bar {
-  stroke: #FF9F1E;
-}
 #cont {
   display: block;
   height: 200px;
@@ -75,7 +67,7 @@ input { border: 1px solid #666; background: #333; color: #fff; padding: 0.5em; b
 	echo "<div data-role='main' class='ui-content'>";
 			echo "<div class='vendor-left'>";
 				$x = $job_id;
-				echo "<h3><a href='http://localhost/crst_dashboard/edit_job.php?job_id=$x'>".$row2["project_name"]."</a></h1>";
+				echo "<h3><a href='edit_job.php?job_id=$x'>".$row2["project_name"]."</a></h1>";
 				echo "<p>Total Records: ".$row1["records_total"]."</p>";
 				echo "<p>Due Date: ".$row2["due_date"]."</p>";
 			echo "</div>";
@@ -117,10 +109,10 @@ input { border: 1px solid #666; background: #333; color: #fff; padding: 0.5em; b
 		if($production_tasks_array2 == $job_tasks_array && $sameSize == TRUE){
 			echo "<h1>Data</h1>";
 			if($count == 1 && count($production_tasks_array2) > 1){
-				echo "<h1 style = 'float: right; margin-top: -70px'>Efficiency</h1>";
+				echo "<h1 style = 'float: right; margin-top: -100px'>Efficiency</h1>";
 			}
 			else if($count == 1 && count($production_tasks_array2) == 1){
-				echo "<h1 style = 'float: right; margin-top: -100px'>Efficiency</h1>";
+				echo "<h1 style = 'float: right; margin-top: -130px'>Efficiency</h1>";
 			}
 			$records_per_array = explode(",", $row2['records_per']);
 			$time_unit_array = explode(",", $row2['time_unit']);
@@ -194,42 +186,30 @@ input { border: 1px solid #666; background: #333; color: #fff; padding: 0.5em; b
 			echo "<li style = 'margin-left: 75px'><h2 value = '" . $hours . "'>Total Hours: " . $hours . "</h2></li>";
 			$efficiency = "High";
 			$color = "#FFFFFF";
-			if($hours < 50){
+			if($hours <= 12){
 				$efficiency = "High";
-				$color = "#349F1E";
 			}
-			else if($hours < 150){
+			else if($hours <= 24){
 				$efficiency = "Medium";
-				$color = "#FF9F1E";
 			}
 			else{
 				$efficiency = "Low";
-				$color = "#FF4000";
 			}
 			echo "<li style = 'margin-left: 75px'><h2>Efficiency: " . $efficiency . "</h2></li>";
 			
-			$hours2 = $hours + 50;
-				
-			$percent = (int)(100 - (($hours2 / 568.48) * 100));
-			if($percent > 100){
+			$percent = (int)($hours/40 * 100);
+			$efficiency = 100 - $percent;
+
+			if($efficiency > 100){
 				$percent = 100;
-				$hours2 = 0;
 			}
-			if($percent < 0){
+			if($efficiency < 0){
 				$percent = 0;
-				$hours2 = 568.48;
 			}
-			if($hours < 1){
-				$percent = 100;
-				$hours2 = 0;
-			}
-				
-			echo "<li style = 'margin-left: -250px; margin-top: -200px; float: right'><div id='cont' data-pct='" . $percent . "'>
-			<svg id='svg' width='200' height='200' viewPort='0 0 100 100' version='1.1' xmlns='http://www.w3.org/2000/svg'>
-			<circle r='90' cx='100' cy='100' fill='transparent' stroke-dasharray='565.48' stroke-dashoffset='0'></circle>
-			<circle style = 'stroke: " . $color . "' id='bar' r='90' cx='100' cy='100' fill='transparent' stroke-dasharray='565.48' stroke-dashoffset='" . $hours2 . "'></circle>
-			</svg>
-			</div></li>";
+			echo "
+					<li><div id='canvas-holder' style = 'width: 15%; float: right; margin-top:-200px'>
+						<canvas id='canvas_prod' width='1' height='1'/>
+					</div></li>";
 			echo "</ul><br><br><br>";
 			$count = $count + 1;
 		}
@@ -241,5 +221,47 @@ input { border: 1px solid #666; background: #333; color: #fff; padding: 0.5em; b
 ?>
 </div>
 <script>
+var percent = <?php echo json_encode($efficiency); ?>;
+	if(percent > 100){
+		percent = 100;
+	}
+	else if(percent < 0){
+		percent = 0;
+	}
+	var toDo = 100 - percent;
+	var color = "#FFFFFF";
+	var highlight = "#FFFFFF";
+	
+	if(percent > 70){
+		color = "#80ff80";
+		highlight = "#99ff99";
+	}
+	else if(percent > 40){
+		color = "#ffe066";
+		highlight = "#ffe680";
+	}
+	else{
+		color = "#ff4d4d";
+		highlight = "#ff6666";
+	}
+	
+	var doughnutData = [
+					{
+						value: toDo,
+						color: "#d9d9d9",
+						highlight: "#d9d9d9",
+						label: "%Leftover"
+					},
+					{
+						value: percent,
+						color: color,
+						highlight: highlight,
+						label: "%Efficiency"
+					}
+				];
 
+window.onload = function(){
+	var ctx = document.getElementById("canvas_prod").getContext("2d");
+	window.myDoughnut = new Chart(ctx).Doughnut(doughnutData, {responsive : true});
+};
 </script>
