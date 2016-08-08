@@ -7,17 +7,11 @@ require ("header.php");
 	<a class="pull-right" href="add_client.php" class="add_button">Add Client</a>
 	</div>
 <div class="dashboard-detail">
-	<div class="search-cont">
+<div class="search-cont">
 	<div class="searchcont-detail">
 		<div class="search-boxleft">
 				<label>Quick Search</label>
 				<input id="search" name="frmSearch" type="text" placeholder="Search for a specific client">
-				<div class="contacts-title">
-				<a id = 'advanced_search_button' class="pull-right" href="#" class="add_button" onclick = 'addField()'>Advanced Search</a>
-				</div>
-		<form class = 'advanced_search_area' action = 'advanced_search_clients.php' method = 'post'>
-		<input id = 'advanced_search_submit' style = 'display: none' type = 'submit' name = 'submit_form_advanced'>
-		</form>
 		</div>
 	</div>
 	</div>
@@ -29,7 +23,18 @@ require ("header.php");
 
 require ("connection.php");
 
-$result = mysqli_query($conn,"SELECT * FROM sales WHERE type = 'Client'");
+$sql = "SELECT * FROM sales WHERE type = 'Client'";
+
+if(isset($_POST['state'])){
+	$state = $_POST['state'];
+	$sql = $sql . " AND state LIKE '%{$state}%'";
+}
+if(isset($_POST['city'])){
+	$city = $_POST['city'];
+	$sql = $sql . " AND city LIKE '%{$city}%'";
+}
+
+$result = mysqli_query($conn,$sql);
 
 
 echo " <div id = 'table-scroll' class='allcontacts-table'><table id = 'table' border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
@@ -93,47 +98,6 @@ $conn->close();
 <script type="text/javascript" src="jquery-latest.js"></script> 
 <script type="text/javascript" src="jquery.tablesorter.js"></script> 
 <script>
-var fields = [false, false];
-
-function addField(){
-	for(var i = 0; i < fields.length; i++){
-		var fieldCount = i + 1;
-		if(fields[i] == false && i == 0){
-			$(".advanced_search_area").append("<div class = 'field" + fieldCount + "'><input name = 'state' type = 'text' placeholder = 'Enter state'><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeField('.field" + fieldCount + "')></div>");
-			document.getElementById("advanced_search_button").innerHTML = "Add Field";
-			document.getElementById("advanced_search_submit").style.display = "block";
-			fields[i] = true;
-			break;
-		}
-		else if(fields[i] == false && i == 1){
-			$(".advanced_search_area").append("<div class = 'field" + fieldCount + "'><input name = 'city' type = 'text' placeholder = 'Enter city'><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeField('.field" + fieldCount + "')></div>");
-			fields[i] = true;
-			break;
-		}
-	}
-}
-function removeField(x){
-	for(var i = 0; i < fields.length; i++){
-		var number = i + 1;
-		if(x == ".field" + number){
-			$(x).remove();
-			fields[i] = false;
-			break;
-		}
-	}
-	
-	var allFalse = true;
-	for(var i = 0; i < fields.length; i++){
-		if(fields[i] == true){
-			allFalse = false;
-		}
-	}
-	
-	if(allFalse == true){
-		document.getElementById("advanced_search_button").innerHTML = "Advanced Search";
-		document.getElementById("advanced_search_submit").style.display = "none";
-	}
-}
 var numPerPage = 10;
 var subtractValue = 3;
 var prevSubValue = 4;
@@ -296,9 +260,3 @@ function nextPage(){
 	}
 }
 </script>
-
-	
-
-	
-
-						
