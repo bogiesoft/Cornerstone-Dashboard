@@ -133,22 +133,10 @@ require ("connection.php");
 		<div class="tab-content">
 			<div role="tabpanel" class="tab-pane active" id="home">
 			<div class="newcontactstab-detail">
-			<form action="add_job_ticket.php" method="post">
-				<?php
-						require ("connection.php");
-						$result = $conn->query("select client_name from client_info");
-						echo("<div class='tabinner-detail'>");
-						echo "<label>Client</label><select name='client_name'>";
-						echo "<option selected = 'selected'>" . $client_name . "</option>";
-						while ($row = $result->fetch_assoc()) {
-									  unset($client_name);
-									  $client_name = $row['client_name']; 
-									  echo '<option value="'.$client_name.'">'.$client_name.'</option>';
-									 
-						}
-						echo "</select>";
-						echo "</div>";
-						?>
+			<div class="tabinner-detail">
+				<label>Client Name</label>
+				<input name="client_name" type="text" value="<?php echo $client_name ; ?>" class="contact-prefix">
+				</div>
 				<div class="tabinner-detail">
 				<label>Job Name</label>
 				<input name="project_name" type="text" value="<?php echo $project_name ; ?>" class="contact-prefix">
