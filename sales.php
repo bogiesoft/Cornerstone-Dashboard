@@ -62,6 +62,12 @@ ul.tab li a:focus, .active {background-color: #ccc;}
 				<input id="search" name="frmSearch" type="text" placeholder="Search for a specific client">
 			</form>
 			<div class="search-boxright pull-right"><a href="#" onclick = "document.getElementById('search_form').submit()">Submit</a></div>
+			<div class="contacts-title">
+				<a id = 'advanced_search_button' class="pull-right" href="#" class="add_button" onclick = 'addField()'>Advanced Search</a>
+				</div>
+		<form class = 'advanced_search_area' action = 'advanced_search_CRM.php' method = 'post'>
+		<input id = 'advanced_search_submit' style = 'display: none' type = 'submit' name = 'submit_form_advanced'>
+		</form>
 		</div>
 	</div>
 <?php
@@ -74,9 +80,13 @@ echo "<tr valign='top'><td colspan='2'><table id = 'crm_table' border='0' cellsp
 
 if ($result->num_rows > 0) {
     // output data of each row
-	
     while($row = $result->fetch_assoc()) {
-		echo "<tr><td>" .$row["full_name"]."</td><td>".  $row["title"]."</td><td>". $row["phone"]. "</td><td>". $row["fax"]. "</td><td>". $row["web_address"]."</td><td>". $row["business"]. "</td></tr>";
+		$foo = array();
+		array_push($foo, $row['full_name']);
+		array_push($foo, $row['address_line_1']);
+		$str = serialize($foo);
+		$stren = urlencode($str);
+		echo "<tr><td><a href = 'edit_client.php?client_info=$stren'>" .$row["full_name"]."</a></td><td>".  $row["title"]."</td><td>". $row["phone"]. "</td><td>". $row["fax"]. "</td><td>". $row["web_address"]."</td><td>". $row["business"]. "</td></tr>";
     }
 	echo "</tbody></table></td></tr></tbody></table></div>";
 } else {
@@ -144,7 +154,52 @@ if ($result->num_rows > 0) {
 <script type="text/javascript" src="jquery-latest.js"></script> 
 <script type="text/javascript" src="jquery.tablesorter.js"></script> 
 <script>
+var fields = [false, false, false];
 
+function addField(){
+	for(var i = 0; i < fields.length; i++){
+		var fieldCount = i + 1;
+		if(fields[i] == false && i == 0){
+			$(".advanced_search_area").append("<div class = 'field" + fieldCount + "'><input name = 'title' type = 'text' placeholder = 'Enter title of client'><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeField('.field" + fieldCount + "')></div>");
+			document.getElementById("advanced_search_button").innerHTML = "Add Field";
+			document.getElementById("advanced_search_submit").style.display = "block";
+			fields[i] = true;
+			break;
+		}
+		else if(fields[i] == false && i == 1){
+			$(".advanced_search_area").append("<div class = 'field" + fieldCount + "'><input name = 'state' type = 'text' placeholder = 'Enter state'><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeField('.field" + fieldCount + "')></div>");
+			fields[i] = true;
+			break;
+		}
+		else if(fields[i] == false && i == 2){
+			$(".advanced_search_area").append("<div class = 'field" + fieldCount + "'><input name = 'city' type = 'text' placeholder = 'Enter city'><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeField('.field" + fieldCount + "')></div>");
+			fields[i] = true;
+			break;
+		}
+	}
+}
+function removeField(x){
+	for(var i = 0; i < fields.length; i++){
+		var number = i + 1;
+		if(x == ".field" + number){
+			$(x).remove();
+			fields[i] = false;
+			break;
+		}
+	}
+	
+	var allFalse = true;
+	for(var i = 0; i < fields.length; i++){
+		if(fields[i] == true){
+			allFalse = false;
+		}
+	}
+	
+	if(allFalse == true){
+		document.getElementById("advanced_search_button").innerHTML = "Advanced Search";
+		document.getElementById("advanced_search_submit").style.display = "none";
+	}
+}
 function changeTab(evt, cityName) {
     // Declare all variables
     var i, tabcontent, tablinks;
