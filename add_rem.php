@@ -51,17 +51,7 @@ require ("connection.php");
 					</div>
 					<div class = "tabinner-detail">
 					<label>Client</label>
-					<select name = "client">
-					<option selected = 'selected' value = "None">None</option>
-					<?php
-						$sql = "SELECT client_name FROM client_info";
-						$result = mysqli_query($conn, $sql);
-						
-						while($row = $result->fetch_assoc()){
-							echo "<option>" . $row['client_name'] . "</option>";
-						}
-					?>
-					</select>
+					<input name = 'client' placeholder = 'Client name(if needed)' value = 'None'>
 					<div class = "clear"></div>
 					</div>
 					<div class = "tabinner-detail">

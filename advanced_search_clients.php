@@ -27,11 +27,15 @@ $sql = "SELECT * FROM sales WHERE type = 'Client'";
 
 if(isset($_POST['state'])){
 	$state = $_POST['state'];
-	$sql = $sql . " AND state LIKE '%{$state}%'";
+	$sql = $sql . " AND state = '$state'";
 }
 if(isset($_POST['city'])){
 	$city = $_POST['city'];
-	$sql = $sql . " AND city LIKE '%{$city}%'";
+	$sql = $sql . " AND city = '$city'";
+}
+if(isset($_POST['title'])){
+	$title = $_POST['title'];
+	$sql = $sql . " AND title LIKE '%{$title}%'";
 }
 
 $result = mysqli_query($conn,$sql);
@@ -62,7 +66,8 @@ if ($result->num_rows > 0) {
 		array_push($foo, $row['full_name']);
 		array_push($foo, $row['address_line_1']);
 		$str = serialize($foo);
-		echo "<tr class = 'hoverTab'><td><a href = 'edit_client.php?client_info=$str'>".$row["full_name"]."</a></td><td>".  $row["business"]."</td><td>". $row["address_line_1"]. "</td><td>". $row["phone"] . "</td><td>". $row["city"]. "</td><td>". $row["title"]. "</td><td>" .$email."</td><td>". $website . "</td></tr>";
+		$stren = urlencode($str);
+		echo "<tr class = 'hoverTab'><td><a href = 'edit_client.php?client_info=$stren'>".$row["full_name"]."</a></td><td>".  $row["business"]."</td><td>". $row["address_line_1"]. "</td><td>". $row["phone"] . "</td><td>". $row["city"]. "</td><td>". $row["title"]. "</td><td>" .$email."</td><td>". $website . "</td></tr>";
     }
 	echo "</tbody></table></td></tr></tbody></table></div>";
 } else {

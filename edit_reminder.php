@@ -102,17 +102,7 @@ if(isset($_POST['submit_form'])){
 					</div>
 					<div class = "tabinner-detail">
 					<label>Client</label>
-					<select name = "client">
-					<option selected = 'selected' value = "<?php echo $row['client_name']; ?>"><?php echo $row['client_name']; ?></option>
-					<?php
-						$sql = "SELECT client_name FROM client_info";
-						$result = mysqli_query($conn, $sql);
-						
-						while($row2 = $result->fetch_assoc()){
-							echo "<option>" . $row2['client_name'] . "</option>";
-						}
-					?>
-					</select>
+					<input name = 'client' value = "<?php echo $row['client_name']; ?>">
 					<div class = "clear"></div>
 					</div>
 					<div class = "tabinner-detail">
