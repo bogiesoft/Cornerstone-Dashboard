@@ -89,7 +89,7 @@ while($row = $job_result->fetch_assoc()){
 			date_default_timezone_set('America/New_York');
 			$today = date("Y-m-d G:i:s");
 			$a_p = date("A");
-			$job = "updated job ticket " . $job_id;
+			$job = "assigned job ticket " . $job_id;
 			$user = $_POST['assign_to' . $job_count];
 			mysqli_query($conn, "UPDATE job_ticket SET processed_by = '$user' WHERE job_id = '$job_id'");
 			$result_processed_by = mysqli_query($conn, "SELECT processed_by FROM job_ticket WHERE job_id = '$job_id'");
