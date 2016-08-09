@@ -20,7 +20,7 @@ require('header.php');
 
 <?php
 require ("connection.php");
-$result = mysqli_query($conn,"SELECT * FROM materials");
+$result = mysqli_query($conn,"SELECT * FROM materials ORDER BY job_id ASC");
 echo " <div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
 echo "<tbody>";
 echo "<tr valign='top'><th class='allcontacts-title'>Weights and Measures<span class='allcontacts-subtitle'></span></th></tr>";
@@ -35,6 +35,7 @@ if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
 		
 		$job_id = $row['job_id'];
+		$material_id = $row['material_id'];
 		
 		$result1 = mysqli_query($conn,"SELECT client_name,project_name FROM job_ticket WHERE job_id='$job_id' ");
 		    while($row1 = $result1->fetch_assoc()){
@@ -45,7 +46,7 @@ if ($result->num_rows > 0) {
 		
 		
 		
-		echo "<tr><td><a href = 'edit_wm.php?job_id=$job_id'>".$row["job_id"]."</a></td><td>".$client_name."</td><td>".$project_name."</td><td>". $row["received"]. "</td><td>". $row["vendor"]. "</td><td>". $row["checked_in"]. "</td><td>". $row["material"]. "</td><td>". $row["type"]. "</td><td>". $row["quantity"]. "</td><td>". $row["height"]. "</td><td>". $row["weight"]. "</td><td>". $row["size"]. "</td><td>". $row["based_on"]. "</td></tr>";
+		echo "<tr><td><a href = 'edit_wm.php?material_id=$material_id'>".$row["job_id"]."</a></td><td>".$client_name."</td><td>".$project_name."</td><td>". $row["received"]. "</td><td>". $row["vendor"]. "</td><td>". $row["checked_in"]. "</td><td>". $row["material"]. "</td><td>". $row["type"]. "</td><td>". $row["quantity"]. "</td><td>". $row["height"]. "</td><td>". $row["weight"]. "</td><td>". $row["size"]. "</td><td>". $row["based_on"]. "</td></tr>";
     }
 	echo "</tbody></table></td></tr></tbody></table></div>";
 } else {
