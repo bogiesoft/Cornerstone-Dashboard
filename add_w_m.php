@@ -1,8 +1,4 @@
 <?php
-require ("header.php");
-?>
-<div class="content">
-<?php
 require ("connection.php");
 
 
