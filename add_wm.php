@@ -26,7 +26,7 @@ require ("header.php");
 						require ("connection.php");
 
 						
-						$result = $conn->query("SELECT job_id FROM job_ticket WHERE job_ticket.job_id NOT IN (SELECT job_id FROM materials)");
+						$result = $conn->query("SELECT job_id FROM job_ticket");
 						
 						while ($row = $result->fetch_assoc()) {
 									  unset($job_id);
