@@ -43,7 +43,7 @@ if ($result->num_rows > 0) {
 				
 				if($row["client_name"] != "None"){
 					$foo = $row['client_name'];
-					$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%'");
+					$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%' LIMIT 3");
 					if(mysqli_num_rows($result_client_name) > 0){
 						while($row = $result_client_name->fetch_assoc()){
 							$my_array = array();
@@ -58,7 +58,7 @@ if ($result->num_rows > 0) {
 			}
 			else if($row["client_name"] != "None"){
 				$foo = $row['client_name'];
-				$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%'");
+				$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%' LIMIT 3");
 				if(mysqli_num_rows($result_client_name) > 0){
 					while($row = $result_client_name->fetch_assoc()){
 						$my_array = array();
@@ -107,7 +107,7 @@ if ($result1->num_rows > 0) {
 				
 				if($row["client_name"] != "None"){
 					$foo = $row['client_name'];
-					$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%'");
+					$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%' LIMIT 3");
 					if(mysqli_num_rows($result_client_name) > 0){
 						while($row = $result_client_name->fetch_assoc()){
 							$my_array = array();
@@ -122,7 +122,7 @@ if ($result1->num_rows > 0) {
 			}
 			else if($row["client_name"] != "None"){
 				$foo = $row['client_name'];
-					$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%'");
+					$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%' LIMIT 3");
 					if(mysqli_num_rows($result_client_name) > 0){
 						while($row = $result_client_name->fetch_assoc()){
 							$my_array = array();
@@ -165,7 +165,7 @@ if($result2->num_rows > 0){
 				
 				if($row["client_name"] != "None"){
 					$foo = $row['client_name'];
-					$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%'");
+					$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%' LIMIT 3");
 					if(mysqli_num_rows($result_client_name) > 0){
 						while($row = $result_client_name->fetch_assoc()){
 							$my_array = array();
@@ -180,7 +180,7 @@ if($result2->num_rows > 0){
 			}
 			else if($row["client_name"] != "None"){
 				$foo = $row['client_name'];
-					$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%'");
+					$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%' LIMIT 3");
 					if(mysqli_num_rows($result_client_name) > 0){
 						while($row = $result_client_name->fetch_assoc()){
 							$my_array = array();
@@ -227,7 +227,7 @@ if(date("j") >= 1 && date("j") <= 4)
 				
 					if($row["client_name"] != "None"){
 						$foo = $row['client_name'];
-					$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%'");
+					$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%' LIMIT 3");
 					if(mysqli_num_rows($result_client_name) > 0){
 						while($row = $result_client_name->fetch_assoc()){
 							$my_array = array();
@@ -242,7 +242,7 @@ if(date("j") >= 1 && date("j") <= 4)
 				}
 				else if($row["client_name"] != "None"){
 					$foo = $row['client_name'];
-					$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%'");
+					$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%' LIMIT 3");
 					if(mysqli_num_rows($result_client_name) > 0){
 						while($row = $result_client_name->fetch_assoc()){
 							$my_array = array();
@@ -290,7 +290,7 @@ if(date("n") == 1 && date("j") >= 1 && date("j") <= 4){
 				
 					if($row["client_name"] != "None"){
 						$foo = $row['client_name'];
-					$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%'");
+					$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%' LIMIT 3");
 					if(mysqli_num_rows($result_client_name) > 0){
 						while($row = $result_client_name->fetch_assoc()){
 							$my_array = array();
@@ -305,7 +305,7 @@ if(date("n") == 1 && date("j") >= 1 && date("j") <= 4){
 				}
 				else if($row["client_name"] != "None"){
 					$foo = $row['client_name'];
-					$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%'");
+					$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%' LIMIT 3");
 					if(mysqli_num_rows($result_client_name) > 0){
 						while($row = $result_client_name->fetch_assoc()){
 							$my_array = array();

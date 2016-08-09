@@ -3,8 +3,8 @@ require ("header.php");
 ?>
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
-	<h1 class="pull-left">Clients</h1>
-	<a class="pull-right" href="add_client.php" class="add_button">Add Client</a>
+	<h1 class="pull-left">Advanced Search Results</h1>
+	<a class="pull-right" href="clients.php" class="add_button">Back to Clients</a>
 	</div>
 <div class="dashboard-detail">
 <div class="search-cont">
@@ -22,28 +22,24 @@ require ("header.php");
 <?php
 
 require ("connection.php");
-
 $sql = "SELECT * FROM sales WHERE type = 'Client'";
-
-if(isset($_POST['state'])){
-	$state = $_POST['state'];
-	$sql = $sql . " AND state = '$state'";
-}
-if(isset($_POST['city'])){
-	$city = $_POST['city'];
-	$sql = $sql . " AND city = '$city'";
-}
-if(isset($_POST['title'])){
-	$title = $_POST['title'];
-	$sql = $sql . " AND title LIKE '%{$title}%'";
+$index = 1;
+while($index <= 3){
+  if(isset($_POST['fieldArea' . $index])){
+	$find = $_POST['fieldArea' . $index];
+	$sql = $sql . " AND (" . $_POST['select' . $index] . " = '$find' OR " . $_POST['select' . $index] . " LIKE '$find')"; 
+  }
+  
+  $index = $index + 1;
+  
 }
 
-$result = mysqli_query($conn,$sql);
+$result = mysqli_query($conn,$sql) or die("error");
 
 
 echo " <div id = 'table-scroll' class='allcontacts-table'><table id = 'table' border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
 echo "<tbody>";
-echo "<tr valign='top'><th class='allcontacts-title'>All Clients<span class='allcontacts-subtitle'></span></th></tr>";
+echo "<tr valign='top'><th class='allcontacts-title'>All Results<span class='allcontacts-subtitle'></span></th></tr>";
 echo "<tr valign='top'><td colspan='2'><table id = 'client_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Client Name</th><th id = 'contact_name' class='maintable-thtwo data-header' data-name='contact_name' data-index='1'>Business</th><th id = 'address' class='maintable-thtwo data-header' data-name='client_add' data-index='2'>Address</th><th id = 'phone' class='maintable-thtwo data-header' data-name='contact_phone' data-index='3'>Phone</th><th id = 'email' class='maintable-thtwo data-header' data-name='contact_email' data-index='4'>City</th><th id = 'website' class='maintable-thtwo data-header' data-name='website' data-index='5'>Title</th><th id = 'category' class='maintable-thtwo data-header' data-name='category' data-index='6'>Email</th><th id = 'title' class='maintable-thtwo data-header' data-name='title' data-index='7'>Website</th></tr></thead><tbody>";
 
 

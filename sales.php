@@ -154,48 +154,25 @@ if ($result->num_rows > 0) {
 <script type="text/javascript" src="jquery-latest.js"></script> 
 <script type="text/javascript" src="jquery.tablesorter.js"></script> 
 <script>
-var fields = [false, false, false];
+var fieldCount = 1;
 
 function addField(){
-	for(var i = 0; i < fields.length; i++){
-		var fieldCount = i + 1;
-		if(fields[i] == false && i == 0){
-			$(".advanced_search_area").append("<div class = 'field" + fieldCount + "'><input name = 'title' type = 'text' placeholder = 'Enter title of client'><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeField('.field" + fieldCount + "')></div>");
-			document.getElementById("advanced_search_button").innerHTML = "Add Field";
-			document.getElementById("advanced_search_submit").style.display = "block";
-			fields[i] = true;
-			break;
-		}
-		else if(fields[i] == false && i == 1){
-			$(".advanced_search_area").append("<div class = 'field" + fieldCount + "'><input name = 'state' type = 'text' placeholder = 'Enter state'><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeField('.field" + fieldCount + "')></div>");
-			fields[i] = true;
-			break;
-		}
-		else if(fields[i] == false && i == 2){
-			$(".advanced_search_area").append("<div class = 'field" + fieldCount + "'><input name = 'city' type = 'text' placeholder = 'Enter city'><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeField('.field" + fieldCount + "')></div>");
-			fields[i] = true;
-			break;
-		}
-	}
+	     if(fieldCount <= 3){
+			$(".advanced_search_area").append("<div class = 'field" + fieldCount + "'><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeField('.field" + fieldCount + "')><input name = 'fieldArea" + fieldCount + "' type = 'text' placeholder = 'Find'>Where<select style = 'width: 125px; font-size: 13px' name = 'select" + fieldCount 
+			+ "'><option selected = 'selected' value = 'full_name'>Client Name</option><option value = 'business'>Business</option><option value = 'address_line_1'>Address</option><option value = 'city'>City</option><option value = 'state'>State</option><option value = 'zipcode'>Zipcode</option><option value = 'title'>Title</option>" + 
+			"<option value = 'phone'>Phone</option><option value = 'web_address'>Website</option><option value = 'email1'>Email</option></select></div>");
+			if(fieldCount == 1){
+				document.getElementById("advanced_search_button").innerHTML = "Add Field";
+				document.getElementById("advanced_search_submit").style.display = "block";
+			}
+			
+			fieldCount++;
+		 }
 }
 function removeField(x){
-	for(var i = 0; i < fields.length; i++){
-		var number = i + 1;
-		if(x == ".field" + number){
-			$(x).remove();
-			fields[i] = false;
-			break;
-		}
-	}
-	
-	var allFalse = true;
-	for(var i = 0; i < fields.length; i++){
-		if(fields[i] == true){
-			allFalse = false;
-		}
-	}
-	
-	if(allFalse == true){
+	$(x).remove();
+	fieldCount--;
+	if(fieldCount == 1){
 		document.getElementById("advanced_search_button").innerHTML = "Advanced Search";
 		document.getElementById("advanced_search_submit").style.display = "none";
 	}
