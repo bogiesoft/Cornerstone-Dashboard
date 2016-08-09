@@ -38,10 +38,10 @@ $result = mysqli_query($conn,"SELECT * FROM timestamp WHERE processed_by='$user'
 if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
-        echo "<div class='notifications' style = 'font-size: 10px'>" . $row['user'] . " " . $row['job'] ."  <button class='delete' id='".$row['time']."'>Delete</button></div>"; 
+        echo "<div class='notifications' style = 'font-size: 10px'>" . $row['user'] . " " . $row['job'] ."  <button class='delete' id='".$row['id']."'>Delete</button></div>"; 
     }
 } else {
-    echo "0 results from jobticket";
+    echo "0 unread updates";
 }
 ?>
 

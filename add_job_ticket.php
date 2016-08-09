@@ -7,7 +7,7 @@ if(isset($_POST['submit_form'])){
 	date_default_timezone_set('America/New_York');
 	$today = date("Y-m-d G:i:s");
 	$a_p = date("A");
-	$job = "created job ticket";
+	$job = "assigned job ticket";
 	$_SESSION['date'] = $today;
 
 	$client_name = $_POST['client_name'];
