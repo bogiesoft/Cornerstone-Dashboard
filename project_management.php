@@ -82,18 +82,25 @@ while($row = $job_result->fetch_assoc()){
 		mysqli_query($conn, "UPDATE job_ticket SET priority = '$priority' WHERE job_id = '$job_id'");
 	}
 	if(isset($_POST['assign_to' . $job_count])){
-		$user_name = $_SESSION['user'];
-		date_default_timezone_set('America/New_York');
-		$today = date("Y-m-d G:i:s");
-		$a_p = date("A");
-		$job = "updated job ticket " . $job_id;
-		$user = $_POST['assign_to' . $job_count];
-		mysqli_query($conn, "UPDATE job_ticket SET processed_by = '$user' WHERE job_id = '$job_id'");
-		$result_processed_by = mysqli_query($conn, "SELECT processed_by FROM job_ticket WHERE job_id = '$job_id'");
-		$row_processed_by = $result_processed_by->fetch_assoc();
-		$processed_by = $row_processed_by['processed_by'];
-		$sql100 = "INSERT INTO timestamp (user,time,job, a_p,processed_by) VALUES ('$user_name', '$today','$job', '$a_p','$processed_by')";
-		$result100 = $conn->query($sql100) or die('Error querying database 101.');
+		$result_percent = mysqli_query($conn, "SELECT percent FROM project_management WHERE job_id = '$job_id'");
+		$row_percent = $result_percent->fetch_assoc();
+		if($row_percent['percent'] == 100){
+			$user_name = $_SESSION['user'];
+			date_default_timezone_set('America/New_York');
+			$today = date("Y-m-d G:i:s");
+			$a_p = date("A");
+			$job = "updated job ticket " . $job_id;
+			$user = $_POST['assign_to' . $job_count];
+			mysqli_query($conn, "UPDATE job_ticket SET processed_by = '$user' WHERE job_id = '$job_id'");
+			$result_processed_by = mysqli_query($conn, "SELECT processed_by FROM job_ticket WHERE job_id = '$job_id'");
+			$row_processed_by = $result_processed_by->fetch_assoc();
+			$processed_by = $row_processed_by['processed_by'];
+			$sql100 = "INSERT INTO timestamp (user,time,job, a_p,processed_by,viewed) VALUES ('$user_name', '$today','$job', '$a_p','$processed_by','no')";
+			$result100 = $conn->query($sql100) or die('Error querying database 101.');
+		}
+		else{
+			echo "<script>alert('Job not complete. Make sure to check yellow sheet');</script>";
+		}
 	}
 	$job_count = $job_count + 1;
 }
@@ -236,23 +243,18 @@ if ($result->num_rows > 0) {
 					
 					$row_wm = $result_wandm->fetch_assoc();
 					
-					echo "<div class='vendor-left' style = 'background: " . $color_priority . "; '>";
-						echo "<h3 style = 'margin-right: 75px'><p><i>Weights and Measure:</i></p></h3>";
-						echo "<p>Location: ".$row_wm["location"]."</p>";
-						echo "<p>Checked in: ".$row_wm["checked_in"]."</p>";
-						echo "<p>Material: ".$row_wm["material"]."</p>";
-						echo "<p>Height: ".$row_wm["height"]."</p>";
-						echo "<p>Size: ".$row_wm["size"]."</p>";
-						
-					echo "</div>";
-					echo "<div class='vendor-right' style = 'background: " . $color_priority . "; '>";
-						echo "<p style = 'visibility: hidden;'>Here</p>";
-						echo "<p>Type: ".$row_wm["type"]."</p>";
-						echo "<p>Quantity: ".$row_wm["quantity"]."</p>";
-						echo "<p>Vendor: ".$row_wm["vendor"]."</p>";
-						echo "<p>Weight: ".$row_wm["weight"]."</p>";
-						echo "<p>Based On: ".$row_wm["based_on"]."</p>";
-					echo "</div><br>";
+					
+					
+					echo " <div id = 'table-scroll' class='allcontacts-table'><table id = 'table' border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
+					echo "<tbody>";
+					echo "<tr valign='top'><th class='allcontacts-title'>Weights and Measures<span class='allcontacts-subtitle'></span></th></tr>";
+					echo "<tr valign='top'><td colspan='2'><table id = 'wm_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Job ID</th><th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Received</th><th id = 'contact_name' class='maintable-thtwo data-header' data-name='contact_name' data-index='1'>Location</th><th id = 'address' class='maintable-thtwo data-header' data-name='client_add' data-index='2'>Checked in</th><th id = 'phone' class='maintable-thtwo data-header' data-name='contact_phone' data-index='3'>Material</th><th id = 'email' class='maintable-thtwo data-header' data-name='contact_email' data-index='4'>Type</th><th id = 'website' class='maintable-thtwo data-header' data-name='website' data-index='5'>Quantity</th><th id = 'category' class='maintable-thtwo data-header' data-name='category' data-index='6'>Vendor</th><th id = 'title' class='maintable-thtwo data-header' data-name='title' data-index='7'>Height</th><th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Weight</th><th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Size</th><th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Based on</th></tr></thead><tbody>";
+					
+					echo "<tr class = 'hoverTab'><td><a href = 'edit_wm.php?job_id=$job_id'>".$row_wm["job_id"]."</a></td><td>". $row_wm['received'] . "</td><td>" . $row_wm["location"]."</td><td>". $row_wm["checked_in"]. "</td><td>". $row_wm["material"] . "</td><td>". $row_wm["type"]. "</td><td>". $row_wm["quantity"]. "</td><td>" .$row_wm["vendor"]."</td><td>". $row_wm["height"] . "</td><td>" . $row_wm['weight'] . "</td><td>" . $row_wm['size'] . "</td><td>" . $row_wm['based_on'] . "</td></tr>";
+					echo "</tbody></table></td></tr></tbody></table></div><br>";
+				}
+				else {
+					echo "0 results";
 				}
 				
 				$result_blue_sheet = mysqli_query($conn, "SELECT * FROM customer_service WHERE job_id = '$job_id'");
