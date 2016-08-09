@@ -13,7 +13,7 @@
 	<li><a href="job_ticket.php"><i><img src="images/web-icons/archive.png"></i>Job Ticket</a><div class="clear"></div></li>
   </ul>
   <h3 style = 'text-align: center'>Live Updates</h3>
-  <ul id='edkoma'>
+  <div id='edkoma'>
 
   <script type="text/javascript">
   $(document).ready(function(){
@@ -24,7 +24,7 @@
   };
   var refreshUpdates=setInterval(auto_refresh,3000);
   </script>
-  </ul>
+  </div>
   <div class="clear"></div>
   </div>
 </div>
