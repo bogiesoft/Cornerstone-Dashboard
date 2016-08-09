@@ -101,7 +101,7 @@ while($row = $job_result->fetch_assoc()){
 		$result_processed_by = mysqli_query($conn, "SELECT processed_by FROM job_ticket WHERE job_id = '$job_id'");
 		$row_processed_by = $result_processed_by->fetch_assoc();
 		$processed_by = $row_processed_by['processed_by'];
-		$sql100 = "INSERT INTO timestamp (user,time,job, a_p,processed_by) VALUES ('$user_name', '$today','$job', '$a_p','$processed_by')";
+		$sql100 = "INSERT INTO timestamp (user,time,job, a_p,processed_by,viewed) VALUES ('$user_name', '$today','$job', '$a_p','$processed_by','no')";
 		$result100 = $conn->query($sql100) or die('Error querying database 101.');
 	}
 	$job_count = $job_count + 1;

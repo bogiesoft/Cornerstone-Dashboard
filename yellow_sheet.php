@@ -63,7 +63,11 @@ $row = $result->fetch_assoc();
 <div class="newcontacttab-inner" style="width:700px;">
 	<div class="tabinner-detail">
 	<div class="clear"></div>
-	</div>			
+	</div>	
+	<div class="tabinner-detail">
+	<label style="width:30%; float:left">Complete</label><label style = 'width: 27%; float: right'>N/A</label>
+	<div class="clear"></div>
+	</div>
 	<div class="tabinner-detail">
 	<input type="checkbox" name="1" class="contact-prefix" style="width:10%; float:left;"<?php if($row['1'] == 1){echo "checked";}?>><label style="width:30%; float:left">Permit is correct</label><input type="checkbox" name="na_1" class="contact-prefix" style="width:50%; float:right;"<?php if($row['na_1'] == 1){echo "checked";}?>>
 	<div class="clear"></div>
