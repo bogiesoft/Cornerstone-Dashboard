@@ -43,13 +43,32 @@ if ($result->num_rows > 0) {
 				
 				if($row["client_name"] != "None"){
 					$foo = $row['client_name'];
-					echo "<i style = 'margin-left: 20px; font-size: 11px'>Client Name: </i><a style = 'font-size: 12px' href = 'edit_client.php?client_name=$foo'>" . $row["client_name"] . "</a>";
+					$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%'");
+					if(mysqli_num_rows($result_client_name) > 0){
+						while($row = $result_client_name->fetch_assoc()){
+							$my_array = array();
+							array_push($my_array, $row['full_name']);
+							array_push($my_array, $row['address_line_1']);
+							$str = serialize($my_array);
+							$stren = urlencode($str);
+							echo "<i style = 'margin-left: 20px; font-size: 11px'>Client Name: </i><a style = 'font-size: 12px' href = 'edit_client.php?client_info=$stren'>" . $row["full_name"] . "</a>";
+						}
+					}
 				}
 			}
 			else if($row["client_name"] != "None"){
-				echo "<b style = 'font-size: 12px; margin-left: 16px'>Info: </b>";
 				$foo = $row['client_name'];
-				echo "<i style = 'font-size: 11px; margin-left: 5px'>Client Name: </i><a style = 'font-size: 12px' href = 'edit_client.php?client_name=$foo'>" . $row["client_name"] . "</a>";
+				$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%'");
+				if(mysqli_num_rows($result_client_name) > 0){
+					while($row = $result_client_name->fetch_assoc()){
+						$my_array = array();
+						array_push($my_array, $row['full_name']);
+						array_push($my_array, $row['address_line_1']);
+						$str = serialize($my_array);
+						$stren = urlencode($str);
+						echo "<i style = 'margin-left: 20px; font-size: 11px'>Client Name: </i><a style = 'font-size: 12px' href = 'edit_client.php?client_info=$stren'>" . $row["full_name"] . "</a>";
+					}
+				}
 				
 				if($row["vendor_name"] != "None"){
 					$foo = $row["vendor_name"];
@@ -88,13 +107,32 @@ if ($result1->num_rows > 0) {
 				
 				if($row["client_name"] != "None"){
 					$foo = $row['client_name'];
-					echo "<i style = 'margin-left: 20px; font-size: 11px'>Client Name: </i><a style = 'font-size: 12px' href = 'edit_client.php?client_name=$foo'>" . $row["client_name"] . "</a>";
+					$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%'");
+					if(mysqli_num_rows($result_client_name) > 0){
+						while($row = $result_client_name->fetch_assoc()){
+							$my_array = array();
+							array_push($my_array, $row['full_name']);
+							array_push($my_array, $row['address_line_1']);
+							$str = serialize($my_array);
+							$stren = urlencode($str);
+							echo "<i style = 'margin-left: 20px; font-size: 11px'>Client Name: </i><a style = 'font-size: 12px' href = 'edit_client.php?client_info=$stren'>" . $row["full_name"] . "</a>";
+						}
+					}
 				}
 			}
 			else if($row["client_name"] != "None"){
-				echo "<b style = 'font-size: 12px; margin-left: 16px'>Info: </b>";
 				$foo = $row['client_name'];
-				echo "<i style = 'font-size: 11px; margin-left: 5px'>Client Name: </i><a style = 'font-size: 12px' href = 'edit_client.php?client_name=$foo'>" . $row["client_name"] . "</a>";
+					$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%'");
+					if(mysqli_num_rows($result_client_name) > 0){
+						while($row = $result_client_name->fetch_assoc()){
+							$my_array = array();
+							array_push($my_array, $row['full_name']);
+							array_push($my_array, $row['address_line_1']);
+							$str = serialize($my_array);
+							$stren = urlencode($str);
+							echo "<i style = 'margin-left: 20px; font-size: 11px'>Client Name: </i><a style = 'font-size: 12px' href = 'edit_client.php?client_info=$stren'>" . $row["full_name"] . "</a>";
+						}
+					}
 				
 				if($row["vendor_name"] != "None"){
 					$foo = $row["vendor_name"];
@@ -127,13 +165,32 @@ if($result2->num_rows > 0){
 				
 				if($row["client_name"] != "None"){
 					$foo = $row['client_name'];
-					echo "<i style = 'margin-left: 20px; font-size: 11px'>Client Name: </i><a style = 'font-size: 12px' href = 'edit_client.php?client_name=$foo'>" . $row["client_name"] . "</a>";
+					$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%'");
+					if(mysqli_num_rows($result_client_name) > 0){
+						while($row = $result_client_name->fetch_assoc()){
+							$my_array = array();
+							array_push($my_array, $row['full_name']);
+							array_push($my_array, $row['address_line_1']);
+							$str = serialize($my_array);
+							$stren = urlencode($str);
+							echo "<i style = 'margin-left: 20px; font-size: 11px'>Client Name: </i><a style = 'font-size: 12px' href = 'edit_client.php?client_info=$stren'>" . $row["full_name"] . "</a>";
+						}
+					}
 				}
 			}
 			else if($row["client_name"] != "None"){
-				echo "<b style = 'font-size: 12px; margin-left: 16px'>Info: </b>";
 				$foo = $row['client_name'];
-				echo "<i style = 'font-size: 11px; margin-left: 5px'>Client Name: </i><a style = 'font-size: 12px' href = 'edit_client.php?client_name=$foo'>" . $row["client_name"] . "</a>";
+					$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%'");
+					if(mysqli_num_rows($result_client_name) > 0){
+						while($row = $result_client_name->fetch_assoc()){
+							$my_array = array();
+							array_push($my_array, $row['full_name']);
+							array_push($my_array, $row['address_line_1']);
+							$str = serialize($my_array);
+							$stren = urlencode($str);
+							echo "<i style = 'margin-left: 20px; font-size: 11px'>Client Name: </i><a style = 'font-size: 12px' href = 'edit_client.php?client_info=$stren'>" . $row["full_name"] . "</a>";
+						}
+					}
 				
 				if($row["vendor_name"] != "None"){
 					$foo = $row["vendor_name"];
@@ -170,13 +227,32 @@ if(date("j") >= 1 && date("j") <= 4)
 				
 					if($row["client_name"] != "None"){
 						$foo = $row['client_name'];
-						echo "<i style = 'margin-left: 20px; font-size: 11px'>Client Name: </i><a style = 'font-size: 12px' href = 'edit_client.php?client_name=$foo'>" . $row["client_name"] . "</a>";
+					$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%'");
+					if(mysqli_num_rows($result_client_name) > 0){
+						while($row = $result_client_name->fetch_assoc()){
+							$my_array = array();
+							array_push($my_array, $row['full_name']);
+							array_push($my_array, $row['address_line_1']);
+							$str = serialize($my_array);
+							$stren = urlencode($str);
+							echo "<i style = 'margin-left: 20px; font-size: 11px'>Client Name: </i><a style = 'font-size: 12px' href = 'edit_client.php?client_info=$stren'>" . $row["full_name"] . "</a>";
+						}
+					}
 					}
 				}
 				else if($row["client_name"] != "None"){
-					echo "<b style = 'font-size: 12px; margin-left: 16px'>Info: </b>";
 					$foo = $row['client_name'];
-					echo "<i style = 'font-size: 11px; margin-left: 5px'>Client Name: </i><a style = 'font-size: 12px' href = 'edit_client.php?client_name=$foo'>" . $row["client_name"] . "</a>";
+					$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%'");
+					if(mysqli_num_rows($result_client_name) > 0){
+						while($row = $result_client_name->fetch_assoc()){
+							$my_array = array();
+							array_push($my_array, $row['full_name']);
+							array_push($my_array, $row['address_line_1']);
+							$str = serialize($my_array);
+							$stren = urlencode($str);
+							echo "<i style = 'margin-left: 20px; font-size: 11px'>Client Name: </i><a style = 'font-size: 12px' href = 'edit_client.php?client_info=$stren'>" . $row["full_name"] . "</a>";
+						}
+					}
 				
 					if($row["vendor_name"] != "None"){
 						$foo = $row["vendor_name"];
@@ -214,13 +290,32 @@ if(date("n") == 1 && date("j") >= 1 && date("j") <= 4){
 				
 					if($row["client_name"] != "None"){
 						$foo = $row['client_name'];
-						echo "<i style = 'margin-left: 20px; font-size: 11px'>Client Name: </i><a style = 'font-size: 12px' href = 'edit_client.php?client_name=$foo'>" . $row["client_name"] . "</a>";
+					$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%'");
+					if(mysqli_num_rows($result_client_name) > 0){
+						while($row = $result_client_name->fetch_assoc()){
+							$my_array = array();
+							array_push($my_array, $row['full_name']);
+							array_push($my_array, $row['address_line_1']);
+							$str = serialize($my_array);
+							$stren = urlencode($str);
+							echo "<i style = 'margin-left: 20px; font-size: 11px'>Client Name: </i><a style = 'font-size: 12px' href = 'edit_client.php?client_info=$stren'>" . $row["full_name"] . "</a>";
+						}
+					}
 					}
 				}
 				else if($row["client_name"] != "None"){
-					echo "<b style = 'font-size: 12px; margin-left: 16px'>Info: </b>";
 					$foo = $row['client_name'];
-					echo "<i style = 'font-size: 11px; margin-left: 5px'>Client Name: </i><a style = 'font-size: 12px' href = 'edit_client.php?client_name=$foo'>" . $row["client_name"] . "</a>";
+					$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%'");
+					if(mysqli_num_rows($result_client_name) > 0){
+						while($row = $result_client_name->fetch_assoc()){
+							$my_array = array();
+							array_push($my_array, $row['full_name']);
+							array_push($my_array, $row['address_line_1']);
+							$str = serialize($my_array);
+							$stren = urlencode($str);
+							echo "<i style = 'margin-left: 20px; font-size: 11px'>Client Name: </i><a style = 'font-size: 12px' href = 'edit_client.php?client_info=$stren'>" . $row["full_name"] . "</a>";
+						}
+					}
 				
 					if($row["vendor_name"] != "None"){
 						$foo = $row["vendor_name"];
