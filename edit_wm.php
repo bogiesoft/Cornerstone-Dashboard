@@ -3,10 +3,10 @@ require ("header.php");
 require ("connection.php");
 
 	
-	$term = $_GET['job_id'];
-	$job_id = $term;
+	$term = $_GET['material_id'];
+	//$job_id = $term;
 	
-	$sql = "SELECT * FROM materials WHERE job_id = '$term'"; 
+	$sql = "SELECT * FROM materials WHERE material_id = '$term'"; 
 	$result = mysqli_query($conn,$sql); 
 	
 	
@@ -39,11 +39,11 @@ require ("connection.php");
 		date_default_timezone_set('America/New_York');
 		$today = date("Y-m-d G:i:s");
 		$a_p = date("A");
-		$_SESSION['date'] = $today;
-		$job = "updated weights and measure"; 
+		$_SESSION['date'] = $today; 
 
 
 		$job_id = $_POST['job_id'];
+		$job = "new w&m on job ticket " . $job_id;
 		$received = $_POST['received'];
 		$checked_in = $_POST['checked_in'];
 		$material = $_POST['material'];
@@ -54,14 +54,16 @@ require ("connection.php");
 		$weight = $_POST['weight'];
 		$size = $_POST['size'];
 		$based_on = $_POST['based_on'];
-		$sql = "UPDATE materials SET location='$location',received='$received',checked_in='$checked_in',material='$material',type='$type',vendor='$vendor',quantity='$quantity',height='$height',weight='$weight',size='$size', based_on = '$based_on' WHERE job_id ='$job_id'";
+		$sql = "UPDATE materials SET job_id = '$job_id', location='$location',received='$received',checked_in='$checked_in',material='$material',type='$type',vendor='$vendor',quantity='$quantity',height='$height',weight='$weight',size='$size', based_on = '$based_on' WHERE material_id ='$term'";
 		$result = $conn->query($sql) or die('Error querying database.');
-
-		$sql6 = "INSERT INTO timestamp (user,time,job,a_p) VALUES ('$user_name', '$today','$job', '$a_p')";
+		$result_processed_by = mysqli_query($conn, "SELECT * FROM job_ticket WHERE job_id = '$job_id'");
+		$row_processed_by = $result_processed_by->fetch_assoc();
+		$processed_by = $row_processed_by['processed_by'];
+		$sql6 = "INSERT INTO timestamp (user,time,job,a_p,processed_by,viewed) VALUES ('$user_name', '$today','$job', '$a_p', '$processed_by', 'no')";
 		$result7 = $conn->query($sql6) or die('Error querying database 5.');
 		 
 		$conn->close();
-		header("location: http://localhost/crst_dashboard/weights_and_measure.php");
+		header("location: weights_and_measure.php");
 		exit();
 	}
 	if(isset($_POST['delete_form'])){
@@ -70,14 +72,17 @@ require ("connection.php");
 		date_default_timezone_set('America/New_York');
 		$today = date("Y-m-d G:i:s");
 		$a_p = date("A");
-		$job = "deleted weights and measure"; 
-		$sql6 = "INSERT INTO timestamp (user,time,job,a_p) VALUES ('$user_name', '$today','$job', '$a_p')";
+		$job_id = $_POST['job_id'];
+		$job = "deleted w&m on job ticket " . $job_id; 
+		$result_processed_by = mysqli_query($conn, "SELECT * FROM job_ticket WHERE job_id = '$job_id'");
+		$row_processed_by = $result_processed_by->fetch_assoc();
+		$processed_by = $row_processed_by['processed_by'];
+		$sql6 = "INSERT INTO timestamp (user,time,job,a_p,processed_by,viewed) VALUES ('$user_name', '$today','$job', '$a_p', '$processed_by', 'no')";
 		$result7 = $conn->query($sql6) or die('Error querying database 5.');
-		
-		$sql_delete = "DELETE FROM materials WHERE '$job_id' = job_id";
+		$sql_delete = "DELETE FROM materials WHERE material_id = '$term'";
 		mysqli_query($conn, $sql_delete);
 		$conn->close();
-		header("location: http://localhost/crst_dashboard/weights_and_measure.php");
+		header("location: weights_and_measure.php");
 		exit();
 	}
 	
@@ -115,7 +120,15 @@ $(document).ready(function(){
 				<div class="newcontacttab-inner">
 					<div class="tabinner-detail">
 					<label>Job Id</label>
-					<input name="job_id" type="text" class="contact-prefix" value="<?php echo $job_id; ?>">
+					<select name="job_id">
+					<option selected = 'selected'><?php echo $job_id; ?></option>
+					<?php
+					 $result = mysqli_query($conn, "SELECT job_id FROM job_ticket");
+					 while($row = $result->fetch_assoc()){
+						 echo "<option value = '" . $row['job_id'] . "'>" . $row['job_id'] . "</option>";
+					 }
+					?>
+					</select>
 					</div>
 					
 					
