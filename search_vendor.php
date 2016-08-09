@@ -28,7 +28,6 @@ require ("header.php");
 						}
 						
 						if(isset($_POST['submit_form'])){
-							session_start();
 							$user_name = $_SESSION['user'];
 							date_default_timezone_set('America/New_York');
 							$today = date("Y-m-d G:i:s");
@@ -54,7 +53,6 @@ require ("header.php");
 							exit();
 						}
 						if(isset($_POST['delete_form'])){
-							session_start();
 							$user_name = $_SESSION['user'];
 							date_default_timezone_set('America/New_York');
 							$today = date("Y-m-d G:i:s");
@@ -124,7 +122,7 @@ require ("header.php");
 				</div>
 			</div>
 				<div class="newcontact-tabbtm">
-					<input class="save-btn" type="submit" value="Save" name="submit_form" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
+					<input class="save-btn store-btn" type="submit" value="Save" name="submit_form" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
 					<input class="save-btn delete-btn" type = "submit" value = "Delete" name = "delete_form" style="width:200px; font-size:16px; background-color:#d14700; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px; float:left">
 				</div>
 			</form>

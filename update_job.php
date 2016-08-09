@@ -84,7 +84,7 @@ if(isset($_POST['submit_form'])){
 			$row_processed_by = $result_processed_by->fetch_assoc();
 			$processed_by = $row_processed_by['processed_by'];
 			
-			$sql5 = "INSERT INTO timestamp (user,time,job, a_p,processed_by) VALUES ('$user_name', '$today','$job', '$a_p','$processed_by')";
+			$sql5 = "INSERT INTO timestamp (user,time,job, a_p,processed_by,viewed) VALUES ('$user_name', '$today','$job', '$a_p','$processed_by','no')";
 			$result5 = $conn->query($sql5) or die('Error querying database 5.');
 			
 			

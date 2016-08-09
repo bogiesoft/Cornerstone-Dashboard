@@ -1,23 +1,15 @@
 <?php
 require ("header.php");
-?>
-<?php
 require ("connection.php");
 
 	$temp=unserialize($_GET['client_info']);
 	$full_name = $temp[0];
-	$address_line_1 = $temp[1];
-	
+	$address_line_1 = $temp[1];	
 	$sql = "SELECT * FROM sales WHERE full_name = '$full_name' AND address_line_1 = '$address_line_1'"; 
 	$result = mysqli_query($conn,$sql) or die("error"); 
-	
-	
-	
+
 	if ($result->num_rows > 0) {
-
 		$row = $result->fetch_assoc();	
-	
-
 		$full_name = $row["full_name"];
 		$business=$row["business"];
 		$phone=$row["phone"];
@@ -29,9 +21,13 @@ require ("connection.php");
 		$address_line_1 =$row["address_line_1"];
 		$city = $row["city"];
 		$state = $row["state"];
+		$zipcode = $row["zipcode"];
+		$fax = $row["fax"];
 		$display = "yes";
-		
-
+		$call_back_date = $row["call_back_date"];
+		$status = $row["status"];
+		$cell_phone = $row["cell_phone"];
+		$second_contact = $row["second_contact"];
 }
 if(isset($_POST['delete_form'])){
 	$user_name = $_SESSION['user'];
@@ -41,41 +37,42 @@ if(isset($_POST['delete_form'])){
 	$job = "deleted client info";
 	$sql6 = "INSERT INTO timestamp (user,time,job, a_p) VALUES ('$user_name', '$today','$job', '$a_p')";
 	$result7 = $conn->query($sql6) or die('Error querying database 5.');
-	
 	$sql_delete = "DELETE FROM sales WHERE full_name = '$full_name' AND address_line_1 = '$address_line_1'";
 	mysqli_query($conn, $sql_delete);
 	$conn->close();
 	header("location: clients.php");
 	exit();
 }
-if(isset($_POST['submit_form'])){
-	$client_name = $_POST['client_name'];
-	$client_add = $_POST['client_add'];
-	$contact_name = $_POST['contact_name'];
-	$contact_phone = $_POST['contact_phone'];
-	$contact_email = $_POST['contact_email'];
-	$category = $_POST['category'];
-	$sec1 = $_POST['sec1'];
-	$website = $_POST['website'];
+else if(isset($_POST['submit_form'])){
+	$full_name = $_POST['full_name'];
+	$address_line_1 = $_POST['address_line_1'];
+	$business = $_POST['business'];
+	$phone = $_POST['phone'];
+	$email1 = $_POST['email1'];
+	$source = $_POST['source'];
+	$city = $_POST['city'];
+	$web_address = $_POST['web_address'];
 	$notes = $_POST['notes'];
 	$title = $_POST['title'];
-	session_start();
+	$state = $_POST['state'];
+	$zipcode = $_POST['zipcode'];
+	$fax = $_POST['fax'];
+	$status = $_POST['status'];
+	$call_back_date = $_POST['call_back_date'];
+	$second_contact = $_POST['second_contact'];
+	$cell_phone = $_POST['cell_phone'];
 	$user_name = $_SESSION['user'];
 	date_default_timezone_set('America/New_York');
 	$today = date("Y-m-d G:i:s");
 	$a_p = date("A");
 	$_SESSION['date'] = $today;
 	$job = "updated client info";
-
-	$sql = "UPDATE client_info SET contact_name='$contact_name', client_add='$client_add',contact_phone='$contact_phone',contact_email='$contact_email',sec1='$sec1',website='$website',notes='$notes',category='$category',title='$title' WHERE client_name='$client_name'";
-
+	$sql = "UPDATE sales SET full_name='$full_name', address_line_1='$address_line_1',phone='$phone',email1='$email1',source='$source',web_address='$web_address',notes='$notes',business='$business',title='$title', cell_phone = '$cell_phone', city = '$city', state = '$state', zipcode = '$zipcode', fax = '$fax', second_contact = '$second_contact', status = '$status', call_back_date = '$call_back_date' WHERE full_name='$full_name' AND address_line_1 = '$address_line_1'";
 	$sql6 = "INSERT INTO timestamp (user,time,job, a_p) VALUES ('$user_name', '$today','$job', '$a_p')";
 	$result7 = $conn->query($sql6) or die('Error querying database 5.');
-
 	$result = $conn->query($sql) or die('Error querying database.');
-	 
 	$conn->close();
-	header("location: clients.php ");
+	header("location: clients.php");
 	exit();
 }
 ?>
@@ -135,6 +132,11 @@ $(document).ready(function(){
 					<input name="email1" type="text" value="<?php echo $email1; ?>" class="contact-prefix">
 					<div class="clear"></div>
 					</div>
+					<div class="tabinner-detail">
+					<label>Website</label>
+					<input name="web_address" type="text" value="<?php echo $web_address; ?>" class="contact-prefix">
+					<div class="clear"></div>
+					</div>
 				</div>
 				<div class="newcontacttab-inner">
 					<div class="tabinner-detail">
@@ -155,6 +157,38 @@ $(document).ready(function(){
 					<div class="tabinner-detail">
 					<label>State</label>
 					<input name="state" type="text" value="<?php echo $state; ?>" class="contact-prefix">
+					<div class="clear"></div>
+					</div>
+					<div class="tabinner-detail">
+					<label>Zip</label>
+					<input name="zipcode" type="text" value="<?php echo $zipcode; ?>" class="contact-prefix">
+					<div class="clear"></div>
+					</div>
+					<div class="tabinner-detail">
+					<label>Fax</label>
+					<input name="fax" type="text" value="<?php echo $fax; ?>" class="contact-prefix">
+					<div class="clear"></div>
+					</div>
+				</div>
+				<div class="newcontacttab-inner">
+					<div class="tabinner-detail">
+					<label>Call Back Date</label>
+					<input name="call_back_date" type="date" value="<?php echo $call_back_date; ?>" class="contact-prefix">
+					<div class="clear"></div>
+					</div>
+					<div class="tabinner-detail">
+					<label>Status</label>
+					<input name="status" type="text" value="<?php echo $status; ?>" class="contact-prefix">
+					<div class="clear"></div>
+					</div>
+					<div class="tabinner-detail">
+					<label>Cell Phone</label>
+					<input name="cell_phone" type="text" value="<?php echo $cell_phone; ?>" class="contact-prefix">
+					<div class="clear"></div>
+					</div>
+					<div class="tabinner-detail">
+					<label>Second Contact</label>
+					<input name="second_contact" type="text" value="<?php echo $second_contact; ?>" class="contact-prefix">
 					<div class="clear"></div>
 					</div>
 				</div>

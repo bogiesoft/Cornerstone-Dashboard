@@ -12,25 +12,19 @@
 	<li><a href="archive.php"><i><img src="images/web-icons/archive.png"></i>Archive Jobs</a><div class="clear"></div></li>
 	<li><a href="job_ticket.php"><i><img src="images/web-icons/archive.png"></i>Job Ticket</a><div class="clear"></div></li>
   </ul>
-  <?php
-  require("connection.php");
-  session_start();
-  echo "<h3 style = 'text-align: center'>Live Updates</h3>";
-  $user = $_SESSION['user'];
-	$result = mysqli_query($conn,"SELECT * FROM timestamp WHERE processed_by='$user' ORDER BY time DESC LIMIT 5");
-	echo " <ul id = 'edkoma'>";
-	if ($result->num_rows > 0) {
-    // output data of each row
-    while($row = $result->fetch_assoc()) {
-		$time = strtotime($row['time']);
-		$myFormatForView = date("M d, Y g:i", $time);
-        echo "<li style = 'font-size: 11px'>" . $row['user'] . " " . $row['job'] ." on ".$myFormatForView. " ". $row['a_p']. "<li>"; 
-    }
-	
-} else {
-    echo "0 results from jobticket";
-}
-  ?>
+  <h3 style = 'text-align: center'>Live Updates</h3>
+  <ul id='edkoma'>
+
+  <script type="text/javascript">
+  $(document).ready(function(){
+      auto_refresh();
+    });
+    function auto_refresh(){
+        $('#edkoma').load('liveUpdates.php');
+  };
+  var refreshUpdates=setInterval(auto_refresh,3000);
+  </script>
+  </ul>
   <div class="clear"></div>
   </div>
 </div>
