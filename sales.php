@@ -69,24 +69,34 @@ ul.tab li a:focus, .active {background-color: #ccc;}
 		<input id = 'advanced_search_submit' style = 'display: none' type = 'submit' name = 'submit_form_advanced'>
 		</form>
 		</div>
-	</div>
+	</div><br>
 <?php
 
 $result = mysqli_query($conn, "SELECT * FROM sales");
 
 echo " <div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
 echo "<tbody>";
-echo "<tr valign='top'><td colspan='2'><table id = 'crm_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='job_id' data-index='0'>Name</th><th class='maintable-thtwo data-header' data-name='client_name' data-index='1'>Title</th><th class='maintable-thtwo data-header' data-name='project_name' data-index='2'>Phone#</th><th class='maintable-thtwo data-header' data-name='due_date' data-index='3'>Fax</th><th class='maintable-thtwo data-header' data-name='estimate_number' data-index='4'>Web Address</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='5'>Business</th></tr></thead><tbody>";
+echo "<tr valign='top'><td colspan='2'><table id = 'crm_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='job_id' data-index='0'>Client Name</th><th class='maintable-thtwo data-header' data-name='client_name' data-index='1'>Business</th><th class='maintable-thtwo data-header' data-name='project_name' data-index='2'>Address</th><th class='maintable-thtwo data-header' data-name='due_date' data-index='3'>Phone</th><th class='maintable-thtwo data-header' data-name='estimate_number' data-index='4'>City</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='5'>Title</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='5'>Email</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='5'>Website</th></tr></thead><tbody>";
 
 if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
-		$foo = array();
+		$website = $row['web_address'];
+		$email = $row['email1'];
+		
+		if(strlen($website) >= 15){
+			$website = substr($website, 0, 15) . "<br>" . "...";
+		}
+		if(strlen($email) >= 15){
+			$email = substr($email, 0, 15) . "<br>" . "...";
+		}
+
+		$foo=array();
 		array_push($foo, $row['full_name']);
 		array_push($foo, $row['address_line_1']);
 		$str = serialize($foo);
 		$stren = urlencode($str);
-		echo "<tr><td><a href = 'edit_client.php?client_info=$stren'>" .$row["full_name"]."</a></td><td>".  $row["title"]."</td><td>". $row["phone"]. "</td><td>". $row["fax"]. "</td><td>". $row["web_address"]."</td><td>". $row["business"]. "</td></tr>";
+		echo "<tr><td><a href = 'edit_client.php?client_info=$stren'>" .$row["full_name"]."</a></td><td>".  $row["business"]."</td><td>". $row["address_line_1"]. "</td><td>". $row["phone"]. "</td><td>" . $row["city"] . "</td><td>". $row['title']. "</td><td>". $email."</td><td>". $website."</td></tr>";
     }
 	echo "</tbody></table></td></tr></tbody></table></div>";
 } else {
@@ -124,24 +134,23 @@ if ($result->num_rows > 0) {
 $result = mysqli_query($conn,"SELECT * FROM job_ticket WHERE processed_by = ''");
 
 
+echo " <div id = 'table-scroll' class='allcontacts-table'><table id = 'table' border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
+echo "<tbody>";
+echo "<tr valign='top'><th class='allcontacts-title'>All Clients<span class='allcontacts-subtitle'></span></th></tr>";
+echo "<tr valign='top'><td colspan='2'><table id = 'client_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Job ID</th><th id = 'contact_name' class='maintable-thtwo data-header' data-name='contact_name' data-index='1'>Client Name</th><th id = 'address' class='maintable-thtwo data-header' data-name='client_add' data-index='2'>Project Name</th><th id = 'phone' class='maintable-thtwo data-header' data-name='contact_phone' data-index='3'>Due Date</th><th id = 'email' class='maintable-thtwo data-header' data-name='contact_email' data-index='4'>Estimate Number</th><th id = 'website' class='maintable-thtwo data-header' data-name='website' data-index='5'>Job Status</th></tr></thead><tbody>";
+
+
 if ($result->num_rows > 0) {
     // output data of each row
-
+	
     while($row = $result->fetch_assoc()) {
 		
-		echo "<div data-role='main' class='ui-content'>";
-			echo "<div class='vendor-left'>";
-				$x = $row["job_id"];
-				echo "<h3><a href='http://localhost/Cornerstone-Dashboard/edit_job.php?job_id=$x'>".$row["job_id"]."</a></h1>";
-				echo "<p>Client Name: ".$row["client_name"]."</p>";
-				echo "<p>Project Name: ".$row["project_name"]."</p>";
-			echo "</div>";
-			echo "<div class='vendor-right'>";
-				echo "<p>Due Date: ".$row["due_date"]."</p>";
-				echo "<p>Estimate Number: ".$row["estimate_number"]."</p>";
-				echo "<p>Job Status: ".$row["job_status"]."</p>";
-			echo "</div>";
-	}
+		$job_id = $row["job_id"];
+		echo "<tr class = 'hoverTab'><td><a href = 'edit_job.php?job_id=$job_id'>".$row["job_id"]."</a></td><td>".  $row["client_name"]."</td><td>". $row["project_name"]. "</td><td>". $row["due_date"] . "</td><td>". $row["estimate_number"]. "</td><td>". $row["job_status"]. "</td></tr>";
+    }
+	echo "</tbody></table></td></tr></tbody></table></div>";
+} else {
+    echo "0 results";
 }
 ?>
 
