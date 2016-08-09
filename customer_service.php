@@ -20,6 +20,51 @@ require ("header.php");
 
 require ("connection.php");
 
+$sql = "";
+
+$result_users = mysqli_query($conn, "SELECT * FROM users WHERE department = 'Customer Service'");
+$count = 1;
+while($row_users = $result_users->fetch_assoc()){
+	$user = $row_users['user'];
+	if($count == 1){
+		$sql = "SELECT * FROM job_ticket WHERE processed_by = '$user'";
+	}
+	else{
+		$sql = $sql . " UNION SELECT * FROM job_ticket WHERE processed_by = '$user'";
+	}
+	
+	$count = $count + 1;
+}
+
+$result = null;
+if($sql != ""){
+	$result = mysqli_query($conn, $sql);
+}
+
+if($result != null){
+	$job_count = 1;
+	while($row = $result->fetch_assoc()){
+		if(isset($_POST['assign_to' . $job_count])){
+			$user_name = $_SESSION['user'];
+			date_default_timezone_set('America/New_York');
+			$today = date("Y-m-d G:i:s");
+			$a_p = date("A");
+			$processed_by = $_POST['assign_to' . $job_count];
+			$job_id = $row["job_id"];
+			$job = "updated job ticket " . $job_id;
+			mysqli_query($conn, "UPDATE job_ticket SET processed_by = '$processed_by' WHERE job_id = '$job_id'");
+			$result_processed_by = mysqli_query($conn, "SELECT processed_by FROM job_ticket WHERE job_id = '$job_id'");
+			$row_processed_by = $result_processed_by->fetch_assoc();
+			$processed_by = $row_processed_by['processed_by'];
+			$sql100 = "INSERT INTO timestamp (user,time,job, a_p,processed_by,viewed) VALUES ('$user_name', '$today','$job', '$a_p','$processed_by','no')";
+			$result100 = $conn->query($sql100) or die('Error querying database 101.');
+		}
+		
+		$job_count = $job_count + 1;
+	}
+}
+
+
 $result = mysqli_query($conn,"SELECT * FROM users WHERE department = 'Customer Service'");
 
 echo " <div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
@@ -35,12 +80,6 @@ if ($result->num_rows > 0) {
 		$temp=$row['user'];
 		$result1 = mysqli_query($conn,"SELECT * FROM job_ticket WHERE processed_by = '$temp'");
 		while($row1 = $result1->fetch_assoc()){
-			$job_id = $row1['job_id'];
-			if(isset($_POST['assign_to' . $job_count])){
-				$processed_by = $_POST['assign_to' . $job_count];
-				mysqli_query($conn, "UPDATE job_ticket SET processed_by = '$processed_by' WHERE job_id = '$job_id'");
-			}
-			
 			$foo = $row1['job_id'];
 			$result2 = mysqli_query($conn, "SELECT * FROM customer_service WHERE job_id = '$foo'");
 			$row2 = $result2->fetch_assoc();
