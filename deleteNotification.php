@@ -11,7 +11,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
-$time = $_POST['id'];
-$sql="UPDATE timestamp SET viewed='yes' WHERE time='$time'";
+$id = $_POST['id'];
+$sql="UPDATE timestamp SET viewed='yes' WHERE id='$id'";
 $result=mysqli_query($conn,$sql) or die("error");
 ?>
