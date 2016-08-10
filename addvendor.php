@@ -37,7 +37,7 @@ $result = $conn->query($sql) or die('Error querying database.');
  
 $conn->close();
 
-header("location: http://localhost/crst_dashboard/vendors.php ");
+header("vendors.php");
 
 exit();
 
