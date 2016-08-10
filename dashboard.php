@@ -104,9 +104,10 @@ $conn->close();
 			$count = 0;
 			while($count < 5){
 				$date = $currentYear . "-" . $currentMonth;
-				$result1=mysqli_query($conn,"SELECT * FROM archive_jobs WHERE estimate_number != 0 AND archive_date LIKE '%{$date}%'") or die("error");
+				$result1=mysqli_query($conn,"SELECT * FROM archive_jobs WHERE estimate_number != 0 AND estimate_date LIKE '%{$date}%'") or die("error");
+				$result15=mysqli_query($conn, "SELECT * FROM job_ticket WHERE estimate_number != 0 AND estimate_date LIKE '%{$date}%'") or die("error");
 				$result2=mysqli_query($conn, "SELECT * FROM sales WHERE date_added LIKE '%{$date}%'");
-				$estimates = mysqli_num_rows($result1);
+				$estimates = mysqli_num_rows($result1) + mysqli_num_rows($result15);
 				$clients_added = mysqli_num_rows($result2);
 				array_push($monthly_estimates, $estimates);
 				array_push($clients_added_monthly, $clients_added);
@@ -268,11 +269,12 @@ $conn->close();
 			while($count < 5){
 				$date = $currentYear . "-" . $currentMonth;
 				$result_closed_jobs = mysqli_query($conn, "SELECT * FROM archive_jobs WHERE status = 'Closed' AND archive_date LIKE '%{$date}%'");
-				$result_invoiced_jobs = mysqli_query($conn, "SELECT * FROM archive_jobs WHERE invoice_number != 0 AND archive_date LIKE '%{$date}%'");
+				$result_invoiced_jobs = mysqli_query($conn, "SELECT * FROM archive_jobs WHERE invoice_number != 0 AND invoice_date LIKE '%{$date}%'");
+				$result_current_invoiced = mysqli_query($conn, "SELECT * FROM customer_service WHERE invoice_date LIKE '%{$date}%'");
 				$count = $count + 1;
 				$currentMonth = $currentMonth - 1;
 				$jobs_closed = mysqli_num_rows($result_closed_jobs);
-				$jobs_invoiced = mysqli_num_rows($result_invoiced_jobs);
+				$jobs_invoiced = mysqli_num_rows($result_invoiced_jobs) + mysqli_num_rows($result_current_invoiced);
 				array_push($jobs_closed_monthly, $jobs_closed);
 				array_push($jobs_invoiced_monthly, $jobs_invoiced);
 				

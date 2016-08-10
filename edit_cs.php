@@ -19,6 +19,7 @@ require ("connection.php");
 		$job_id = $row["job_id"];
 		$postage = $row["postage"];
 		$invoice_number = $row["invoice_number"];
+		$invoice_date = $row["invoice_date"];
 		$residual_returned = $row["residual_returned"];
 		$week_followup = $row["2week_followup"];
 		$notes=$row["notes"];
@@ -57,6 +58,10 @@ require ("connection.php");
 					<div class="tabinner-detail">
 					<label>Invoice</label>
 					<input name="invoice_number" type="text" value="<?php echo $invoice_number; ?>" class="contact-prefix">
+					</div>
+					<div class="tabinner-detail">
+					<label>Invoice date</label>
+					<input name="invoice_date" type="date" value="<?php echo $invoice_date; ?>" class="contact-prefix">
 					</div>
 					<div class="tabinner-detail">
 					<label>Residual Retured</label>
