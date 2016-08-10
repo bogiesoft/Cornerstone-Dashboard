@@ -1,6 +1,7 @@
 <?php
 require ("header.php");
 ?>
+<script src="W_MSweetAlert.js"></script>
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 	<h1 class="pull-left">Add Weights and Measures</h1>
@@ -45,7 +46,7 @@ require ("header.php");
 						require ("connection.php");
 						$result = $conn->query("select vendor_name from vendors");
 						echo("<div class='tabinner-detail' >");
-						echo "<label>Vendor</label><select name='vendor' style=width:220px;'>";
+						echo "<label>Vendor</label><select id='vendor' name='vendor' style=width:220px;'>";
 						while ($row = $result->fetch_assoc()) {
 									  unset($vendor_name);
 									  $vendor_name = $row['vendor_name']; 
@@ -63,11 +64,11 @@ require ("header.php");
 						</div>
 						<div class="tabinner-detail">
 						<label>Material</label>
-						<input name="material" type="text" class="contact-prefix">
+						<input id="material" name="material" type="text" class="contact-prefix">
 						</div>
 						<div class="tabinner-detail">
 						<label>Type</label>
-						<input name="type" type="text" class="contact-prefix">
+						<input id="type" name="type" type="text" class="contact-prefix">
 						</div>
 						<div class="tabinner-detail">
 						<label>Quantity</label>
@@ -94,7 +95,7 @@ require ("header.php");
 					</div>
 			</div>
 					<div class="newcontact-tabbtm">
-					<input class="save-btn" type="submit" value="Save" name="submit_form" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
+					<input class="save-btn store-btn" type="submit" value="Save" name="submit_form" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
 					</div>
 				</form>
 			</div>
