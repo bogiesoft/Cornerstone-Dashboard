@@ -51,6 +51,8 @@ require ("connection.php");
 		$due_date = $row['due_date'];
 		$created_by = $row['created_by'];
 		$estimate_number = $row['estimate_number'];
+		$estimate_date = $row['estimate_date'];
+		$estimate_created_by = $row['estimate_created_by'];
 		$special_instructions = $row['special_instructions'];
 		$materials_ordered = $row['materials_ordered'];
 		$materials_expected = $row['materials_expected'];
@@ -177,6 +179,30 @@ require ("connection.php");
 				<div class="tabinner-detail">
 				<label>Estimate Number</label>
 				<input name="estimate_number" type="text" value="<?php echo $estimate_number ; ?>" class="contact-prefix">
+				</div>
+				<div class="tabinner-detail">
+				<label>Estimate date</label>
+				<input name="estimate_date" type="date" value="<?php echo $estimate_date ; ?>" class="contact-prefix">
+				</div>
+				<div class="tabinner-detail">
+				<label>Estimate created by</label>
+				<select name="estimate_created_by">
+					<?php
+						$result = mysqli_query($conn, "SELECT * FROM users");
+						$result_selected = mysqli_query($conn, "SELECT * FROM users WHERE user = '$estimate_created_by'");
+						if(mysqli_num_rows($result_selected) > 0){
+							$row_selected = $result_selected->fetch_assoc();
+							$name = $row_selected["first_name"] . " " . $row["last_name"];
+							echo "<option selected = 'selected' value = '" . $estimate_created_by . "'>" . $name . "</option>";
+						}
+						else{
+							echo "<option selected = 'selected' value = ''></option>";
+						}
+						while($row = $result->fetch_assoc()){
+							echo "<option value = '" . $row['user'] . "'>" . $row['first_name'] . " " . $row['last_name'] . "</option>"; 
+						}
+					?>
+					</select>
 				</div>
 				<div class="tabinner-detail">
 				<label>Materials Ordered</label>
