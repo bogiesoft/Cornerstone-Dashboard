@@ -49,9 +49,10 @@ ul.tab li a:focus, .active {background-color: #ccc;}
 <ul class="nav nav-tabs" role="tablist">
   <li><a href="#" class="tablinks" onclick="changeTab(event, 'internal')">Internal</a></li>
   <li><a href="#" class="tablinks" onclick="changeTab(event, 'CRM')">CRM</a></li>
-  <li><a href="#" class="tablinks" onclick="changeTab(event, 'statistics')">Statistics</a></li>
 </ul>
-
+<div class="contacts-title">
+	<a class="pull-right" href="statistics.php" class="add_button">Statistics</a>
+	</div>
 </div>
 <div id="CRM" class="tab-content">
 <div class="search-cont">
@@ -61,7 +62,6 @@ ul.tab li a:focus, .active {background-color: #ccc;}
 				<label>Quick Search</label>
 				<input id="search" name="frmSearch" type="text" placeholder="Search for a specific client">
 			</form>
-			<div class="search-boxright pull-right"><a href="#" onclick = "document.getElementById('search_form').submit()">Submit</a></div>
 			<div class="contacts-title">
 				<a id = 'advanced_search_button' class="pull-right" href="#" class="add_button" onclick = 'addField()'>Advanced Search</a>
 				</div>
@@ -122,11 +122,6 @@ if ($result->num_rows > 0) {
 	</div>
 </div>
 </div>
-</div>
-
-<div id="statistics" class="tab-content">
-  <h3>Statistics</h3>
-  <p>Under Construction</p>
 </div>
 <div id="internal" class="tab-content">
 <h3>In Process</h3><br>
@@ -198,6 +193,7 @@ if ($result->num_rows > 0) {
 <script type="text/javascript" src="jquery-latest.js"></script> 
 <script type="text/javascript" src="jquery.tablesorter.js"></script> 
 <script>
+
 var fieldCount = 1;
 
 function addField(){

@@ -61,6 +61,29 @@ require ("header.php");
 					<input name="estimate_number" type="text" class="contact-prefix">
 					</div>
 					<div class="tabinner-detail">
+					<label>Estimate date</label>
+					<input name="estimate_date" type="date" class="contact-prefix">
+					</div>
+					<div class="tabinner-detail">
+					<label>Estimate created by</label>
+					<select name="estimate_created_by">
+					<?php
+						$result = mysqli_query($conn, "SELECT * FROM users");
+						$count = 1;
+						while($row = $result->fetch_assoc()){
+							if($count == 1){
+								echo "<option selected = 'selected' value = '" . $row['user'] . "'>" . $row['first_name'] . " " . $row['last_name'] . "</option>"; 
+							}
+							else{
+								echo "<option value = '" . $row['user'] . "'>" . $row['first_name'] . " " . $row['last_name'] . "</option>"; 
+							}
+							
+							$count = $count + 1;
+						}
+					?>
+					</select>
+					</div>
+					<div class="tabinner-detail">
 					<label>Materials Ordered</label>
 					<input name="materials_ordered" type="date" class="contact-prefix">
 					</div>
