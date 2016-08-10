@@ -19,6 +19,7 @@ if(isset($_POST['submit_form'])){
 			$due_date = date("Y-m-d", strtotime($_POST['due_date']));
 			$created_by = $_POST['created_by'];
 			$estimate_number = $_POST['estimate_number'];
+			$estimate_date = $_POST['estimate_date'];
 			$special_instructions = $_POST['special_instructions'];
 			$materials_ordered = date("Y-m-d", strtotime($_POST['materials_ordered']));
 			$materials_expected = date("Y-m-d", strtotime($_POST['materials_expected']));
@@ -67,7 +68,7 @@ if(isset($_POST['submit_form'])){
 			$final_count = $_POST['final_count'];
 			$bs_domestic = $_POST['bs_domestic'];
 			}
-			$sql = "UPDATE job_ticket SET processed_by = '$processed_by', client_name = '$client_name', project_name = '$project_name',ticket_date = '$ticket_date',due_date = '$due_date',created_by = '$created_by',estimate_number = '$estimate_number',special_instructions = '$special_instructions',materials_ordered = '$materials_ordered',materials_expected = '$materials_expected',expected_quantity = '$expected_quantity',records_total = '$records_total',job_status = '$job_status', mail_class = '$mail_class', rate = '$rate', processing_category = '$processing_category', mail_dim = '$mail_dim', weights_measures = '$weights_measures', permit = '$permit', bmeu = '$bmeu', based_on = '$based_on', non_profit_number = '$non_profit_number'  WHERE job_id = '$job_id' ";
+			$sql = "UPDATE job_ticket SET processed_by = '$processed_by', client_name = '$client_name', project_name = '$project_name',ticket_date = '$ticket_date',due_date = '$due_date',created_by = '$created_by',estimate_number = '$estimate_number',estimate_date = '$estimate_date', special_instructions = '$special_instructions',materials_ordered = '$materials_ordered',materials_expected = '$materials_expected',expected_quantity = '$expected_quantity',records_total = '$records_total',job_status = '$job_status', mail_class = '$mail_class', rate = '$rate', processing_category = '$processing_category', mail_dim = '$mail_dim', weights_measures = '$weights_measures', permit = '$permit', bmeu = '$bmeu', based_on = '$based_on', non_profit_number = '$non_profit_number'  WHERE job_id = '$job_id' ";
 			$result = $conn->query($sql) or die(date('Y-m-d', strtotime($ticket_date)));
 			
 			$sql2 = "UPDATE project_management SET data_source = '$data_source',data_received = '$data_received',data_completed = '$data_completed', dqr_sent = '$dqr_sent' WHERE job_id = '$job_id' ";
