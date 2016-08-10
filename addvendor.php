@@ -16,18 +16,6 @@ $today = date("Y-m-d G:i:s");
 $a_p = date("A");
 $job = "added new vendor";
 
-
-
-$check=mysqli_query($conn,"select * from vendors where vendor_name='$vendor_name' and vendor_add='$vendor_add' ");
-    $checkrows=mysqli_num_rows($check);
-
-    if ($checkrows>0){
-	   echo '<script>alert("This record has already been added.");
-	   window.location.href = "vendors.php";
-	   </script>';  
-   }
-
-
 $sql6 = "INSERT INTO timestamp (user,time,job, a_p) VALUES ('$user_name', '$today','$job', '$a_p')";
 $result7 = $conn->query($sql6) or die('Error querying database 5.');
 
@@ -37,7 +25,7 @@ $result = $conn->query($sql) or die('Error querying database.');
  
 $conn->close();
 
-header("vendors.php");
+header("location: vendors.php");
 
 exit();
 

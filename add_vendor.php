@@ -1,6 +1,7 @@
 <?php
 require ("header.php");
 ?>
+<script src="VendorSweetAlert.js"></script>
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 	<h1 class="pull-left">Add Vendor</h1>
@@ -22,7 +23,7 @@ require ("header.php");
 				<div class="newcontacttab-inner">
 					<div class="tabinner-detail">
 					<label>Vendor Name</label>
-					<input name="vendor_name" type="text" class="contact-prefix">
+					<input id="vendor_name" name="vendor_name" type="text" class="contact-prefix">
 					<div class="clear"></div>
 					</div>
 					<div class="tabinner-detail">
@@ -32,7 +33,7 @@ require ("header.php");
 					</div>
 					<div class="tabinner-detail">
 					<label>Contact Address</label>
-					<input name="vendor_add" type="text" class="contact-prefix">
+					<input id="vendor_add" name="vendor_add" type="text" class="contact-prefix">
 					<div class="clear"></div>
 					</div>
 				</div>
@@ -64,5 +65,4 @@ require ("header.php");
 	</div>
 	</div>
 </div>
-
 </div>

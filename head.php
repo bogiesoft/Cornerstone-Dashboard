@@ -13,7 +13,6 @@
 	<script src="jquery.js"></script>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 	<script src="Chart.js"></script>
-  <script src="SweetAlert.js"></script>
 	<script src="sweetalert/dist/sweetalert.min.js"></script> 
 	<link rel="stylesheet" type="text/css" href="sweetalert/dist/sweetalert.css">
 	
