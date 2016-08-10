@@ -98,7 +98,7 @@ $(document).ready(function(){
     }
 });
 </script>
-
+<script src="W_MSweetAlert.js"></script>
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 	<h1 class="pull-left">Edit Weights and Measures</h1>
@@ -138,7 +138,7 @@ $(document).ready(function(){
 					</div>
 					<div class="tabinner-detail">
 					<label>Vendor</label>
-					<select name = "vendor" style = "width:220px;">
+					<select id="vendor" name = "vendor" style = "width:220px;">
 					<option selected><?php echo $vendor; ?></option>
 					<?php
 						$sql = "SELECT vendor_name FROM vendors";
@@ -157,11 +157,11 @@ $(document).ready(function(){
 					</div>
 					<div class="tabinner-detail">
 					<label>Material</label>
-					<input name="material" type="text" class="contact-prefix" value="<?php echo $material; ?>">
+					<input id="material" name="material" type="text" class="contact-prefix" value="<?php echo $material; ?>">
 					</div>
 					<div class="tabinner-detail">
 					<label>Type</label>
-					<input name="type" type="text" class="contact-prefix"value="<?php echo $type; ?>">
+					<input id="type" name="type" type="text" class="contact-prefix"value="<?php echo $type; ?>">
 					</div>
 					<div class="tabinner-detail">
 					<label>Quantity</label>
@@ -171,11 +171,11 @@ $(document).ready(function(){
 				<div class="newcontacttab-inner">
 					<div class="tabinner-detail">
 					<label>Height</label>
-					<input name="height" type="text" class="contact-prefix" value="<?php echo $height; ?>">
+					<input  name="height" type="text" class="contact-prefix" value="<?php echo $height; ?>">
 					</div>
 					<div class="tabinner-detail">
 					<label>Weight</label>
-					<input name="weight" type="text" class="contact-prefix" value="<?php echo $weight; ?>">
+					<input  name="weight" type="text" class="contact-prefix" value="<?php echo $weight; ?>">
 					</div>
 					<div class="tabinner-detail">
 					<label>Size</label>
@@ -188,8 +188,8 @@ $(document).ready(function(){
 				</div>
 			</div>
 				<div class="newcontact-tabbtm">
-					<input class="save-btn" type="submit" value="Save" name="submit_form" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
-					<input class="save-btn" type = "submit" value = "Delete" name = "delete_form" onClick = "return confirm('Are you sure you want to delete this weights and measure?')" style="width:200px; font-size:16px; background-color:#d14700; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px; float:left">
+					<input class="save-btn store-btn" type="submit" value="Save" name="submit_form" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
+					<input class="save-btn delete-btn" type = "submit" value = "Delete" name = "delete_form" onClick = "return confirm('Are you sure you want to delete this weights and measure?')" style="width:200px; font-size:16px; background-color:#d14700; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px; float:left">
 				</div>
 				</form>
 			
