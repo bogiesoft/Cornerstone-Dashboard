@@ -221,19 +221,6 @@ if ($result->num_rows > 0) {
 					echo "<p>DQR date: ".$row_pm["dqr_sent"]."</p>";
 				echo "</div><br>";
 				
-				$result_wandm = mysqli_query($conn, "SELECT * FROM materials WHERE job_id = '$job_id'");
-				
-				if(mysqli_num_rows($result_wandm) > 0){
-					echo " <div id = 'table-scroll' class='allcontacts-table'><table id = 'table' border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
-					echo "<tbody>";
-					echo "<tr valign='top'><th class='allcontacts-title'>Weights and Measures<span class='allcontacts-subtitle'></span></th></tr>";
-					echo "<tr valign='top'><td colspan='2'><table id = 'wm_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Job ID</th><th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Received</th><th id = 'contact_name' class='maintable-thtwo data-header' data-name='contact_name' data-index='1'>Location</th><th id = 'address' class='maintable-thtwo data-header' data-name='client_add' data-index='2'>Checked in</th><th id = 'phone' class='maintable-thtwo data-header' data-name='contact_phone' data-index='3'>Material</th><th id = 'email' class='maintable-thtwo data-header' data-name='contact_email' data-index='4'>Type</th><th id = 'website' class='maintable-thtwo data-header' data-name='website' data-index='5'>Quantity</th><th id = 'category' class='maintable-thtwo data-header' data-name='category' data-index='6'>Vendor</th><th id = 'title' class='maintable-thtwo data-header' data-name='title' data-index='7'>Height</th><th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Weight</th><th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Size</th><th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Based on</th></tr></thead><tbody>";
-					while($row_wm = $result_wandm->fetch_assoc()){
-						echo "<tr class = 'hoverTab'><td><a href = 'edit_wm.php?job_id=$job_id'>".$row_wm["job_id"]."</a></td><td>". $row_wm['received'] . "</td><td>" . $row_wm["location"]."</td><td>". $row_wm["checked_in"]. "</td><td>". $row_wm["material"] . "</td><td>". $row_wm["type"]. "</td><td>". $row_wm["quantity"]. "</td><td>" .$row_wm["vendor"]."</td><td>". $row_wm["height"] . "</td><td>" . $row_wm['weight'] . "</td><td>" . $row_wm['size'] . "</td><td>" . $row_wm['based_on'] . "</td></tr>";
-					}
-					echo "</tbody></table></td></tr></tbody></table></div><br>";
-				}
-				
 				$result_blue_sheet = mysqli_query($conn, "SELECT * FROM customer_service WHERE job_id = '$job_id'");
 				$row_blue_sheet = $result_blue_sheet->fetch_assoc();
 				

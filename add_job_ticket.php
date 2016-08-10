@@ -31,7 +31,10 @@ if(isset($_POST['submit_form'])){
 	if(isset($_POST['job_status'])){
 		$job_status = $_POST['job_status'];
 	}
-
+	@$wm_array = $_POST['w&m'];
+	if(is_array($wm_array)){
+		
+	}
 	$mail_class = $_POST['mail_class'];
 	$rate = $_POST['rate'];
 	$processing_category = $_POST['processing_category'];
