@@ -66,7 +66,7 @@ require ("header.php");
 							$job = "deleted vendor";
 							$sql6 = "INSERT INTO timestamp (user,time,job, a_p) VALUES ('$user_name', '$today','$job', '$a_p')";
 							$result7 = $conn->query($sql6) or die('Error querying database 5.');
-							$sql_delete = "DELETE FROM vendors WHERE '$vendor_name' = vendor_name";
+							$sql_delete = "DELETE FROM vendors WHERE vendor_name='$vendor_name'  and vendor_add='$vendor_add'";
 							mysqli_query($conn, $sql_delete);
 							$conn->close();
 							header("location: vendors.php");
