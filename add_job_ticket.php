@@ -21,6 +21,8 @@ if(isset($_POST['submit_form'])){
 		$created_by = $_POST['created_by'];
 	}
 	$estimate_number = $_POST['estimate_number'];
+	$estimate_date = $_POST['estimate_date'];
+	$estimate_created_by = $_POST['estimate_created_by'];
 	$special_instructions = $_POST['special_instructions'];
 	$materials_ordered = date("Y-m-d", strtotime($_POST['materials_ordered']));
 	$materials_expected = date("Y-m-d", strtotime($_POST['materials_expected']));
@@ -82,8 +84,8 @@ if(isset($_POST['submit_form'])){
 
 	
 
-	$sql = "INSERT INTO job_ticket(processed_by,client_name,project_name,ticket_date,due_date,created_by,special_instructions,materials_ordered,materials_expected,estimate_number,expected_quantity,records_total,job_status,mail_class,rate,processing_category,
-	mail_dim,weights_measures,permit,bmeu,based_on,non_profit_number) VALUES ('$processed_by','$client_name', '$project_name', '$ticket_date', '$due_date','$created_by','$special_instructions','$materials_ordered','$materials_expected','$estimate_number','$expected_quantity','$records_total','$job_status', '$mail_class', '$rate', '$processing_category', '$mail_dim', '$weights_measures', '$permit', '$bmeu', '$based_on', '$non_profit_number')";
+	$sql = "INSERT INTO job_ticket(processed_by,client_name,project_name,ticket_date,due_date,created_by,special_instructions,materials_ordered,materials_expected,estimate_number,estimate_date,estimate_created_by,expected_quantity,records_total,job_status,mail_class,rate,processing_category,
+	mail_dim,weights_measures,permit,bmeu,based_on,non_profit_number) VALUES ('$processed_by','$client_name', '$project_name', '$ticket_date', '$due_date','$created_by','$special_instructions','$materials_ordered','$materials_expected','$estimate_number','$estimate_date','$estimate_created_by','$expected_quantity','$records_total','$job_status', '$mail_class', '$rate', '$processing_category', '$mail_dim', '$weights_measures', '$permit', '$bmeu', '$based_on', '$non_profit_number')";
 	$result = $conn->query($sql) or die('Error querying database 0.');
 
 

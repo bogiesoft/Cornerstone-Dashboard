@@ -49,7 +49,7 @@ if(isset($_POST['submit_form'])){
 		$temp = $count + 1;
 	}
 	
-	$sql1 = "INSERT INTO archive_jobs ( job_id,processed_by,client_name,project_name,ticket_date,due_date,created_by,estimate_number,estimate_date,special_instructions,materials_ordered,materials_expected,expected_quantity,records_total,job_status, mail_class, rate, processing_category, mail_dim, weights_measures, permit, bmeu, based_on, non_profit_number)  SELECT job_id,processed_by,client_name,project_name,ticket_date,due_date,created_by,estimate_number,estimate_date,special_instructions,materials_ordered,materials_expected,expected_quantity,records_total,job_status, mail_class, rate, processing_category, mail_dim, weights_measures, permit, bmeu, based_on, non_profit_number FROM job_ticket WHERE job_id = '$job_id'";
+	$sql1 = "INSERT INTO archive_jobs ( job_id,processed_by,client_name,project_name,ticket_date,due_date,created_by,estimate_number,estimate_date,estimate_created_by,special_instructions,materials_ordered,materials_expected,expected_quantity,records_total,job_status, mail_class, rate, processing_category, mail_dim, weights_measures, permit, bmeu, based_on, non_profit_number)  SELECT job_id,processed_by,client_name,project_name,ticket_date,due_date,created_by,estimate_number,estimate_date,estimate_created_by,special_instructions,materials_ordered,materials_expected,expected_quantity,records_total,job_status, mail_class, rate, processing_category, mail_dim, weights_measures, permit, bmeu, based_on, non_profit_number FROM job_ticket WHERE job_id = '$job_id'";
 	$result = $conn->query($sql1) or die('Error querying database 100.') ;
 	$result1 = mysqli_query($conn,"DELETE FROM job_ticket WHERE job_id = '$job_id'");
 
