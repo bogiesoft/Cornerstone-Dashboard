@@ -22,23 +22,6 @@ require ("header.php");
 				<form action="add_w_m.php" method="post">
 					<div class="newcontacttab-inner">
 						<div class="tabinner-detail">
-						<label>Job Id</label><select name='job_id' class="contact-prefix" style="width:220px;">
-						<?php
-						require ("connection.php");
-
-						
-						$result = $conn->query("SELECT job_id FROM job_ticket");
-						
-						while ($row = $result->fetch_assoc()) {
-									  unset($job_id);
-									  $job_id = $row['job_id']; 
-									  echo '<option value="'.$job_id.'">'.$job_id.'</option>';
-									 
-						}
-						echo "</select>";
-						?>
-						</div>
-						<div class="tabinner-detail">
 						<label>Received Date</label>
 						<input name="received" type="date" class="contact-birthday" style="width:220px;">
 						</div>
@@ -56,12 +39,13 @@ require ("header.php");
 						echo "</select>";
 						echo "</div>";
 						?>
-					</div>
-					<div class="newcontacttab-inner">
 						<div class="tabinner-detail">
 						<label>Checked In (initials)</label>
 						<input name="checked_in" type="text" class="contact-prefix">
 						</div>
+					</div>
+					
+					<div class="newcontacttab-inner">
 						<div class="tabinner-detail">
 						<label>Material</label>
 						<input id="material" name="material" type="text" class="contact-prefix">
@@ -71,15 +55,11 @@ require ("header.php");
 						<input id="type" name="type" type="text" class="contact-prefix">
 						</div>
 						<div class="tabinner-detail">
-						<label>Quantity</label>
-						<input name="quantity" type="text" class="contact-prefix">
-						</div>
-					</div>
-					<div class="newcontacttab-inner">
-						<div class="tabinner-detail">
 						<label>Height "in"</label>
 						<input name="height" type="text" class="contact-prefix">
 						</div>
+					</div>
+					<div class="newcontacttab-inner">
 						<div class="tabinner-detail">
 						<label>Weight "lbs"</label>
 						<input name="weight" type="text" class="contact-prefix">
