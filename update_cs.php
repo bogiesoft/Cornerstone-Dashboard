@@ -18,7 +18,7 @@ if(isset($_POST['submit_form'])){
 	$today = date("Y-m-d G:i:s");
 	$a_p = date("A");
 	$_SESSION['date'] = $today;
-	$job = $status . " job " . $job_id;
+	$job = $status . " job ticket" . $job_id;
 
 	$sql = "UPDATE customer_service SET postage='$postage',invoice_number='$invoice_number',residual_returned='$residual_returned',2week_followup='$week_followup',notes='$notes',status='$status',reason='$reason' WHERE job_id = '$job_id'";
 
@@ -29,7 +29,7 @@ if(isset($_POST['submit_form'])){
 	$result_processed_by = mysqli_query($conn, "SELECT processed_by FROM job_ticket WHERE job_id = '$job_id'");
 	$row_processed_by = $result_processed_by->fetch_assoc();
 	$processed_by = $row_processed_by['processed_by'];
-	$sql100 = "INSERT INTO timestamp (user,time,job, a_p,processed_by) VALUES ('$user_name', '$today','$job', '$a_p','$processed_by')";
+	$sql100 = "INSERT INTO timestamp (user,time,job, a_p,processed_by,viewed) VALUES ('$user_name', '$today','$job', '$a_p','$processed_by','no')";
 	$result100 = $conn->query($sql100) or die('Error querying database 101.');
 	
 	$sql3 = "SELECT job_id FROM archive_jobs";

@@ -116,6 +116,8 @@ else if(isset($_POST['delete_form'])){
 	mysqli_query($conn, $sql1);
 	$sql1 = "DELETE FROM customer_service WHERE job_id = '$job_id'";
 	mysqli_query($conn, $sql1);
+	$sql1 = "DELETE FROM materials WHERE job_id = '$job_id'";
+	mysqli_query($conn, $sql1);
 	$sql1 = "INSERT INTO timestamp (user,time,job, a_p) VALUES ('$user_name', '$today','$job', '$a_p')";
 	mysqli_query($conn, $sql1);
 	$conn->close();
