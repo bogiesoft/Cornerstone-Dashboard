@@ -107,7 +107,7 @@ else if(isset($_POST['delete_form'])){
 	$row_processed_by = $result_processed_by->fetch_assoc();
 	$processed_by = $row_processed_by['processed_by'];
 	
-	$sql5 = "INSERT INTO timestamp (user,time,job, a_p,processed_by) VALUES ('$user_name', '$today','$job', '$a_p','$processed_by')";
+	$sql5 = "INSERT INTO timestamp (user,time,job, a_p,processed_by,viewed) VALUES ('$user_name', '$today','$job', '$a_p','$processed_by', 'no')";
 	$result5 = $conn->query($sql5) or die('Error querying database 5.');
 	
 	$sql1 = "DELETE FROM project_management WHERE job_id = '$job_id'";
@@ -117,8 +117,6 @@ else if(isset($_POST['delete_form'])){
 	$sql1 = "DELETE FROM customer_service WHERE job_id = '$job_id'";
 	mysqli_query($conn, $sql1);
 	$sql1 = "DELETE FROM materials WHERE job_id = '$job_id'";
-	mysqli_query($conn, $sql1);
-	$sql1 = "INSERT INTO timestamp (user,time,job, a_p) VALUES ('$user_name', '$today','$job', '$a_p')";
 	mysqli_query($conn, $sql1);
 	$conn->close();
 	header("location: dashboard.php");

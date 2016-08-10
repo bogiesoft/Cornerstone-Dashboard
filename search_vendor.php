@@ -6,9 +6,10 @@ require ("header.php");
 
 						require ("connection.php");
 
-							$temp = $_GET['vendor_name'];
-							$vendor_name = $temp;
-							$sql = "SELECT * FROM vendors WHERE vendor_name = '$temp' "; 
+							$temp = unserialize($_GET['vendor_info']);
+							$vendor_name = $temp[0];
+							$vendor_add = $temp[1];
+							$sql = "SELECT * FROM vendors WHERE vendor_name = '$vendor_name' AND vendor_add = '$vendor_add'"; 
 							$result = mysqli_query($conn,$sql); 
 							
 							
