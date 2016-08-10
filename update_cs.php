@@ -12,6 +12,7 @@ if(isset($_POST['submit_form'])){
 	$notes=$_POST["notes"];
 	$status = $_POST["status"];
 	$reason = $_POST["reason"];
+	$invoice_date = $_POST["invoice_date"];
 	session_start();
 	$user_name = $_SESSION['user'];
 	date_default_timezone_set('America/New_York');
@@ -20,7 +21,7 @@ if(isset($_POST['submit_form'])){
 	$_SESSION['date'] = $today;
 	$job = $status . " job ticket" . $job_id;
 
-	$sql = "UPDATE customer_service SET postage='$postage',invoice_number='$invoice_number',residual_returned='$residual_returned',2week_followup='$week_followup',notes='$notes',status='$status',reason='$reason' WHERE job_id = '$job_id'";
+	$sql = "UPDATE customer_service SET postage='$postage',invoice_number='$invoice_number', invoice_date = '$invoice_date', residual_returned='$residual_returned',2week_followup='$week_followup',notes='$notes',status='$status',reason='$reason' WHERE job_id = '$job_id'";
 
 	$result0 = $conn->query($sql) or die('Error querying database.');
 
@@ -48,7 +49,7 @@ if(isset($_POST['submit_form'])){
 		$temp = $count + 1;
 	}
 	
-	$sql1 = "INSERT INTO archive_jobs ( job_id,processed_by,client_name,project_name,ticket_date,due_date,created_by,estimate_number,special_instructions,materials_ordered,materials_expected,expected_quantity,records_total,job_status, mail_class, rate, processing_category, mail_dim, weights_measures, permit, bmeu, based_on, non_profit_number)  SELECT job_id,processed_by,client_name,project_name,ticket_date,due_date,created_by,estimate_number,special_instructions,materials_ordered,materials_expected,expected_quantity,records_total,job_status, mail_class, rate, processing_category, mail_dim, weights_measures, permit, bmeu, based_on, non_profit_number FROM job_ticket WHERE job_id = '$job_id'";
+	$sql1 = "INSERT INTO archive_jobs ( job_id,processed_by,client_name,project_name,ticket_date,due_date,created_by,estimate_number,estimate_date,special_instructions,materials_ordered,materials_expected,expected_quantity,records_total,job_status, mail_class, rate, processing_category, mail_dim, weights_measures, permit, bmeu, based_on, non_profit_number)  SELECT job_id,processed_by,client_name,project_name,ticket_date,due_date,created_by,estimate_number,estimate_date,special_instructions,materials_ordered,materials_expected,expected_quantity,records_total,job_status, mail_class, rate, processing_category, mail_dim, weights_measures, permit, bmeu, based_on, non_profit_number FROM job_ticket WHERE job_id = '$job_id'";
 	$result = $conn->query($sql1) or die('Error querying database 100.') ;
 	$result1 = mysqli_query($conn,"DELETE FROM job_ticket WHERE job_id = '$job_id'");
 
@@ -92,11 +93,10 @@ if(isset($_POST['submit_form'])){
 	archive_jobs.bs_domestic = customer_service.bs_domestic
 	 WHERE archive_jobs.job_id = customer_service.job_id AND customer_service.job_id = '$temp'";
 	 $result8 = $conn->query($sql4) or die('Error querying database 3.');
-	$result9 = mysqli_query($conn,"DELETE FROM customer_service WHERE job_id = '$job_id'");
-
 	$result10 = mysqli_query($conn,"UPDATE archive_jobs, customer_service SET 
 	archive_jobs.postage = customer_service.postage,
 	archive_jobs.invoice_number = customer_service.invoice_number,
+	archive_jobs.invoice_date = customer_service.invoice_date,
 	archive_jobs.residual_returned = customer_service.residual_returned,
 	archive_jobs.2week_followup = customer_service.2week_followup,
 	archive_jobs.notes = customer_service.notes,

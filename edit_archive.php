@@ -132,6 +132,7 @@ require ("connection.php");
 	<div class="newcontactstabs-outer">
 		<div class="tab-content">
 			<div role="tabpanel" class="tab-pane active" id="home">
+			<form action="add_job_ticket.php" method="post">
 			<div class="newcontactstab-detail">
 			<div class="tabinner-detail">
 				<label>Client Name</label>

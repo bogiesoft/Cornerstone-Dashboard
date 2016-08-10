@@ -30,6 +30,10 @@ require ("header.php");
 						
 						if(isset($_POST['submit_form'])){
 							$user_name = $_SESSION['user'];
+							$result_previous = mysqli_query($conn, "SELECT vendor_name, vendor_add FROM vendors WHERE vendor_name = '$vendor_name' AND vendor_add = '$vendor_add'");
+							$row_previous = $result_previous->fetch_assoc();
+							$prev_name = $row_previous['vendor_name'];
+							$prev_add = $row_previous['vendor_add'];
 							date_default_timezone_set('America/New_York');
 							$today = date("Y-m-d G:i:s");
 							$a_p = date("A");
@@ -43,7 +47,7 @@ require ("header.php");
 							$vendor_website = $_POST['website'];		
 							$vendor_add = $_POST['client_add'];
 					
-							$sql = "UPDATE vendors SET vendor_name='$vendor_name',vendor_phone='$vendor_phone',vendor_add='$vendor_add',vendor_contact='$vendor_contact',vendor_email='$vendor_email',vendor_website='$vendor_website' WHERE vendor_name='$vendor_name'";
+							$sql = "UPDATE vendors SET vendor_name='$vendor_name',vendor_phone='$vendor_phone',vendor_add='$vendor_add',vendor_contact='$vendor_contact',vendor_email='$vendor_email',vendor_website='$vendor_website' WHERE vendor_name='$prev_name' AND vendor_add = '$prev_add'";
 
 							$result = $conn->query($sql) or die('Error querying database.');
 							 
