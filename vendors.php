@@ -37,8 +37,12 @@ if ($result->num_rows > 0) {
 		
 		echo "<div data-role='main' class='ui-content'>";
 			echo "<div class='vendor-left'>";
-				$x = $row["vendor_name"];
-				echo "<h3><a href='http://localhost/Cornerstone-Dashboard/search_vendor.php?vendor_name=$x'>".$row["vendor_name"]."</a></h1>";
+				$foo = array();
+				array_push($foo, $row['vendor_name']);
+				array_push($foo, $row['vendor_add']);
+				$str = serialize($foo);
+				$stren = urlencode($str);
+				echo "<h3><a href='search_vendor.php?vendor_info=$stren'>".$row["vendor_name"]."</a></h1>";
 				echo "<p>Contact Name: ".$row["vendor_contact"]."</p>";
 				echo "<p>Address: ".$row["vendor_add"]."</p>";
 			echo "</div>";
@@ -47,28 +51,6 @@ if ($result->num_rows > 0) {
 				echo "<p>Email: ".$row["vendor_email"]."</p>";
 				echo "<p>Website: ".$row["vendor_website"]."</p>";
 			echo "</div>";
-				
-	
-					echo "<div>";
-							
-					$result1 = mysqli_query($conn,"SELECT * FROM w_and_m WHERE vendor='$x'");
-					
-					if ($result1->num_rows > 0) {
-						echo " <div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
-						echo "<tbody>";
-						echo "<tr valign='top'><td colspan='2'><table border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='material' data-index='0'>Material</th><th class='maintable-thtwo data-header' data-name='size' data-index='1'>Size 'in'</th><th class='maintable-thtwo data-header' data-name='height' data-index='2'>Height 'in'</th><th class='maintable-thtwo data-header' data-name='weight' data-index='3'>Weight 'lb'</th><th class='maintable-thtwo data-header' data-name='based_on' data-index='4'>Based On</th></tr>";
-						while($row1 = $result1->fetch_assoc()) {
-							
-							echo "<tr><td>".$row1["material"]."</td><td>".  $row1["size"]."</td><td>". $row1["height"]. "</td><td>". $row1["weight"]. "</td><td>". $row1["based_on"]."</td></tr>";
-							
-							
-						}
-						echo "</tbody></table></td></tr></tbody></table></div>";
-						echo "<div class='clear'></div>";
-						echo "<br>";
-					} 
-				
-				echo "</div>";
 			echo "</div>";
     }
 } else {
