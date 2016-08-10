@@ -6,7 +6,6 @@ require ("header.php");
 	<div class="contacts-title">
 	<h1 class="pull-left">Vendors</h1>
 	<a class="pull-right" href="add_vendor.php" class="add_button">Add Vendor</a>
-	<a class="pull-right" href="add_pop_wm.php" style="margin-right:20px; background-color:#d14700;">Add Popular W/M</a>
 	</div>
 <div class="dashboard-detail">
 	<div class="search-cont">
@@ -38,8 +37,8 @@ if ($result->num_rows > 0) {
 		echo "<div data-role='main' class='ui-content'>";
 			echo "<div class='vendor-left'>";
 				$foo = array();
-				array_push($foo, $row['vendor_name']);
-				array_push($foo, $row['vendor_add']);
+				array_push($foo, $row["vendor_name"]);
+				array_push($foo, $row["vendor_add"]);
 				$str = serialize($foo);
 				$stren = urlencode($str);
 				echo "<h3><a href='search_vendor.php?vendor_info=$stren'>".$row["vendor_name"]."</a></h1>";
