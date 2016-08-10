@@ -110,7 +110,7 @@ $(document).ready(function(){
 					</div>
 					<div class="tabinner-detail">
 					<label>Vendor</label>
-					<select id="vendor" name = "vendor" style = "width:220px;">
+					<select name = "vendor" style = "width:220px;">
 					<option selected><?php echo $vendor; ?></option>
 					<?php
 						$sql = "SELECT vendor_name FROM vendors";
@@ -129,11 +129,11 @@ $(document).ready(function(){
 				<div class="newcontacttab-inner">
 					<div class="tabinner-detail">
 					<label>Material</label>
-					<input id="material" name="material" type="text" class="contact-prefix" value="<?php echo $material; ?>">
+					<input name="material" type="text" class="contact-prefix" value="<?php echo $material; ?>">
 					</div>
 					<div class="tabinner-detail">
 					<label>Type</label>
-					<input id="type" name="type" type="text" class="contact-prefix"value="<?php echo $type; ?>">
+					<input name="type" type="text" class="contact-prefix"value="<?php echo $type; ?>">
 					</div>
 					<div class="tabinner-detail">
 					<label>Height</label>
