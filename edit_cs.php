@@ -28,6 +28,7 @@ require ("connection.php");
 }
 
 ?>
+<script src="C_SSweetAlert.js"></script>
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 	<h1 class="pull-left">Edit Invoiced Job</h1>
