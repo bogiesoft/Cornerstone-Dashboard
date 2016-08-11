@@ -38,7 +38,7 @@ $(document).ready(function(){
 	};
 
 	function showDuplicateMessage(){
-		swal("Error!", "This vendor has already been bushit", "error");
+		swal("Error!", "This vendor has already been added. Please update or delete old one.", "error");
 	};
 
 	function warnBeforeRedirect() {
