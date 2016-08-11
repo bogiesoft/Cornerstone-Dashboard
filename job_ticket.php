@@ -107,8 +107,6 @@ require ("header.php");
 					<option value="waiting for postage">waiting for postage</option>
 					</select>
 					</div>
-					
-					
 					<div class="tabinner-detail">
 					<label>Mail Class</label>
 					<input name="mail_class" type="text" class="contact-prefix">
@@ -124,10 +122,6 @@ require ("header.php");
 					<div class="tabinner-detail">
 					<label>Mail Dimensions</label>
 					<input name="mail_dim" type="text" class="contact-prefix">
-					</div>
-					<div class="tabinner-detail">
-					<label>Weights and Measures</label>
-					<input name="weights_measures" type="text" class="contact-prefix">
 					</div>
 					<div class="tabinner-detail">
 					<label>Permit</label>
@@ -288,22 +282,49 @@ require ("header.php");
 					<label>Final Count</label>
 					<input name="final_count" type="text" class="contact-prefix">
 					</div>
-					
+					<div class="tabinner-detail">
+					<label>Weights and Measures</label>
+					<select name = 'wm[]'multiple>
+					<?php
+					$result = mysqli_query($conn, "SELECT * FROM materials ORDER BY vendor");
+					while($row = $result->fetch_assoc()){
+						echo "<option value = '" . $row['material_id'] . "'>" . $row['vendor'] . str_repeat('&nbsp;', 7) . $row['material'] . str_repeat('&nbsp;', 7) . $row['type'] . "</option>";
+					}
+					?>
+					</select>
+					</div>
 					<div class="tabinner-detail">
 					<label>Special Instructions</label>
 					<textarea name="special_instructions" class="contact-prefix"></textarea>
 					</div>
-					
 				</div>	
 				</div>
 				<div class="newcontact-tabbtm">
 					<input class="save-btn store-btn" type="submit" value="Save" name="submit_form" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
 				</div>
 			</form>
+			<button onclick = 'add_wm()'>Add Weights and Measure</button>
 			</div>
 		</div>
 	</div>
 </div>
 </div>
+<script>
+var count = 1;
 
+function add_wm(){
+	var vendors = <?php echo json_encode($array_vendors); ?>;
+	var materials = <?php  echo json_encode($array_material); ?>;
+	var types = <?php echo json_encode($array_type); ?>;
+	alert("test 1")
+	$(".weights_and_measures").append("<div id = 'wm" + count + "'><select name = 'vendors" + count + "'></select></div>");
+	for(var i = 0; i < vendors.length; i++){
+			var opt = document.createElement('option');
+			opt.value = vendors[i];
+			opt.innerHTML = vendors[i];
+			document.getElementById("vendors" + count).appendChild(opt);
+		}
+	alert("test");
+}
+</script>
 		

@@ -13,9 +13,6 @@ require ("connection.php");
 	
 	if ($result->num_rows > 0) {
 		$row = $result->fetch_assoc();	
-		$received = $row['received'];
-		$location = $row['location'];
-		$checked_in = $row['checked_in'];
 		$material = $row['material'];
 		$type = $row['type'];
 		$vendor = $row['vendor'];
@@ -38,8 +35,6 @@ require ("connection.php");
 		$a_p = date("A");
 		$_SESSION['date'] = $today; 
 		$job = "updated weights and measure";
-		$received = $_POST['received'];
-		$checked_in = $_POST['checked_in'];
 		$material = $_POST['material'];
 		$type = $_POST['type'];
 		$vendor = $_POST['vendor'];
@@ -47,7 +42,7 @@ require ("connection.php");
 		$weight = $_POST['weight'];
 		$size = $_POST['size'];
 		$based_on = $_POST['based_on'];
-		$sql = "UPDATE materials SET location='$location',received='$received',checked_in='$checked_in',material='$material',type='$type',vendor='$vendor',height='$height',weight='$weight',size='$size', based_on = '$based_on' WHERE material_id ='$term'";
+		$sql = "UPDATE materials SET material='$material',type='$type',vendor='$vendor',height='$height',weight='$weight',size='$size', based_on = '$based_on' WHERE material_id ='$term'";
 		$result = $conn->query($sql) or die('Error querying database.');
 		$sql6 = "INSERT INTO timestamp (user,time,job,a_p) VALUES ('$user_name', '$today','$job', '$a_p')";
 		$result7 = $conn->query($sql6) or die('Error querying database 5.');
@@ -105,10 +100,6 @@ $(document).ready(function(){
 				<form action="" method="post">
 				<div class="newcontacttab-inner">
 					<div class="tabinner-detail">
-					<label>Received Date</label>
-					<input name="received" type="date" style="width:250px;" class="contact-birthday" value="<?php echo $received; ?>">
-					</div>
-					<div class="tabinner-detail">
 					<label>Vendor</label>
 					<select name = "vendor" style = "width:220px;">
 					<option selected><?php echo $vendor; ?></option>
@@ -122,15 +113,11 @@ $(document).ready(function(){
 					</select>
 					</div>
 					<div class="tabinner-detail">
-					<label>Checked In</label>
-					<input name="checked_in" type="text" class="contact-prefix" value="<?php echo $checked_in; ?>">
-					</div>
-				</div>
-				<div class="newcontacttab-inner">
-					<div class="tabinner-detail">
 					<label>Material</label>
 					<input name="material" type="text" class="contact-prefix" value="<?php echo $material; ?>">
 					</div>
+				</div>
+				<div class="newcontacttab-inner">
 					<div class="tabinner-detail">
 					<label>Type</label>
 					<input name="type" type="text" class="contact-prefix"value="<?php echo $type; ?>">

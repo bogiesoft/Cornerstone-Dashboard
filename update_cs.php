@@ -33,6 +33,44 @@ if(isset($_POST['submit_form'])){
 	$sql100 = "INSERT INTO timestamp (user,time,job, a_p,processed_by,viewed) VALUES ('$user_name', '$today','$job', '$a_p','$processed_by','no')";
 	$result100 = $conn->query($sql100) or die('Error querying database 101.');
 	
+	$material = "";
+	$type = "";
+	$vendor = "";
+	$height = "";
+	$weight = "";
+	$size = "";
+	
+	$result_wm = mysqli_query($conn, "SELECT weights_measures FROM job_ticket WHERE job_id = '$job_id'");
+	$row_wm = $result_wm->fetch_assoc();
+	
+	if($row_wm['weights_measures'] != ""){
+		$material_array = array();
+		$type_array = array();
+		$vendor_array = array();
+		$height_array = array();
+		$weight_array = array();
+		$size_array = array();
+		$array_material_ids = explode(",", $row_wm['weights_measures']);
+		for($i = 0; $i < count($array_material_ids); $i++){
+			$material_id = $array_material_ids[$i];
+			$result_info = mysqli_query($conn, "SELECT * FROM materials WHERE material_id = '$material_id'");
+			$row_info = $result_info->fetch_assoc();
+			array_push($material_array, $row_info['material']);
+			array_push($type_array, $row_info['type']);
+			array_push($vendor_array, $row_info['vendor']);
+			array_push($height_array, $row_info['height']);
+			array_push($weight_array, $row_info['weight']);
+			array_push($size_array, $row_info['size']);
+		}
+		
+		$material = implode(",", $material_array);
+		$type = implode(",", $type_array);
+		$vendor = implode(",", $vendor_array);
+		$height = implode(",", $height_array);
+		$weight = implode(",", $weight_array);
+		$size = implode(",", $size_array);
+	}
+	
 	$sql3 = "SELECT job_id FROM archive_jobs";
 	$result3 = mysqli_query($conn, $sql3);
 	$count = 0;
@@ -51,28 +89,18 @@ if(isset($_POST['submit_form'])){
 	
 	$sql1 = "INSERT INTO archive_jobs ( job_id,processed_by,client_name,project_name,ticket_date,due_date,created_by,estimate_number,estimate_date,estimate_created_by,special_instructions,materials_ordered,materials_expected,expected_quantity,records_total,job_status, mail_class, rate, processing_category, mail_dim, weights_measures, permit, bmeu, based_on, non_profit_number)  SELECT job_id,processed_by,client_name,project_name,ticket_date,due_date,created_by,estimate_number,estimate_date,estimate_created_by,special_instructions,materials_ordered,materials_expected,expected_quantity,records_total,job_status, mail_class, rate, processing_category, mail_dim, weights_measures, permit, bmeu, based_on, non_profit_number FROM job_ticket WHERE job_id = '$job_id'";
 	$result = $conn->query($sql1) or die('Error querying database 100.') ;
+	
+	
+	
 	$result1 = mysqli_query($conn,"DELETE FROM job_ticket WHERE job_id = '$job_id'");
 
-
+	$sql = "UPDATE archive_jobs SET material = '$material', type = '$type', vendor = '$vendor', height = '$height', weight = '$weight', size = '$size' WHERE job_id = '$job_id'";
+	mysqli_query($conn, $sql) or die("materials error");
+	
 	$sql2 = "UPDATE archive_jobs, project_management SET archive_jobs.data_source = project_management.data_source ,archive_jobs.data_received = project_management.data_received ,archive_jobs.data_completed = project_management.data_completed,archive_jobs.dqr_sent = project_management.dqr_sent WHERE archive_jobs.job_id = project_management.job_id AND project_management.job_id = '$temp'";	
 	$result2 = $conn->query($sql2) or die('Error querying database 1.') ;
 	$result3 = mysqli_query($conn,"DELETE FROM project_management WHERE job_id = '$job_id'");
 
-	$sql3 = "UPDATE archive_jobs, materials SET 
-	archive_jobs.received = materials.received,
-	archive_jobs.location = materials.location,
-	archive_jobs.checked_in = materials.checked_in,
-	archive_jobs.material = materials.material,
-	archive_jobs.type = materials.type,
-	archive_jobs.quantity = materials.quantity,
-	archive_jobs.vendor = materials.vendor,
-	archive_jobs.height = materials.height,
-	archive_jobs.weight = materials.weight,
-	archive_jobs.size = materials.size
-	 WHERE archive_jobs.job_id = materials.job_id AND materials.job_id = '$temp'";
-	 $result6 = $conn->query($sql3) or die('Error querying database 2.') ;
-	 
-	$result7 = mysqli_query($conn,"DELETE FROM materials WHERE job_id = '$job_id'");
 
 	$sql4 = "UPDATE archive_jobs, customer_service SET 
 	archive_jobs.completed_date = customer_service.completed_date,
