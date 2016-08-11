@@ -282,24 +282,20 @@ require ("header.php");
 					<label>Final Count</label>
 					<input name="final_count" type="text" class="contact-prefix">
 					</div>
-					
+					<div class="tabinner-detail">
+					<label>Weights and Measures</label>
+					<select name = 'wm[]'multiple>
+					<?php
+					$result = mysqli_query($conn, "SELECT * FROM materials ORDER BY vendor");
+					while($row = $result->fetch_assoc()){
+						echo "<option value = '" . $row['material_id'] . "'>" . $row['vendor'] . str_repeat('&nbsp;', 7) . $row['material'] . str_repeat('&nbsp;', 7) . $row['type'] . "</option>";
+					}
+					?>
+					</select>
+					</div>
 					<div class="tabinner-detail">
 					<label>Special Instructions</label>
 					<textarea name="special_instructions" class="contact-prefix"></textarea>
-					</div>
-					<div class="tabinner-detail">
-					<label>Weights and Measures</label>
-					<?php
-						$array_vendors = array();
-						$array_material = array();
-						$array_type = array();
-						$result_vendors = mysqli_query($conn, "SELECT * FROM materials");
-						while($row = $result_vendors->fetch_assoc()){
-							array_push($array_vendors, $row['vendor']);
-							array_push($array_material, $row['material']);
-							array_push($array_type, $row['type']);
-						}
-					?>
 					</div>
 				</div>	
 				</div>

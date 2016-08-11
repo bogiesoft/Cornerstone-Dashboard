@@ -221,6 +221,33 @@ if ($result->num_rows > 0) {
 					echo "<p>DQR date: ".$row_pm["dqr_sent"]."</p>";
 				echo "</div><br>";
 				
+				require ("connection.php");
+				$result_wm = mysqli_query($conn, "SELECT weights_measures FROM job_ticket WHERE job_id = '$job_id'");
+				$row_wm = "";
+				if(mysqli_num_rows($result_wm) > 0){
+					$row_wm = $result_wm->fetch_assoc();
+				}
+				
+				$materials_array = array();
+				
+				if($row_wm != ""){
+					$materials_array = explode(",", $row_wm['weights_measures']);
+				}
+					echo " <div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
+					echo "<tbody>";
+					echo "<tr valign='top'><th class='allcontacts-title'>Weights and Measures<span class='allcontacts-subtitle'></span></th></tr>";
+					echo "<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='vendor' data-index='4'>Vendor</th><th class='maintable-thtwo data-header' data-name='material' data-index='6'>Material</th><th class='maintable-thtwo data-header' data-name='type' data-index='7'>Type</th><th class='maintable-thtwo data-header' data-name='based_on' data-index='12'>Based On</th><th class='maintable-thtwo data-header' data-name='height' data-index='9'>Height 'in'</th><th class='maintable-thtwo data-header' data-name='weight' data-index='10'>Weight 'lbs'</th><th class='maintable-thtwo data-header' data-name='size' data-index='11'>Size 'in'</th></tr></thead><tbody>";
+
+					for($i = 0; $i < count($materials_array); $i++){
+							$material_id = $materials_array[$i];
+							$result_wm = mysqli_query($conn, "SELECT * FROM materials WHERE material_id = '$material_id'");
+							if(mysqli_num_rows($result_wm) > 0){
+								$row = $result_wm->fetch_assoc();
+								echo "<tr><td><a href = 'edit_wm.php?material_id=$material_id'>". $row["vendor"]. "</a></td><td>". $row["material"]. "</td><td>". $row["type"]. "</td><td>". $row["based_on"]. "</td><td>". $row["height"]. "</td><td>". $row["weight"]. "</td><td>". $row["size"]. "</td></tr>";
+							}
+					}
+						echo "</tbody></table></td></tr></tbody></table></div>";
+				 
 				$result_blue_sheet = mysqli_query($conn, "SELECT * FROM customer_service WHERE job_id = '$job_id'");
 				$row_blue_sheet = $result_blue_sheet->fetch_assoc();
 				

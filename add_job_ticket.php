@@ -31,9 +31,10 @@ if(isset($_POST['submit_form'])){
 	if(isset($_POST['job_status'])){
 		$job_status = $_POST['job_status'];
 	}
-	@$wm_array = $_POST['w&m'];
+	@$wm_array = $_POST['wm'];
+	$wm = "";
 	if(is_array($wm_array)){
-		
+		$wm = implode(",", $_POST['wm']);
 	}
 	$mail_class = $_POST['mail_class'];
 	$rate = $_POST['rate'];
@@ -88,7 +89,7 @@ if(isset($_POST['submit_form'])){
 	
 
 	$sql = "INSERT INTO job_ticket(processed_by,client_name,project_name,ticket_date,due_date,created_by,special_instructions,materials_ordered,materials_expected,estimate_number,estimate_date,estimate_created_by,expected_quantity,records_total,job_status,mail_class,rate,processing_category,
-	mail_dim,weights_measures,permit,bmeu,based_on,non_profit_number) VALUES ('$processed_by','$client_name', '$project_name', '$ticket_date', '$due_date','$created_by','$special_instructions','$materials_ordered','$materials_expected','$estimate_number','$estimate_date','$estimate_created_by','$expected_quantity','$records_total','$job_status', '$mail_class', '$rate', '$processing_category', '$mail_dim', '$weights_measures', '$permit', '$bmeu', '$based_on', '$non_profit_number')";
+	mail_dim,weights_measures,permit,bmeu,based_on,non_profit_number) VALUES ('$processed_by','$client_name', '$project_name', '$ticket_date', '$due_date','$created_by','$special_instructions','$materials_ordered','$materials_expected','$estimate_number','$estimate_date','$estimate_created_by','$expected_quantity','$records_total','$job_status', '$mail_class', '$rate', '$processing_category', '$mail_dim', '$wm', '$permit', '$bmeu', '$based_on', '$non_profit_number')";
 	$result = $conn->query($sql) or die('Error querying database 0.');
 
 

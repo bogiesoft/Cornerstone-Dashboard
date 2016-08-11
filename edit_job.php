@@ -265,10 +265,6 @@ require ("connection.php");
 				<input name="mail_dim" type="text" value="<?php echo $mail_dim ; ?>" class="contact-prefix">
 				</div>
 				<div class="tabinner-detail">
-				<label>Weights and Measures</label>
-				<input name="weights_measures" type="text" value="<?php echo $weights_measures ; ?>" class="contact-prefix">
-				</div>
-				<div class="tabinner-detail">
 				<label>Permit</label>
 				<input name="permit" type="text" value="<?php echo $permit ; ?>" class="contact-prefix">
 				</div>
@@ -435,7 +431,26 @@ require ("connection.php");
 				<label>Final Count</label>
 				<input name="final_count" type="text" value="<?php echo $final_count ; ?>"  class="contact-prefix">
 				</div>
-				
+				<div class="tabinner-detail">
+				<label>Weights and Measures</label>
+				<select name = 'wm[]'multiple>
+					<?php
+					$result = mysqli_query($conn, "SELECT * FROM materials ORDER BY vendor");
+					$wm_array = explode(",", $weights_measures);
+					$index = 0;
+					while($row = $result->fetch_assoc()){
+						if($wm_array[$index] == $row['material_id']){
+							echo "<option selected = 'selected' value = '" . $row['material_id'] . "'>" . $row['vendor'] . str_repeat('&nbsp;', 7) . $row['material'] . str_repeat('&nbsp;', 7) . $row['type'] . "</option>";
+						}
+						else{
+							echo "<option value = '" . $row['material_id'] . "'>" . $row['vendor'] . str_repeat('&nbsp;', 7) . $row['material'] . str_repeat('&nbsp;', 7) . $row['type'] . "</option>";
+						}
+						
+						$index = $index + 1;
+					}
+					?>
+					</select>
+				</div>
 				<div class="tabinner-detail">				
 				<label>Special Instructions</label>
 				<textarea name="special_instructions" class="contact-prefix" cols="80" rows="25"><?php echo $special_instructions ; ?></textarea>
