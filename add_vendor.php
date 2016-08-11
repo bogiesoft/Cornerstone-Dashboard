@@ -33,7 +33,7 @@ require ("header.php");
 					</div>
 					<div class="tabinner-detail">
 					<label>Contact Address</label>
-					<input id="vendor_add" name="vendor_add" type="text" class="contact-prefix">
+					<input name="vendor_add" type="text" class="contact-prefix">
 					<div class="clear"></div>
 					</div>
 				</div>

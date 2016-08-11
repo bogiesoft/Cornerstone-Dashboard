@@ -10,7 +10,7 @@ require ("header.php");
 							$temp = unserialize($_GET['vendor_info']);
 							$vendor_name = $temp[0];
 							$vendor_add = $temp[1];
-							$sql = "SELECT * FROM vendors WHERE vendor_name = '$vendor_name' AND vendor_add = '$vendor_add'"; 
+							$sql = "SELECT * FROM vendors WHERE vendor_name = '$vendor_name'"; 
 							$result = mysqli_query($conn,$sql); 
 							
 							
@@ -31,7 +31,7 @@ require ("header.php");
 						
 						if(isset($_POST['submit_form'])){
 							$user_name = $_SESSION['user'];
-							$result_previous = mysqli_query($conn, "SELECT vendor_name, vendor_add FROM vendors WHERE vendor_name = '$vendor_name' AND vendor_add = '$vendor_add'");
+							$result_previous = mysqli_query($conn, "SELECT vendor_name, vendor_add FROM vendors WHERE vendor_name = '$vendor_name'");
 							$row_previous = $result_previous->fetch_assoc();
 							$prev_name = $row_previous['vendor_name'];
 							$prev_add = $row_previous['vendor_add'];
@@ -48,7 +48,7 @@ require ("header.php");
 							$vendor_website = $_POST['website'];		
 							$vendor_add = $_POST['client_add'];
 					
-							$sql = "UPDATE vendors SET vendor_name='$vendor_name',vendor_phone='$vendor_phone',vendor_add='$vendor_add',vendor_contact='$vendor_contact',vendor_email='$vendor_email',vendor_website='$vendor_website' WHERE vendor_name='$prev_name' AND vendor_add = '$prev_add'";
+							$sql = "UPDATE vendors SET vendor_name='$vendor_name',vendor_phone='$vendor_phone',vendor_add='$vendor_add',vendor_contact='$vendor_contact',vendor_email='$vendor_email',vendor_website='$vendor_website' WHERE vendor_name='$prev_name'";
 
 							$result = $conn->query($sql) or die('Error querying database.');
 							 
@@ -66,7 +66,7 @@ require ("header.php");
 							$job = "deleted vendor";
 							$sql6 = "INSERT INTO timestamp (user,time,job, a_p) VALUES ('$user_name', '$today','$job', '$a_p')";
 							$result7 = $conn->query($sql6) or die('Error querying database 5.');
-							$sql_delete = "DELETE FROM vendors WHERE vendor_name='$vendor_name'  and vendor_add='$vendor_add'";
+							$sql_delete = "DELETE FROM vendors WHERE vendor_name='$vendor_name'";
 							mysqli_query($conn, $sql_delete);
 							$conn->close();
 							header("location: vendors.php");
