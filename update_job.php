@@ -31,7 +31,7 @@ if(isset($_POST['submit_form'])){
 			$rate = $_POST['rate'];
 			$processing_category = $_POST['processing_category'];
 			$mail_dim = $_POST['mail_dim'];
-			$weights_measures = $_POST['weights_measures'];
+			$weights_measures = implode(',',$_POST['wm']);
 			$permit = $_POST['permit'];
 			$bmeu = $_POST['bmeu'];
 			$based_on = $_POST['based_on'];
@@ -117,8 +117,6 @@ else if(isset($_POST['delete_form'])){
 	$sql1 = "DELETE FROM production WHERE job_id = '$job_id'";
 	mysqli_query($conn, $sql1);
 	$sql1 = "DELETE FROM customer_service WHERE job_id = '$job_id'";
-	mysqli_query($conn, $sql1);
-	$sql1 = "DELETE FROM materials WHERE job_id = '$job_id'";
 	mysqli_query($conn, $sql1);
 	$conn->close();
 	header("location: dashboard.php");
