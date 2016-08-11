@@ -20,7 +20,6 @@ $(document).ready(function(){
 
 	function checkDup(){
 		var vendor_name=$("#vendor_name").val();
-		var vendor_add=$("#vendor_add").val();
 		$.ajax({
 			type: "POST",
 			url: "checkVendorDup.php",
@@ -39,7 +38,7 @@ $(document).ready(function(){
 	};
 
 	function showDuplicateMessage(){
-		swal("Error!", "This vendor has already been added.", "error");
+		swal("Error!", "This vendor has already been bushit", "error");
 	};
 
 	function warnBeforeRedirect() {
