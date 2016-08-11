@@ -68,6 +68,8 @@ require ("header.php");
 							$result7 = $conn->query($sql6) or die('Error querying database 5.');
 							$sql_delete = "DELETE FROM vendors WHERE vendor_name='$vendor_name'";
 							mysqli_query($conn, $sql_delete);
+							$sql_delete_WM = "DELETE FROM materials WHERE vendor='$vendor_name'";
+							mysqli_query($conn, $sql_delete_WM);
 							$conn->close();
 							header("location: vendors.php");
 							exit();

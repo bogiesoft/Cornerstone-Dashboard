@@ -23,7 +23,7 @@ $(document).ready(function(){
 		$.ajax({
 			type: "POST",
 			url: "checkVendorDup.php",
-			data:{vendor_name:vendor_name,vendor_add:vendor_add},
+			data:{vendor_name:vendor_name},
 			success:function(data){
 				if(data=='duplicate')
 				{
