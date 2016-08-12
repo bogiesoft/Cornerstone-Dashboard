@@ -3,7 +3,57 @@ require ("header.php");
 ?>
 
 
+<script>
+	$(function() {
+    $(".vendors").change(getMaterials);
+    $("#materials").change(getTypes);
 
+});
+
+function getMaterials()
+{
+    var vendor = $(this).val(); 
+    $.ajax({
+        url: 'getMaterials.php',
+        type: 'post',
+        data: {
+            vendor: vendor
+        },
+        success: function(data){
+        	$("#materials").children().remove();
+        	$("#materials").append("<option value='default'>Select</option>");
+        	$("#types").children().remove();
+        	$("#types").append("<option value='default'>Select</option>");
+        	var result=jQuery.parseJSON(data);
+        	$.each(result,function( index, value ) {
+				$("#materials").append('<option value="'+value+'">'+value+'</option>');
+			});
+    	}
+    });
+};
+
+function getTypes()
+{
+	var vendor=$(".vendors").val();
+    var material = $(this).val(); 
+    $.ajax({
+        url: 'getTypes.php',
+        type: 'post',
+        data: {
+            vendor: vendor,
+            material:material
+        },
+        success: function(data){
+        	$("#types").children().remove();
+        	$("#types").append("<option value='default'>Select</option>");
+        	var result=jQuery.parseJSON(data);
+        	$.each(result,function( index, value ) {
+				$("#types").append('<option value="'+value+'">'+value+'</option>');
+			});
+    	}
+    });
+};
+</script>
 <!----- New Job Ticket ----->
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
@@ -284,19 +334,43 @@ require ("header.php");
 					</div>
 					<div class="tabinner-detail">
 					<label>Weights and Measures</label>
-					<select name = 'wm[]'multiple>
-					<?php
-					$result = mysqli_query($conn, "SELECT * FROM materials ORDER BY vendor");
-					while($row = $result->fetch_assoc()){
-						echo "<option value = '" . $row['material_id'] . "'>" . $row['vendor'] . str_repeat('&nbsp;', 7) . $row['material'] . str_repeat('&nbsp;', 7) . $row['type'] . "</option>";
-					}
-					?>
-					</select>
+					<table border="1" cellpadding="1" cellspacing="1" style='text-align: center; vertical-align: middle;'>
+						<tr>
+					        <th>Select</th><th>Vendor</th><th>Material</th><th>type</th>
+					    </tr>
+						<?php
+						$result = mysqli_query($conn, "SELECT * FROM materials ORDER BY vendor");
+						while($row = $result->fetch_assoc()){
+							    echo "<tr>
+								        <td ><input type='checkbox' name='wm[]' value='" . $row['material_id'] . "'></td>
+								        <td>"; $result = $conn->query("select vendor_name from vendors");
+											echo "<select class='vendors' name='vendor' style=width:220px;'><option value='default'>Select</option>";
+											while ($row = $result->fetch_assoc()) {
+														  unset($vendor_name);
+														  $vendor_name = $row['vendor_name']; 
+														  echo '<option value="'.$vendor_name.'">'.$vendor_name.'</option>';
+														 
+											}
+											echo "</select>
+										</td>
+
+								        <td>";
+											echo "<select id='materials' name='vendor' style=width:220px;'><option value='default'>Select</option></select>
+										</td>
+								       	<td>
+											<select id='types' name='vendor' style=width:220px;'><option value='default'>Select</option></select>
+										</td>
+								    </tr>";
+								    }
+						?>
+
+					</table>
 					</div>
 					<div class="tabinner-detail">
 					<label>Special Instructions</label>
 					<textarea name="special_instructions" class="contact-prefix"></textarea>
 					</div>
+
 				</div>	
 				</div>
 				<div class="newcontact-tabbtm">
@@ -325,6 +399,6 @@ function add_wm(){
 			document.getElementById("vendors" + count).appendChild(opt);
 		}
 	alert("test");
-}
+
 </script>
 		
