@@ -35,6 +35,10 @@ require ("header.php");
 						echo "</select>";
 						echo "</div>";
 						?>
+						<div class="tabinner-detail">
+						<label>Product #</label>
+						<input id="product_num" name="product_num" type="text" class="contact-prefix">
+						</div>
 					</div>
 					
 					<div class="newcontacttab-inner">
