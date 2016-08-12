@@ -4,15 +4,50 @@ require ("header.php");
 
 
 <script>
+var W_Mcount=1;
 	$(function() {
-    $(".vendors").change(getMaterials);
-    $("#materials").change(getTypes);
+    $("#vendors"+W_Mcount).change(function(){
+    	getMaterials(W_Mcount);
+    });
+    $("#materials"+W_Mcount).change(function(){
+    	getTypes(W_Mcount);
+    });
 
 });
+function addWeights_Measures(){
+	if(W_Mcount<20){
+		W_Mcount=W_Mcount+1;
+		$("#W_MTable").append(	"<tr id='WM"+W_Mcount+"'><td >			<input type='checkbox' checked name='wm[]' value=''>		</td>		<td>			<select id='vendors"+W_Mcount+"' name='vendor' style='width:220px;'>				<option value='default'>Select</option>			</select>		</td>		<td>			<select id='materials"+W_Mcount+"' name='material' style='width:220px;'>				<option value='default'>Select</option>			</select>		</td>		<td>			<select id='types"+W_Mcount+"' name='vendor' style='width:220px;'>				<option value='default'>Select</option>			</select>		</td> <td><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeWeights_Measures('#WM" + W_Mcount + "')></td>	</tr>");
+		getVendors(W_Mcount);
 
-function getMaterials()
+	}
+};
+function removeWeights_Measures(x){
+	$(x).remove();
+	W_Mcount--;
+};
+function getVendors(W_Mcount)
 {
-    var vendor = $(this).val(); 
+    $.ajax({
+        url: 'getVendors.php',
+        type: 'post',
+        success: function(data){
+        	$("#materials"+W_Mcount).children().remove();
+        	$("#materials"+W_Mcount).append("<option value='default'>Select</option>");
+        	$("#types"+W_Mcount).children().remove();
+        	$("#types"+W_Mcount).append("<option value='default'>Select</option>");
+        	var result=jQuery.parseJSON(data);
+        	$.each(result,function( index, value ) {
+				$("#vendors"+W_Mcount).append('<option value="'+value+'">'+value+'</option>');
+			});
+    	}
+    });
+
+};
+function getMaterials(W_Mcount)
+{
+	alert('getmaterials'+W_Mcount);
+   var vendor = $("#vendors"+W_Mcount).val(); 
     $.ajax({
         url: 'getMaterials.php',
         type: 'post',
@@ -20,22 +55,23 @@ function getMaterials()
             vendor: vendor
         },
         success: function(data){
-        	$("#materials").children().remove();
-        	$("#materials").append("<option value='default'>Select</option>");
-        	$("#types").children().remove();
-        	$("#types").append("<option value='default'>Select</option>");
+        	$("#materials"+W_Mcount).children().remove();
+        	$("#materials"+W_Mcount).append("<option value='default'>Select</option>");
+        	$("#types"+W_Mcount).children().remove();
+        	$("#types"+W_Mcount).append("<option value='default'>Select</option>");
         	var result=jQuery.parseJSON(data);
         	$.each(result,function( index, value ) {
-				$("#materials").append('<option value="'+value+'">'+value+'</option>');
+				$("#materials"+W_Mcount).append('<option value="'+value+'">'+value+'</option>');
 			});
     	}
     });
 };
 
-function getTypes()
+function getTypes(W_Mcount)
 {
-	var vendor=$(".vendors").val();
-    var material = $(this).val(); 
+	alert('gettypes'+W_Mcount);
+	var vendor=$("#vendors"+W_Mcount).val();
+    var material = $("#materials"+W_Mcount).val(); 
     $.ajax({
         url: 'getTypes.php',
         type: 'post',
@@ -44,11 +80,11 @@ function getTypes()
             material:material
         },
         success: function(data){
-        	$("#types").children().remove();
-        	$("#types").append("<option value='default'>Select</option>");
+        	$("#types"+W_Mcount).children().remove();
+        	$("#types"+W_Mcount).append("<option value='default'>Select</option>");
         	var result=jQuery.parseJSON(data);
         	$.each(result,function( index, value ) {
-				$("#types").append('<option value="'+value+'">'+value+'</option>');
+				$("#types"+W_Mcount).append('<option value="'+value+'">'+value+'</option>');
 			});
     	}
     });
@@ -334,17 +370,18 @@ function getTypes()
 					</div>
 					<div class="tabinner-detail">
 					<label>Weights and Measures</label>
-					<table border="1" cellpadding="1" cellspacing="1" style='text-align: center; vertical-align: middle;'>
+					<a class="pull-right" onclick = 'addWeights_Measures()'>Add Weights and Measures</a>
+					<table id="W_MTable" border="1" cellpadding="1" cellspacing="1" style='text-align: center; vertical-align: middle;'>
 						<tr>
-					        <th>Select</th><th>Vendor</th><th>Material</th><th>type</th>
+					        <th>Select</th><th>Vendor</th><th>Material</th><th>type</th><th>Delete</th>
 					    </tr>
 						<?php
 						$result = mysqli_query($conn, "SELECT * FROM materials ORDER BY vendor");
 						while($row = $result->fetch_assoc()){
-							    echo "<tr>
+							    echo "<tr id='WM1'>
 								        <td ><input type='checkbox' name='wm[]' value='" . $row['material_id'] . "'></td>
 								        <td>"; $result = $conn->query("select vendor_name from vendors");
-											echo "<select class='vendors' name='vendor' style=width:220px;'><option value='default'>Select</option>";
+											echo "<select id='vendors1' name='vendor' style='width:220px;'><option value='default'>Select</option>";
 											while ($row = $result->fetch_assoc()) {
 														  unset($vendor_name);
 														  $vendor_name = $row['vendor_name']; 
@@ -355,11 +392,12 @@ function getTypes()
 										</td>
 
 								        <td>";
-											echo "<select id='materials' name='vendor' style=width:220px;'><option value='default'>Select</option></select>
+											echo "<select id='materials1' name='vendor' style='width:220px;'><option value='default'>Select</option></select>
 										</td>
 								       	<td>
-											<select id='types' name='vendor' style=width:220px;'><option value='default'>Select</option></select>
+											<select id='types1' name='vendor' style='width:220px;'><option value='default'>Select</option></select>
 										</td>
+										<td><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeWeights_Measures('#WM1')></td>
 								    </tr>";
 								    }
 						?>
@@ -377,28 +415,9 @@ function getTypes()
 					<input class="save-btn store-btn" type="submit" value="Save" name="submit_form" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
 				</div>
 			</form>
-			<button onclick = 'add_wm()'>Add Weights and Measure</button>
 			</div>
 		</div>
 	</div>
 </div>
 </div>
-<script>
-var count = 1;
-
-function add_wm(){
-	var vendors = <?php echo json_encode($array_vendors); ?>;
-	var materials = <?php  echo json_encode($array_material); ?>;
-	var types = <?php echo json_encode($array_type); ?>;
-	alert("test 1")
-	$(".weights_and_measures").append("<div id = 'wm" + count + "'><select name = 'vendors" + count + "'></select></div>");
-	for(var i = 0; i < vendors.length; i++){
-			var opt = document.createElement('option');
-			opt.value = vendors[i];
-			opt.innerHTML = vendors[i];
-			document.getElementById("vendors" + count).appendChild(opt);
-		}
-	alert("test");
-
-</script>
 		
