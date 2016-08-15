@@ -6,48 +6,49 @@ require ("header.php");
 <script>
 var W_Mcount=1;
 	$(function() {
-    $("#vendors"+W_Mcount).change(function(){
-    	getMaterials(W_Mcount);
+    $(document).on('change', '.vendors',function(){
+    	var id=$(this).parent().parent().attr('id');
+    	getMaterials(id);
     });
-    $("#materials"+W_Mcount).change(function(){
-    	getTypes(W_Mcount);
+    $(document).on('change', '.materials',function(){
+    	var id=$(this).parent().parent().attr('id');
+    	getTypes(id);
     });
 
 });
 function addWeights_Measures(){
 	if(W_Mcount<20){
 		W_Mcount=W_Mcount+1;
-		$("#W_MTable").append(	"<tr id='WM"+W_Mcount+"'><td >			<input type='checkbox' checked name='wm[]' value=''>		</td>		<td>			<select id='vendors"+W_Mcount+"' name='vendor' style='width:220px;'>				<option value='default'>Select</option>			</select>		</td>		<td>			<select id='materials"+W_Mcount+"' name='material' style='width:220px;'>				<option value='default'>Select</option>			</select>		</td>		<td>			<select id='types"+W_Mcount+"' name='vendor' style='width:220px;'>				<option value='default'>Select</option>			</select>		</td> <td><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeWeights_Measures('#WM" + W_Mcount + "')></td>	</tr>");
+		$("#W_MTable").append(	"<tr id='"+W_Mcount+"'><td >			<input type='checkbox' checked name='wm[]' value=''>		</td>		<td>			<select class='vendors' id='vendors"+W_Mcount+"' name='vendor' style='width:220px;'>				<option value='default'>Select</option>			</select>		</td>		<td>			<select class='materials' id='materials"+W_Mcount+"' name='material' style='width:220px;'>				<option value='default'>Select</option>			</select>		</td>		<td>			<select class='types' id='types"+W_Mcount+"' name='vendor' style='width:220px;'>				<option value='default'>Select</option>			</select>		</td> <td><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeWeights_Measures('#" + W_Mcount + "')></td>	</tr>");
 		getVendors(W_Mcount);
 
 	}
 };
-function removeWeights_Measures(x){
-	$(x).remove();
+function removeWeights_Measures(row_id){
+	$(row_id).remove();
 	W_Mcount--;
 };
-function getVendors(W_Mcount)
+function getVendors(row_id)
 {
     $.ajax({
         url: 'getVendors.php',
         type: 'post',
         success: function(data){
-        	$("#materials"+W_Mcount).children().remove();
-        	$("#materials"+W_Mcount).append("<option value='default'>Select</option>");
-        	$("#types"+W_Mcount).children().remove();
-        	$("#types"+W_Mcount).append("<option value='default'>Select</option>");
+        	$("#materials"+row_id).children().remove();
+        	$("#materials"+row_id).append("<option value='default'>Select</option>");
+        	$("#types"+row_id).children().remove();
+        	$("#types"+row_id).append("<option value='default'>Select</option>");
         	var result=jQuery.parseJSON(data);
         	$.each(result,function( index, value ) {
-				$("#vendors"+W_Mcount).append('<option value="'+value+'">'+value+'</option>');
+				$("#vendors"+row_id).append('<option value="'+value+'">'+value+'</option>');
 			});
     	}
     });
 
 };
-function getMaterials(W_Mcount)
+function getMaterials(row_id)
 {
-	alert('getmaterials'+W_Mcount);
-   var vendor = $("#vendors"+W_Mcount).val(); 
+   var vendor = $("#vendors"+row_id).val(); 
     $.ajax({
         url: 'getMaterials.php',
         type: 'post',
@@ -55,23 +56,22 @@ function getMaterials(W_Mcount)
             vendor: vendor
         },
         success: function(data){
-        	$("#materials"+W_Mcount).children().remove();
-        	$("#materials"+W_Mcount).append("<option value='default'>Select</option>");
-        	$("#types"+W_Mcount).children().remove();
-        	$("#types"+W_Mcount).append("<option value='default'>Select</option>");
+        	$("#materials"+row_id).children().remove();
+        	$("#materials"+row_id).append("<option value='default'>Select</option>");
+        	$("#types"+row_id).children().remove();
+        	$("#types"+row_id).append("<option value='default'>Select</option>");
         	var result=jQuery.parseJSON(data);
         	$.each(result,function( index, value ) {
-				$("#materials"+W_Mcount).append('<option value="'+value+'">'+value+'</option>');
+				$("#materials"+row_id).append('<option value="'+value+'">'+value+'</option>');
 			});
     	}
     });
 };
 
-function getTypes(W_Mcount)
+function getTypes(row_id)
 {
-	alert('gettypes'+W_Mcount);
-	var vendor=$("#vendors"+W_Mcount).val();
-    var material = $("#materials"+W_Mcount).val(); 
+	var vendor=$("#vendors"+row_id).val();
+    var material = $("#materials"+row_id).val(); 
     $.ajax({
         url: 'getTypes.php',
         type: 'post',
@@ -80,11 +80,11 @@ function getTypes(W_Mcount)
             material:material
         },
         success: function(data){
-        	$("#types"+W_Mcount).children().remove();
-        	$("#types"+W_Mcount).append("<option value='default'>Select</option>");
+        	$("#types"+row_id).children().remove();
+        	$("#types"+row_id).append("<option value='default'>Select</option>");
         	var result=jQuery.parseJSON(data);
         	$.each(result,function( index, value ) {
-				$("#types"+W_Mcount).append('<option value="'+value+'">'+value+'</option>');
+				$("#types"+row_id).append('<option value="'+value+'">'+value+'</option>');
 			});
     	}
     });
@@ -378,10 +378,10 @@ function getTypes(W_Mcount)
 						<?php
 						$result = mysqli_query($conn, "SELECT * FROM materials ORDER BY vendor");
 						while($row = $result->fetch_assoc()){
-							    echo "<tr id='WM1'>
+							    echo "<tr id='1'>
 								        <td ><input type='checkbox' name='wm[]' value='" . $row['material_id'] . "'></td>
 								        <td>"; $result = $conn->query("select vendor_name from vendors");
-											echo "<select id='vendors1' name='vendor' style='width:220px;'><option value='default'>Select</option>";
+											echo "<select class='vendors' id='vendors1' name='vendor' style='width:220px;'><option value='default'>Select</option>";
 											while ($row = $result->fetch_assoc()) {
 														  unset($vendor_name);
 														  $vendor_name = $row['vendor_name']; 
@@ -392,10 +392,10 @@ function getTypes(W_Mcount)
 										</td>
 
 								        <td>";
-											echo "<select id='materials1' name='vendor' style='width:220px;'><option value='default'>Select</option></select>
+											echo "<select class='materials' id='materials1' name='vendor' style='width:220px;'><option value='default'>Select</option></select>
 										</td>
 								       	<td>
-											<select id='types1' name='vendor' style='width:220px;'><option value='default'>Select</option></select>
+											<select class='types' id='types1' name='vendor' style='width:220px;'><option value='default'>Select</option></select>
 										</td>
 										<td><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeWeights_Measures('#WM1')></td>
 								    </tr>";
