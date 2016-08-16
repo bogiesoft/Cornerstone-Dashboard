@@ -76,7 +76,7 @@ $result = mysqli_query($conn, "SELECT * FROM sales");
 
 echo " <div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
 echo "<tbody>";
-echo "<tr valign='top'><td colspan='2'><table id = 'crm_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='job_id' data-index='0'>Client Name</th><th class='maintable-thtwo data-header' data-name='client_name' data-index='1'>Business</th><th class='maintable-thtwo data-header' data-name='project_name' data-index='2'>Address</th><th class='maintable-thtwo data-header' data-name='due_date' data-index='3'>Phone</th><th class='maintable-thtwo data-header' data-name='estimate_number' data-index='4'>City</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='5'>Title</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='5'>Email</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='5'>Website</th></tr></thead><tbody>";
+echo "<tr valign='top'><td colspan='2'><table id = 'crm_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='job_id' data-index='0'>Client Name</th><th class='maintable-thtwo data-header' data-name='client_name' data-index='1'>Business</th><th class='maintable-thtwo data-header' data-name='due_date' data-index='3'>Phone</th><th class='maintable-thtwo data-header' data-name='estimate_number' data-index='4'>City</th><th class='maintable-thtwo data-header' data-name='project_name' data-index='2'>Zip Code</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='5'>Title</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='5'>Email</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='5'>Website</th></tr></thead><tbody>";
 
 if ($result->num_rows > 0) {
     // output data of each row
@@ -96,7 +96,7 @@ if ($result->num_rows > 0) {
 		array_push($foo, $row['address_line_1']);
 		$str = serialize($foo);
 		$stren = urlencode($str);
-		echo "<tr><td><a href = 'edit_client.php?client_info=$stren'>" .$row["full_name"]."</a></td><td>".  $row["business"]."</td><td>". $row["address_line_1"]. "</td><td>". $row["phone"]. "</td><td>" . $row["city"] . "</td><td>". $row['title']. "</td><td>". $email."</td><td>". $website."</td></tr>";
+		echo "<tr><td><a href = 'edit_client.php?client_info=$stren'>" .$row["full_name"]."</a></td><td>".  $row["business"]."</td><td>". $row["phone"]. "</td><td>" . $row["city"] . "</td><td>". $row["zipcode"]. "</td><td>". $row['title']. "</td><td>". $email."</td><td>". $website."</td></tr>";
     }
 	echo "</tbody></table></td></tr></tbody></table></div>";
 } else {
