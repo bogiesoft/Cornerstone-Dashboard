@@ -76,12 +76,12 @@ $result = mysqli_query($conn, "SELECT * FROM sales");
 
 echo " <div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
 echo "<tbody>";
-echo "<tr valign='top'><td colspan='2'><table id = 'crm_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='job_id' data-index='0'>Client Name</th><th class='maintable-thtwo data-header' data-name='client_name' data-index='1'>Business</th><th class='maintable-thtwo data-header' data-name='due_date' data-index='3'>Phone</th><th class='maintable-thtwo data-header' data-name='estimate_number' data-index='4'>City</th><th class='maintable-thtwo data-header' data-name='project_name' data-index='2'>Zip Code</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='5'>Title</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='5'>Email</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='5'>Website</th></tr></thead><tbody>";
+echo "<tr valign='top'><td colspan='2'><table id = 'crm_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='job_id' data-index='0'>Client Name</th><th class='maintable-thtwo data-header' data-name='client_name' data-index='1'>Business</th><th class='maintable-thtwo data-header' data-name='due_date' data-index='2'>Phone</th><th class='maintable-thtwo data-header' data-name='estimate_number' data-index='3'>City</th><th class='maintable-thtwo data-header' data-name='project_name' data-index='4'>Zip Code</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='5'>Call Back Date</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='6'>Priority Level</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='7'>Vertical 1</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='8'>Vertical 2</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='9'>Vertical 3</th></tr></thead><tbody>";
 
 if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
-		$website = $row['web_address'];
+	/*	$website = $row['web_address'];
 		$email = $row['email1'];
 		
 		if(strlen($website) >= 15){
@@ -90,13 +90,13 @@ if ($result->num_rows > 0) {
 		if(strlen($email) >= 15){
 			$email = substr($email, 0, 15) . "<br>" . "...";
 		}
-
+*/
 		$foo=array();
 		array_push($foo, $row['full_name']);
 		array_push($foo, $row['address_line_1']);
 		$str = serialize($foo);
 		$stren = urlencode($str);
-		echo "<tr><td><a href = 'edit_client.php?client_info=$stren'>" .$row["full_name"]."</a></td><td>".  $row["business"]."</td><td>". $row["phone"]. "</td><td>" . $row["city"] . "</td><td>". $row["zipcode"]. "</td><td>". $row['title']. "</td><td>". $email."</td><td>". $website."</td></tr>";
+		echo "<tr><td><a href = 'edit_client.php?client_info=$stren'>" .$row["full_name"]."</a></td><td>".  $row["business"]."</td><td>". $row["phone"]. "</td><td>" . $row["city"] . "</td><td>". $row["zipcode"]. "</td><td>". $row["call_back_date"]."</td><td>". $row["priority"]."</td><td>". $row["vertical1"]."</td><td>". $row["vertical2"]."</td><td>". $row["vertical3"]."</td></tr>";
     }
 	echo "</tbody></table></td></tr></tbody></table></div>";
 } else {
