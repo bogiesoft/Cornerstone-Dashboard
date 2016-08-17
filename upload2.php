@@ -41,7 +41,7 @@ if ($conn->connect_error) {
    FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\r'
 IGNORE 1 LINES
-(@var1, @var2) 
+(@var1, @var2, edwardwang) 
 SET begin = STR_TO_DATE(@var1, '%m/%d/%Y'),     
 end = STR_TO_DATE(@var2, '%m/%d/%Y')
 ";
