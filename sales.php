@@ -1,6 +1,26 @@
 <?php
 require ("header.php");
 ?>
+<script>
+	$(function() {
+    $(document).on('click', '#rep-btn',function(){
+    	sortByRep();
+    });
+
+});
+function sortByRep(){
+	    $.ajax({
+        url: 'sortByRep.php',
+        type: 'post',
+        success: function(data){
+        	var result=jQuery.parseJSON(data);
+        	$.each(result,function( index, value ) {
+				$("#checkbox"+row_id).attr("value", value);
+			});
+    	}
+    });
+};
+</script>
 <style>
 ul.tab {
     list-style-type: none;
@@ -51,8 +71,7 @@ ul.tab li a:focus, .active {background-color: #ccc;}
   <li><a href="#" class="tablinks" onclick="changeTab(event, 'CRM')">CRM</a></li>
 </ul>
 <div class="contacts-title">
-	<a class="pull-right" href="statistics.php" class="add_button">Statistics</a>
-	</div>
+</div>
 </div>
 <div id="CRM" class="tab-content">
 <div class="search-cont">
@@ -63,7 +82,12 @@ ul.tab li a:focus, .active {background-color: #ccc;}
 				<input id="search" name="frmSearch" type="text" placeholder="Search for a specific client">
 			</form>
 			<div class="contacts-title">
+				<a id = 'savedSearches-btn' class="pull-right" href="#" class="add_button" onclick = 'addField()'>Saved Searches</a>
+				<a id = 'priority-btn' class="pull-right" href="#" class="add_button" onclick = 'addField()'>Priority</a>
+				<a id = 'callBack-btn' class="pull-right" href="#" class="add_button" onclick = 'addField()'>Call Back</a>
+				<a id = 'rep-btn' class="pull-right" href="#" class="add_button" onclick = 'addField()'>Rep</a>
 				<a id = 'advanced_search_button' class="pull-right" href="#" class="add_button" onclick = 'addField()'>Advanced Search</a>
+
 				</div>
 		<form class = 'advanced_search_area' action = 'advanced_search_CRM.php' method = 'post'>
 		<input id = 'advanced_search_submit' style = 'display: none' type = 'submit' name = 'submit_form_advanced'>
@@ -76,7 +100,7 @@ $result = mysqli_query($conn, "SELECT * FROM sales");
 
 echo " <div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
 echo "<tbody>";
-echo "<tr valign='top'><td colspan='2'><table id = 'crm_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='job_id' data-index='0'>Client Name</th><th class='maintable-thtwo data-header' data-name='client_name' data-index='1'>Business</th><th class='maintable-thtwo data-header' data-name='due_date' data-index='2'>Phone</th><th class='maintable-thtwo data-header' data-name='estimate_number' data-index='3'>City</th><th class='maintable-thtwo data-header' data-name='project_name' data-index='4'>Zip Code</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='5'>Call Back Date</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='6'>Priority Level</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='7'>Vertical 1</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='8'>Vertical 2</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='9'>Vertical 3</th></tr></thead><tbody>";
+echo "<tr valign='top'><td colspan='2'><table id = 'crm_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='job_id' data-index='0'>Client Name</th><th class='maintable-thtwo data-header' data-name='client_name' data-index='1'>Business</th><th class='maintable-thtwo data-header' data-name='due_date' data-index='2'>Phone</th><th class='maintable-thtwo data-header' data-name='estimate_number' data-index='3'>City</th><th class='maintable-thtwo data-header' data-name='project_name' data-index='4'>Zip Code</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='5'>Call Back Date</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='6'>Priority</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='7'>Vertical 1</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='8'>Vertical 2</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='9'>Vertical 3</th></tr></thead><tbody>";
 
 if ($result->num_rows > 0) {
     // output data of each row
@@ -88,7 +112,7 @@ if ($result->num_rows > 0) {
 			$website = substr($website, 0, 15) . "<br>" . "...";
 		}
 		if(strlen($email) >= 15){
-			$email = substr($email, 0, 15) . "<br>" . "...";
+			$email = substr($email, 0, 15) . "<br>" . "...";s
 		}
 */
 		$foo=array();
@@ -96,7 +120,7 @@ if ($result->num_rows > 0) {
 		array_push($foo, $row['address_line_1']);
 		$str = serialize($foo);
 		$stren = urlencode($str);
-		echo "<tr><td><a href = 'edit_client.php?client_info=$stren'>" .$row["full_name"]."</a></td><td>".  $row["business"]."</td><td>". $row["phone"]. "</td><td>" . $row["city"] . "</td><td>". $row["zipcode"]. "</td><td>". $row["call_back_date"]."</td><td>". $row["priority"]."</td><td>". $row["vertical1"]."</td><td>". $row["vertical2"]."</td><td>". $row["vertical3"]."</td></tr>";
+		echo "<tr><td class='data-cell'><a href = 'edit_client.php?client_info=$stren'>" .$row["full_name"]."</a></td><td class='data-cell'>".  $row["business"]."</td><td class='data-cell'>". $row["phone"]. "</td><td class='data-cell'>" . $row["city"] . "</td><td class='data-cell'>". $row["zipcode"]. "</td><td class='data-cell'>". $row["call_back_date"]."</td><td class='data-cell'>". $row["priority"]."</td><td class='data-cell'>". $row["vertical1"]."</td><td class='data-cell'>". $row["vertical2"]."</td><td class='data-cell'>". $row["vertical3"]."</td></tr>";
     }
 	echo "</tbody></table></td></tr></tbody></table></div>";
 } else {

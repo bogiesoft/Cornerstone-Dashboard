@@ -1,8 +1,1 @@
-
-				<div class="newcontacttab-inner">
-					<div class="tabinner-detail">
-					<label>Note</label>
-					<textarea name="notes" class="contact-notes"><?php echo $notes; ?></textarea>
-					<div class="clear"></div>
-					</div>
-				</div>
+		echo "<tr><td><a href = 'edit_client.php?client_info=$stren'>" .$row["full_name"]."</a></td><td>".  $row["business"]."</td><td>". $row["phone"]. "</td><td>" . $row["city"] . "</td><td>". $row["zipcode"]. "</td><td>". $row["call_back_date"]."</td><td><select class='prioritySelect' id='priority".$row["job_id"]."' style='width:220px;'><option value='default'>". $row["priority"]."</option></select></td><td>". $row["vertical1"]."</td><td>". $row["vertical2"]."</td><td>". $row["vertical3"]."</td></tr>";

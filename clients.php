@@ -89,7 +89,7 @@ $conn->close();
 </div>
 </div>
 
-<!--- script for making table sortable --->
+<!-- script for making table sortable -->
 <script src="sorttable.js"></script>
 <script type="text/javascript" src="jquery-latest.js"></script> 
 <script type="text/javascript" src="jquery.tablesorter.js"></script> 
