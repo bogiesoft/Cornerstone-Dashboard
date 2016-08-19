@@ -32,10 +32,9 @@ require ("connection.php");
 $result = mysqli_query($conn,"SELECT * FROM sales WHERE type = 'Client'");
 
 
-echo " <div id = 'table-scroll' class='allcontacts-table'><table id = 'table' border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
+echo " <div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
 echo "<tbody>";
-echo "<tr valign='top'><th class='allcontacts-title'>All Clients<span class='allcontacts-subtitle'></span></th></tr>";
-echo "<tr valign='top'><td colspan='2'><table id = 'client_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Client Name</th><th id = 'contact_name' class='maintable-thtwo data-header' data-name='contact_name' data-index='1'>Business</th><th id = 'address' class='maintable-thtwo data-header' data-name='client_add' data-index='2'>Address</th><th id = 'phone' class='maintable-thtwo data-header' data-name='contact_phone' data-index='3'>Phone</th><th id = 'email' class='maintable-thtwo data-header' data-name='contact_email' data-index='4'>City</th><th id = 'website' class='maintable-thtwo data-header' data-name='website' data-index='5'>Title</th><th id = 'category' class='maintable-thtwo data-header' data-name='category' data-index='6'>Email</th><th id = 'title' class='maintable-thtwo data-header' data-name='title' data-index='7'>Website</th></tr></thead><tbody>";
+echo "<tr valign='top'><td colspan='2'><table id = 'crm_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='job_id' data-index='0'>Client Name</th><th class='maintable-thtwo data-header' data-name='client_name' data-index='1'>Business</th><th class='maintable-thtwo data-header' data-name='due_date' data-index='2'>Phone</th><th class='maintable-thtwo data-header' data-name='estimate_number' data-index='3'>City</th><th class='maintable-thtwo data-header' data-name='project_name' data-index='4'>Zip Code</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='5'>Call Back Date</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='6'>Priority</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='7'>Vertical 1</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='8'>Vertical 2</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='9'>Vertical 3</th></tr></thead><tbody>";
 
 
 if ($result->num_rows > 0) {
@@ -58,7 +57,7 @@ if ($result->num_rows > 0) {
 		array_push($foo, $row['address_line_1']);
 		$str = serialize($foo);
 		$stren = urlencode($str);
-		echo "<tr class = 'hoverTab'><td><a href = 'edit_client.php?client_info=$stren'>".$row["full_name"]."</a></td><td>".  $row["business"]."</td><td>". $row["address_line_1"]. "</td><td>". $row["phone"] . "</td><td>". $row["city"]. "</td><td>". $row["title"]. "</td><td>" .$email."</td><td>". $website . "</td></tr>";
+		echo "<tr><td class='data-cell'><a href = 'edit_client.php?client_info=$stren'>" .$row["full_name"]."</a></td><td class='data-cell'>".  $row["business"]."</td><td class='data-cell'>". $row["phone"]. "</td><td class='data-cell'>" . $row["city"] . "</td><td class='data-cell'>". $row["zipcode"]. "</td><td class='data-cell'>". $row["call_back_date"]."</td><td class='data-cell'>". $row["priority"]."</td><td class='data-cell'>". $row["vertical1"]."</td><td class='data-cell'>". $row["vertical2"]."</td><td class='data-cell'>". $row["vertical3"]."</td></tr>";
     }
 	echo "</tbody></table></td></tr></tbody></table></div>";
 } else {

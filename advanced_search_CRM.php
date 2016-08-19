@@ -1,100 +1,6 @@
 <?php
 require ("header.php");
 ?>
-<div class="dashboard-cont" style="padding-top:110px;">
-	<div class="contacts-title">
-	<h1 class="pull-left">Advanced Search Results</h1>
-	<a class="pull-right" href="sales.php" class="add_button">Back to Sales</a>
-	</div>
-<div class="dashboard-detail">
-<div class="search-cont">
-	<div class="searchcont-detail">
-		<div class="search-boxleft">
-				<label>Quick Search</label>
-				<input id="search" name="frmSearch" type="text" placeholder="Search for a specific client">
-		</div>
-	</div>
-	</div>
-<div class="clear"></div>
-
-
-
-<?php
-
-require ("connection.php");
-$sql = "SELECT * FROM sales WHERE type = 'Client'";
-$index = 1;
-while($index <= 3){
-  if(isset($_POST['fieldArea' . $index])){
-	$find = $_POST['fieldArea' . $index];
-	$sql = $sql . " AND (" . $_POST['select' . $index] . " = '$find' OR " . $_POST['select' . $index] . " LIKE '$find')"; 
-  }
-  
-  $index = $index + 1;
-  
-}
-
-$result = mysqli_query($conn,$sql) or die("error");
-
-
-echo " <div id = 'table-scroll' class='allcontacts-table'><table id = 'table' border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
-echo "<tbody>";
-echo "<tr valign='top'><th class='allcontacts-title'>All Results<span class='allcontacts-subtitle'></span></th></tr>";
-echo "<tr valign='top'><td colspan='2'><table id = 'client_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Client Name</th><th id = 'contact_name' class='maintable-thtwo data-header' data-name='contact_name' data-index='1'>Business</th><th id = 'address' class='maintable-thtwo data-header' data-name='client_add' data-index='2'>Address</th><th id = 'phone' class='maintable-thtwo data-header' data-name='contact_phone' data-index='3'>Phone</th><th id = 'email' class='maintable-thtwo data-header' data-name='contact_email' data-index='4'>City</th><th id = 'website' class='maintable-thtwo data-header' data-name='website' data-index='5'>Title</th><th id = 'category' class='maintable-thtwo data-header' data-name='category' data-index='6'>Email</th><th id = 'title' class='maintable-thtwo data-header' data-name='title' data-index='7'>Website</th></tr></thead><tbody>";
-
-
-if ($result->num_rows > 0) {
-    // output data of each row
-	
-    while($row = $result->fetch_assoc()) {
-		
-		$website = $row['web_address'];
-		$email = $row['email1'];
-		
-		if(strlen($website) >= 15){
-			$website = substr($website, 0, 15) . "<br>" . "...";
-		}
-		if(strlen($email) >= 15){
-			$email = substr($email, 0, 15) . "<br>" . "...";
-		}
-
-		$foo=array();
-		array_push($foo, $row['full_name']);
-		array_push($foo, $row['address_line_1']);
-		$str = serialize($foo);
-		$stren = urlencode($str);
-		echo "<tr class = 'hoverTab'><td><a href = 'edit_client.php?client_info=$stren'>".$row["full_name"]."</a></td><td>".  $row["business"]."</td><td>". $row["address_line_1"]. "</td><td>". $row["phone"] . "</td><td>". $row["city"]. "</td><td>". $row["title"]. "</td><td>" .$email."</td><td>". $website . "</td></tr>";
-    }
-	echo "</tbody></table></td></tr></tbody></table></div>";
-} else {
-    echo "0 results";
-}
-
-$conn->close();
-
-?>
-<div class="allcontacts-breadcrumbs">
-	<div class="allcontacts-breadcrumbsleft pull-left page-control">
-	<nav>
-		<ul class = "pagination" id = "pag">
-			<li id = 'prev_button' class = 'previous' style = 'display:none;' onclick = "prevPage();">Prev</li>
-		</ul>
-	</nav>
-	</div>
-	<div class="items-per-page-cont pull-right">
-		<label>Clients Per Page</label>
-		<select class="per-page-val" id = "item_count" onchange = "changeCount()">
-			<option value="10">10</option>
-			<option value="25">25</option>
-			<option value="50">50</option>
-			<option value="100">100</option>
-		</select>
-	</div>
-</div>
-</div>
-</div>
-
-<!--- script for making table sortable --->
 <script src="sorttable.js"></script>
 <script type="text/javascript" src="jquery-latest.js"></script> 
 <script type="text/javascript" src="jquery.tablesorter.js"></script> 
@@ -113,11 +19,25 @@ $("#search").keyup(function(){
                $(this).show();                
         });
     }); 
-	
-$(document).ready(function() 
+
+$(document).ready(function()
     { 
         $("#client_table").tablesorter(); 
 		pageCreator();
+		$(".saveSearch").click(function() {
+			alert("hello");
+			var field1 = $(#searchFields).attr("field1");
+			var value1 = $(#searchFields).attr("value1");
+			var field2 = $(#searchFields).attr("field2");
+			var value2 = $(#searchFields).attr("value2");
+			var field3 = $(#searchFields).attr("field3");
+			var value3 = $(#searchFields).attr("value3");
+			$.ajax({
+				type: "POST",
+				url: "saveSearch.php",
+				data:{field1:field1, value1:value1, field2:field2, value2:value2, field3:field3, value3:value3},
+			});
+		});	
     } 
 ); 
 function pageCreator(){
@@ -261,3 +181,103 @@ function nextPage(){
 	}
 }
 </script>
+<div class="dashboard-cont" style="padding-top:110px;">
+	<div class="contacts-title">
+	<h1 class="pull-left">Advanced Search Results</h1>
+	<a class="pull-right" href="sales.php" class="add_button">Back to Sales</a>
+	<button class="saveSearch">Save the search</button>
+	</div>
+<div class="dashboard-detail">
+<div class="search-cont">
+	<div class="searchcont-detail">
+		<div class="search-boxleft">
+				<label>Quick Search</label>
+				<input id="search" name="frmSearch" type="text" placeholder="Search for a specific client">
+		</div>
+	</div>
+	</div>
+<div class="clear"></div>
+<?php
+require ("connection.php");
+$sql = "SELECT * FROM sales WHERE type = 'Client'";
+$index = 1;
+echo "<div id='searchFields' ";
+while($index <= 3){
+  if(isset($_POST['fieldArea' . $index])){
+	$find = $_POST['fieldArea' . $index];
+	$value=$_POST['select' . $index];
+
+	$sql = $sql . " AND (" . $value . " = '$find' OR " . $value . " LIKE '$find')"; 
+	echo "field". $index . "='". $value ."' value". $index . "='". $find ."' ";
+  }
+  else
+  {
+  	echo "field". $index . "='' value". $index . "='' ";
+  }
+  
+  $index = $index + 1;
+  
+}
+echo "></div>";
+$result = mysqli_query($conn,$sql) or die("error");
+
+
+echo " <div id = 'table-scroll' class='allcontacts-table'><table id = 'table' border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
+echo "<tbody>";
+echo "<tr valign='top'><th class='allcontacts-title'>All Results<span class='allcontacts-subtitle'></span></th></tr>";
+echo "<tr valign='top'><td colspan='2'><table id = 'client_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Client Name</th><th id = 'contact_name' class='maintable-thtwo data-header' data-name='contact_name' data-index='1'>Business</th><th id = 'address' class='maintable-thtwo data-header' data-name='client_add' data-index='2'>Address</th><th id = 'phone' class='maintable-thtwo data-header' data-name='contact_phone' data-index='3'>Phone</th><th id = 'email' class='maintable-thtwo data-header' data-name='contact_email' data-index='4'>City</th><th id = 'website' class='maintable-thtwo data-header' data-name='website' data-index='5'>Title</th><th id = 'category' class='maintable-thtwo data-header' data-name='category' data-index='6'>Email</th><th id = 'title' class='maintable-thtwo data-header' data-name='title' data-index='7'>Website</th></tr></thead><tbody>";
+
+
+if ($result->num_rows > 0) {
+    // output data of each row
+	
+    while($row = $result->fetch_assoc()) {
+		
+		$website = $row['web_address'];
+		$email = $row['email1'];
+		
+		if(strlen($website) >= 15){
+			$website = substr($website, 0, 15) . "<br>" . "...";
+		}
+		if(strlen($email) >= 15){
+			$email = substr($email, 0, 15) . "<br>" . "...";
+		}
+
+		$foo=array();
+		array_push($foo, $row['full_name']);
+		array_push($foo, $row['address_line_1']);
+		$str = serialize($foo);
+		$stren = urlencode($str);
+		echo "<tr class = 'hoverTab'><td><a href = 'edit_client.php?client_info=$stren'>".$row["full_name"]."</a></td><td>".  $row["business"]."</td><td>". $row["address_line_1"]. "</td><td>". $row["phone"] . "</td><td>". $row["city"]. "</td><td>". $row["title"]. "</td><td>" .$email."</td><td>". $website . "</td></tr>";
+    }
+	echo "</tbody></table></td></tr></tbody></table></div>";
+} else {
+    echo "0 results";
+}
+
+$conn->close();
+?>
+
+<div class="allcontacts-breadcrumbs">
+	<div class="allcontacts-breadcrumbsleft pull-left page-control">
+	<nav>
+		<ul class = "pagination" id = "pag">
+			<li id = 'prev_button' class = 'previous' style = 'display:none;' onclick = "prevPage();">Prev</li>
+		</ul>
+	</nav>
+	</div>
+	<div class="items-per-page-cont pull-right">
+		<label>Clients Per Page</label>
+		<select class="per-page-val" id = "item_count" onchange = "changeCount()">
+			<option value="10">10</option>
+			<option value="25">25</option>
+			<option value="50">50</option>
+			<option value="100">100</option>
+		</select>
+	</div>
+</div>
+</div>
+</div>
+
+<!-- script for making table sortable -->
+
