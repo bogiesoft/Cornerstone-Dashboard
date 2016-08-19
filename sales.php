@@ -1,26 +1,6 @@
 <?php
 require ("header.php");
 ?>
-<script>
-	$(function() {
-    $(document).on('click', '#rep-btn',function(){
-    	sortByRep();
-    });
-
-});
-function sortByRep(){
-	    $.ajax({
-        url: 'sortByRep.php',
-        type: 'post',
-        success: function(data){
-        	var result=jQuery.parseJSON(data);
-        	$.each(result,function( index, value ) {
-				$("#checkbox"+row_id).attr("value", value);
-			});
-    	}
-    });
-};
-</script>
 <style>
 ul.tab {
     list-style-type: none;
@@ -82,10 +62,6 @@ ul.tab li a:focus, .active {background-color: #ccc;}
 				<input id="search" name="frmSearch" type="text" placeholder="Search for a specific client">
 			</form>
 			<div class="contacts-title">
-				<a id = 'savedSearches-btn' class="pull-right" href="#" class="add_button" onclick = 'addField()'>Saved Searches</a>
-				<a id = 'priority-btn' class="pull-right" href="#" class="add_button" onclick = 'addField()'>Priority</a>
-				<a id = 'callBack-btn' class="pull-right" href="#" class="add_button" onclick = 'addField()'>Call Back</a>
-				<a id = 'rep-btn' class="pull-right" href="#" class="add_button" onclick = 'addField()'>Rep</a>
 				<a id = 'advanced_search_button' class="pull-right" href="#" class="add_button" onclick = 'addField()'>Advanced Search</a>
 
 				</div>
@@ -180,7 +156,6 @@ echo " <div id = 'table-scroll' class='allcontacts-table'><table id = 'table' bo
 echo "<tbody>";
 echo "<tr valign='top'><th class='allcontacts-title'>All Clients<span class='allcontacts-subtitle'></span></th></tr>";
 echo "<tr valign='top'><td colspan='2'><table id = 'client_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Job ID</th><th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Assign to</th><th id = 'contact_name' class='maintable-thtwo data-header' data-name='contact_name' data-index='1'>Client Name</th><th id = 'address' class='maintable-thtwo data-header' data-name='client_add' data-index='2'>Project Name</th><th id = 'phone' class='maintable-thtwo data-header' data-name='contact_phone' data-index='3'>Due Date</th><th id = 'email' class='maintable-thtwo data-header' data-name='contact_email' data-index='4'>Estimate Number</th><th id = 'website' class='maintable-thtwo data-header' data-name='website' data-index='5'>Job Status</th></tr></thead><tbody>";
-
 
 if ($result->num_rows > 0) {
     // output data of each row

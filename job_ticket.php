@@ -41,7 +41,7 @@ function getMaterialsID(row_id){
 function addWeights_Measures(){
 	if(W_Mcount<20){
 		W_Mcount=W_Mcount+1;
-		$("#W_MTable").append(	"<tr id='"+W_Mcount+"'><td >			<input type='checkbox' id='checkbox"+W_Mcount+"'checked name='wm[]' value=''>		</td>		<td>			<select class='vendors' id='vendors"+W_Mcount+"' name='vendor' style='width:220px;'>				<option value='default'>Select</option>			</select>		</td>		<td>			<select class='materials' id='materials"+W_Mcount+"' name='material' style='width:220px;'>				<option value='default'>Select</option>			</select>		</td>		<td>			<select class='types' id='types"+W_Mcount+"' name='vendor' style='width:220px;'>				<option value='default'>Select</option>			</select>		</td> <td><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeWeights_Measures('#" + W_Mcount + "')></td>	</tr>");
+		$("#W_MTable").append(	"<tr id='"+W_Mcount+"'><td >			<input type='checkbox' id='checkbox"+W_Mcount+"'checked name='wm[]' value=''>		</td>		<td>			<select class='vendors' id='vendors"+W_Mcount+"' name='vendor' style='width:220px;'>				<option value=''>Select</option>			</select>		</td>		<td>			<select class='materials' id='materials"+W_Mcount+"' name='material' style='width:220px;'>				<option value=''>Select</option>			</select>		</td>		<td>			<select class='types' id='types"+W_Mcount+"' name='vendor' style='width:220px;'>				<option value=''>Select</option>			</select>		</td> <td><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeWeights_Measures('#" + W_Mcount + "')></td>	</tr>");
 		getVendors(W_Mcount);
 
 	}
@@ -57,9 +57,9 @@ function getVendors(row_id)
         type: 'post',
         success: function(data){
         	$("#materials"+row_id).children().remove();
-        	$("#materials"+row_id).append("<option value='default'>Select</option>");
+        	$("#materials"+row_id).append("<option value=''>Select</option>");
         	$("#types"+row_id).children().remove();
-        	$("#types"+row_id).append("<option value='default'>Select</option>");
+        	$("#types"+row_id).append("<option value=''>Select</option>");
         	var result=jQuery.parseJSON(data);
         	$.each(result,function( index, value ) {
 				$("#vendors"+row_id).append('<option value="'+value+'">'+value+'</option>');
@@ -79,9 +79,9 @@ function getMaterials(row_id)
         },
         success: function(data){
         	$("#materials"+row_id).children().remove();
-        	$("#materials"+row_id).append("<option value='default'>Select</option>");
+        	$("#materials"+row_id).append("<option value=''>Select</option>");
         	$("#types"+row_id).children().remove();
-        	$("#types"+row_id).append("<option value='default'>Select</option>");
+        	$("#types"+row_id).append("<option value=''>Select</option>");
         	var result=jQuery.parseJSON(data);
         	$.each(result,function( index, value ) {
 				$("#materials"+row_id).append('<option value="'+value+'">'+value+'</option>');
@@ -103,7 +103,7 @@ function getTypes(row_id)
         },
         success: function(data){
         	$("#types"+row_id).children().remove();
-        	$("#types"+row_id).append("<option value='default'>Select</option>");
+        	$("#types"+row_id).append("<option value=''>Select</option>");
         	var result=jQuery.parseJSON(data);
         	$.each(result,function( index, value ) {
 				$("#types"+row_id).append('<option value="'+value+'">'+value+'</option>');
@@ -403,7 +403,7 @@ function getTypes(row_id)
 							    echo "<tr id='1'>
 								        <td ><input type='checkbox' id='checkbox1' checked name='wm[]' value='" . $row['material_id'] . "'></td>
 								        <td>"; $result = $conn->query("select vendor_name from vendors");
-											echo "<select class='vendors' id='vendors1' name='vendor' style='width:220px;'><option value='default'>Select</option>";
+											echo "<select class='vendors' id='vendors1' name='vendor' style='width:220px;'><option value=''>Select</option>";
 											while ($row = $result->fetch_assoc()) {
 														  unset($vendor_name);
 														  $vendor_name = $row['vendor_name']; 
@@ -414,10 +414,10 @@ function getTypes(row_id)
 										</td>
 
 								        <td>";
-											echo "<select class='materials' id='materials1' name='vendor' style='width:220px;'><option value='default'>Select</option></select>
+											echo "<select class='materials' id='materials1' name='vendor' style='width:220px;'><option value=''>Select</option></select>
 										</td>
 								       	<td>
-											<select class='types' id='types1' name='vendor' style='width:220px;'><option value='default'>Select</option></select>
+											<select class='types' id='types1' name='vendor' style='width:220px;'><option value=''>Select</option></select>
 										</td>
 										<td><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeWeights_Measures('#1')></td>
 								    </tr>";

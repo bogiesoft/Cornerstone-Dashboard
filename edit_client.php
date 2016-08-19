@@ -51,6 +51,7 @@ if ($result->num_rows > 0) {
 	$USPS_9Y9_EDDM_Marketing_Card=$row["USPS_9Y9_EDDM_Marketing_Card"];
 	$SEPT_2014_3_5Y11_CRST_Marketing_Card=$row["SEPT_2014_3_5Y11_CRST_Marketing_Card"];
 	$Contractor_Mailing_2016=$row["Contractor_Mailing_2016"];
+	$type = $row["type"];
 
 }
 if(isset($_POST['delete_form'])){
@@ -108,13 +109,14 @@ else if(isset($_POST['submit_form'])){
 	$USPS_9Y9_EDDM_Marketing_Card = isset($_POST['USPS_9Y9_EDDM_Marketing_Card']) ? $_POST['USPS_9Y9_EDDM_Marketing_Card'] : '';
 	$SEPT_2014_3_5Y11_CRST_Marketing_Card = isset($_POST['SEPT_2014_3_5Y11_CRST_Marketing_Card']) ? $_POST['SEPT_2014_3_5Y11_CRST_Marketing_Card'] : '';
 	$Contractor_Mailing_2016 = isset($_POST['Contractor_Mailing_2016']) ? $_POST['Contractor_Mailing_2016'] : '';
+	$type = $_POST['type'];
 	$user_name = $_SESSION['user'];
 	date_default_timezone_set('America/New_York');
 	$today = date("Y-m-d G:i:s");
 	$a_p = date("A");
 	$_SESSION['date'] = $today;
 	$job = "updated client info";
-	$sql = "UPDATE sales SET rep='$rep', quickbooks='$quickbooks', full_name='$full_name', address_line_1='$address_line_1', address_line_2='$address_line_2', phone='$phone',email1='$email1',source='$source',web_address='$web_address',notes='$notes',business='$business',title='$title', cell_phone = '$cell_phone', city = '$city', state = '$state', zipcode = '$zipcode', fax = '$fax', second_contact = '$second_contact', status = '$status', call_back_date = '$call_back_date', priority = '$priority' , date_added = '$date_added', mailing_list = '$mailing_list', pie_day = '$pie_day', alt_phone = '$alt_phone', home_phone = '$home_phone' , email2 = '$email2', vertical1 = '$vertical1', vertical2 = '$vertical2', vertical3 = '$vertical3', _2014_pie_day = '$_2014_pie_day', Non_Profit_Card_08_2013 = '$Non_Profit_Card_08_2013' , Commercial_Card_08_2013 = '$Commercial_Card_08_2013' , USPS_Post_Office_Mailing_03_2014 = '$USPS_Post_Office_Mailing_03_2014', Contractor_Small_Business_Select_Mailing_03_2014 = '$Contractor_Small_Business_Select_Mailing_03_2014', Contractor_SB_Select_Mailing_04_2014 = '$Contractor_SB_Select_Mailing_04_2014', USPS_EDDM_Regs_brochure_Mailing_04_2014 = '$USPS_EDDM_Regs_brochure_Mailing_04_2014', USPS_9Y9_EDDM_Marketing_Card = '$USPS_9Y9_EDDM_Marketing_Card', SEPT_2014_3_5Y11_CRST_Marketing_Card = '$SEPT_2014_3_5Y11_CRST_Marketing_Card', Contractor_Mailing_2016 = '$Contractor_Mailing_2016'WHERE full_name='$full_name' AND address_line_1 = '$address_line_1'";
+	$sql = "UPDATE sales SET rep='$rep', quickbooks='$quickbooks', full_name='$full_name', address_line_1='$address_line_1', address_line_2='$address_line_2', phone='$phone',email1='$email1',source='$source',web_address='$web_address',notes='$notes',business='$business',title='$title', cell_phone = '$cell_phone', city = '$city', state = '$state', zipcode = '$zipcode', fax = '$fax', second_contact = '$second_contact', status = '$status', call_back_date = '$call_back_date', priority = '$priority' , date_added = '$date_added', mailing_list = '$mailing_list', pie_day = '$pie_day', alt_phone = '$alt_phone', home_phone = '$home_phone' , email2 = '$email2', vertical1 = '$vertical1', vertical2 = '$vertical2', vertical3 = '$vertical3', _2014_pie_day = '$_2014_pie_day', Non_Profit_Card_08_2013 = '$Non_Profit_Card_08_2013' , Commercial_Card_08_2013 = '$Commercial_Card_08_2013' , USPS_Post_Office_Mailing_03_2014 = '$USPS_Post_Office_Mailing_03_2014', Contractor_Small_Business_Select_Mailing_03_2014 = '$Contractor_Small_Business_Select_Mailing_03_2014', Contractor_SB_Select_Mailing_04_2014 = '$Contractor_SB_Select_Mailing_04_2014', USPS_EDDM_Regs_brochure_Mailing_04_2014 = '$USPS_EDDM_Regs_brochure_Mailing_04_2014', USPS_9Y9_EDDM_Marketing_Card = '$USPS_9Y9_EDDM_Marketing_Card', SEPT_2014_3_5Y11_CRST_Marketing_Card = '$SEPT_2014_3_5Y11_CRST_Marketing_Card', Contractor_Mailing_2016 = '$Contractor_Mailing_2016', type = '$type' WHERE full_name='$full_name' AND address_line_1 = '$address_line_1'";
 	$sql6 = "INSERT INTO timestamp (user,time,job, a_p) VALUES ('$user_name', '$today','$job', '$a_p')";
 	$result7 = $conn->query($sql6) or die('Error querying database 5.');
 	$result = $conn->query($sql) or die('Error querying database.');
@@ -270,6 +272,20 @@ else if(isset($_POST['submit_form'])){
 									<div class="tabinner-detail">
 										<label>Second Contact</label>
 										<input name="second_contact" type="text" value="<?php echo $second_contact; ?>" class="contact-prefix">
+										<div class="clear"></div>
+									</div>
+									<div class="tabinner-detail">
+										<label>Type</label>
+											<select name='type'>
+												<?php 
+												if($type=='Client')
+													echo "<option selected = 'selected' value = '" . $type . "'>" . $type . "</option><option value =''>Select</option><option value ='Prospect'>Prospect</option>"; 
+												else if($type=='Prospect')
+													echo "<option selected = 'selected' value = '" . $type . "'>" . $type . "</option><option value =''>Select</option><option value ='Client'>Client</option>"; 
+												else
+													echo "<option selected = 'selected' value = ''>Select</option><option value ='Client'>Client</option><option value ='Prospect'>Prospect</option>"; 
+												?>
+											</select>
 										<div class="clear"></div>
 									</div>
 								</div>

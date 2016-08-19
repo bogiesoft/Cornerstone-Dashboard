@@ -138,6 +138,15 @@ require ("header.php");
 										<input name="second_contact" type="text"  class="contact-prefix">
 										<div class="clear"></div>
 									</div>
+									<div class="tabinner-detail">
+										<label>Type</label>
+											<select name='type'>
+												<option value = ''>Select</option>
+												<option value ='Client'>Client</option>
+												<option value ='Prospect'>Prospect</option>
+											</select>
+										<div class="clear"></div>
+									</div>
 								</div>
 								<div class="newcontacttab-inner">
 									<div class="tabinner-detail">
@@ -201,7 +210,7 @@ require ("header.php");
 									</div>
 								</div>
 							</div>
-							<div class="newcontactstab-detail" id="mailing_history" style = 'display:none;'>
+							<div class="newcontactstab-detail" id="mailing_history" style = 'display:none; white-space: nowrap;'>
 								<div class="newcontacttab-inner" style="width:700px;">
 									<div class="tabinner-detail">
 										<div class="clear"></div>
