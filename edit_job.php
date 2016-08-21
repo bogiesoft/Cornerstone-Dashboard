@@ -1,6 +1,7 @@
 <?php
 require ("header.php");
 ?>
+<script src="JobTicketSweetAlert.js"></script>
 <script type="text/javascript">
 
     function PrintElem(elem)

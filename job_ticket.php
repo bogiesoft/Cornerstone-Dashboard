@@ -2,7 +2,7 @@
 require ("header.php");
 ?>
 
-
+<script src="JobTicketSweetAlert.js"></script>
 <script>
 	var id_of_row;
 	var number_of_rows;
