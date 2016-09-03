@@ -2,74 +2,99 @@
 require ("header.php");
 ?>
 <style>
-ul.tab {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    border: 1px solid #ccc;
-    background-color: #f1f1f1;
-}
+	ul.tab {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		overflow: hidden;
+		border: 1px solid #ccc;
+		background-color: #f1f1f1;
+	}
 
-/* Float the list items side by side */
-ul.tab li {float: left;}
+	/* Float the list items side by side */
+	ul.tab li {float: left;}
 
-/* Style the links inside the list items */
-ul.tab li a {
-    display: inline-block;
-    color: black;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    transition: 0.3s;
-    font-size: 17px;
-}
+	/* Style the links inside the list items */
+	ul.tab li a {
+		display: inline-block;
+		color: black;
+		text-align: center;
+		padding: 14px 16px;
+		text-decoration: none;
+		transition: 0.3s;
+		font-size: 17px;
+	}
 
-/* Change background color of links on hover */
-ul.tab li a:hover {background-color: #ddd;}
+	/* Change background color of links on hover */
+	ul.tab li a:hover {background-color: #ddd;}
 
-/* Create an active/current tablink class */
-ul.tab li a:focus, .active {background-color: #ccc;}
+	/* Create an active/current tablink class */
+	ul.tab li a:focus, .active {background-color: #ccc;}
 
-/* Style the tab content */
-.tab-content {
-    display: none;
-}
-#internal{
-	display: block;
-}
+	/* Style the tab content */
+	.tab-content {
+		display: none;
+	}
+	#internal{
+		display: block;
+	}
 </style>
 <div class="dashboard-cont" style="padding-top:110px;">
-<div class="contacts-title">
-	<h1 class="pull-left">Sales</h1>
-	<div><a href="uploadForm.php">upload</a></div>
+	<div class="contacts-title">
+		<h1 class="pull-left">Sales</h1>
+		<div><a href="uploadForm.php">upload</a></div>
 	</div>
-<div class="dashboard-detail">
-<div class="newcontacts-tabs">
-<ul class="nav nav-tabs" role="tablist">
-  <li><a href="#" class="tablinks" onclick="changeTab(event, 'internal')">Internal</a></li>
-  <li><a href="#" class="tablinks" onclick="changeTab(event, 'CRM')">CRM</a></li>
-</ul>
-<div class="contacts-title">
-</div>
-</div>
-<div id="CRM" class="tab-content">
-<div class="search-cont">
-	<div class="searchcont-detail">
-		<div class="search-boxleft">
-			<form id = "search_form" action="vendor_search.php" method="post" >
-				<label>Quick Search</label>
-				<input id="search" name="frmSearch" type="text" placeholder="Search for a specific client">
-			</form>
+	<div class="dashboard-detail">
+		<div class="newcontacts-tabs">
+			<ul class="nav nav-tabs" role="tablist">
+				<li><a href="#" class="tablinks" onclick="changeTab(event, 'internal')">Internal</a></li>
+				<li><a href="#" class="tablinks" onclick="changeTab(event, 'CRM')">CRM</a></li>
+			</ul>
 			<div class="contacts-title">
-				<a id = 'advanced_search_button' class="pull-right" href="#" class="add_button" onclick = 'addField()'>Advanced Search</a>
-
-				</div>
-		<form class = 'advanced_search_area' action = 'advanced_search_CRM.php' method = 'post'>
-		<input id = 'advanced_search_submit' style = 'display: none' type = 'submit' name = 'submit_form_advanced'>
-		</form>
+			</div>
 		</div>
-	</div><br>
+		<div id="CRM" class="tab-content">
+			<div class="search-cont">
+				<div class="searchcont-detail">
+					<div class="search-boxleft">
+						<form id = "search_form" action="vendor_search.php" method="post" >
+							<label>Quick Search</label>
+							<input id="search" name="frmSearch" type="text" placeholder="Search for a specific client">
+						</form>
+					</div>
+					<div class="contacts-title">
+						<a id = 'advanced_search_button' class="pull-right" href="#" class="add_button" onclick = 'addField()'>Advanced Search</a>
+						<form class = 'advanced_search_area' action = 'advanced_search_CRM.php' method = 'get'>
+							<input id = 'advanced_search_submit' style = 'display: none' type = 'submit' name = 'submit_form_advanced'>
+						</form>
+					</div>
+					<div id="saved_search_div">
+					<button id = 'show_saved_search' class="pull-right" class="add_button" onclick = 'showSavedSearch()'>Show Saved Search</button>
+						<table id="saved_search_table" style = 'display: none'>
+							<tbody>
+								<?php
+								$result = mysqli_query($conn, "SELECT * FROM saved_search");
+								if ($result->num_rows > 0) {
+							    // output data of each row
+									while($row = $result->fetch_assoc()) {
+										$field1=$row["field1"];
+										$value1=$row["value1"];
+										$field2=$row["field2"];
+										$value2=$row["value2"];
+										$field3=$row["field3"];
+										$value3=$row["value3"];
+										echo "<tr><td class='data-cell'><a href = 'advanced_search_CRM.php?fieldArea1=$value1&select1=$field1&fieldArea2=$value2&select2=$field2&fieldArea3=$value3&select3=$field3'>". $row["search_name"]."</a></td></tr>";
+									}
+								} 
+								else {
+									echo "0 Saved Searches";
+								}
+								?>
+							</tbody>
+						</table>
+					</div>
+
+				</div><br>
 <?php
 
 $result = mysqli_query($conn, "SELECT * FROM sales");
@@ -194,6 +219,16 @@ if ($result->num_rows > 0) {
 <script>
 
 var fieldCount = 1;
+function showSavedSearch(){
+	if(document.getElementById('show_saved_search').innerHTML == "Show Saved Search"){
+		document.getElementById('saved_search_table').style.display = "block";
+		document.getElementById('show_saved_search').innerHTML = "Hide Saved Search";
+	}
+	else{
+		document.getElementById('saved_search_table').style.display = "none";
+		document.getElementById('show_saved_search').innerHTML = "Show Saved Search";
+	}
+}
 
 function addField(){
 	     if(fieldCount <= 3){

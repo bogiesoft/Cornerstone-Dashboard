@@ -29,12 +29,18 @@ $sql = "SELECT * FROM sales WHERE type = 'Client'";
 $index = 1;
 echo "<div id='searchFields' ";
 while($index <= 3){
-  if(isset($_POST['fieldArea' . $index])){
-	$find = $_POST['fieldArea' . $index];
-	$value=$_POST['select' . $index];
-
-	$sql = $sql . " AND (" . $value . " = '$find' OR " . $value . " LIKE '$find')"; 
-	echo "field". $index . "='". $value ."' value". $index . "='". $find ."' ";
+  if(isset($_GET['fieldArea' . $index])){
+	$find = $_GET['fieldArea' . $index];
+	$value=$_GET['select' . $index];
+	if($find!=''&& $value!='')
+	{
+		$sql = $sql . " AND (" . $value . " = '$find' OR " . $value . " LIKE '$find')"; 
+		echo "field". $index . "='". $value ."' value". $index . "='". $find ."' ";
+	}
+	else
+	{
+		echo "field". $index . "='' value". $index . "='' ";
+	}
   }
   else
   {
