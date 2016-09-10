@@ -20,11 +20,10 @@ $(document).ready(function(){
 
 	function checkDup(){
 		var vendor_name=$("#vendor_name").val();
-		var vendor_add=$("#vendor_add").val();
 		$.ajax({
 			type: "POST",
 			url: "checkVendorDup.php",
-			data:{vendor_name:vendor_name,vendor_add:vendor_add},
+			data:{vendor_name:vendor_name},
 			success:function(data){
 				if(data=='duplicate')
 				{
@@ -39,7 +38,7 @@ $(document).ready(function(){
 	};
 
 	function showDuplicateMessage(){
-		swal("Error!", "This vendor has already been added.", "error");
+		swal("Error!", "This vendor has already been added. Please update or delete old one.", "error");
 	};
 
 	function warnBeforeRedirect() {
