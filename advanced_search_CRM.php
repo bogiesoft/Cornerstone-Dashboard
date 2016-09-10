@@ -1,9 +1,12 @@
 <?php
 require ("header.php");
 ?>
+<script src="saveSearchSweetAlert.js"></script>
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 	<h1 class="pull-left">Advanced Search Results</h1>
+	<input type="text" name="search_name" value="" id="search_name"/>
+	<button class="save-btn store-btn" id="saveSearch">Save Search</button> 
 	<a class="pull-right" href="sales.php" class="add_button">Back to Sales</a>
 	</div>
 <div class="dashboard-detail">
@@ -24,16 +27,30 @@ require ("header.php");
 require ("connection.php");
 $sql = "SELECT * FROM sales WHERE type = 'Client'";
 $index = 1;
+echo "<div id='searchFields' ";
 while($index <= 3){
-  if(isset($_POST['fieldArea' . $index])){
-	$find = $_POST['fieldArea' . $index];
-	$sql = $sql . " AND (" . $_POST['select' . $index] . " = '$find' OR " . $_POST['select' . $index] . " LIKE '$find')"; 
+  if(isset($_GET['fieldArea' . $index])){
+	$find = $_GET['fieldArea' . $index];
+	$value=$_GET['select' . $index];
+	if($find!=''&& $value!='')
+	{
+		$sql = $sql . " AND (" . $value . " = '$find' OR " . $value . " LIKE '$find')"; 
+		echo "field". $index . "='". $value ."' value". $index . "='". $find ."' ";
+	}
+	else
+	{
+		echo "field". $index . "='' value". $index . "='' ";
+	}
+  }
+  else
+  {
+  	echo "field". $index . "='' value". $index . "='' ";
   }
   
   $index = $index + 1;
   
 }
-
+echo "></div>";
 $result = mysqli_query($conn,$sql) or die("error");
 
 
@@ -94,7 +111,7 @@ $conn->close();
 </div>
 </div>
 
-<!--- script for making table sortable --->
+<!-- script for making table sortable -->
 <script src="sorttable.js"></script>
 <script type="text/javascript" src="jquery-latest.js"></script> 
 <script type="text/javascript" src="jquery.tablesorter.js"></script> 

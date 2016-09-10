@@ -2,8 +2,120 @@
 require ("header.php");
 ?>
 
+<script src="JobTicketSweetAlert.js"></script>
+<script>
+	var id_of_row;
+	var number_of_rows;
 
+	$(function() {
+		id_of_row=parseInt($( "tr:last" ).attr('id'));
+		number_of_rows=id_of_row;
+    $(document).on('change', '.vendors',function(){
+    	var id=$(this).parent().parent().attr('id');
+    	getMaterials(id);
+    });
+    $(document).on('change', '.materials',function(){
+    	var id=$(this).parent().parent().attr('id');
+    	getTypes(id);
+    });
+    $(document).on('change', '.types',function(){
+    	var id=$(this).parent().parent().attr('id');
+    	getMaterialsID(id);
+    });
 
+});
+function getMaterialsID(row_id){
+		var vendor=$("#vendors"+row_id).val();
+	    var material = $("#materials"+row_id).val(); 
+	    var type=$("#types"+row_id).val(); 
+	    $.ajax({
+        url: 'getMaterialsID.php',
+        type: 'post',
+        data:{vendor:vendor,material:material,type:type},
+        success: function(data){
+        	var result=jQuery.parseJSON(data);
+        	$.each(result,function( index, value ) {
+				$("#checkbox"+row_id).attr("value", value);
+			});
+    	}
+    });
+
+};
+function addWeights_Measures(){
+	if(number_of_rows<20){
+		number_of_rows=number_of_rows+1;
+		id_of_row=id_of_row+1;
+		$("#W_M_tbody").append(	"<tr id='"+id_of_row+"'><td >			<input type='checkbox' id='checkbox"+id_of_row+"'checked name='wm[]' value=''>		</td>		<td>			<select class='vendors' id='vendors"+id_of_row+"' name='vendor' style='width:220px;'>				<option value=''>Select</option>			</select>		</td>		<td>			<select class='materials' id='materials"+id_of_row+"' name='material' style='width:220px;'>				<option value=''>Select</option>			</select>		</td>		<td>			<select class='types' id='types"+id_of_row+"' name='vendor' style='width:220px;'>				<option value=''>Select</option>			</select>		</td> <td><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeWeights_Measures('#" + id_of_row + "')></td>	</tr>");
+		getVendors(id_of_row);
+
+	}
+};
+function removeWeights_Measures(row_id){
+	$(row_id).remove();
+	number_of_rows--;
+};
+function getVendors(row_id)
+{
+    $.ajax({
+        url: 'getVendors.php',
+        type: 'post',
+        success: function(data){
+        	$("#materials"+row_id).children().remove();
+        	$("#materials"+row_id).append("<option value=''>Select</option>");
+        	$("#types"+row_id).children().remove();
+        	$("#types"+row_id).append("<option value=''>Select</option>");
+        	var result=jQuery.parseJSON(data);
+        	$.each(result,function( index, value ) {
+				$("#vendors"+row_id).append('<option value="'+value+'">'+value+'</option>');
+			});
+    	}
+    });
+
+};
+function getMaterials(row_id)
+{
+   var vendor = $("#vendors"+row_id).val(); 
+    $.ajax({
+        url: 'getMaterials.php',
+        type: 'post',
+        data: {
+            vendor: vendor
+        },
+        success: function(data){
+        	$("#materials"+row_id).children().remove();
+        	$("#materials"+row_id).append("<option value=''>Select</option>");
+        	$("#types"+row_id).children().remove();
+        	$("#types"+row_id).append("<option value=''>Select</option>");
+        	var result=jQuery.parseJSON(data);
+        	$.each(result,function( index, value ) {
+				$("#materials"+row_id).append('<option value="'+value+'">'+value+'</option>');
+			});
+    	}
+    });
+};
+
+function getTypes(row_id)
+{
+	var vendor=$("#vendors"+row_id).val();
+    var material = $("#materials"+row_id).val(); 
+    $.ajax({
+        url: 'getTypes.php',
+        type: 'post',
+        data: {
+            vendor: vendor,
+            material:material
+        },
+        success: function(data){
+        	$("#types"+row_id).children().remove();
+        	$("#types"+row_id).append("<option value=''>Select</option>");
+        	var result=jQuery.parseJSON(data);
+        	$.each(result,function( index, value ) {
+				$("#types"+row_id).append('<option value="'+value+'">'+value+'</option>');
+			});
+    	}
+    });
+};
+</script>
 <!----- New Job Ticket ----->
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
@@ -284,47 +396,57 @@ require ("header.php");
 					</div>
 					<div class="tabinner-detail">
 					<label>Weights and Measures</label>
-					<select name = 'wm[]'multiple>
-					<?php
-					$result = mysqli_query($conn, "SELECT * FROM materials ORDER BY vendor");
-					while($row = $result->fetch_assoc()){
-						echo "<option value = '" . $row['material_id'] . "'>" . $row['vendor'] . str_repeat('&nbsp;', 7) . $row['material'] . str_repeat('&nbsp;', 7) . $row['type'] . "</option>";
-					}
-					?>
-					</select>
+					<a class="pull-right" onclick = 'addWeights_Measures()'>Add Weights and Measures</a>
+					<table id="W_MTable" border="1" cellpadding="1" cellspacing="1" style='text-align: center; vertical-align: middle;'>
+						<thead>
+						<tr>
+					        <th>Select</th><th>Vendor</th><th>Material</th><th>type</th><th>Delete</th>
+					    </tr>
+					    </thead>
+					    <tbody id="W_M_tbody">
+						<?php
+						$result = mysqli_query($conn, "SELECT * FROM materials ORDER BY vendor");
+						while($row = $result->fetch_assoc()){
+							    echo "<tr id='1'>
+								        <td ><input type='checkbox' id='checkbox1' checked name='wm[]' value='" . $row['material_id'] . "'></td>
+								        <td>"; $result = $conn->query("select vendor_name from vendors");
+											echo "<select class='vendors' id='vendors1' name='vendor' style='width:220px;'><option value=''>Select</option>";
+											while ($row = $result->fetch_assoc()) {
+														  unset($vendor_name);
+														  $vendor_name = $row['vendor_name']; 
+														  echo '<option value="'.$vendor_name.'">'.$vendor_name.'</option>';
+														 
+											}
+											echo "</select>
+										</td>
+
+								        <td>";
+											echo "<select class='materials' id='materials1' name='vendor' style='width:220px;'><option value=''>Select</option></select>
+										</td>
+								       	<td>
+											<select class='types' id='types1' name='vendor' style='width:220px;'><option value=''>Select</option></select>
+										</td>
+										<td><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeWeights_Measures('#1')></td>
+								    </tr>";
+								    }
+						?>
+						</tbody>
+					</table>
 					</div>
 					<div class="tabinner-detail">
 					<label>Special Instructions</label>
 					<textarea name="special_instructions" class="contact-prefix"></textarea>
 					</div>
+
 				</div>	
 				</div>
 				<div class="newcontact-tabbtm">
 					<input class="save-btn store-btn" type="submit" value="Save" name="submit_form" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
 				</div>
 			</form>
-			<button onclick = 'add_wm()'>Add Weights and Measure</button>
 			</div>
 		</div>
 	</div>
 </div>
 </div>
-<script>
-var count = 1;
-
-function add_wm(){
-	var vendors = <?php echo json_encode($array_vendors); ?>;
-	var materials = <?php  echo json_encode($array_material); ?>;
-	var types = <?php echo json_encode($array_type); ?>;
-	alert("test 1")
-	$(".weights_and_measures").append("<div id = 'wm" + count + "'><select name = 'vendors" + count + "'></select></div>");
-	for(var i = 0; i < vendors.length; i++){
-			var opt = document.createElement('option');
-			opt.value = vendors[i];
-			opt.innerHTML = vendors[i];
-			document.getElementById("vendors" + count).appendChild(opt);
-		}
-	alert("test");
-}
-</script>
 		

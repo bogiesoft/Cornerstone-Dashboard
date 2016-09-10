@@ -21,10 +21,6 @@ require ("header.php");
 			<div class="newcontactstab-detail">
 				<form action="add_w_m.php" method="post">
 					<div class="newcontacttab-inner">
-						<div class="tabinner-detail">
-						<label>Received Date</label>
-						<input name="received" type="date" class="contact-birthday" style="width:220px;">
-						</div>
 						<?php
 						require ("connection.php");
 						$result = $conn->query("select vendor_name from vendors");
@@ -40,8 +36,8 @@ require ("header.php");
 						echo "</div>";
 						?>
 						<div class="tabinner-detail">
-						<label>Checked In (initials)</label>
-						<input name="checked_in" type="text" class="contact-prefix">
+						<label>Product #</label>
+						<input id="product_num" name="product_num" type="text" class="contact-prefix">
 						</div>
 					</div>
 					
