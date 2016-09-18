@@ -15,6 +15,12 @@
 	<script src="Chart.js"></script>
 	<script src="sweetalert/dist/sweetalert.min.js"></script> 
 	<link rel="stylesheet" type="text/css" href="sweetalert/dist/sweetalert.css">
+	<link href='fullcalendar-3.0.0/fullcalendar.css' rel='stylesheet' />
+	<link href='fullcalendar-3.0.0/fullcalendar.print.css' rel='stylesheet' media='print' />
+	<script src='fullcalendar-3.0.0/lib/moment.min.js'></script>
+	<script src='fullcalendar-3.0.0/lib/jquery.min.js'></script>
+	<script src='fullcalendar-3.0.0/fullcalendar.min.js'></script>
+	<script src='fullcalendar-3.0.0/fullcalendar.js'></script>
 	
 	<!---- Bootstrap CDN Scripts  ---->
 

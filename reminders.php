@@ -4,336 +4,199 @@ require('header.php');
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 	<h1 class="pull-left">Reminders</h1>
-	<a class="pull-right" href="add_rem.php" class="add_button">Add Reminder</a>
-	</div>
+	<a id = "add_rem_button" class="pull-right" href="#" class="add_button" onclick = "showAdd()">Add Reminder</a>
+	</div><br>
+<div id = "add_reminder" style = "display: none">
+	<form action = "add_reminder.php" method = "post">
+	<div class="tabinner-detail">
+	<label id = "date_label">Date</label>
+	<input id = "date" name="date" type="date" class="contact-prefix" style="width:95%;">
+	<div class="clear"></div>
+	</div><br>
+	<div class="tabinner-detail">
+	<label id = "occurence_label">Occurence</label><br>
+	<select style = "float: left; width: 150px" id = "occurence_id" name = "occurence" onchange = "showExtraInput()">
+	<option selected = 'selected' value = "Day">Day</option>
+	<option value = "DT">Day and Time</option>
+	<option value = "DUR">Duration</option>
+	</select>
+	<div class="clear"></div>
+	</div><br>
+	<div class="tabinner-detail">
+	<label id = "end_date_label" style = "display: none">End Date</label>
+	<input id = "end_date" name="end_date" type="date" class="contact-prefix" style="width:95%; display: none">
+	<div class="clear"></div>
+	</div><br>
+	<div class="tabinner-detail">
+	<label id = "time_label" style = "display: none">Time</label>
+	<input id = "time" name="time" type="time" class="contact-prefix" style="width:95%; display: none">
+	<div class="clear"></div>
+	</div><br>
+	<div class="tabinner-detail">
+	<label>Text</label><br>
+	<textarea name="text" style="float:right; width:600px; height:300px;"></textarea>
+	<div class="clear"></div>
+	</div><br>
+	<input class = "save-btn" type = "submit" name = "submit_form" value = "Add" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
+	</form>
+</div><br>
 <div class="dashboard-detail">
-<div class="clear"></div>
-<div class="reminders">
 <?php
 require ("connection.php");
 //session_start();
 
 $user = $_SESSION['user'];
-$result = mysqli_query($conn,"SELECT * FROM reminder WHERE date = CURDATE() AND occurence = 'Once' AND user = '$user'");
-$result1 = mysqli_query($conn,"SELECT * FROM reminder WHERE date BETWEEN DATE_ADD(CURDATE(),INTERVAL 1 DAY) AND DATE_ADD(CURDATE(), INTERVAL 5 DAY) AND occurence = 'Once' AND user = '$user'");
-date_default_timezone_set('America/New_York');
-$day = date("D");
-$result2 = mysqli_query($conn, "SELECT * FROM reminder WHERE occurence = 'Weekly' AND current_day = '$day' AND user = '$user'");
-$result3 = mysqli_query($conn, "SELECT * FROM reminder WHERE occurence = 'Monthly' AND user = '$user'");
-$result4 = mysqli_query($conn, "SELECT * FROM reminder WHERE occurence = 'Yearly' AND user = '$user'");
 
-$count = 1;
+$result = mysqli_query($conn, "SELECT * FROM reminder WHERE user = '$user'");
+$dates = array();
+$texts = array();
+$id = array();
+$occurences = array();
+$times = array();
+$end_dates = array();
 
-if ($result->num_rows > 0) {
-    // output data of each row
-	echo "<h2>Today's Reminders:</h2>";
-	
-    while($row = $result->fetch_assoc()) {
-		$text = $row['text'];
-		if($row['user'] == $_SESSION['user'] ){
-			if($row['text'] == ""){
-				$text = "BLANK";
-			}
-			$foo = $row["id"];
-			echo $count . ". " . "<a href = edit_reminder.php?id=$foo><u>" . $text."</u></a><br>";
-			if($row["vendor_name"] != "None"){
-				echo "<b style = 'font-size: 12px; margin-left: 16px'>Info:</b>";
-				$foo = $row["vendor_name"];
-				echo "<i style = 'font-size: 11px; margin-left: 5px'>Vendor Name: </i><a style = 'font-size: 12px' href = 'search_vendor.php?vendor_name=$foo'>" . $row["vendor_name"] . "</a>";
-				
-				if($row["client_name"] != "None"){
-					$foo = $row['client_name'];
-					$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%' LIMIT 3");
-					if(mysqli_num_rows($result_client_name) > 0){
-						while($row = $result_client_name->fetch_assoc()){
-							$my_array = array();
-							array_push($my_array, $row['full_name']);
-							array_push($my_array, $row['address_line_1']);
-							$str = serialize($my_array);
-							$stren = urlencode($str);
-							echo "<i style = 'margin-left: 20px; font-size: 11px'>Client Name: </i><a style = 'font-size: 12px' href = 'edit_client.php?client_info=$stren'>" . $row["full_name"] . "</a>";
-						}
-					}
-				}
-			}
-			else if($row["client_name"] != "None"){
-				$foo = $row['client_name'];
-				$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%' LIMIT 3");
-				if(mysqli_num_rows($result_client_name) > 0){
-					while($row = $result_client_name->fetch_assoc()){
-						$my_array = array();
-						array_push($my_array, $row['full_name']);
-						array_push($my_array, $row['address_line_1']);
-						$str = serialize($my_array);
-						$stren = urlencode($str);
-						echo "<i style = 'margin-left: 20px; font-size: 11px'>Client Name: </i><a style = 'font-size: 12px' href = 'edit_client.php?client_info=$stren'>" . $row["full_name"] . "</a>";
-					}
-				}
-				
-				if($row["vendor_name"] != "None"){
-					$foo = $row["vendor_name"];
-					echo "<i style = 'margin-left: 20px; font-size: 11px'>Vendor Name: </i><a style = 'font-size: 12px' href = 'search_vendor.php?vendor_name=$foo'>" . $row["vendor_name"] . "</a>";
-				}
-			}
-		}
-		
-		echo "<br>";
-		
-		$count = $count + 1;
-		
-    }
-} 
-
-echo "<br>";
-
-if ($result1->num_rows > 0) {
-    // output data of each row
-	echo "<h2>Upcoming Reminders:</h2>";
-	
-    while($row = $result1->fetch_assoc()) {
-		$text = $row['text'];
-		if($row['user'] == $_SESSION['user'] ){
-			if($row['text'] == ""){
-				$text = "BLANK";
-			}
-			$foo = $row["id"];
-			$time = strtotime($row['date']);
-			$myFormatForView = date("M d, Y", $time);
-			echo "<i>" . $myFormatForView."</i>: ". "<a href = 'edit_reminder.php?id=$foo'>" . $text."</a><br>";
-			if($row["vendor_name"] != "None"){
-				echo "<b style = 'font-size: 12px; margin-left: 16px'>Info:</b>";
-				$foo = $row["vendor_name"];
-				echo "<i style = 'font-size: 11px; margin-left: 5px'>Vendor Name: </i><a style = 'font-size: 12px' href = 'search_vendor.php?vendor_name=$foo'>" . $row["vendor_name"] . "</a>";
-				
-				if($row["client_name"] != "None"){
-					$foo = $row['client_name'];
-					$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%' LIMIT 3");
-					if(mysqli_num_rows($result_client_name) > 0){
-						while($row = $result_client_name->fetch_assoc()){
-							$my_array = array();
-							array_push($my_array, $row['full_name']);
-							array_push($my_array, $row['address_line_1']);
-							$str = serialize($my_array);
-							$stren = urlencode($str);
-							echo "<i style = 'margin-left: 20px; font-size: 11px'>Client Name: </i><a style = 'font-size: 12px' href = 'edit_client.php?client_info=$stren'>" . $row["full_name"] . "</a>";
-						}
-					}
-				}
-			}
-			else if($row["client_name"] != "None"){
-				$foo = $row['client_name'];
-					$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%' LIMIT 3");
-					if(mysqli_num_rows($result_client_name) > 0){
-						while($row = $result_client_name->fetch_assoc()){
-							$my_array = array();
-							array_push($my_array, $row['full_name']);
-							array_push($my_array, $row['address_line_1']);
-							$str = serialize($my_array);
-							$stren = urlencode($str);
-							echo "<i style = 'margin-left: 20px; font-size: 11px'>Client Name: </i><a style = 'font-size: 12px' href = 'edit_client.php?client_info=$stren'>" . $row["full_name"] . "</a>";
-						}
-					}
-				
-				if($row["vendor_name"] != "None"){
-					$foo = $row["vendor_name"];
-					echo "<i style = 'margin-left: 20px; font-size: 11px'>Vendor Name: </i><a style = 'font-size: 12px' href = 'search_vendor.php?vendor_name=$foo'>" . $row["vendor_name"] . "</a>";
-				}
-			}
-			
-			echo "<br>";
-		}
-		
-    }
-}
-echo "<br>";
-$count = 1;
-if($result2->num_rows > 0){
-	echo "<h2>Weekly Reminders: </h2>";
-	
-	while($row = $result2->fetch_assoc()) {
-		$text = $row['text'];
-		if($row['user'] == $_SESSION['user'] ){
-			if($row['text'] == ""){
-				$text = "BLANK";
-			}
-			$foo = $row["id"];
-			echo $count . ". " . "<a href = edit_reminder.php?id=$foo><u>" . $text."</u></a><br>";
-			if($row["vendor_name"] != "None"){
-				echo "<b style = 'font-size: 12px; margin-left: 16px'>Info:</b>";
-				$foo = $row["vendor_name"];
-				echo "<i style = 'font-size: 11px; margin-left: 5px'>Vendor Name: </i><a style = 'font-size: 12px' href = 'search_vendor.php?vendor_name=$foo'>" . $row["vendor_name"] . "</a>";
-				
-				if($row["client_name"] != "None"){
-					$foo = $row['client_name'];
-					$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%' LIMIT 3");
-					if(mysqli_num_rows($result_client_name) > 0){
-						while($row = $result_client_name->fetch_assoc()){
-							$my_array = array();
-							array_push($my_array, $row['full_name']);
-							array_push($my_array, $row['address_line_1']);
-							$str = serialize($my_array);
-							$stren = urlencode($str);
-							echo "<i style = 'margin-left: 20px; font-size: 11px'>Client Name: </i><a style = 'font-size: 12px' href = 'edit_client.php?client_info=$stren'>" . $row["full_name"] . "</a>";
-						}
-					}
-				}
-			}
-			else if($row["client_name"] != "None"){
-				$foo = $row['client_name'];
-					$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%' LIMIT 3");
-					if(mysqli_num_rows($result_client_name) > 0){
-						while($row = $result_client_name->fetch_assoc()){
-							$my_array = array();
-							array_push($my_array, $row['full_name']);
-							array_push($my_array, $row['address_line_1']);
-							$str = serialize($my_array);
-							$stren = urlencode($str);
-							echo "<i style = 'margin-left: 20px; font-size: 11px'>Client Name: </i><a style = 'font-size: 12px' href = 'edit_client.php?client_info=$stren'>" . $row["full_name"] . "</a>";
-						}
-					}
-				
-				if($row["vendor_name"] != "None"){
-					$foo = $row["vendor_name"];
-					echo "<i style = 'margin-left: 20px; font-size: 11px'>Vendor Name: </i><a style = 'font-size: 12px' href = 'search_vendor.php?vendor_name=$foo'>" . $row["vendor_name"] . "</a>";
-				}
-			}
-		}
-		
-		echo "<br>";
-		
-		$count = $count + 1;
-		
-    }
-}
-echo "<br>";
-
-if(date("j") >= 1 && date("j") <= 4)
-{
-	if($result3->num_rows > 0){
-		echo "<h2>Monthly Reminders: </h2>";
-		
-		while($row = $result3->fetch_assoc()) {
-			$text = $row['text'];
-			if($row['user'] == $_SESSION['user'] ){
-				if($row['text'] == ""){
-					$text = "BLANK";
-				}
-				$foo = $row["id"];
-				echo $count . ". " . "<a href = edit_reminder.php?id=$foo><u>" . $text."</u></a><br>";
-				if($row["vendor_name"] != "None"){
-					echo "<b style = 'font-size: 12px; margin-left: 16px'>Info:</b>";
-					$foo = $row["vendor_name"];
-					echo "<i style = 'font-size: 11px; margin-left: 5px'>Vendor Name: </i><a style = 'font-size: 12px' href = 'search_vendor.php?vendor_name=$foo'>" . $row["vendor_name"] . "</a>";
-				
-					if($row["client_name"] != "None"){
-						$foo = $row['client_name'];
-					$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%' LIMIT 3");
-					if(mysqli_num_rows($result_client_name) > 0){
-						while($row = $result_client_name->fetch_assoc()){
-							$my_array = array();
-							array_push($my_array, $row['full_name']);
-							array_push($my_array, $row['address_line_1']);
-							$str = serialize($my_array);
-							$stren = urlencode($str);
-							echo "<i style = 'margin-left: 20px; font-size: 11px'>Client Name: </i><a style = 'font-size: 12px' href = 'edit_client.php?client_info=$stren'>" . $row["full_name"] . "</a>";
-						}
-					}
-					}
-				}
-				else if($row["client_name"] != "None"){
-					$foo = $row['client_name'];
-					$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%' LIMIT 3");
-					if(mysqli_num_rows($result_client_name) > 0){
-						while($row = $result_client_name->fetch_assoc()){
-							$my_array = array();
-							array_push($my_array, $row['full_name']);
-							array_push($my_array, $row['address_line_1']);
-							$str = serialize($my_array);
-							$stren = urlencode($str);
-							echo "<i style = 'margin-left: 20px; font-size: 11px'>Client Name: </i><a style = 'font-size: 12px' href = 'edit_client.php?client_info=$stren'>" . $row["full_name"] . "</a>";
-						}
-					}
-				
-					if($row["vendor_name"] != "None"){
-						$foo = $row["vendor_name"];
-						echo "<i style = 'margin-left: 20px; font-size: 11px'>Vendor Name: </i><a style = 'font-size: 12px' href = 'search_vendor.php?vendor_name=$foo'>" . $row["vendor_name"] . "</a>";
-					}
-				}
-			}
-		
-			echo "<br>";
-		
-			$count = $count + 1;
-		
-		}
-	}
+while($row = $result->fetch_assoc()){
+	array_push($dates, $row['date']);
+	array_push($texts, $row['text']);
+	array_push($id, $row['id']);
+	array_push($end_dates, $row['end_date']);
+	array_push($times, $row['time']);
+	array_push($occurences, $row['occurence']);
 }
 
-echo "<br>";
+$result = mysqli_query($conn, "SELECT * FROM job_ticket");
+$job_ids = array();
+$job_dates = array();
 
-if(date("n") == 1 && date("j") >= 1 && date("j") <= 4){
-	if($result4->num_rows > 0){
-		echo "<h2>Yearly Reminders: </h2>";
-		
-		while($row = $result4->fetch_assoc()) {
-			$text = $row['text'];
-			if($row['user'] == $_SESSION['user'] ){
-				if($row['text'] == ""){
-					$text = "BLANK";
-				}
-				$foo = $row["id"];
-				echo $count . ". " . "<a href = edit_reminder.php?id=$foo><u>" . $text."</u></a><br>";
-				if($row["vendor_name"] != "None"){
-					echo "<b style = 'font-size: 12px; margin-left: 16px'>Info:</b>";
-					$foo = $row["vendor_name"];
-					echo "<i style = 'font-size: 11px; margin-left: 5px'>Vendor Name: </i><a style = 'font-size: 12px' href = 'search_vendor.php?vendor_name=$foo'>" . $row["vendor_name"] . "</a>";
-				
-					if($row["client_name"] != "None"){
-						$foo = $row['client_name'];
-					$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%' LIMIT 3");
-					if(mysqli_num_rows($result_client_name) > 0){
-						while($row = $result_client_name->fetch_assoc()){
-							$my_array = array();
-							array_push($my_array, $row['full_name']);
-							array_push($my_array, $row['address_line_1']);
-							$str = serialize($my_array);
-							$stren = urlencode($str);
-							echo "<i style = 'margin-left: 20px; font-size: 11px'>Client Name: </i><a style = 'font-size: 12px' href = 'edit_client.php?client_info=$stren'>" . $row["full_name"] . "</a>";
-						}
-					}
-					}
-				}
-				else if($row["client_name"] != "None"){
-					$foo = $row['client_name'];
-					$result_client_name = mysqli_query($conn, "SELECT * FROM sales WHERE type = 'Client' AND full_name LIKE '%{$foo}%' LIMIT 3");
-					if(mysqli_num_rows($result_client_name) > 0){
-						while($row = $result_client_name->fetch_assoc()){
-							$my_array = array();
-							array_push($my_array, $row['full_name']);
-							array_push($my_array, $row['address_line_1']);
-							$str = serialize($my_array);
-							$stren = urlencode($str);
-							echo "<i style = 'margin-left: 20px; font-size: 11px'>Client Name: </i><a style = 'font-size: 12px' href = 'edit_client.php?client_info=$stren'>" . $row["full_name"] . "</a>";
-						}
-					}
-				
-					if($row["vendor_name"] != "None"){
-						$foo = $row["vendor_name"];
-						echo "<i style = 'margin-left: 20px; font-size: 11px'>Vendor Name: </i><a style = 'font-size: 12px' href = 'search_vendor.php?vendor_name=$foo'>" . $row["vendor_name"] . "</a>";
-					}
-				}
-			}
-		
-			echo "<br>";
-		
-			$count = $count + 1;
-		
-		}
-	}
+while($row = $result->fetch_assoc()){
+	array_push($job_ids, $row['job_id']);
+	array_push($job_dates, $row['due_date']);
 }
 
 $conn->close();
 ?>
-</div>
+<script>
+
+	$(document).ready(function() {
+	
+	var dates = <?php echo json_encode($dates); ?>;
+	var texts = <?php echo json_encode($texts); ?>;
+	var ids = <?php echo json_encode($id); ?>;
+	var end_dates = <?php echo json_encode($end_dates); ?>;
+	var times = <?php echo json_encode($times); ?>;
+	var occurences = <?php echo json_encode($occurences); ?>;
+	var job_ids = <?php echo json_encode($job_ids); ?>;
+	var job_dates = <?php echo json_encode($job_dates); ?>;	
+	
+	var events = [];
+	var today = new Date();
+	var dd = today.getDate() + 1;
+	var mm = today.getMonth() + 1;
+	var yyyy = today.getFullYear();
+	var index = 0;
+	
+	for(var i = 0; i < dates.length; i++){
+		var id1 = ids[i];
+		if(occurences[i] == "Day"){
+			events[i] = {
+				url: "edit_reminder.php?id=" + id1,
+				title: texts[i],
+				start: dates[i]
+			};
+		}
+		else if(occurences[i] == "DT"){
+			events[i] = {
+				url: "edit_reminder.php?id=" + id1,
+				title: texts[i],
+				start: dates[i] + "T" + times[i] + ":00"
+			};
+		}
+		else{
+			events[i] = {
+				url: "edit_reminder.php?id=" + id1,
+				title: texts[i],
+				start: dates[i],
+				end: end_dates[i]
+			};
+		}
+		index = i;
+	}
+	
+	var exitIndex = index;
+	
+	for(var i = 0; i < job_ids.length; i++){
+		if(exitIndex == 0){
+				events[i] = {
+				url: "edit_job.php?job_id=" + job_ids[i],
+				title: "Job " + job_ids[i] + " Due",
+				start: job_dates[i]
+			};
+		}
+		else{
+				events[index+1] = {
+				url: "edit_job.php?job_id=" + job_ids[i],
+				title: "Job " + job_ids[i] + " Due",
+				start: job_dates[i]
+			};
+			
+			index = index + 1;
+		}
+	}
+		$('#calendar').fullCalendar({
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,basicWeek,listDay'
+			},
+			defaultDate: yyyy + '-' + mm + '-' + dd,
+			navLinks: true, // can click day/week names to navigate views
+			editable: true,
+			eventLimit: true, // allow "more" link when too many events
+			events: events
+		});
+	});
+function showAdd(){
+   if(document.getElementById("add_rem_button").innerHTML == "Add Reminder"){
+		document.getElementById("add_reminder").style.display = "inline";
+		document.getElementById("add_rem_button").innerHTML = "Cancel";
+   }
+   else{
+	   document.getElementById("add_reminder").style.display = "none";
+	   document.getElementById("add_rem_button").innerHTML = "Add Reminder";
+   }
+}
+
+function showExtraInput(){
+	var e = document.getElementById("occurence_id");
+	if(e.options[e.selectedIndex].value == "DUR"){
+		document.getElementById("end_date").style.display = "inline";
+		document.getElementById("end_date_label").style.display = "inline";
+		document.getElementById("time_label").style.display = "none";
+		document.getElementById("time").style.display = "none";
+	}
+	else if(e.options[e.selectedIndex].value == "DT"){
+		document.getElementById("end_date").style.display = "none";
+		document.getElementById("end_date_label").style.display = "none";
+		document.getElementById("time_label").style.display = "inline";
+		document.getElementById("time").style.display = "inline";
+	}
+	else{
+		document.getElementById("time_label").style.display = "none";
+		document.getElementById("time").style.display = "none";
+		document.getElementById("end_date").style.display = "none";
+		document.getElementById("end_date_label").style.display = "none";
+	}
+}
+</script>
+<style>
+	#calendar {
+		max-width: 900px;
+		margin: 0 auto;
+	}
+
+</style>
+
+<div id='calendar'></div>
+
 </div>
 </div>		
