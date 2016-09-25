@@ -14,10 +14,39 @@ require ("header.php");
 				<input id="search" name="frmSearch" type="text" placeholder="Search for a specific client">
 				<div class="contacts-title">
 				<a id = 'advanced_search_button' class="pull-right" href="#" class="add_button" onclick = 'addField()'>Advanced Search</a>
+				<a id = 'show_saved_search' class="pull-right" class="add_button" onclick = 'showSavedSearch()' href = "#" style = "background: #ff5c33">Show Saved Search</a>
 				</div>
 		<form class = 'advanced_search_area' action = 'advanced_search_clients.php' method = 'post'>
-		<input id = 'advanced_search_submit' style = 'display: none' type = 'submit' name = 'submit_form_advanced'>
+							<input id = 'advanced_search_submit' name = 'advanced_search_submit' style = 'display: none; margin-right: 5%; margin-bottom: 5%; background-color: #000000; color: #ffffff' type = 'submit' value = "Search">
+							<input id = 'advanced_search_and_save' name = 'advanced_search_and_save' style = 'display: none; margin-bottom: 5%; background-color: #000000; color: #ffffff' type = 'submit' value = "Search and Save">
+							<input id = 'advanced_save' name = 'advanced_save' style = 'display: none; margin-bottom: 5%; margin-left: 5%; background-color: #000000; color: #ffffff' type = 'submit' value = "Save">
+							<input id = 'advanced_search_name' name = 'advanced_search_name' style = 'display: none; width: 240px; margin-left: 3%; margin-bottom: 3%' type = 'text' placeholder = 'Enter Saved Search Name'>
 		</form>
+		</div>
+		<div id="saved_search_div">
+						<table id="saved_search_table" style = 'display: none'>
+							<tbody>
+								<?php
+								$result = mysqli_query($conn, "SELECT * FROM saved_search WHERE table_type = 'CLIENT' ORDER BY search_date DESC LIMIT 10");
+								if (mysqli_num_rows($result) > 0) {
+							    // output data of each row
+									while($row = $result->fetch_assoc()) {
+										$field1=$row["field1"];
+										$value1=$row["value1"];
+										$field2=$row["field2"];
+										$value2=$row["value2"];
+										$field3=$row["field3"];
+										$value3=$row["value3"];
+										$search_id=$row["search_id"];
+										echo "<tr id = 'row" . $search_id . "'><td class='data-cell'><a href = 'advanced_search_clients.php?field1=$field1&value1=$value1&field2=$field2&value2=$value2&field3=$field3&value3=$value3&search_id=$search_id'>". $row["search_name"]."</a></td><td><button id = '" . $search_id . "'><img src = 'images/x_button.png' width = '25' height = '25'></button></tr>";
+									}
+								} 
+								else {
+									echo "0 Saved Searches";
+								}
+								?>
+							</tbody>
+						</table>
 		</div>
 	</div>
 	</div>
@@ -92,17 +121,29 @@ $conn->close();
 <script src="sorttable.js"></script>
 <script type="text/javascript" src="jquery-latest.js"></script> 
 <script type="text/javascript" src="jquery.tablesorter.js"></script> 
-<script>
+<script type = "text/javascript">
 var fieldCount = 1;
-
+function showSavedSearch(){
+	if(document.getElementById('show_saved_search').innerHTML == "Show Saved Search"){
+		document.getElementById('saved_search_table').style.display = "block";
+		document.getElementById('show_saved_search').innerHTML = "Hide Saved Search";
+	}
+	else{
+		document.getElementById('saved_search_table').style.display = "none";
+		document.getElementById('show_saved_search').innerHTML = "Show Saved Search";
+	}
+}
 function addField(){
 	     if(fieldCount <= 3){
-			$(".advanced_search_area").append("<div class = 'field" + fieldCount + "'><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeField('.field" + fieldCount + "')><input name = 'fieldArea" + fieldCount + "' type = 'text' placeholder = 'Find'>Where<select style = 'width: 125px; font-size: 13px' name = 'select" + fieldCount 
+			$(".advanced_search_area").append("<div class = 'field" + fieldCount + "'><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeField('.field" + fieldCount + "')><input style = 'margin-bottom: 4%' name = 'fieldArea" + fieldCount + "' type = 'text' placeholder = 'Find'>Where<select style = 'width: 125px; font-size: 13px' name = 'select" + fieldCount 
 			+ "'><option selected = 'selected' value = 'full_name'>Client Name</option><option value = 'business'>Business</option><option value = 'address_line_1'>Address</option><option value = 'city'>City</option><option value = 'state'>State</option><option value = 'zipcode'>Zipcode</option><option value = 'title'>Title</option>" + 
 			"<option value = 'phone'>Phone</option><option value = 'web_address'>Website</option><option value = 'email1'>Email</option></select></div>");
 			if(fieldCount == 1){
 				document.getElementById("advanced_search_button").innerHTML = "Add Field";
-				document.getElementById("advanced_search_submit").style.display = "block";
+				document.getElementById("advanced_search_submit").style.display = "inline";
+				document.getElementById("advanced_search_and_save").style.display = "inline";
+				document.getElementById("advanced_search_name").style.display = "inline";
+				document.getElementById("advanced_save").style.display = "inline";
 			}
 			
 			fieldCount++;
@@ -114,6 +155,9 @@ function removeField(x){
 	if(fieldCount == 1){
 		document.getElementById("advanced_search_button").innerHTML = "Advanced Search";
 		document.getElementById("advanced_search_submit").style.display = "none";
+		document.getElementById("advanced_search_and_save").style.display = "none";
+		document.getElementById("advanced_search_name").style.display = "none";
+		document.getElementById("advanced_save").style.display = "none";
 	}
 }
 var numPerPage = 10;
@@ -277,6 +321,22 @@ function nextPage(){
 		}
 	}
 }
+$("button").click(function(){
+    var del_id = $(this).attr("id");
+    var info = del_id;
+	if(confirm("Are you sure you want to delete"))
+	$.ajax({
+		url: 'delete_search.php',
+		type: 'POST',
+		data: {
+			id: info
+		},
+		success: function(){
+			document.getElementById("row" + del_id).style.display = "none";
+		}
+	});
+	return false;
+});
 </script>
 
 	
