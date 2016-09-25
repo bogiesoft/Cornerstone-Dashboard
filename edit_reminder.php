@@ -23,6 +23,10 @@ if(isset($_POST['submit_form'])){
 header("location: reminders.php");
 exit();
 }
+else if(isset($_POST['delete_form'])){
+	mysqli_query($conn, "DELETE FROM reminder WHERE id = '$id'");
+	header("location: reminders.php");
+}
 require ("header.php");
 
 $temp = $id;
@@ -95,10 +99,11 @@ $text = $row['text'];
 	</div><br>
 	<div class="tabinner-detail">
 	<label>Text</label><br>
-	<textarea name="text" style="float:right; width:600px; height:300px;"><?php echo $text; ?></textarea>
+	<textarea name="text" style="float:right; width:600px; height:50px;"><?php echo $text; ?></textarea>
 	<div class="clear"></div>
 	</div><br>
 	<input class = "save-btn" type = "submit" name = "submit_form" value = "Save" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
+	<input class = "save-btn" type = "submit" name = "delete_form" value = "Delete" style="width:200px; font-size:16px; background-color:#ff5c33; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
 	</form>
 			</div>
 		</div>

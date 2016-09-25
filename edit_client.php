@@ -158,7 +158,14 @@ else if(isset($_POST['submit_form'])){
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 		<h1 class="pull-left">Edit Client</h1>
-		<a class="pull-right" href="clients.php" >Back to Clients</a>
+		<?php
+		if($type == "Client"){
+			echo "<a class='pull-right' href='clients.php' >Back to Clients</a>";
+		}
+		else{
+			echo "<a class='pull-right' href='sales.php' >Back to Sales</a>";
+		}
+		?>
 		<div class="clear"></div>
 	</div>
 	<div class="dashboard-detail">

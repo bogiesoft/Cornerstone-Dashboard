@@ -64,26 +64,30 @@ require ("header.php");
 					</div>
 					<div class="contacts-title">
 						<a id = 'advanced_search_button' class="pull-right" href="#" class="add_button" onclick = 'addField()'>Advanced Search</a>
-						<form class = 'advanced_search_area' action = 'advanced_search_CRM.php' method = 'get'>
-							<input id = 'advanced_search_submit' style = 'display: none' type = 'submit' name = 'submit_form_advanced'>
+						<a id = 'show_saved_search' class="pull-right" class="add_button" onclick = 'showSavedSearch()' href = "#" style = "background: #ff5c33">Show Saved Search</a>
+						<form class = 'advanced_search_area' action = 'advanced_search_CRM.php' method = 'post'>
+							<input id = 'advanced_search_submit' name = 'advanced_search_submit' style = 'display: none; margin-right: 5%; margin-bottom: 5%; background-color: #000000; color: #ffffff' type = 'submit' value = "Search">
+							<input id = 'advanced_search_and_save' name = 'advanced_search_and_save' style = 'display: none; margin-bottom: 5%; background-color: #000000; color: #ffffff' type = 'submit' value = "Search and Save">
+							<input id = 'advanced_save' name = 'advanced_save' style = 'display: none; margin-bottom: 5%; margin-left: 5%; background-color: #000000; color: #ffffff' type = 'submit' value = "Save">
+							<input id = 'advanced_search_name' name = 'advanced_search_name' style = 'display: none; width: 200px; margin-left: 3%; margin-bottom: 3%' type = 'text' placeholder = 'Enter Saved Search Name'>
 						</form>
 					</div>
 					<div id="saved_search_div">
-					<button id = 'show_saved_search' class="pull-right" class="add_button" onclick = 'showSavedSearch()'>Show Saved Search</button>
 						<table id="saved_search_table" style = 'display: none'>
 							<tbody>
 								<?php
-								$result = mysqli_query($conn, "SELECT * FROM saved_search");
-								if ($result->num_rows > 0) {
+								$result = mysqli_query($conn, "SELECT * FROM saved_search WHERE table_type = 'CRM' ORDER BY search_date DESC LIMIT 10");
+								if (mysqli_num_rows($result) > 0) {
 							    // output data of each row
 									while($row = $result->fetch_assoc()) {
+										$search_id = $row["search_id"];
 										$field1=$row["field1"];
 										$value1=$row["value1"];
 										$field2=$row["field2"];
 										$value2=$row["value2"];
 										$field3=$row["field3"];
 										$value3=$row["value3"];
-										echo "<tr><td class='data-cell'><a href = 'advanced_search_CRM.php?fieldArea1=$value1&select1=$field1&fieldArea2=$value2&select2=$field2&fieldArea3=$value3&select3=$field3'>". $row["search_name"]."</a></td></tr>";
+										echo "<tr id = 'row" . $search_id . "'><td class='data-cell'><a href = 'advanced_search_CRM.php?field1=$field1&value1=$value1&field2=$field2&value2=$value2&field3=$field3&value3=$value3&search_id=$search_id'>". $row["search_name"]."</a></td><td><button id = '" . $search_id . "'><img src = 'images/x_button.png' width = '25' height = '25'></button></tr>";
 									}
 								} 
 								else {
@@ -232,12 +236,15 @@ function showSavedSearch(){
 
 function addField(){
 	     if(fieldCount <= 3){
-			$(".advanced_search_area").append("<div class = 'field" + fieldCount + "'><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeField('.field" + fieldCount + "')><input name = 'fieldArea" + fieldCount + "' type = 'text' placeholder = 'Find'>Where<select style = 'width: 125px; font-size: 13px' name = 'select" + fieldCount 
+			$(".advanced_search_area").append("<div class = 'field" + fieldCount + "'><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeField('.field" + fieldCount + "')><input style = 'margin-bottom: 4%' name = 'fieldArea" + fieldCount + "' type = 'text' placeholder = 'Find'>Where<select style = 'width: 125px; font-size: 13px' name = 'select" + fieldCount 
 			+ "'><option selected = 'selected' value = 'full_name'>Client Name</option><option value = 'business'>Business</option><option value = 'address_line_1'>Address</option><option value = 'city'>City</option><option value = 'state'>State</option><option value = 'zipcode'>Zipcode</option><option value = 'title'>Title</option>" + 
 			"<option value = 'phone'>Phone</option><option value = 'web_address'>Website</option><option value = 'email1'>Email</option></select></div>");
 			if(fieldCount == 1){
 				document.getElementById("advanced_search_button").innerHTML = "Add Field";
-				document.getElementById("advanced_search_submit").style.display = "block";
+				document.getElementById("advanced_search_submit").style.display = "inline";
+				document.getElementById("advanced_search_and_save").style.display = "inline";
+				document.getElementById("advanced_search_name").style.display = "inline";
+				document.getElementById("advanced_save").style.display = "inline";
 			}
 			
 			fieldCount++;
@@ -249,6 +256,9 @@ function removeField(x){
 	if(fieldCount == 1){
 		document.getElementById("advanced_search_button").innerHTML = "Advanced Search";
 		document.getElementById("advanced_search_submit").style.display = "none";
+		document.getElementById("advanced_search_and_save").style.display = "none";
+		document.getElementById("advanced_search_name").style.display = "none";
+		document.getElementById("advanced_save").style.display = "none";
 	}
 }
 function changeTab(evt, cityName) {
@@ -272,6 +282,10 @@ function changeTab(evt, cityName) {
     evt.currentTarget.className += " active";
 }
 
+var numPerPage = 10;
+var subtractValue = 3;
+var prevSubValue = 5;
+
 $("#search").keyup(function(){
         _this = this;
         // Show only matching TR, hide rest of them
@@ -282,16 +296,13 @@ $("#search").keyup(function(){
                $(this).show();                
         });
     }); 
-
-var subtractValue = 3;
-var prevSubValue = 4;
-
+	
 $(document).ready(function() 
     { 
-		$("#crm_table").tablesorter();
+        $("#crm_table").tablesorter(); 
 		pageCreator();
     } 
-);
+); 
 function pageCreator(){
 	$('table.table-striped.main-table.contacts-list').each(function() {
 		var currentPage = 0;
@@ -427,9 +438,25 @@ function nextPage(){
 				break;
 			}
 		}
-		if(ul.children[lastIndex + 1].className == "next" || count < 5){
+		if(count < 5 || ul.children[lastIndex + 1].className == "next"){
 			document.getElementById("next_button").style.display = "none";
 		}
 	}
 }
+$("button").click(function(){
+    var del_id = $(this).attr("id");
+    var info = del_id;
+	if(confirm("Are you sure you want to delete"))
+	$.ajax({
+		url: 'delete_search.php',
+		type: 'POST',
+		data: {
+			id: info
+		},
+		success: function(){
+			document.getElementById("row" + del_id).style.display = "none";
+		}
+	});
+	return false;
+});
 </script>

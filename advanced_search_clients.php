@@ -1,4 +1,56 @@
 <?php
+require ("connection.php");
+if(isset($_POST["advanced_save"])){
+	$index = 1;
+	$fields = array();
+	$values = array();
+	while($index <= 3){
+	  if(isset($_POST['fieldArea' . $index])){
+		$find = $_POST['fieldArea' . $index];
+		$value = $_POST['select' . $index];
+		if($find!=''&& $value!='')
+		{
+			array_push($fields, $value);
+			array_push($values, $find);
+		}
+	  }
+	  
+	  $index = $index + 1;
+	  
+	}
+	$search_name = $_POST['advanced_search_name'];
+	date_default_timezone_set('America/New_York');
+	$today = date("Y-m-d");
+	if(count($values) != 0){
+		if($search_name == ''){
+			$search_name = "Search_" . $values[0] . "_" . $fields[0];
+		}
+		if($values[0] != ''){
+			if(count($fields) == 1){
+				$field1 = $fields[0];
+				$value1 = $values[0];
+				mysqli_query($conn, "INSERT INTO saved_search (search_name, search_date, field1, value1, table_type) VALUES ('$search_name', '$today', '$field1', '$value1', 'CLIENT')");
+			}
+			else if(count($fields) == 2){
+				$field1 = $fields[0];
+				$value1 = $values[0];
+				$field2 = $fields[1];
+				$value2 = $values[1];
+				mysqli_query($conn, "INSERT INTO saved_search (search_name, search_date, field1, value1, field2, value2, table_type) VALUES ('$search_name', '$today', '$field1', '$value1', '$field2', '$value2', 'CLIENT')");
+			}
+			else{
+				$field1 = $fields[0];
+				$value1 = $values[0];
+				$field2 = $fields[1];
+				$value2 = $values[1];
+				$field3 = $fields[2];
+				$value3 = $values[2];
+				mysqli_query($conn, "INSERT INTO saved_search (search_name, search_date, field1, value1, field2, value2, field3, value3, table_type) VALUES ('$search_name', '$today', '$field1', '$value1', '$field2', '$value2', '$field3', '$value3', 'CLIENT')");
+			}
+		}
+	}
+	header("location: clients.php");
+}
 require ("header.php");
 ?>
 <div class="dashboard-cont" style="padding-top:110px;">
@@ -20,28 +72,95 @@ require ("header.php");
 
 
 <?php
-
-require ("connection.php");
-$sql = "SELECT * FROM sales WHERE type = 'Client'";
-$index = 1;
-while($index <= 3){
-  if(isset($_POST['fieldArea' . $index])){
-	$find = $_POST['fieldArea' . $index];
-	$sql = $sql . " AND (" . $_POST['select' . $index] . " = '$find' OR " . $_POST['select' . $index] . " LIKE '$find')"; 
-  }
-  
-  $index = $index + 1;
-  
+$sql = "";
+$fields = array();
+$values = array();
+if(isset($_POST['advanced_search_submit']) || isset($_POST['advanced_search_and_save'])){
+	$sql = $sql . "SELECT * FROM sales WHERE type = 'Client'";
+	$index = 1;
+	while($index <= 3){
+	  if(isset($_POST['fieldArea' . $index])){
+		$find = $_POST['fieldArea' . $index];
+		$value = $_POST['select' . $index];
+		if($find!=''&& $value!='')
+		{
+			$sql = $sql . " AND (" . $value . " = '$find' OR " . $value . " LIKE '%{$find}%')"; 
+			array_push($fields, $value);
+			array_push($values, $find);
+		}
+	  }
+	  
+	  $index = $index + 1;
+	  
+	}
+}
+if($sql != ""){
+	$result = mysqli_query($conn,$sql) or die("error");
 }
 
-$result = mysqli_query($conn,$sql) or die("error");
-
-
+if(isset($_POST['advanced_search_and_save'])){
+	$search_name = $_POST['advanced_search_name'];
+	date_default_timezone_set('America/New_York');
+	$today = date("Y-m-d");
+	if(count($values) != 0){
+		if($search_name == ''){
+			$search_name = "Search_" . $values[0] . "_" . $fields[0];
+		}
+		if($values[0] != ''){
+			if(count($fields) == 1){
+				$field1 = $fields[0];
+				$value1 = $values[0];
+				mysqli_query($conn, "INSERT INTO saved_search (search_name, search_date, field1, value1, table_type) VALUES ('$search_name', '$today', '$field1', '$value1', 'CLIENT')");
+			}
+			else if(count($fields) == 2){
+				$field1 = $fields[0];
+				$value1 = $values[0];
+				$field2 = $fields[1];
+				$value2 = $values[1];
+				mysqli_query($conn, "INSERT INTO saved_search (search_name, search_date, field1, value1, field2, value2, table_type) VALUES ('$search_name', '$today', '$field1', '$value1', '$field2', '$value2', 'CLIENT')");
+			}
+			else{
+				$field1 = $fields[0];
+				$value1 = $values[0];
+				$field2 = $fields[1];
+				$value2 = $values[1];
+				$field3 = $fields[2];
+				$value3 = $values[2];
+				mysqli_query($conn, "INSERT INTO saved_search (search_name, search_date, field1, value1, field2, value2, field3, value3, table_type) VALUES ('$search_name', '$today', '$field1', '$value1', '$field2', '$value2', '$field3', '$value3', 'CLIENT')");
+			}
+		}
+	}
+}
+if(!isset($_POST['advanced_search_submit']) && !isset($_POST['advanced_search_and_save'])){
+	$search_id = $_GET['search_id'];
+	$field1 = $_GET['field1'];
+	$value1 = $_GET['value1'];
+	$field2 = $_GET['field2'];
+	$value2 = $_GET['value2'];
+	$field3 = $_GET['field3'];
+	$value3 = $_GET['value3'];
+	
+	date_default_timezone_set('America/New_York');
+	$today = date("Y-m-d");
+	
+	mysqli_query($conn, "UPDATE saved_search SET search_date = '$today' WHERE search_id = '$search_id'") or die("ERROR");
+	
+	if($field2 != "$$$" && $field3 == "$$$"){
+		$sql = "SELECT * FROM sales WHERE type = 'Client' AND (" . $field1 . " = '$value1' OR " . $field1 . " LIKE '%{$value1}%') AND (" . $field2 . " = '$value2' OR " . $field2 . " LIKE '%{$value2}%')";
+	}
+	else if($field3 != "$$$"){
+		$sql = "SELECT * FROM sales WHERE type = 'Client' AND (" . $field1 . " = '$value1' OR " . $field1 . " LIKE '%{$value1}%') AND (" . $field2 . " = '$value2' OR " . $field2 . " LIKE '%{$value2}%') AND (" . $field3 . " = '$value3' OR " . $field3 . " LIKE '%{$value3}%')";
+	}
+	else{
+		$sql = "SELECT * FROM sales WHERE type = 'Client' AND (" . $field1 . " = '$value1' OR " . $field1 . " LIKE '%{$value1}%')";
+	}
+	
+	$result = mysqli_query($conn, $sql) or die("error");
+}
 echo " <div id = 'table-scroll' class='allcontacts-table'><table id = 'table' border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
 echo "<tbody>";
 echo "<tr valign='top'><th class='allcontacts-title'>All Results<span class='allcontacts-subtitle'></span></th></tr>";
 echo "<tr valign='top'><td colspan='2'><table id = 'client_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Client Name</th><th id = 'contact_name' class='maintable-thtwo data-header' data-name='contact_name' data-index='1'>Business</th><th id = 'address' class='maintable-thtwo data-header' data-name='client_add' data-index='2'>Address</th><th id = 'phone' class='maintable-thtwo data-header' data-name='contact_phone' data-index='3'>Phone</th><th id = 'email' class='maintable-thtwo data-header' data-name='contact_email' data-index='4'>City</th><th id = 'website' class='maintable-thtwo data-header' data-name='website' data-index='5'>Title</th><th id = 'category' class='maintable-thtwo data-header' data-name='category' data-index='6'>Email</th><th id = 'title' class='maintable-thtwo data-header' data-name='title' data-index='7'>Website</th></tr></thead><tbody>";
-
 
 if ($result->num_rows > 0) {
     // output data of each row
@@ -94,7 +213,7 @@ $conn->close();
 </div>
 </div>
 
-<!--- script for making table sortable --->
+<!-- script for making table sortable -->
 <script src="sorttable.js"></script>
 <script type="text/javascript" src="jquery-latest.js"></script> 
 <script type="text/javascript" src="jquery.tablesorter.js"></script> 
@@ -118,7 +237,7 @@ $(document).ready(function()
     { 
         $("#client_table").tablesorter(); 
 		pageCreator();
-    } 
+    }
 ); 
 function pageCreator(){
 	$('table.table-striped.main-table.contacts-list').each(function() {
