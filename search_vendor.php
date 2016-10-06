@@ -1,6 +1,3 @@
-<?php
-require ("header.php");
-?>
 <script src="VendorSweetAlert.js"></script>
 <?php
 
@@ -74,7 +71,7 @@ require ("header.php");
 							header("location: vendors.php");
 							exit();
 						}
-
+					require ("header.php");
 					?>
 					<div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">

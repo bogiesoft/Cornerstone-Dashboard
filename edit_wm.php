@@ -1,5 +1,4 @@
 <?php
-require ("header.php");
 require ("connection.php");
 
 	
@@ -20,6 +19,7 @@ require ("connection.php");
 		$weight = $row['weight'];
 		$size = $row['size'];
 		$based_on = $row['based_on'];
+		$product_num = $row['product_num'];
 		$display = "yes";
     
 	} 
@@ -42,8 +42,10 @@ require ("connection.php");
 		$weight = $_POST['weight'];
 		$size = $_POST['size'];
 		$based_on = $_POST['based_on'];
-		$sql = "UPDATE materials SET material='$material',type='$type',vendor='$vendor',height='$height',weight='$weight',size='$size', based_on = '$based_on' WHERE material_id ='$term'";
-		$result = $conn->query($sql) or die('Error querying database.');
+		$product_num = $_POST['product_num'];
+		echo $based_on . "<br>" . $product_num . "<br>";
+		$sql = "UPDATE materials SET material='$material',type='$type',vendor='$vendor',height='$height',weight='$weight',size='$size', based_on = '$based_on', product_num = '$product_num' WHERE material_id ='$term'";
+		$result = $conn->query($sql) or die('Error querying database 5');
 		$sql6 = "INSERT INTO timestamp (user,time,job,a_p) VALUES ('$user_name', '$today','$job', '$a_p')";
 		$result7 = $conn->query($sql6) or die('Error querying database 5.');
 		 
@@ -67,6 +69,7 @@ require ("connection.php");
 		exit();
 	}
 	
+	require ("header.php");
 ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script>
@@ -139,6 +142,10 @@ $(document).ready(function(){
 					<div class="tabinner-detail">
 					<label>Based On</label>
 					<input name="based_on" type="text" class="contact-prefix" value="<?php echo $based_on; ?>">
+					</div>
+					<div class="tabinner-detail">
+					<label>Product Number</label>
+					<input name="product_num" type="text" class="contact-prefix" value="<?php echo $product_num; ?>">
 					</div>
 				</div>
 			</div>
