@@ -1,7 +1,7 @@
 <?php
-require('header.php');
 require('connection.php');
 if(isset($_POST['submit_form'])){
+	session_start();
 	$job_id = $_SESSION['yellow_sheet_job_id'];
 	$count = 1;
 	$check_count = 0;
@@ -36,6 +36,7 @@ if(isset($_POST['submit_form'])){
 	mysqli_query($conn, "UPDATE project_management SET percent = '$percent' WHERE job_id = '$job_id'") or die("error");
 	header("location: project_management.php");
 }
+require('header.php');
 $job_id = $_GET['job_id'];
 $_SESSION['yellow_sheet_job_id'] = $job_id;
 $result = mysqli_query($conn, "SELECT * FROM project_management WHERE job_id = '$job_id'");
