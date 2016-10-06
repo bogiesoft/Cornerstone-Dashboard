@@ -98,9 +98,6 @@ while($row = $job_result->fetch_assoc()){
 			$sql100 = "INSERT INTO timestamp (user,time,job, a_p,processed_by,viewed) VALUES ('$user_name', '$today','$job', '$a_p','$processed_by','no')";
 			$result100 = $conn->query($sql100) or die('Error querying database 101.');
 		}
-		else{
-			echo "<script>alert('Job not complete. Make sure to check yellow sheet');</script>";
-		}
 	}
 	$job_count = $job_count + 1;
 }
@@ -162,7 +159,13 @@ if ($result->num_rows > 0) {
 					echo "<p class = 'hover_info'>Records total: ".$row1["records_total"]."<span style = 'height: 20px; width: 250px' class = 'tooltiptext'>Foreigns: " . $row_blue_sheet['bs_foreigns'] . ", Domestic: " . $row_blue_sheet['bs_domestic'] . "</span></p>";
 					$name = $row2["first_name"] . " " . $row2["last_name"];
 					echo "<p style = 'margin-right: 190px'>Assigned to: ".$name."</p><br>";
-					echo "<form style = 'margin-left: 750px;' action = '' method = 'post'><select onchange = 'this.form.submit()' name = 'assign_to" . $job_count . "' style = 'width: 120px'><option selected disabled value = 'None'>--Assign To--</option>";
+					
+					$result_ys_percent = mysqli_query($conn, "SELECT percent FROM project_management WHERE job_id = '$job_id'");
+					$row_ys_percent = $result_ys_percent->fetch_assoc();
+					$percent = $row_ys_percent["percent"];
+					
+					$form_id = "assigned_to" . $job_count;
+					echo "<form id = 'assigned_to" . $job_count . "' style = 'margin-left: 750px;' action = '' method = 'post'><select onchange = 'checkPercent(" . $percent . ", \"" . $form_id . "\");' name = 'assign_to" . $job_count . "' style = 'width: 120px'><option selected disabled value = 'None'>--Assign To--</option>";
 					$processed_by = $name;
 					
 					$result_users = mysqli_query($conn, "SELECT user FROM users");
@@ -181,10 +184,7 @@ if ($result->num_rows > 0) {
 					</div></a>";
 					
 					array_push($id_array, 'canvas_pm' . $job_count);
-					
-					$result_ys_percent = mysqli_query($conn, "SELECT percent FROM project_management WHERE job_id = '$job_id'");
-					$row_ys_percent = $result_ys_percent->fetch_assoc();
-					array_push($percent_array, $row_ys_percent["percent"]);
+					array_push($percent_array, $percent);
 					
 					
 				echo "<div id = 'show" . $job_count . "' style = 'display: none'>";	
@@ -308,6 +308,8 @@ if ($result->num_rows > 0) {
 ?>
 </div>
 </div>
+<script src="PMSweetAlert.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script src="sorttable.js"></script>
 <script type="text/javascript" src="jquery-latest.js"></script> 
 <script type="text/javascript" src="jquery.tablesorter.js"></script> 
