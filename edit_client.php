@@ -1,5 +1,4 @@
 <?php
-require ("header.php");
 require ("connection.php");
 
 $temp=unserialize($_GET['client_info']);
@@ -124,6 +123,8 @@ else if(isset($_POST['submit_form'])){
 	header("location:clients.php");
 	exit();
 }
+
+require ("header.php");
 ?>
 <script src="ClientSweetAlert.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>

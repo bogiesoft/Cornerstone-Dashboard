@@ -17,7 +17,7 @@ if(isset($_POST['submit_form'])){
 	$result = $conn->query($sql) or die('Error querying database.');
 	 
 	$conn->close();
-	header("location: http://localhost/crst_dashboard/documentation.php ");
+	header("location: documentation.php");
 	exit();
 }
 else{

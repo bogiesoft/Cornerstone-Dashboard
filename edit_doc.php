@@ -2,11 +2,9 @@
 require ("header.php");
 require ("connection.php");
 
-	
-	$term = $_GET['title'];
-	
-	$sql = "SELECT * FROM documentation WHERE title = '$term'"; 
-	$result = mysqli_query($conn,$sql); 
+$term = $_GET['title'];	
+$sql = "SELECT * FROM documentation WHERE title = '$term'"; 
+$result = mysqli_query($conn,$sql); 
 	
 	
 	
