@@ -79,8 +79,8 @@
 						</div>
 						</div><br>
 						<div class="newcontact-tabbtm">
-							  <input type = "submit" name = "account_save" value = "Save Account" onclick = "return confirm('Save Changes?')" style="float: right;width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;"/>
-							  <input type = "submit" name = "account_delete" value = "Delete Account" onclick = "return confirm('Delete account?')" style="float: left;width:200px; font-size:16px; background-color:#d14700; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;"/>
+							  <input class = 'save-btn' type = "submit" name = "account_save" value = "Save Account" style="float: right;width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;"/>
+							  <input class = 'delete-btn' type = "submit" name = "account_delete" value = "Delete Account" style="float: left;width:200px; font-size:16px; background-color:#d14700; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;"/>
 						</div>
 						</form>
 </div>
@@ -88,3 +88,5 @@
 </div>
 </div>
 </div>
+<script src="AdminSweetAlert.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
