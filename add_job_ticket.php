@@ -1,5 +1,4 @@
 <?php
-
 require ("connection.php");
 if(isset($_POST['submit_form'])){
 	session_start();
@@ -123,22 +122,5 @@ if(isset($_POST['submit_form'])){
 	header("location: job_ticket.php");
 	exit();
 }
-else{
-	session_start();
-	$user_name = $_SESSION['user'];
-	date_default_timezone_set('America/New_York');
-	$today = date("Y-m-d G:i:s");
-	$a_p = date("A");
-	$job = "deleted archive job";
-	$temp = $_GET['job_id'];
-	mysqli_query($conn, "INSERT INTO timestamp (user,time,job,a_p) VALUES ('$user_name', '$today','$job', '$a_p')");
-	mysqli_query($conn, "DELETE FROM archive_jobs WHERE job_id = '$temp'");
-	$conn->close();
-
-	header("location: archive.php");
-	exit();
-	
-}
-
 ?>
 

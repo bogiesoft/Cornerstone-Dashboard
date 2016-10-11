@@ -1,5 +1,4 @@
 <?php
-require('header.php');
 require('connection.php');
 $id = $_GET['id'];
 $result = mysqli_query($conn, "SELECT * FROM production_data WHERE id = '$id'");
@@ -9,6 +8,7 @@ $time_unit_array = explode(",", $row['time_unit']);
 $records_per_array = explode(",", $row['records_per']);
 $people_array = explode(",", $row['people']);
 $job_array = explode(",", $row['job']);
+$total_records = $row["total_records"];
 
 if(isset($_POST['save_form'])){
 	
@@ -152,6 +152,7 @@ else if(isset($_POST['delete_form'])){
 	mysqli_query($conn, "DELETE FROM production_data WHERE id = '$id'");
 	header("location: production_data.php");
 }
+require('header.php');
 
 ?>
 <script>
@@ -214,7 +215,7 @@ function removeTask(){
 	<a class="pull-right" href="production_data.php" >Back to Time Tracking</a>
 	</div><br><br><br><br>
 <form action="" method="post">
-<div>Total Records &nbsp; <br><input name = "records" type = "text" id = "records" style = "width: 80px" value = <?php echo $row['total_records']; ?>></input></div><p id = "recs_error" style = "color:red;"></p><br><br>
+<div>Total Records &nbsp; <br><input name = "records" type = "text" id = "records" style = "width: 80px" value = <?php echo $total_records; ?>></input></div><p id = "recs_error" style = "color:red;"></p><br><br>
   <div class = "prod_info">
 	<h1>Task 1: </h1>
 	<label style = "float: left;">Time/Unit</label> &nbsp; <input name = "time_number" type = "text" id = "time_number" style = "float: left; margin-right: 10px; width: 40px; font-size = 18px;" value = <?php echo $time_number_array[0]; ?>></input><select style = "float:left;" name = "time_unit" id = "time_unit"><option selected = 'selected'><?php echo $time_unit_array[0]; ?></option><option>min.</option><option>sec.</option><option>hr.</option></select>
@@ -254,8 +255,8 @@ function removeTask(){
 <h1><progress id = "progress_bar" value = "1" max = "40" style = "background-color: red"></progress></h1><br>
 <h2 id = "display_time">Hours: 0</h2><br>
 <h2 id = "eff">Efficiency: </h2><br>
-<input type = "submit" value = "Save Data" name = "save_form"></input>
-<input type = "submit" value = "Delete" name = "delete_form" onclick = 'return confirm("Delete Data")'></input>
+<input class = 'save-btn' type = "submit" value = "Save Data" name = "save_form"></input>
+<input class = 'delete-btn' type = "submit" value = "Delete" name = "delete_form"></input>
 </form>
 <button type = "button" onclick = "changeBar();">Submit Data</button><button type = "button" onclick = "addTask();">Add Task</button><button style = 'float: right' type = "button" onclick = "removeTask();">Remove Task</button>
 <style>
@@ -273,6 +274,8 @@ progress[value]::-webkit-progress-value {
     background-size: 35px 20px, 100% 100%, 100% 100%;
 }
 </style>
+<script src="TimeTrackingSweetAlert.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.2.min.js"></script>
 
 <script type = "text/javascript">

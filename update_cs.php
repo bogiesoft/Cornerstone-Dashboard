@@ -165,7 +165,6 @@ if(isset($_POST['delete_form'])){
 	mysqli_query($conn,"DELETE FROM customer_service WHERE job_id = '$job_id'")or die("error1");
 	mysqli_query($conn,"DELETE FROM job_ticket WHERE job_id = '$job_id'")or die("error3");
 	mysqli_query($conn,"DELETE FROM project_management WHERE job_id = '$job_id'")or die("error4");
-	mysqli_query($conn,"DELETE FROM mail_info WHERE job_id = '$job_id'")or die("error5");
 	mysqli_query($conn,"DELETE FROM production WHERE job_id = '$job_id'")or die("error6");
 	
 	$conn->close();

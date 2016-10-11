@@ -45,7 +45,7 @@ require('header.php');
 <h1><progress id = "progress_bar" value = "0" max = "40" style = "background-color: red"></progress></h1><br>
 <h2 id = "display_time">Hours: 0</h2><br>
 <h2 id = "eff">Efficiency: </h2><br>
-<input type = "submit" value = "Save Data"></input>
+<input class = "save-btn" type = "submit" value = "Save Data"></input>
 </form>
 <button type = "button" onclick = "changeBar();">Submit Data</button><button type = "button" onclick = "addTask();">Add Task</button><button type = "button" onclick = "removeTask();">Remove Task</button><br><br><br>
 <div class="contacts-title">
@@ -56,7 +56,7 @@ require('header.php');
 	<div class="searchcont-detail">
 		<div class="search-boxleft">
 				<label>Quick Search</label>
-				<input id="search" name="frmSearch" type="text" placeholder="Search for a specific client">
+				<input id="search" name="frmSearch" type="text" placeholder="Search for data">
 		</div>
 	</div>
 	</div>
@@ -121,6 +121,8 @@ progress[value]::-webkit-progress-value {
     background-size: 35px 20px, 100% 100%, 100% 100%;
 }
 </style>
+<script src="TimeTrackingSweetAlert.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.2.min.js"></script>
 <script src="sorttable.js"></script>
 <script type="text/javascript" src="jquery-latest.js"></script> 

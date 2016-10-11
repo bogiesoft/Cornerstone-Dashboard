@@ -1,9 +1,10 @@
 <?php
-require ("header.php");?>
-
+$job_id = $_GET['job_id'];
+require ("header.php");
+$_SESSION['deleted_archived_job_id'] = $job_id;
+?>
 <script type="text/javascript" src="http://jqueryjs.googlecode.com/files/jquery-1.3.1.min.js" > </script> 
 <script type="text/javascript">
-
     function PrintElem(elem)
     {
         Popup($(elem).html());
@@ -33,17 +34,13 @@ require ("header.php");?>
 <?php
 require ("connection.php");
 
-	
-	
-	$temp = $_GET['job_id'];
-	$sql = "SELECT * FROM archive_jobs WHERE job_id = '$temp'"; 
+	$sql = "SELECT * FROM archive_jobs WHERE job_id = '$job_id'"; 
 	$result = mysqli_query($conn,$sql); 
 	$_SESSION["job_id"] = $temp;
 	
 	
 	if ($result->num_rows > 0) {
 		$row = $result->fetch_assoc();	
-	
 		$job_id = $row['job_id'];
 		$client_name = $row['client_name'];
 		$project_name = $row['project_name'];
@@ -447,16 +444,19 @@ require ("connection.php");
 			</div>
 				<div class="newcontact-tabbtm">
 					<input class="save-btn" type="submit" value="Save" name="submit_form" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;"/>
-					<input class="save-btn" type="button" value="Print Div" onclick="PrintElem('.dashboard-cont')" style="width:200px; font-size:16px; background-color:#d14700; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px; float:left" />
+					<input class="save2-btn" type="button" value="Print Div" onclick="PrintElem('.dashboard-cont')" style="width:200px; font-size:16px; background-color:#d14700; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px; float:left" />
+					</form>
+					<form action = "delete_archive.php" method = "post">
+					<input class="delete-btn" type="submit" value="Delete" name="submit_form" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;"/>
+					</form>
 				</div>
-			</form>
 			</div>
 		</div>
 	</div>
 	</div>
 </div>	
 <div class="contacts-title">
-	<a class="pull-right" href="add_job_ticket.php?job_id=<?php echo $temp; ?>" class="add_button" style = "margin-right: 15px; padding-left: 10px" onclick = "return confirm('Delete Archive')">Delete</a>
 	</div>
 </div>
-	
+<script src="ArchiveSweetAlert.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>	
