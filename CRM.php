@@ -40,14 +40,10 @@ require ("header.php");
 	}
 </style>
 <div class="dashboard-cont" style="padding-top:110px;">
-	<div class="contacts-title">
-		<h1 class="pull-left">Sales</h1>
-		<div><a href="uploadForm.php">upload</a></div>
-	</div>
+
 	<div class="dashboard-detail">
 		<div class="newcontacts-tabs">
 			<ul class="nav nav-tabs" role="tablist">
-				<li><a href="#" class="tablinks" onclick="changeTab(event, 'internal')">Internal</a></li>
 				<li><a href="#" class="tablinks" onclick="changeTab(event, 'CRM')">CRM</a></li>
 			</ul>
 			
@@ -152,78 +148,10 @@ if ($result->num_rows > 0) {
 </div>
 </div>
 </div>
-<div id="internal" class="tab-content">
-<div class="search-cont">
-	<div class="searchcont-detail">
-		<div class="search-boxleft">
-			<label>Quick Search</label>
-			<input id="Jobsearch" name="frmSearch" type="text" placeholder="Search for a specific job">
-		</div>
-	</div>
-</div>
-<h3>In Process</h3><br>
- <?php
-
-$job_count = 1;
-$result = mysqli_query($conn, "SELECT * FROM job_ticket WHERE processed_by = ''");
-while($row = $result->fetch_assoc()){
-	if(isset($_POST['assign_to' . $job_count])){
-		$user_name = $_SESSION['user'];
-		date_default_timezone_set('America/New_York');
-		$today = date("Y-m-d G:i:s");
-		$a_p = date("A");
-		$job_id = $row["job_id"];
-		$job = "updated job ticket " . $job_id;
-		$processed_by = $_POST['assign_to' . $job_count];
-		mysqli_query($conn, "UPDATE job_ticket SET processed_by = '$processed_by' WHERE job_id = '$job_id'");
-		$result_processed_by = mysqli_query($conn, "SELECT processed_by FROM job_ticket WHERE job_id = '$job_id'");
-		$row_processed_by = $result_processed_by->fetch_assoc();
-		$processed_by = $row_processed_by['processed_by'];
-		$sql100 = "INSERT INTO timestamp (user,time,job, a_p,processed_by,viewed) VALUES ('$user_name', '$today','$job', '$a_p','$processed_by','no')";
-		$result100 = $conn->query($sql100) or die('Error querying database 101.');
-	}
-	
-	$job_count = $job_count + 1;
-} 
- 
-$result = mysqli_query($conn,"SELECT * FROM job_ticket WHERE processed_by = ''");
-
-
-echo " <div id = 'table-scroll' class='allcontacts-table'><table id = 'table' border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
-echo "<tbody>";
-echo "<tr valign='top'><th class='allcontacts-title'>All Clients<span class='allcontacts-subtitle'></span></th></tr>";
-echo "<tr valign='top'><td colspan='2'><table id = 'client_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Job ID</th><th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Assign to</th><th id = 'contact_name' class='maintable-thtwo data-header' data-name='contact_name' data-index='1'>Client Name</th><th id = 'address' class='maintable-thtwo data-header' data-name='client_add' data-index='2'>Project Name</th><th id = 'phone' class='maintable-thtwo data-header' data-name='contact_phone' data-index='3'>Due Date</th><th id = 'email' class='maintable-thtwo data-header' data-name='contact_email' data-index='4'>Estimate Number</th><th id = 'website' class='maintable-thtwo data-header' data-name='website' data-index='5'>Job Status</th></tr></thead><tbody>";
-
-if ($result->num_rows > 0) {
-    // output data of each row
-	$job_count = 1;
-    while($row = $result->fetch_assoc()) {
-		$job_id = $row["job_id"];
-		echo "<tr class = 'hoverTab'><td><a href = 'edit_job.php?job_id=$job_id'>".$row["job_id"]."</a></td><td>";
-		echo "<form method = 'post' action = ''>";
-		echo "<select name = 'assign_to" . $job_count . "' style = 'font-size: 10px; width: 80px' onchange = 'this.form.submit()'>";
-		$processed_by = $row['processed_by'];
-		echo "<option selected = 'selected' value = ''>" . $processed_by . "</option>";
-		$sql = "SELECT first_name, last_name, user FROM users";
-		$result1 = mysqli_query($conn, $sql);
-		while($row1 = $result1->fetch_assoc()){
-			echo "<option value = '" . $row1['user'] . "'>" . $row1['first_name'] . ' ' .  $row1['last_name'] . "</option>";
-					
-		}
-		echo "</select></form>";
-		echo "</td><td>" .  $row["client_name"]."</td><td>". $row["project_name"]. "</td><td>". $row["due_date"] . "</td><td>". $row["estimate_number"]. "</td><td>". $row["job_status"]. "</td></tr>";
-		$job_count = $job_count + 1;
-    }
-	echo "</tbody></table></td></tr></tbody></table></div>";
-} else {
-    echo "0 results";
-}
-?>
 
 </div>
 </div>
-</div>
-</div>
+
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="sorttable.js"></script>
 <script type="text/javascript" src="jquery-latest.js"></script> 
