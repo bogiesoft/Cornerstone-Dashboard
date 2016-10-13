@@ -7,14 +7,14 @@
         <title>DataConsulate</title>
 
         <link href="//fonts.googleapis.com/css?family=Lato:300,400|Montserrat" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="/Cornerstone-Dashboard/media/dc.css" type="text/css" />
-        <link rel="stylesheet" href="/Cornerstone-Dashboard/media/scrollbar.css" type="text/css" />
-        <link href="/Cornerstone-Dashboard/thirdparty/toastr.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="Upload-css/dc.css" type="text/css" />
+        <link rel="stylesheet" href="Upload-css/scrollbar.css" type="text/css" />
+        <link href="Upload-css/toastr.css" rel="stylesheet"/>
 
-        <script src="/Cornerstone-Dashboard/thirdparty/jquery.js"></script>
-        <script src="/Cornerstone-Dashboard/thirdparty/toastr.js"></script>
+        <script src="Upload-css/jquery.js"></script>
+        <script src="Upload-css/toastr.js"></script>
 
-        <script src="/Cornerstone-Dashboard/script/lib/require.js"></script>
+        <script src="Upload-css/require.js"></script>
 
 <script>
 var CodeVersion = '3.0.8';
@@ -155,8 +155,6 @@ echo "</table>";
 ?>
 </div>
 
-      <h4>File Fields</h4>
-      <div id="file-fields"><div class="list">    <div class="list-title"></div>    <ul><li>First Name</li><li>Last Name</li><li>Age</li></ul></div></div>
 
       <div class="widget-corner-lower"></div>
     </fieldset>
