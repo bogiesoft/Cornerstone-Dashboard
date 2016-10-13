@@ -45,16 +45,26 @@ var CodeVersion = '3.0.8';
                         reader.onload = function (e) {
                             var table = $("<table border='1' cellspacing='1' cellpadding='1'/>");
                             var rows = e.target.result.split("\n");
-                            for (var i = 0; i < 1; i++) {
+                            
                                 var row = $("<tr>");
-                                var cells = rows[i].split(",");
+                                var cells = rows[0].split(",");
                                 for (var j = 0; j < cells.length; j++) {
                                     var cell = $('<tr td>');
                                     cell.html(cells[j]);
                                     row.append(cell);
+									
+									//add select options
+									var selects = document.getElementsByClassName("import_dropdown");
+		
+									for(var i = 0; i < selects.length; i++){
+										var option = document.createElement("option");
+										option.text = cells[j];
+										option.value = cells[j];
+										selects[i].add(option);
+									}
                                 }
                                 table.append(row);
-                            }
+                            
                             $("#dvCSV").html('');
                             $("#dvCSV").append(table);
 							$('.selected').removeClass('selected');
@@ -124,60 +134,26 @@ var CodeVersion = '3.0.8';
 
       <div id="map">
           <div id="data-fields"></div>
-      <table id = "uploadTable"><tr><th>Data Field</th><th>File Field</th><th>Upload FIle</th></tr>	<!--show into this column-->
-	  <tr><td class="data-object" colspan="2">contact</td></tr>
-	  <tr><td data-object-index="0">id</td><td></td></tr>
-	  <tr><td data-object-index="0">prefix</td><td></td></tr>
-	  <tr><td data-object-index="0">firstname</td><td></td></tr>
-	  <tr><td data-object-index="0">middlename</td><td></td></tr>
-	  <tr><td data-object-index="0">lastname</td><td></td></tr>
-	  <tr><td data-object-index="0">suffix</td><td></td></tr>
-	  <tr><td data-object-index="0">nickname</td><td></td></tr>
-	  <tr><td data-object-index="0">gender</td><td></td></tr>
-	  <tr><td data-object-index="0">birthday</td><td></td></tr>
-	  <tr><td data-object-index="0">title</td><td></td></tr>
-	  <tr><td data-object-index="0">organization</td><td></td></tr>
-	  <tr><td data-object-index="0">department</td><td></td></tr>
-	  <tr><td data-object-index="0">address1line1</td><td></td></tr>
-	  <tr><td data-object-index="0">address1line2</td><td></td></tr>
-	  <tr><td data-object-index="0">address1line3</td><td></td></tr>
-	  <tr><td data-object-index="0">address1city</td><td></td></tr>
-	  <tr><td data-object-index="0">address1state</td><td></td></tr>
-	  <tr><td data-object-index="0">address1zip</td><td></td></tr>
-	  <tr><td data-object-index="0">address1country</td><td></td></tr>
-	  <tr><td data-object-index="0">email</td><td></td></tr>
-	  <tr><td data-object-index="0">homephone</td><td></td></tr>
-	  <tr><td data-object-index="0">workphone</td><td></td></tr>
-	  <tr><td data-object-index="0">cellphone</td><td></td></tr>
-	  <tr><td data-object-index="0">website</td><td></td></tr>
-	  <tr><td data-object-index="0">facebook</td><td></td></tr>
-	  <tr><td data-object-index="0">twitter</td><td></td></tr>
-	  <tr><td data-object-index="0">linkedin</td><td></td></tr>
-	  <tr><td data-object-index="0">googleplus</td><td></td></tr>
-	  <tr><td data-object-index="0">notes</td><td></td></tr>
-	  <tr><td data-object-index="0">verified</td><td></td></tr>
-	  <tr><td class="data-object" colspan="2">address<label>Name</label><input></td></tr>
-	  <tr><td data-object-index="1">type</td><td></td></tr>
-	  <tr><td data-object-index="1">line1</td><td></td></tr>
-	  <tr><td data-object-index="1">line2</td><td></td></tr>
-	  <tr><td data-object-index="1">line3</td><td></td></tr>
-	  <tr><td data-object-index="1">city</td><td></td></tr>
-	  <tr><td data-object-index="1">state</td><td></td></tr>
-	  <tr><td data-object-index="1">zip</td><td></td></tr>
-	  <tr><td data-object-index="1">country</td><td></td></tr>
-	  <tr><td class="data-object" colspan="2">contribution</td></tr>
-	  <tr><td data-object-index="2">stimulus</td><td></td></tr>
-	  <tr><td data-object-index="2">fund</td><td></td></tr>
-	  <tr><td data-object-index="2">date</td><td></td></tr>
-	  <tr><td data-object-index="2">amount</td><td></td></tr>
-	  <tr><td data-object-index="2">type</td><td></td></tr>
-	  <tr><td data-object-index="2">checknumber</td><td></td></tr>
-	  <tr><td data-object-index="2">checkdate</td><td></td></tr>
-	  <tr><td data-object-index="2">notes</td><td></td></tr>
-	  <tr><td class="data-object" colspan="2">custom<label>Name</label><input><label>Type</label><select><option>text</option><option>select</option><option>bool</option><option>date</option><option>number</option></select></td></tr>
-	  <tr><td data-object-index="3">value</td><td></td></tr>
-	  <tr><td class="data-object" colspan="2">campaign<label>Name</label><input><label>Type</label><select><option>directmail</option></select><label>Date</label><input type="date"></td></tr>
-	  <tr><td data-object-index="4">included</td><td></td></tr></table></div>
+      <?php
+require("connection.php");
+
+$result = mysqli_query($conn,"SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'sales'");
+
+echo "<table id = 'import_table' border='1' >
+<tr>
+<td align=center> <b>Data Field</b></td><td>File Field</td>";
+if($result -> num_rows>0){
+while($data = $result->fetch_assoc())
+{   
+    echo "<tr>";
+    echo "<td align=center>$data[COLUMN_NAME]</td><td><select class = 'import_dropdown'><option value = 'none' style = 'display: none'>Choose one provided</option></select></td>";
+    echo "</tr>";
+}
+}else 
+	echo "no result";
+echo "</table>";
+?>
+</div>
 
       <h4>File Fields</h4>
       <div id="file-fields"><div class="list">    <div class="list-title"></div>    <ul><li>First Name</li><li>Last Name</li><li>Age</li></ul></div></div>
