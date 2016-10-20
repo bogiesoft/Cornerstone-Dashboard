@@ -1,19 +1,17 @@
 <?php
+
 require("connection.php");
-
-$result = mysqli_query($conn,"SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'sales'");
-
-echo "<table border='1' >
-<tr>
-<td align=center> <b>Data Field</b></td>";
-if($result -> num_rows>0){
-while($data = $result->fetch_assoc())
-{   
-    echo "<tr>";
-    echo "<td align=center>$data[COLUMN_NAME]</td>";
-    echo "</tr>";
+$data = array();
+$handle = fopen($_FILES['fileUpload']["tmp_name"], 'r');
+while($row = fgetcsv($handle , 100000 , ",")) {
+   $data[] = $row;
 }
-}else 
-	echo "no result";
-echo "</table>";
+for ($j=0; $j < count($data[0]); $j++) {
+  for ($i=0; $i <count($data); $i++) {
+    echo $data[$i][$j]." ";
+  }
+  echo "<br>";
+}
+echo $_POST["phone"];
+
 ?>
