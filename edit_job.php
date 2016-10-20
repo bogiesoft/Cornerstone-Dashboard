@@ -458,25 +458,19 @@ require ("connection.php");
 				
 				<div class="tabinner-detail">
 				<label>Tasks</label>
-				<select name="tasks[]" multiple>
-					  <option selected = "selected" value = "<?php echo $tasks;?>"><?php echo $tasks; ?></option>
-					  <option value="Mail Merge">Mail Merge</option>
-					  <option value="Letter Printing">Letter Printing</option>
-					  <option value="In-House Envelope Printing">In-House Envelope Printing</option>
-					  <option value="Tabbing">Tabbing</option>
-					  <option value="Folding">Folding</option>
-					  <option value="Inserting">Inserting</option>
-					  <option value="Sealing">Sealing</option>
-					  <option value="Collating">Collating</option>
-					  <option value="Labeling">Labeling</option>
-					  <option value="Print Permit">Print Permit</option>
-					  <option value="Correct Permit">Correct Permit</option>
-					  <option value="Carrier Route">Carrier Route</option>
-					  <option value="Endorsement line">Endorsement line</option>
-					  <option value="Address Printing">Address Printing</option>
-					  <option value="Tag as Political">Tag as Political</option>
-					  <option value="Inkjet Printing">Inkjet Printing</option>
-					  <option value="Glue Dots">Glue Dots</option>
+				<ul name="tasks[]">
+					  <li selected = "selected" value = ""></li>
+					  <?php 
+					  $entire_task = array("Mail Merge","Letter Printing", "In-House Envelope Print", "Tabbing","Folding","Inserting","Sealing","Collating","Labeling","Print Permit","Correct Permit","Carrier Route","Endorsement line","Address Printing","Tag as Political","Inkjet Printing","Glue Dots");
+					  $task_array = explode(",", $tasks);
+						foreach($entire_task as $key => $value):
+						if(in_array($key, $task_array))
+							echo '<li><input type = "checkbox" value="'.$key.'" checked/>'.$value.'</li>';
+						else
+							echo '<li><input type = "checkbox" value="'.$key.'" />'.$value.'</li>';
+						endforeach;
+					  ?>
+					  
 					</select>
 				</div>
 				

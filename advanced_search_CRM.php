@@ -160,7 +160,24 @@ if(!isset($_POST['advanced_search_submit']) && !isset($_POST['advanced_search_an
 echo " <div id = 'table-scroll' class='allcontacts-table'><table id = 'table' border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
 echo "<tbody>";
 echo "<tr valign='top'><th class='allcontacts-title'>All Results<span class='allcontacts-subtitle'></span></th></tr>";
-echo "<tr valign='top'><td colspan='2'><table id = 'client_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Client Name</th><th id = 'contact_name' class='maintable-thtwo data-header' data-name='contact_name' data-index='1'>Business</th><th id = 'address' class='maintable-thtwo data-header' data-name='client_add' data-index='2'>Address</th><th id = 'phone' class='maintable-thtwo data-header' data-name='contact_phone' data-index='3'>Phone</th><th id = 'email' class='maintable-thtwo data-header' data-name='contact_email' data-index='4'>City</th><th id = 'website' class='maintable-thtwo data-header' data-name='website' data-index='5'>Title</th><th id = 'category' class='maintable-thtwo data-header' data-name='category' data-index='6'>Email</th><th id = 'title' class='maintable-thtwo data-header' data-name='title' data-index='7'>Website</th></tr></thead><tbody>";
+echo "<tr valign='top'><td colspan='2'><table id = 'client_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'>
+<th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Client Name</th>
+<th id = 'contact_name' class='maintable-thtwo data-header' data-name='contact_name' data-index='1'>Business</th>
+<th id = 'address' class='maintable-thtwo data-header' data-name='client_add' data-index='2'>Address</th>
+<th id = 'city' class='maintable-thtwo data-header' data-name='city' data-index='3'>City</th>
+<th id = 'state' class='maintable-thtwo data-header' data-name='state' data-index='4'>State</th>
+<th id = 'zipcode' class='maintable-thtwo data-header' data-name='zipcode' data-index='5'>Zipcode</th>
+<th id = 'call_back_date' class='maintable-thtwo data-header' data-name='call_back_date' data-index='6'>Call back date</th>
+
+<th id = 'priority' class='maintable-thtwo data-header' data-name='priority' data-index='7'>Priority</th>
+
+<th id = 'title' class='maintable-thtwo data-header' data-name='title' data-index='8'>Title</th>
+<th id = 'phone' class='maintable-thtwo data-header' data-name='category' data-index='9'>Phone</th>
+<th id = 'email' class='maintable-thtwo data-header' data-name='email' data-index='10'>Email</th>
+<th id = 'website' class='maintable-thtwo data-header' data-name='website' data-index='11'>Website</th>
+<th id = 'vertical1' class='maintable-thtwo data-header' data-name='vertical1' data-index='12'>Vertical1</th>
+<th id = 'vertical2' class='maintable-thtwo data-header' data-name='vertical2' data-index='13'>Vertical2</th>
+<th id = 'vertical3' class='maintable-thtwo data-header' data-name='vertical3' data-index='14'>Vertical3</th></tr></thead><tbody>";
 
 if ($result->num_rows > 0) {
     // output data of each row
@@ -182,7 +199,11 @@ if ($result->num_rows > 0) {
 		array_push($foo, $row['address_line_1']);
 		$str = serialize($foo);
 		$stren = urlencode($str);
-		echo "<tr class = 'hoverTab'><td><a href = 'edit_client.php?client_info=$stren'>".$row["full_name"]."</a></td><td>".  $row["business"]."</td><td>". $row["address_line_1"]. "</td><td>". $row["phone"] . "</td><td>". $row["city"]. "</td><td>". $row["title"]. "</td><td>" .$email."</td><td>". $website . "</td></tr>";
+		echo "<tr class = 'hoverTab'><td><a href = 'edit_client.php?client_info=$stren'>".$row["full_name"].
+		"</a></td><td>".  $row["business"]."</td><td>". $row["address_line_1"]. "</td><td>". $row["city"] . "</td><td>". $row["state"] .
+		"</td><td>". $row["zipcode"] .
+		"</td><td>". $row["call_back_date"]. "</td><td>". $row["priority"]. "</td><td>".$row["title"]."</td><td>". $row["phone"] .
+		"</td><td>" .$email."</td><td>". $website . "</td><td>". $row["vertical1"]. "</td><td>". $row["vertical2"]. "</td><td>". $row["vertical3"]. "</td><td><tr>";
     }
 	echo "</tbody></table></td></tr></tbody></table></div>";
 } else {

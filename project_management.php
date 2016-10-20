@@ -47,8 +47,12 @@ $id_array = array();
 	<div class="search-cont">
 	<div class="searchcont-detail">
 		<div class="search-boxleft">
+		<form id = "search_form" action="production_job_search.php" method="post">
 				<label>Quick Search</label>
 				<input id="search" name="frmSearch" type="text" placeholder="Search for a specific job">
+			</form>
+		<div class="search-boxright pull-right"><a href="#" onclick = "document.getElementById('search_form').submit()">Submit</a></div>
+	
 		</div>
 	</div>
 	</div>
@@ -314,6 +318,24 @@ if ($result->num_rows > 0) {
 <script type="text/javascript" src="jquery-latest.js"></script> 
 <script type="text/javascript" src="jquery.tablesorter.js"></script> 
 <script>
+
+$("#search").keyup(function(){
+        _this = this;
+        // Show only matching TR, hide rest of them
+        $.each($("#w_m_table tbody tr"), function() {
+            if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+               $(this).hide();
+            else
+               $(this).show();                
+        });
+    }); 
+	
+$(document).ready(function() 
+    { 
+        $("#w_m_table").tablesorter(); 
+		pageCreator();
+    } 
+);
 function showJob(div, button){
 	if(document.getElementById(button).innerHTML == "Info"){
 		document.getElementById(div).style.display = "block";
