@@ -371,23 +371,23 @@ function getTypes(row_id)
 							<div id="list1" class="dropdown-check-list" tabindex="100">
 							<span class="anchor">Select Tasks</span>
 							<ul name = "item" id="items" class="items">
-								<li><input type="checkbox" name = "tasks[]" value = "Mail Merge"/>Mail Merge </li>
-								<li><input type="checkbox" name = "tasks[]" value = "Letter Printing "/>Letter Printing</li>
-								<li><input type="checkbox" name = "tasks[]" value = "Letter Printing "/>In-House Envelope Print</li>
-								<li><input type="checkbox" name = "tasks[]" value = "Tabbing "/>Tabbing </li>
-								<li><input type="checkbox" name = "tasks[]" value = "Folding "/>Folding </li>
-								<li><input type="checkbox" name = "tasks[]" value = "Inserting "/>Inserting </li>
-								<li><input type="checkbox" name = "tasks[]" value = "Sealing "/>Sealing</li>
-								<li><input type="checkbox" name = "tasks[]" value = "Collating "/>Collating</li>
-								<li><input type="checkbox" name = "tasks[]" value = "Labeling "/>Labeling</li>
-								<li><input type="checkbox" name = "tasks[]" value = "Print Permit "/>Print Permit</li>
-								<li><input type="checkbox" name = "tasks[]" value = "Correct Permit "/>Correct Permit</li>
-								<li><input type="checkbox" name = "tasks[]" value = "Carrier Route "/>Carrier Route</li>
-								<li><input type="checkbox" name = "tasks[]" value = "Endorsement line "/>Endorsement line</li>
-								<li><input type="checkbox" name = "tasks[]" value = "Address Printing "/>Address Printing</li>
-								<li><input type="checkbox" name = "tasks[]" value = "Tag as Political "/>Tag as Political</li>
-								<li><input type="checkbox" name = "tasks[]" value = "Inkjet Printing "/>Inkjet Printing</li>
-								<li><input type="checkbox" name = "tasks[]" value = "Glue Dots "/>Glue Dots</li>
+								<li><input type="checkbox" name = "tasks[]" value = "Mail Merge"/>Mail Merge</li>
+								<li><input type="checkbox" name = "tasks[]" value = "Letter Printing"/>Letter Printing</li>
+								<li><input type="checkbox" name = "tasks[]" value = "Letter Printing"/>In-House Envelope Print</li>
+								<li><input type="checkbox" name = "tasks[]" value = "Tabbing"/>Tabbing </li>
+								<li><input type="checkbox" name = "tasks[]" value = "Folding"/>Folding </li>
+								<li><input type="checkbox" name = "tasks[]" value = "Inserting"/>Inserting </li>
+								<li><input type="checkbox" name = "tasks[]" value = "Sealing"/>Sealing</li>
+								<li><input type="checkbox" name = "tasks[]" value = "Collating"/>Collating</li>
+								<li><input type="checkbox" name = "tasks[]" value = "Labeling"/>Labeling</li>
+								<li><input type="checkbox" name = "tasks[]" value = "Print Permit"/>Print Permit</li>
+								<li><input type="checkbox" name = "tasks[]" value = "Correct Permit"/>Correct Permit</li>
+								<li><input type="checkbox" name = "tasks[]" value = "Carrier Route"/>Carrier Route</li>
+								<li><input type="checkbox" name = "tasks[]" value = "Endorsement line"/>Endorsement line</li>
+								<li><input type="checkbox" name = "tasks[]" value = "Address Printing"/>Address Printing</li>
+								<li><input type="checkbox" name = "tasks[]" value = "Tag as Political"/>Tag as Political</li>
+								<li><input type="checkbox" name = "tasks[]" value = "Inkjet Printing"/>Inkjet Printing</li>
+								<li><input type="checkbox" name = "tasks[]" value = "Glue Dots"/>Glue Dots</li>
 							</ul>
 						</div>
 
@@ -405,14 +405,13 @@ function getTypes(row_id)
 										items.classList.add('visible');
 										items.style.display = "block";
 									}
-									
-									
+
 								}
 
 								items.onblur = function(evt) {
 									items.classList.remove('visible');
 								}
-							</script>
+						</script>
 				
 					</div>
                      
