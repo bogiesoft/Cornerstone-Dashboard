@@ -94,7 +94,8 @@ var CodeVersion = '3.0.8';
 				});
         });
     </script>
-    <input type="file" id="fileUpload" />
+	<form action  = "uploadImport.php" method = "post" enctype="multipart/form-data">
+    <input type="file" id="fileUpload" name = "imported_file"/>
     <input type="button" id="upload" value="Upload" />
     <hr />
 	<fieldset>
@@ -114,8 +115,6 @@ var CodeVersion = '3.0.8';
 		<div class="widget-corner-lower"></div>
 	</fieldset>
 <!--import complete-->
-
-</form>
 		
 
 		
@@ -125,12 +124,7 @@ var CodeVersion = '3.0.8';
       <div class="widget-corner-upper"></div>
       <legend>Map Fields</legend>
 
-     <div id="map-actions">
-         <button class="small" id="address-add">+ Address</button>
-         <button class="small" id="contribution-add">+ Contribution</button>
-         <button class="small" id="custom-add">+ Custom</button>
-         <button class="small" id="campaign-add">+ Campaign</button>
-     </div>
+    
 
       <div id="map">
           <div id="data-fields"></div>
@@ -160,8 +154,9 @@ echo "</table>";
     </fieldset>
 
     <div id="instance-actions">
-      <button id="import-accept">Import</button>
+      <button id="import-accept" onclick = "this.form.submit()">Import</button>
     </div>
+</form>
 
    </div><!-- #set_map -->
    <div id="upload_file" class="hide">
