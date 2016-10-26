@@ -463,12 +463,13 @@ require ("connection.php");
 					  <?php 
 					  $entire_task = array("Mail Merge","Letter Printing", "In-House Envelope Print", "Tabbing","Folding","Inserting","Sealing","Collating","Labeling","Print Permit","Correct Permit","Carrier Route","Endorsement line","Address Printing","Tag as Political","Inkjet Printing","Glue Dots");
 					  $task_array = explode(",", $tasks);
-						foreach($entire_task as $key => $value):
-						if(in_array($key, $task_array))
-							echo '<li><input type = "checkbox" value="'.$key.'" checked/>'.$value.'</li>';
-						else
-							echo '<li><input type = "checkbox" value="'.$key.'" />'.$value.'</li>';
-						endforeach;
+						for($i = 0;$i<count($entire_task);$i++){
+							//checked only those task which is in the $task_array
+							if(in_array($entire_task[$i], $task_array))
+								echo '<li><input type = "checkbox" name = "tasks[]" value="'.$entire_task[$i].'" checked/>'.$entire_task[$i].'</li>';
+							else
+								echo '<li><input type = "checkbox" name = "tasks[]" value="'.$entire_task[$i].'" />'.$entire_task[$i].'</li>';
+						}
 					  ?>
 					  
 					</select>
