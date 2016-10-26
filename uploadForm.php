@@ -134,7 +134,7 @@ var CodeVersion = '3.0.8';
 	<!--import button-->
 	<form id = "importForm" action = "uploadForm_database.php" method = "POST" enctype="multipart/form-data">
     	<div id="instance-actions">
-    	  <button id="import-accept">Import</button>
+    	  <button id="import-accept" onclick = "displayLoading()">Import</button><img id = "loadImage" style = "display:none" src = "images/web-icons/loadingBar.gif" alt = "Smiley Face" height = "40" width = "40">
     	</div>
     </form>
 
@@ -148,3 +148,9 @@ var CodeVersion = '3.0.8';
 
     </body>
 </html>
+<script>
+function displayLoading()
+{
+	document.getElementById("loadImage").style.display = "block";
+}
+</script>
