@@ -20,7 +20,7 @@ $size = $_POST['size'];
 $based_on = $_POST['based_on'];
 $product_num = $_POST['product_num'];
 
-$sql = "INSERT INTO materials( material,type,vendor,height,weight,size,based_on,product_num) VALUES ('$material','$type','$vendor','$height','$weight','$size','$based_on','$product_num')";
+$sql = 'INSERT INTO materials( material,type,vendor,height,weight,size,based_on,product_num) VALUES ("' . $material . '","' . $type . '","' . $vendor . '","' . $height . '","' . $weight . '","' . $size . '","' . $based_on . '","' . $product_num . '")';
 $result = $conn->query($sql) or die('Error querying database.');
  
 $conn->close();

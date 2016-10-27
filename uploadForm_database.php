@@ -34,34 +34,39 @@ for($i = 0; $i < count($array_names); $i++)
 
 for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 {
-		$sql = "INSERT INTO sales (rep, quickbooks, full_name, title, phone, fax, web_address, business, address_line_1, address_line_2, city, state, zipcode, status, call_back_date, priority, date_added, 
+		$sql = 'INSERT INTO sales (rep, quickbooks, full_name, title, phone, fax, web_address, business, address_line_1, address_line_2, city, state, zipcode, status, call_back_date, priority, date_added, 
 				mailing_list, pie_day, second_contact, cell_phone, alt_phone, home_phone, email1, email2, vertical1, vertical2, vertical3, source, notes, _2014_pie_day, Non_Profit_Card_08_2013, 
 				Commercial_Card_08_2013, USPS_Post_Office_Mailing_03_2014, Contractor_Small_Business_Select_Mailing_03_2014, Contractor_SB_Select_Mailing_04_2014, USPS_EDDM_Regs_brochure_Mailing_04_2014,
-				USPS_9Y9_EDDM_Marketing_Card, SEPT_2014_3_5Y11_CRST_Marketing_Card, Contractor_Mailing_2016, type) VALUES (";
+				USPS_9Y9_EDDM_Marketing_Card, SEPT_2014_3_5Y11_CRST_Marketing_Card, Contractor_Mailing_2016, type) VALUES (';
 		
-		$sql2 = "UPDATE sales SET ";
+		$sql2 = 'UPDATE sales SET ';
 		$full_name = " ";
 		$address_line_1 = " ";
 		
 		for($j = 0; $j < count($array_indexes); $j++){ //goes through all corresponding indexes to headers and adds to sql statements for insert and update as specified
+			
+			if($array_indexes[$j] != -1){
+				$input = str_replace('"', '', $data[$i][$array_indexes[$j]]);
+			}
+			
 			if($array_names[$j] == "full_name" && $array_indexes[$j] != -1){
-				$full_name = $data[$i][$array_indexes[$j]];
+				$full_name = $input;
 			}
 			if($array_names[$j] == "address_line_1" && $array_indexes[$j] != -1){
-				$address_line_1 = $data[$i][$array_indexes[$j]];
+				$address_line_1 = $input;
 			}
 			
 			
 			if($array_indexes[$j] != -1){
-				$sql = $sql . "'" . $data[$i][$array_indexes[$j]] . "',";
+				$sql = $sql . '"' . $input . '",';
 				if($array_names[$j] != "full_name" && $array_names[$j] != "address_line_1"){
-					$sql2 = $sql2 . $array_names[$j] . " = '" . $data[$i][$array_indexes[$j]] . "', ";
+					$sql2 = $sql2 . $array_names[$j] . ' = "' . $input . '", ';
 				}
 			}
 			else if($array_indexes[$j] != -1 && $j == count($array_indexes) - 1){
-				$sql = $sql . $data[$i][$array_indexes[$j]] . ")";
+				$sql = $sql . $input . ')';
 				if($array_names[$j] != "full_name" && $array_names[$j] != "address_line_1"){
-					$sql2 = $sql2 . $array_names[$j] . " = '" . $data[$i][$array_indexes[$j]] . "' WHERE full_name = '$full_name' AND address_line_1 = '$address_line_1'";
+					$sql2 = $sql2 . $array_names[$j] . ' = "' . $input . '" WHERE full_name = "' . $full_name . '" AND address_line_1 = "' . $address_line_1 . '"';
 				}
 			}
 			else if($array_indexes[$j] == -1 && $j != count($array_indexes) - 1){
@@ -83,6 +88,7 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 		$rows = mysqli_num_rows($result_match);
 		if($rows == 0){
 			mysqli_query($conn, $sql) or die("error");
+			echo $sql . "<br><br>";
 		}
 		else{
 			mysqli_query($conn, $sql2) or die("error");

@@ -10,15 +10,15 @@ if(isset($_POST['submit_form'])){
 	$text = $_POST['text'];
 	$occurence = $_POST['occurence'];
 	if($occurence == 'Day'){
-		mysqli_query($conn, "UPDATE reminder set user = '$user', text = '$text', date = '$date', occurence = '$occurence', end_date = 'none', time = 'none' WHERE id = '$temp'");
+		mysqli_query($conn, 'UPDATE reminder set user = "' . $user . '", text = "' . $text . '", date = "' . $date . '", occurence = "' . $occurence . '", end_date = "none", time = "none" WHERE id = "' . $temp . '"');
 	}
 	else if($occurence == 'DT'){
 		$time = $_POST['time'];
-		mysqli_query($conn, "UPDATE reminder set user = '$user', text = '$text', date = '$date', occurence = '$occurence', end_date = 'none', time = '$time' WHERE id = '$temp'");
+		mysqli_query($conn, 'UPDATE reminder set user = "' . $user . '", text = "' . $text . '", date = "' . $date . '", occurence = "' . $occurence . '", end_date = "none", time = "' . $time . '" WHERE id = "' . $temp . '"');
 	}
 	else{
 		$end_date = $_POST['end_date'];
-		mysqli_query($conn, "UPDATE reminder set user = '$user', text = '$text', date = '$date', occurence = '$occurence', end_date = '$end_date', time = 'none' WHERE id = '$temp'");
+		mysqli_query($conn, 'UPDATE reminder set user = "' . $user . '", text = "' . $text . '", date = "' . $date . '", occurence = "' . $occurence . '", end_date = "' . $end_date . '", time = "none" WHERE id = "' . $temp . '"');
 	}
 header("location: reminders.php");
 exit();
