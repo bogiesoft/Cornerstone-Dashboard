@@ -14,9 +14,9 @@ if(isset($_POST["advanced_save"])){
 			array_push($values, $find);
 		}
 	  }
-	  
+
 	  $index = $index + 1;
-	  
+
 	}
 	$search_name = $_POST['advanced_search_name'];
 	date_default_timezone_set('America/New_York');
@@ -58,6 +58,7 @@ require ("header.php");
 	<div class="contacts-title">
 	<h1 class="pull-left">Advanced Search Results</h1>
 	<a class="pull-right" href="sales.php" class="add_button">Back to Sales</a>
+	<a id = 'view_marked' name = 'view_marked' class="pull-right" class="add_button" href = "#" style = "background: #ff5c33">View Marked</a>
 	</div>
 <div class="dashboard-detail">
 <div class="search-cont">
@@ -85,14 +86,14 @@ if(isset($_POST['advanced_search_submit']) || isset($_POST['advanced_search_and_
 		$value = $_POST['select' . $index];
 		if($find!=''&& $value!='')
 		{
-			$sql = $sql . " AND (" . $value . " = '$find' OR " . $value . " LIKE '%{$find}%')"; 
+			$sql = $sql . " AND (" . $value . " = '$find' OR " . $value . " LIKE '%{$find}%')";
 			array_push($fields, $value);
 			array_push($values, $find);
 		}
 	  }
-	  
+
 	  $index = $index + 1;
-	  
+
 	}
 }
 if($sql != ""){
@@ -140,12 +141,12 @@ if(!isset($_POST['advanced_search_submit']) && !isset($_POST['advanced_search_an
 	$value2 = $_GET['value2'];
 	$field3 = $_GET['field3'];
 	$value3 = $_GET['value3'];
-	
+
 	date_default_timezone_set('America/New_York');
 	$today = date("Y-m-d");
-	
+
 	mysqli_query($conn, "UPDATE saved_search SET search_date = '$today' WHERE search_id = '$search_id'") or die("ERROR");
-	
+
 	if($field2 != "$$$" && $field3 == "$$$"){
 		$sql = "SELECT * FROM sales WHERE type != '' AND (" . $field1 . " = '$value1' OR " . $field1 . " LIKE '%{$value1}%') AND (" . $field2 . " = '$value2' OR " . $field2 . " LIKE '%{$value2}%')";
 	}
@@ -160,16 +161,35 @@ if(!isset($_POST['advanced_search_submit']) && !isset($_POST['advanced_search_an
 echo " <div id = 'table-scroll' class='allcontacts-table'><table id = 'table' border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
 echo "<tbody>";
 echo "<tr valign='top'><th class='allcontacts-title'>All Results<span class='allcontacts-subtitle'></span></th></tr>";
-echo "<tr valign='top'><td colspan='2'><table id = 'client_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Client Name</th><th id = 'contact_name' class='maintable-thtwo data-header' data-name='contact_name' data-index='1'>Business</th><th id = 'address' class='maintable-thtwo data-header' data-name='client_add' data-index='2'>Address</th><th id = 'phone' class='maintable-thtwo data-header' data-name='contact_phone' data-index='3'>Phone</th><th id = 'email' class='maintable-thtwo data-header' data-name='contact_email' data-index='4'>City</th><th id = 'website' class='maintable-thtwo data-header' data-name='website' data-index='5'>Title</th><th id = 'category' class='maintable-thtwo data-header' data-name='category' data-index='6'>Email</th><th id = 'title' class='maintable-thtwo data-header' data-name='title' data-index='7'>Website</th></tr></thead><tbody>";
+echo "<tr valign='top'><td colspan='2'><div id = 'inside_table' ><table id = 'client_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead>
+<tr valign='top' class='contact-headers'>
+<input type = 'checkbox' id = 'allcb' name = 'allcb'/> Mark all
+<th></th>
+<th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='1'>Client Name</th>
+<th id = 'contact_name' class='maintable-thtwo data-header' data-name='contact_name' data-index='2'>Business</th>
+<th id = 'address' class='maintable-thtwo data-header' data-name='client_add' data-index='3'>Address</th>
+<th id = 'city' class='maintable-thtwo data-header' data-name='client_add' data-index='4'>City</th>
+<th id = 'state' class='maintable-thtwo data-header' data-name='client_add' data-index='5'>State</th>
+<th id = 'zipcode' class='maintable-thtwo data-header' data-name='client_add' data-index='6'>Zip Code</th>
+<th id = 'call_back_date' class='maintable-thtwo data-header' data-name='client_add' data-index='7'>Call Back Date</th>
+<th id = 'priority' class='maintable-thtwo data-header' data-name='client_add' data-index='8'>Priority</th>
+<th id = 'title' class='maintable-thtwo data-header' data-name='title' data-index='9'>Website</th>
+<th id = 'phone' class='maintable-thtwo data-header' data-name='contact_phone' data-index='10'>Phone</th>
+<th id = 'website' class='maintable-thtwo data-header' data-name='website' data-index='11'>Title</th>
+<th id = 'category' class='maintable-thtwo data-header' data-name='category' data-index='12'>Email</th>
+<th id = 'vertical1' class='maintable-thtwo data-header' data-name='category' data-index='13'>Vertical1</th>
+<th id = 'vertical2' class='maintable-thtwo data-header' data-name='category' data-index='14'>Vertical2</th>
+<th id = 'vertical3' class='maintable-thtwo data-header' data-name='category' data-index='15'>Vertical3</th>
+</tr></thead><tbody>";
 
 if ($result->num_rows > 0) {
     // output data of each row
-	
+
     while($row = $result->fetch_assoc()) {
-		
+
 		$website = $row['web_address'];
 		$email = $row['email1'];
-		
+
 		if(strlen($website) >= 15){
 			$website = substr($website, 0, 15) . "<br>" . "...";
 		}
@@ -182,9 +202,26 @@ if ($result->num_rows > 0) {
 		array_push($foo, $row['address_line_1']);
 		$str = serialize($foo);
 		$stren = urlencode($str);
-		echo "<tr class = 'hoverTab'><td><a href = 'edit_client.php?client_info=$stren'>".$row["full_name"]."</a></td><td>".  $row["business"]."</td><td>". $row["address_line_1"]. "</td><td>". $row["phone"] . "</td><td>". $row["city"]. "</td><td>". $row["title"]. "</td><td>" .$email."</td><td>". $website . "</td></tr>";
+		echo "<tr class = 'hoverTab'>
+		<td><input type = 'checkbox' class = 'check-box' name = 'Mark[]'/></td>
+		<td><a href = 'edit_client.php?client_info=$stren'>".$row["full_name"]."</a></td>
+		<td>".  $row["business"]."</td>
+		<td>". $row["address_line_1"]. "</td>
+		<td>". $row["city"]. "</td>
+		<td>". $row["state"] . "</td>
+		<td>". $row["zipcode"]. "</td>
+		<td>". $row["call_back_date"]. "</td>
+		<td>". $row["priority"]. "</td>
+		<td>". $row["title"]. "</td>
+		<td>". $row["phone"] . "</td>
+
+		<td>" .$email."</td>
+		<td>". $website . "</td>
+		<td>". $row["vertical1"]. "</td>
+		<td>". $row["vertical2"]. "</td>
+		<td>". $row["vertical3"]. "</td></tr>";
     }
-	echo "</tbody></table></td></tr></tbody></table></div>";
+	echo "</tbody></table></div></td></tr></tbody></table></div>";
 } else {
     echo "0 results";
 }
@@ -210,13 +247,21 @@ $conn->close();
 		</select>
 	</div>
 </div>
+
+<!--export button-->
+<div class='button'>
+    <a href="#" id ="export" role='button'>Export</a>
+</div>
+<!--export button-->
+
+
 </div>
 </div>
 
 <!-- script for making table sortable -->
-<script src="sorttable.js"></script>
-<script type="text/javascript" src="jquery-latest.js"></script> 
-<script type="text/javascript" src="jquery.tablesorter.js"></script> 
+
+<script type="text/javascript" src="jquery-latest.js"></script>
+<script type="text/javascript" src="jquery.tablesorter.js"></script>
 <script>
 var numPerPage = 10;
 var subtractValue = 3;
@@ -229,16 +274,16 @@ $("#search").keyup(function(){
             if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
                $(this).hide();
             else
-               $(this).show();                
+               $(this).show();
         });
-    }); 
-	
-$(document).ready(function() 
-    { 
-        $("#client_table").tablesorter(); 
-		pageCreator();
+    });
+
+$(document).ready(function()
+    {
+        $("#client_table").tablesorter();
+				pageCreator();
     }
-); 
+);
 function pageCreator(){
 	$('table.table-striped.main-table.contacts-list').each(function() {
 		var currentPage = 0;
@@ -268,7 +313,7 @@ function pageCreator(){
 	});
 	document.getElementById("id1").className = "current clickable";
 	var ul = document.getElementById("pag");
-	
+
 	if(ul.childNodes.length > 5){
 		for(var i = 6; i < ul.childNodes.length - 1; i++){
 			ul.children[i].style.display = "none";
@@ -295,7 +340,7 @@ function prevPage(){
 			break;
 		}
 	}
-	
+
 	var newDisplayIndex = 0;
 	for(var i = oldDisplayIndex; i >= 1; i--){
 		newDisplayIndex = i;
@@ -306,7 +351,7 @@ function prevPage(){
 			ul.children[i].style.display = "none";
 		}
 	}
-	
+
 	var count = 0;
 	var lastIndex = 0;
 	for(var i = newDisplayIndex; i >= 1; i--){
@@ -327,7 +372,7 @@ function prevPage(){
 function nextPage(){
 	document.getElementById("prev_button").style.display = "inline";
 	var ul = document.getElementById("pag");
-	
+
 	var displayCount = 0;
 	var lastIndexCheck = 0;
 	for(var i = 1; i < ul.childNodes.length - 1; i++){
@@ -347,7 +392,7 @@ function nextPage(){
 				break;
 			}
 		}
-		
+
 		var newDisplayIndex = 0;
 		for(var i = oldDisplayIndex; i < ul.childNodes.length - 1; i++){
 			if(ul.children[i].style.display == "none"){
@@ -358,7 +403,7 @@ function nextPage(){
 				ul.children[i].style.display = "none";
 			}
 		}
-		
+
 		var count = 0;
 		var lastIndex = 0;
 		for(var i = newDisplayIndex; i < (ul.childNodes.length - subtractValue); i++){
@@ -379,4 +424,85 @@ function nextPage(){
 		}
 	}
 }
+
+function exportTableToCSV($table, filename) {
+		var $headers = $table.find('tr:has(th)')
+				,$rows = $table.find('tr:has(td:has(input:checked))')
+				// Temporary delimiter characters unlikely to be typed by keyboard
+				// This is to avoid accidentally splitting the actual contents
+				,tmpColDelim = String.fromCharCode(11) // vertical tab character
+				,tmpRowDelim = String.fromCharCode(0) // null character
+				// actual delimiter characters for CSV format
+				,colDelim = '","'
+				,rowDelim = '"\r\n"';
+				// Grab text from table into CSV formatted string
+				var csv = '"';
+				csv += formatRows($headers.map(grabRow));
+				csv += rowDelim;
+				csv += formatRows($rows.map(grabRow)) + '"';
+				// Data URI
+				var csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csv);
+		$(this)
+				.attr({
+				'download': filename
+						,'href': csvData
+						//,'target' : '_blank' //if you want it to open in a new window
+		});
+		//------------------------------------------------------------
+		// Helper Functions
+		//------------------------------------------------------------
+		// Format the output so it has the appropriate delimiters
+		function formatRows(rows){
+				return rows.get().join(tmpRowDelim)
+						.split(tmpRowDelim).join(rowDelim)
+						.split(tmpColDelim).join(colDelim);
+		}
+		// Grab and format a row from the table
+		function grabRow(i,row){
+
+				var $row = $(row);
+				//for some reason $cols = $row.find('td') || $row.find('th') won't work...
+				var $cols = $row.find('td:not(:first-child)');
+				if(!$cols.length) $cols = $row.find('th:not(:first-child)');
+				return $cols.map(grabCol)
+										.get().join(tmpColDelim);
+		}
+		// Grab and format a column from the table
+		function grabCol(j,col){
+				var $col = $(col),
+						$text = $col.text();
+				return $text.replace('"', '""'); // escape double quotes
+		}
+}
+
+// This must be a hyperlink
+$("#export").click(function (event) {
+		// var outputFile = 'export'
+		var outputFile = window.prompt("What do you want to name your output file (Note: This won't have any effect on Safari)") || 'export';
+		outputFile = outputFile.replace('.csv','') + '.csv'
+
+		// CSV
+		exportTableToCSV.apply(this, [$('#inside_table>table'), outputFile]);
+
+		// IF CSV, don't do event.preventDefault() or return false
+		// We actually need this to be a typical hyperlink
+});
+
+
+$("#view_marked").click(function(){
+    $("#inside_table>table tr").has(".check-box:not(:checked)").css("display", "none");;
+});
+
+$("#allcb").change(function(){
+	console.log("hello");
+    if($(this).attr('checked')){
+        $('#inside_table>table tr td input[type="checkbox"]').each(function(){
+            $(this).attr('checked', true);
+        });
+    }else{
+        $('#inside_table>table tr td input[type="checkbox"]').each(function(){
+            $(this).attr('checked', false);
+        });
+    }
+});
 </script>

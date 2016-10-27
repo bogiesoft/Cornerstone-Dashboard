@@ -40,7 +40,7 @@ require ("header.php");
 										$search_id=$row["search_id"];
 										echo "<tr id = 'row" . $search_id . "'><td class='data-cell'><a href = 'advanced_search_clients.php?field1=$field1&value1=$value1&field2=$field2&value2=$value2&field3=$field3&value3=$value3&search_id=$search_id'>". $row["search_name"]."</a></td><td><button id = '" . $search_id . "'><img src = 'images/x_button.png' width = '25' height = '25'></button></tr>";
 									}
-								} 
+								}
 								else {
 									echo "0 Saved Searches";
 								}
@@ -68,12 +68,12 @@ echo "<tr valign='top'><td colspan='2'><table id = 'crm_table' border='0' cellsp
 
 if ($result->num_rows > 0) {
     // output data of each row
-	
+
     while($row = $result->fetch_assoc()) {
-		
+
 		$website = $row['web_address'];
 		$email = $row['email1'];
-		
+
 		if(strlen($website) >= 15){
 			$website = substr($website, 0, 15) . "<br>" . "...";
 		}
@@ -118,9 +118,10 @@ $conn->close();
 </div>
 
 <!-- script for making table sortable -->
+
+<script type="text/javascript" src="jquery-latest.js"></script>
+<script type="text/javascript" src="jquery.tablesorter.js"></script>
 <script src="sorttable.js"></script>
-<script type="text/javascript" src="jquery-latest.js"></script> 
-<script type="text/javascript" src="jquery.tablesorter.js"></script> 
 <script type = "text/javascript">
 var fieldCount = 1;
 function showSavedSearch(){
@@ -135,8 +136,8 @@ function showSavedSearch(){
 }
 function addField(){
 	     if(fieldCount <= 3){
-			$(".advanced_search_area").append("<div class = 'field" + fieldCount + "'><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeField('.field" + fieldCount + "')><input style = 'margin-bottom: 4%' name = 'fieldArea" + fieldCount + "' type = 'text' placeholder = 'Find'>Where<select style = 'width: 125px; font-size: 13px' name = 'select" + fieldCount 
-			+ "'><option selected = 'selected' value = 'full_name'>Client Name</option><option value = 'business'>Business</option><option value = 'address_line_1'>Address</option><option value = 'city'>City</option><option value = 'state'>State</option><option value = 'zipcode'>Zipcode</option><option value = 'title'>Title</option>" + 
+			$(".advanced_search_area").append("<div class = 'field" + fieldCount + "'><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeField('.field" + fieldCount + "')><input style = 'margin-bottom: 4%' name = 'fieldArea" + fieldCount + "' type = 'text' placeholder = 'Find'>Where<select style = 'width: 125px; font-size: 13px' name = 'select" + fieldCount
+			+ "'><option selected = 'selected' value = 'full_name'>Client Name</option><option value = 'business'>Business</option><option value = 'address_line_1'>Address</option><option value = 'city'>City</option><option value = 'state'>State</option><option value = 'zipcode'>Zipcode</option><option value = 'title'>Title</option>" +
 			"<option value = 'phone'>Phone</option><option value = 'web_address'>Website</option><option value = 'email1'>Email</option></select></div>");
 			if(fieldCount == 1){
 				document.getElementById("advanced_search_button").innerHTML = "Add Field";
@@ -145,7 +146,7 @@ function addField(){
 				document.getElementById("advanced_search_name").style.display = "inline";
 				document.getElementById("advanced_save").style.display = "inline";
 			}
-			
+
 			fieldCount++;
 		 }
 }
@@ -171,16 +172,16 @@ $("#search").keyup(function(){
             if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
                $(this).hide();
             else
-               $(this).show();                
+               $(this).show();
         });
-    }); 
-	
-$(document).ready(function() 
-    { 
-        $("#client_table").tablesorter(); 
+    });
+
+$(document).ready(function()
+    {
+        $("#client_table").tablesorter();
 		pageCreator();
-    } 
-); 
+    }
+);
 function pageCreator(){
 	$('table.table-striped.main-table.contacts-list').each(function() {
 		var currentPage = 0;
@@ -210,7 +211,7 @@ function pageCreator(){
 	});
 	document.getElementById("id1").className = "current clickable";
 	var ul = document.getElementById("pag");
-	
+
 	if(ul.childNodes.length > 5){
 		for(var i = 6; i < ul.childNodes.length - 1; i++){
 			ul.children[i].style.display = "none";
@@ -237,7 +238,7 @@ function prevPage(){
 			break;
 		}
 	}
-	
+
 	var newDisplayIndex = 0;
 	for(var i = oldDisplayIndex; i >= 1; i--){
 		newDisplayIndex = i;
@@ -248,7 +249,7 @@ function prevPage(){
 			ul.children[i].style.display = "none";
 		}
 	}
-	
+
 	var count = 0;
 	var lastIndex = 0;
 	for(var i = newDisplayIndex; i >= 1; i--){
@@ -269,7 +270,7 @@ function prevPage(){
 function nextPage(){
 	document.getElementById("prev_button").style.display = "inline";
 	var ul = document.getElementById("pag");
-	
+
 	var displayCount = 0;
 	var lastIndexCheck = 0;
 	for(var i = 1; i < ul.childNodes.length - 1; i++){
@@ -289,7 +290,7 @@ function nextPage(){
 				break;
 			}
 		}
-		
+
 		var newDisplayIndex = 0;
 		for(var i = oldDisplayIndex; i < ul.childNodes.length - 1; i++){
 			if(ul.children[i].style.display == "none"){
@@ -300,7 +301,7 @@ function nextPage(){
 				ul.children[i].style.display = "none";
 			}
 		}
-		
+
 		var count = 0;
 		var lastIndex = 0;
 		for(var i = newDisplayIndex; i < (ul.childNodes.length - subtractValue); i++){
@@ -338,9 +339,3 @@ $("button").click(function(){
 	return false;
 });
 </script>
-
-	
-
-	
-
-						
