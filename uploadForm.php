@@ -10,21 +10,11 @@
         <link rel="stylesheet" href="Upload-css/dc.css" type="text/css" />
         <link rel="stylesheet" href="Upload-css/scrollbar.css" type="text/css" />
         <link href="Upload-css/toastr.css" rel="stylesheet"/>
-<<<<<<< HEAD
-        <!-- jQuery -->
-          <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
-=======
 
->>>>>>> master
         <script src="Upload-css/jquery.js"></script>
         <script src="Upload-css/toastr.js"></script>
 
         <script src="Upload-css/require.js"></script>
-<<<<<<< HEAD
-        <script src = "ImportSweetAlert.js"></script>
-
-=======
->>>>>>> master
 
 <script>
 var CodeVersion = '3.0.8';
@@ -33,10 +23,6 @@ var CodeVersion = '3.0.8';
     </head>
 <body>
 
-<<<<<<< HEAD
-
-=======
->>>>>>> master
             <div id="content">
 
 <div id="header">
@@ -148,11 +134,7 @@ var CodeVersion = '3.0.8';
 	<!--import button-->
 	<form id = "importForm" action = "uploadForm_database.php" method = "POST" enctype="multipart/form-data">
     	<div id="instance-actions">
-<<<<<<< HEAD
-    	  <button id="import-accept">Import</button>
-=======
     	  <button id="import-accept" onclick = "displayLoading()">Import</button><img id = "loadImage" style = "display:none" src = "images/web-icons/loadingBar.gif" alt = "Smiley Face" height = "40" width = "40">
->>>>>>> master
     	</div>
     </form>
 
