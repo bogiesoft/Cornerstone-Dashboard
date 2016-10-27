@@ -7,15 +7,15 @@ if(isset($_POST['submit_form'])){
 	$text = $_POST['text'];
 	$occurence = $_POST['occurence'];
 	if($occurence == 'Day'){
-		mysqli_query($conn, "INSERT INTO reminder (user, text, date, occurence) VALUES ('$user', '$text', '$date', '$occurence')");
+		mysqli_query($conn, 'INSERT INTO reminder (user, text, date, occurence) VALUES ("' . $user . '", "' . $text . '", "' . $date . '", "' . $occurence . '")');
 	}
 	else if($occurence == 'DT'){
 		$time = $_POST['time'];
-		mysqli_query($conn, "INSERT INTO reminder (user, text, date, occurence, time) VALUES ('$user', '$text', '$date', '$occurence', '$time')");
+		mysqli_query($conn, 'INSERT INTO reminder (user, text, date, occurence, time) VALUES ("' . $user . '", "' . $text . '", "' . $date . '", "' . $occurence . '", "' . $time . '")');
 	}
 	else{
 		$end_date = $_POST['end_date'];
-		mysqli_query($conn, "INSERT INTO reminder (user, text, date, occurence, end_date) VALUES ('$user', '$text', '$date', '$occurence', '$end_date')");
+		mysqli_query($conn, 'INSERT INTO reminder (user, text, date, occurence, end_date) VALUES ("' . $user . '", "' . $text . '", "' . $date . '", "' . $occurence . '", "' . $end_date . '")');
 	}
 }
 

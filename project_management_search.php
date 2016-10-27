@@ -55,7 +55,7 @@ html {  height: 100%;}
 	<div class="search-cont">
 	<div class="searchcont-detail">
 		<div class="search-boxleft">
-			<form id = "search_form" action="production_job_search.php" method="post">
+			<form id = "search_form" action="project_management_search.php" method="post">
 				<label>Quick Search</label>
 				<input id="search" name="frmSearch" type="text" placeholder="Search for a job">
 			</form>
@@ -72,30 +72,30 @@ if(isset($_POST['frmSearch'])){
 	$compare = $_POST['frmSearch'];
 }
 else{
-	$compare = $_SESSION['compare_production'];
+	$compare = $_SESSION['compare_projects'];
 }
-$_SESSION['compare_production'] = $compare;
+$_SESSION['compare_projects'] = $compare;
 if($compare == "None"){
 	$compare = 0;
-	$job_result = mysqli_query($conn,"SELECT job_id, client_name, project_name, due_date, priority FROM job_ticket WHERE priority LIKE '%{$compare}%' ORDER BY priority DESC, due_date ASC");
+	$project_result = mysqli_query($conn,"SELECT job_id, client_name, project_name, due_date, priority FROM job_ticket WHERE priority LIKE '%{$compare}%' ORDER BY priority DESC, due_date ASC");
 }
 else if($compare == "Low"){
 	$compare = 1;
-	$job_result = mysqli_query($conn,"SELECT job_id, client_name, project_name, due_date, priority FROM job_ticket WHERE priority LIKE '%{$compare}%' ORDER BY priority DESC, due_date ASC");
+	$project_result = mysqli_query($conn,"SELECT job_id, client_name, project_name, due_date, priority FROM job_ticket WHERE priority LIKE '%{$compare}%' ORDER BY priority DESC, due_date ASC");
 }
 else if($compare == "Medium"){
 	$compare = 2;
-	$job_result = mysqli_query($conn,"SELECT job_id, client_name, project_name, due_date, priority FROM job_ticket WHERE priority LIKE '%{$compare}%' ORDER BY priority DESC, due_date ASC");
+	$project_result = mysqli_query($conn,"SELECT job_id, client_name, project_name, due_date, priority FROM job_ticket WHERE priority LIKE '%{$compare}%' ORDER BY priority DESC, due_date ASC");
 }
 else if($compare == "High"){
 	$compare = 3;
-	$job_result = mysqli_query($conn,"SELECT job_id, client_name, project_name, due_date, priority FROM job_ticket WHERE priority LIKE '%{$compare}%' ORDER BY priority DESC, due_date ASC");
+	$project_result = mysqli_query($conn,"SELECT job_id, client_name, project_name, due_date, priority FROM job_ticket WHERE priority LIKE '%{$compare}%' ORDER BY priority DESC, due_date ASC");
 }
 else{
-	$job_result = mysqli_query($conn,"SELECT job_id, client_name, project_name, due_date, priority FROM job_ticket WHERE job_id LIKE '%{$compare}%' OR project_name LIKE '%{$compare}%' OR due_date LIKE '%{$compare}%' OR client_name LIKE '%{$compare}%' OR priority LIKE '%{$compare}%' ORDER BY priority DESC, due_date ASC");
+	$project_result = mysqli_query($conn,"SELECT job_id, client_name, project_name, due_date, priority FROM job_ticket WHERE job_id LIKE '%{$compare}%' OR project_name LIKE '%{$compare}%' OR due_date LIKE '%{$compare}%' OR client_name LIKE '%{$compare}%' OR priority LIKE '%{$compare}%' ORDER BY priority DESC, due_date ASC");
 }
 $job_count = 1;
-while($row = $job_result->fetch_assoc()){
+while($row = $project_result->fetch_assoc()){
 	$job_id = $row['job_id'];
 	if(isset($_POST['priority' . $job_count])){
 		$priority = $_POST['priority' . $job_count];

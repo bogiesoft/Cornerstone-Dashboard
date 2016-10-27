@@ -112,13 +112,13 @@ var CodeVersion = '3.0.8';
 
 		$result = mysqli_query($conn,"SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'sales'");
 
-		echo "<table id = 'import_table' border='1' >
+		echo "<table id = 'import_table' border='1'>
 		<tr>
 			<td align=center> <b>Data Field</b></td><td>File Field</td>";
 		if($result -> num_rows>0){
 			while($data = $result->fetch_assoc()){
 	    		echo "<tr>";
-	    		echo "<td align=center>$data[COLUMN_NAME]</td><td><select class = 'import_dropdown' name= '".$data['COLUMN_NAME']."' form = 'importForm' ><option value = 'none' style = 'display: none'>Choose one provided</option></select></td>";
+	    		echo "<td align=center>$data[COLUMN_NAME]</td><td><select class = 'import_dropdown' name= $data[COLUMN_NAME] form = 'importForm' ><option value = 'none' style = 'display: none'>Choose one provided</option></select></td>";
 	    		echo "</tr>";
 			}
 		}else
@@ -134,7 +134,7 @@ var CodeVersion = '3.0.8';
 	<!--import button-->
 	<form id = "importForm" action = "uploadForm_database.php" method = "POST" enctype="multipart/form-data">
     	<div id="instance-actions">
-    	  <button id="import-accept">Import</button>
+    	  <button id="import-accept" onclick = "displayLoading()">Import</button><img id = "loadImage" style = "display:none" src = "images/web-icons/loadingBar.gif" alt = "Smiley Face" height = "40" width = "40">
     	</div>
     </form>
 
@@ -148,3 +148,9 @@ var CodeVersion = '3.0.8';
 
     </body>
 </html>
+<script>
+function displayLoading()
+{
+	document.getElementById("loadImage").style.display = "block";
+}
+</script>

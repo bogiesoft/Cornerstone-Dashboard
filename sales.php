@@ -50,7 +50,6 @@ require ("header.php");
 				<li><a href="#" class="tablinks" onclick="changeTab(event, 'internal')">Internal</a></li>
 				<li><a href="#" class="tablinks" onclick="changeTab(event, 'CRM')">CRM</a></li>
 			</ul>
-			
 			<div class="contacts-title">
 			</div>
 		</div>
@@ -90,7 +89,7 @@ require ("header.php");
 										$value3=$row["value3"];
 										echo "<tr id = 'row" . $search_id . "'><td class='data-cell'><a href = 'advanced_search_CRM.php?field1=$field1&value1=$value1&field2=$field2&value2=$value2&field3=$field3&value3=$value3&search_id=$search_id'>". $row["search_name"]."</a></td><td><button id = '" . $search_id . "'><img src = 'images/x_button.png' width = '25' height = '25'></button></tr>";
 									}
-								} 
+								}
 								else {
 									echo "0 Saved Searches";
 								}
@@ -106,26 +105,59 @@ $result = mysqli_query($conn, "SELECT * FROM sales");
 
 echo " <div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
 echo "<tbody>";
-echo "<tr valign='top'><td colspan='2'><table id = 'crm_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='job_id' data-index='0'>Client Name</th><th class='maintable-thtwo data-header' data-name='client_name' data-index='1'>Business</th><th class='maintable-thtwo data-header' data-name='due_date' data-index='2'>Phone</th><th class='maintable-thtwo data-header' data-name='estimate_number' data-index='3'>City</th><th class='maintable-thtwo data-header' data-name='project_name' data-index='4'>Zip Code</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='5'>Call Back Date</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='6'>Priority</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='7'>Vertical 1</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='8'>Vertical 2</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='9'>Vertical 3</th></tr></thead><tbody>";
+echo "<tr valign='top'><td colspan='2'><table id = 'crm_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'>
+<th class='maintable-thtwo data-header' data-name='Mark' data-index='0'>Mark</th>
+<th class='maintable-thtwo data-header' data-name='job_id' data-index='1'>Client Name</th>
+<th class='maintable-thtwo data-header' data-name='client_name' data-index='2'>Business</th>
+<th class='maintable-thtwo data-header' data-name='client_name' data-index='3'>Address</th>
+<th class='maintable-thtwo data-header' data-name='estimate_number' data-index='4'>City</th>
+<th class='maintable-thtwo data-header' data-name='estimate_number' data-index='5'>State</th>
+<th class='maintable-thtwo data-header' data-name='project_name' data-index='6'>Zip Code</th>
+<th class='maintable-thtwo data-header' data-name='records_total' data-index='7'>Call Back Date</th>
+<th class='maintable-thtwo data-header' data-name='records_total' data-index='8'>Priority</th>
+<th class='maintable-thtwo data-header' data-name='records_total' data-index='9'>Title</th>
+<th class='maintable-thtwo data-header' data-name='due_date' data-index='10'>Phone</th>
+<th class='maintable-thtwo data-header' data-name='records_total' data-index='11'>Website</th>
+<th class='maintable-thtwo data-header' data-name='records_total' data-index='12'>Email</th>
+<th class='maintable-thtwo data-header' data-name='records_total' data-index='13'>Vertical 1</th>
+<th class='maintable-thtwo data-header' data-name='records_total' data-index='14'>Vertical 2</th>
+<th class='maintable-thtwo data-header' data-name='records_total' data-index='15'>Vertical 3</th>
+</tr></thead><tbody>";
 
 if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
 	/*	$website = $row['web_address'];
 		$email = $row['email1'];
-		
+
 		if(strlen($website) >= 15){
 			$website = substr($website, 0, 15) . "<br>" . "...";
 		}
 		if(strlen($email) >= 15){
 			$email = substr($email, 0, 15) . "<br>" . "...";s
-		}*/
+		}
+*/
 		$foo=array();
 		array_push($foo, $row['full_name']);
 		array_push($foo, $row['address_line_1']);
 		$str = serialize($foo);
 		$stren = urlencode($str);
-		echo "<tr><td class='data-cell'><a href = 'edit_client.php?client_info=$stren'>" .$row["full_name"]."</a></td><td class='data-cell'>".  $row["business"]."</td><td class='data-cell'>". $row["phone"]. "</td><td class='data-cell'>" . $row["city"] . "</td><td class='data-cell'>". $row["zipcode"]. "</td><td class='data-cell'>". $row["call_back_date"]."</td><td class='data-cell'>". $row["priority"]."</td><td class='data-cell'>". $row["vertical1"]."</td><td class='data-cell'>". $row["vertical2"]."</td><td class='data-cell'>". $row["vertical3"]."</td></tr>";
+		echo "<tr><td class = 'data-cell'><input type = 'checkbox' name = 'Mark[]'/></td>
+		<td class='data-cell'><a href = 'edit_client.php?client_info=$stren'>" .$row["full_name"]."</a></td>
+		<td class='data-cell'>".  $row["business"]."</td>
+		<td class='data-cell'>".  $row["address_line_1"]."</td>
+		<td class='data-cell'>" . $row["city"] . "</td>
+		<td class='data-cell'>" . $row["state"] . "</td>
+		<td class='data-cell'>". $row["zipcode"]. "</td>
+		<td class='data-cell'>". $row["call_back_date"]."</td>
+		<td class='data-cell'>". $row["priority"]."</td>
+		<td class='data-cell'>". $row["title"]."</td>
+		<td class='data-cell'>". $row["phone"]. "</td>
+		<td class='data-cell'>". $row["web_address"]."</td>
+		<td class='data-cell'>". $row["email1"]."</td>
+		<td class='data-cell'>". $row["vertical1"]."</td>
+		<td class='data-cell'>". $row["vertical2"]."</td>
+		<td class='data-cell'>". $row["vertical3"]."</td></tr>";
     }
 	echo "</tbody></table></td></tr></tbody></table></div>";
 } else {
@@ -150,17 +182,16 @@ if ($result->num_rows > 0) {
 		</select>
 	</div>
 </div>
-</div>
-</div>
-<div id="internal" class="tab-content">
-<div class="search-cont">
-	<div class="searchcont-detail">
-		<div class="search-boxleft">
-			<label>Quick Search</label>
-			<input id="Jobsearch" name="frmSearch" type="text" placeholder="Search for a specific job">
+<!--export button-->
+<form id = "exportForm" action = "uploadForm_export.php" method = "POST" enctype="multipart/form-data">
+		<div id="instance-actions">
+			<button id="export-accept">Export</button>
 		</div>
-	</div>
+	</form>
 </div>
+</div>
+
+<div id="internal" class="tab-content">
 <h3>In Process</h3><br>
  <?php
 
@@ -182,10 +213,10 @@ while($row = $result->fetch_assoc()){
 		$sql100 = "INSERT INTO timestamp (user,time,job, a_p,processed_by,viewed) VALUES ('$user_name', '$today','$job', '$a_p','$processed_by','no')";
 		$result100 = $conn->query($sql100) or die('Error querying database 101.');
 	}
-	
+
 	$job_count = $job_count + 1;
-} 
- 
+}
+
 $result = mysqli_query($conn,"SELECT * FROM job_ticket WHERE processed_by = ''");
 
 
@@ -208,7 +239,7 @@ if ($result->num_rows > 0) {
 		$result1 = mysqli_query($conn, $sql);
 		while($row1 = $result1->fetch_assoc()){
 			echo "<option value = '" . $row1['user'] . "'>" . $row1['first_name'] . ' ' .  $row1['last_name'] . "</option>";
-					
+
 		}
 		echo "</select></form>";
 		echo "</td><td>" .  $row["client_name"]."</td><td>". $row["project_name"]. "</td><td>". $row["due_date"] . "</td><td>". $row["estimate_number"]. "</td><td>". $row["job_status"]. "</td></tr>";
@@ -220,35 +251,18 @@ if ($result->num_rows > 0) {
 }
 ?>
 
+
 </div>
 </div>
 </div>
 </div>
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="sorttable.js"></script>
-<script type="text/javascript" src="jquery-latest.js"></script> 
-<script type="text/javascript" src="jquery.tablesorter.js"></script> 
+<script type="text/javascript" src="jquery-latest.js"></script>
+<script type="text/javascript" src="jquery.tablesorter.js"></script>
 <script>
 
 var fieldCount = 1;
-
-$("#Jobsearch").keyup(function(){
-        _this = this;
-        // Show only matching TR, hide rest of them
-        $.each($("#client_table tbody tr"), function() {
-            if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
-               $(this).hide();
-            else
-               $(this).show();                
-        });
-    }); 
-$(document).ready(function() 
-    { 
-        $("#client_table").tablesorter(); 
-		pageCreator();
-    } 
-);
-
 function showSavedSearch(){
 	if(document.getElementById('show_saved_search').innerHTML == "Show Saved Search"){
 		document.getElementById('saved_search_table').style.display = "block";
@@ -262,9 +276,8 @@ function showSavedSearch(){
 
 function addField(){
 	     if(fieldCount <= 3){
-			$(".advanced_search_area").append("<div class = 'field" + fieldCount + "'><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeField('.field" + fieldCount + "')><input style = 'margin-bottom: 4%' name = 'fieldArea" + fieldCount + "' type = 'text' placeholder = 'Find'>Where<select style = 'width: 125px; font-size: 13px' name = 'select" + fieldCount 
-			+ "'><option selected = 'selected' value = 'full_name'>Client Name</option><option value = 'business'>Business</option><option value = 'address_line_1'>Address</option><option value = 'city'>City</option><option value = 'state'>State</option><option value = 'zipcode'>Zipcode</option><option value = 'title'>Title</option>" + 
-			"<option value = 'phone'>Phone</option><option value = 'web_address'>Website</option><option value = 'email1'>Email</option></select></div>");
+			$(".advanced_search_area").append("<div class = 'field" + fieldCount + "'><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeField('.field" + fieldCount + "')><input style = 'margin-bottom: 4%' name = 'fieldArea" + fieldCount + "' type = 'text' placeholder = 'Find'>Where<select style = 'width: 125px; font-size: 13px' name = 'select" + fieldCount
+			+ "'><option selected = 'selected' value = 'full_name'>Client Name</option><option value = 'business'>Business</option><option value = 'address_line_1'>Address</option><option value = 'city'>City</option><option value = 'state'>State</option><option value = 'zipcode'>Zipcode</option><option value = 'call_back_date'>Call Back Date</option><option value = 'priority'>Priority</option><option value = 'title'>Title</option>" +"<option value = 'phone'>Phone</option><option value = 'web_address'>Website</option><option value = 'email1'>Email</option><option value = 'vertical1'>Vertical1</option><option value = 'vertical2'>Vertical2</option><option value = 'vertical3'>Vertical3</option></select></div>");
 			if(fieldCount == 1){
 				document.getElementById("advanced_search_button").innerHTML = "Add Field";
 				document.getElementById("advanced_search_submit").style.display = "inline";
@@ -272,7 +285,7 @@ function addField(){
 				document.getElementById("advanced_search_name").style.display = "inline";
 				document.getElementById("advanced_save").style.display = "inline";
 			}
-			
+
 			fieldCount++;
 		 }
 }
@@ -319,16 +332,16 @@ $("#search").keyup(function(){
             if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
                $(this).hide();
             else
-               $(this).show();                
+               $(this).show();
         });
-    }); 
-	
-$(document).ready(function() 
-    { 
-        $("#crm_table").tablesorter(); 
+    });
+
+$(document).ready(function()
+    {
+        $("#crm_table").tablesorter();
 		pageCreator();
-    } 
-); 
+    }
+);
 function pageCreator(){
 	$('table.table-striped.main-table.contacts-list').each(function() {
 		var currentPage = 0;
@@ -358,7 +371,7 @@ function pageCreator(){
 	});
 	document.getElementById("id1").className = "current clickable";
 	var ul = document.getElementById("pag");
-	
+
 	if(ul.childNodes.length > 5){
 		for(var i = 6; i < ul.childNodes.length - 1; i++){
 			ul.children[i].style.display = "none";
@@ -385,7 +398,7 @@ function prevPage(){
 			break;
 		}
 	}
-	
+
 	var newDisplayIndex = 0;
 	for(var i = oldDisplayIndex; i >= 1; i--){
 		newDisplayIndex = i;
@@ -396,7 +409,7 @@ function prevPage(){
 			ul.children[i].style.display = "none";
 		}
 	}
-	
+
 	var count = 0;
 	var lastIndex = 0;
 	for(var i = newDisplayIndex; i >= 1; i--){
@@ -417,7 +430,7 @@ function prevPage(){
 function nextPage(){
 	document.getElementById("prev_button").style.display = "inline";
 	var ul = document.getElementById("pag");
-	
+
 	var displayCount = 0;
 	var lastIndexCheck = 0;
 	for(var i = 1; i < ul.childNodes.length - 1; i++){
@@ -437,7 +450,7 @@ function nextPage(){
 				break;
 			}
 		}
-		
+
 		var newDisplayIndex = 0;
 		for(var i = oldDisplayIndex; i < ul.childNodes.length - 1; i++){
 			if(ul.children[i].style.display == "none"){
@@ -448,7 +461,7 @@ function nextPage(){
 				ul.children[i].style.display = "none";
 			}
 		}
-		
+
 		var count = 0;
 		var lastIndex = 0;
 		for(var i = newDisplayIndex; i < (ul.childNodes.length - subtractValue); i++){

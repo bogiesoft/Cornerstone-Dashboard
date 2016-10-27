@@ -13,11 +13,11 @@ if(isset($_POST['submit_form'])){
 	$sql6 = "INSERT INTO timestamp (user,time,job, a_p) VALUES ('$user_name', '$today','$job', '$a_p')";
 	$result7 = $conn->query($sql6) or die('Error querying database 5.');
 
-	$sql = "UPDATE documentation SET title='$title',text='$text', user='$user', timestamp='$today' WHERE title ='$title'";
+	$sql = 'UPDATE documentation SET title="' . $title . '",text="' . $text . '", user="' . $user_name . '", timestamp="' . $today . '" WHERE title ="' . $title . '"';
 	$result = $conn->query($sql) or die('Error querying database.');
 	 
 	$conn->close();
-	header("location: http://localhost/crst_dashboard/documentation.php ");
+	header("location: documentation.php");
 	exit();
 }
 else{
