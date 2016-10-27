@@ -28,6 +28,8 @@ $_SESSION['title'] = $title;
 			<li><a href="production.php">PRODUCTION</a></li>
 			<li><a href="project_management.php">PROJECT MANAGEMENT</a></li>
 			<li><a href="sales.php">SALES</a></li>
+			<li><a href="CRM.php">CRM</a></li>
+			
 		</ul>
 		</div>
 			<div class="righttop">
