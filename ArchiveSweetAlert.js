@@ -18,9 +18,11 @@ $(document).ready(function(){
 		}
 	});
 
-	function showSaveMessage(){
-		swal({   title: "Saved!",   text: "This job has been updated.",   type: "success",      confirmButtonColor: "#4FD8FC",   confirmButtonText: "OK",   closeOnConfirm: true }, 
-			function(){ saveNotClicked=false; $( ".save-btn" ).click();});  
+	function showSaveMessage() {
+		swal({   title: "Are you sure?",   text: "This will become an active job",   type: "warning",   showCancelButton: true,   confirmButtonColor: "#42f46b",   confirmButtonText: "Yes, save it!",   closeOnConfirm: false }, 
+			function(){ swal({   title: "Job created!",   text: "This job is now active.",   type: "success",      confirmButtonColor: "#4FD8FC",   confirmButtonText: "OK",   closeOnConfirm: true }, 
+				function(){ saveNotClicked=false; $( ".save-btn" ).click();});  
+		});
 	};
 	
 	function warnBeforeDelete() {
