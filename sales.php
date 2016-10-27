@@ -39,7 +39,6 @@ require ("header.php");
 		display: block;
 	}
 </style>
-
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 		<h1 class="pull-left">Sales</h1>
@@ -64,7 +63,6 @@ require ("header.php");
 						</form>
 					</div>
 					<div class="contacts-title">
-						<a id = 'view_marked' name = 'view_marked' class="pull-right" class="add_button" href = "#" style = "background: #ff5c33">View Marked</a>
 						<a id = 'advanced_search_button' class="pull-right" href="#" class="add_button" onclick = 'addField()'>Advanced Search</a>
 						<a id = 'show_saved_search' class="pull-right" class="add_button" onclick = 'showSavedSearch()' href = "#" style = "background: #ff5c33">Show Saved Search</a>
 						<form class = 'advanced_search_area' action = 'advanced_search_CRM.php' method = 'post'>
@@ -101,18 +99,13 @@ require ("header.php");
 					</div>
 
 				</div><br>
-
 <?php
 
-$result = mysqli_query($conn, "SELECT * FROM sales LIMIT 500");
+$result = mysqli_query($conn, "SELECT * FROM sales");
 
-echo " <div id = 'allcontacts-table' class='allcontacts-table'><table name = 'tableCSV' id = 'tableCSV' border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
+echo " <div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
 echo "<tbody>";
-<<<<<<< HEAD
-echo "<tr valign='top'><td colspan='2'><div id = 'inside_table'><table id = 'crm_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'>
-=======
 echo "<tr valign='top'><td colspan='2'><table id = 'crm_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'>
->>>>>>> Importer/Exporter
 <th class='maintable-thtwo data-header' data-name='Mark' data-index='0'>Mark</th>
 <th class='maintable-thtwo data-header' data-name='job_id' data-index='1'>Client Name</th>
 <th class='maintable-thtwo data-header' data-name='client_name' data-index='2'>Business</th>
@@ -149,11 +142,7 @@ if ($result->num_rows > 0) {
 		array_push($foo, $row['address_line_1']);
 		$str = serialize($foo);
 		$stren = urlencode($str);
-<<<<<<< HEAD
-		echo "<tr><td class = 'data-cell'><input class = 'check-box' type = 'checkbox' name = 'Mark[]'/></td>
-=======
 		echo "<tr><td class = 'data-cell'><input type = 'checkbox' name = 'Mark[]'/></td>
->>>>>>> Importer/Exporter
 		<td class='data-cell'><a href = 'edit_client.php?client_info=$stren'>" .$row["full_name"]."</a></td>
 		<td class='data-cell'>".  $row["business"]."</td>
 		<td class='data-cell'>".  $row["address_line_1"]."</td>
@@ -170,12 +159,11 @@ if ($result->num_rows > 0) {
 		<td class='data-cell'>". $row["vertical2"]."</td>
 		<td class='data-cell'>". $row["vertical3"]."</td></tr>";
     }
-	echo "</tbody></table></div></td></tr></tbody></table></div>";
+	echo "</tbody></table></td></tr></tbody></table></div>";
 } else {
     echo "0 results";
 }
 ?>
-
 <div class="allcontacts-breadcrumbs">
 	<div class="allcontacts-breadcrumbsleft pull-left page-control">
 		<nav>
@@ -194,24 +182,12 @@ if ($result->num_rows > 0) {
 		</select>
 	</div>
 </div>
-<<<<<<< HEAD
-
-
-
-<!--export button-->
-<div class='button'>
-    <a href="#" id ="export" role='button'>Export</a>
-</div>
-<!--export button-->
-
-=======
 <!--export button-->
 <form id = "exportForm" action = "uploadForm_export.php" method = "POST" enctype="multipart/form-data">
 		<div id="instance-actions">
 			<button id="export-accept">Export</button>
 		</div>
 	</form>
->>>>>>> Importer/Exporter
 </div>
 </div>
 
@@ -280,16 +256,11 @@ if ($result->num_rows > 0) {
 </div>
 </div>
 </div>
-
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="sorttable.js"></script>
-<<<<<<< HEAD
-<script type="text/javascript" src="jquery.tablesorter.js"></script>
-<script type='text/javascript'>
-=======
 <script type="text/javascript" src="jquery-latest.js"></script>
 <script type="text/javascript" src="jquery.tablesorter.js"></script>
 <script>
->>>>>>> Importer/Exporter
 
 var fieldCount = 1;
 function showSavedSearch(){
@@ -302,6 +273,7 @@ function showSavedSearch(){
 		document.getElementById('show_saved_search').innerHTML = "Show Saved Search";
 	}
 }
+
 function addField(){
 	     if(fieldCount <= 3){
 			$(".advanced_search_area").append("<div class = 'field" + fieldCount + "'><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeField('.field" + fieldCount + "')><input style = 'margin-bottom: 4%' name = 'fieldArea" + fieldCount + "' type = 'text' placeholder = 'Find'>Where<select style = 'width: 125px; font-size: 13px' name = 'select" + fieldCount
@@ -367,11 +339,7 @@ $("#search").keyup(function(){
 $(document).ready(function()
     {
         $("#crm_table").tablesorter();
-<<<<<<< HEAD
-				pageCreator();
-=======
 		pageCreator();
->>>>>>> Importer/Exporter
     }
 );
 function pageCreator(){
@@ -514,93 +482,20 @@ function nextPage(){
 		}
 	}
 }
-
-
-function exportTableToCSV($table, filename) {
-		var $headers = $table.find('tr:has(th)')
-				,$rows = $table.find('tr:has(td:has(input:checked))')
-				// Temporary delimiter characters unlikely to be typed by keyboard
-				// This is to avoid accidentally splitting the actual contents
-				,tmpColDelim = String.fromCharCode(11) // vertical tab character
-				,tmpRowDelim = String.fromCharCode(0) // null character
-				// actual delimiter characters for CSV format
-				,colDelim = '","'
-				,rowDelim = '"\r\n"';
-				// Grab text from table into CSV formatted string
-				var csv = '"';
-				csv += formatRows($headers.map(grabRow));
-				csv += rowDelim;
-				csv += formatRows($rows.map(grabRow)) + '"';
-				// Data URI
-				var csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csv);
-		$(this)
-				.attr({
-				'download': filename
-						,'href': csvData
-						//,'target' : '_blank' //if you want it to open in a new window
-		});
-		//------------------------------------------------------------
-		// Helper Functions
-		//------------------------------------------------------------
-		// Format the output so it has the appropriate delimiters
-		function formatRows(rows){
-				return rows.get().join(tmpRowDelim)
-						.split(tmpRowDelim).join(rowDelim)
-						.split(tmpColDelim).join(colDelim);
+$("button").click(function(){
+    var del_id = $(this).attr("id");
+    var info = del_id;
+	if(confirm("Are you sure you want to delete"))
+	$.ajax({
+		url: 'delete_search.php',
+		type: 'POST',
+		data: {
+			id: info
+		},
+		success: function(){
+			document.getElementById("row" + del_id).style.display = "none";
 		}
-		// Grab and format a row from the table
-		function grabRow(i,row){
-
-				var $row = $(row);
-				//for some reason $cols = $row.find('td') || $row.find('th') won't work...
-				var $cols = $row.find('td:not(:first-child)');
-				if(!$cols.length) $cols = $row.find('th:not(:first-child)');
-				return $cols.map(grabCol)
-										.get().join(tmpColDelim);
-		}
-		// Grab and format a column from the table
-		function grabCol(j,col){
-				var $col = $(col),
-						$text = $col.text();
-				return $text.replace('"', '""'); // escape double quotes
-		}
-}
-
-// This must be a hyperlink
-$("#export").click(function (event) {
-		// var outputFile = 'export'
-		var outputFile = window.prompt("What do you want to name your output file (Note: This won't have any effect on Safari)") || 'export';
-		outputFile = outputFile.replace('.csv','') + '.csv'
-
-		// CSV
-		exportTableToCSV.apply(this, [$('#inside_table>table'), outputFile]);
-
-		// IF CSV, don't do event.preventDefault() or return false
-		// We actually need this to be a typical hyperlink
+	});
+	return false;
 });
-
-$("#view_marked").click(function(){
-    $("#inside_table>table tr").has(".check-box:not(:checked)").css("display", "none");;
-});
-<<<<<<< HEAD
-
-
-// $("button").click(function(){
-//     var del_id = $(this).attr("id");
-//     var info = del_id;
-// 	if(confirm("Are you sure you want to delete"))
-// 	$.ajax({
-// 		url: 'delete_search.php',
-// 		type: 'POST',
-// 		data: {
-// 			id: info
-// 		},
-// 		success: function(){
-// 			document.getElementById("row" + del_id).style.display = "none";
-// 		}
-// 	});
-// 	return false;
-// });
-=======
->>>>>>> Importer/Exporter
 </script>

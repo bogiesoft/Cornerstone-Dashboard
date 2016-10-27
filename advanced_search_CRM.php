@@ -58,7 +58,6 @@ require ("header.php");
 	<div class="contacts-title">
 	<h1 class="pull-left">Advanced Search Results</h1>
 	<a class="pull-right" href="sales.php" class="add_button">Back to Sales</a>
-	<a id = 'view_marked' name = 'view_marked' class="pull-right" class="add_button" href = "#" style = "background: #ff5c33">View Marked</a>
 	</div>
 <div class="dashboard-detail">
 <div class="search-cont">
@@ -161,16 +160,9 @@ if(!isset($_POST['advanced_search_submit']) && !isset($_POST['advanced_search_an
 echo " <div id = 'table-scroll' class='allcontacts-table'><table id = 'table' border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
 echo "<tbody>";
 echo "<tr valign='top'><th class='allcontacts-title'>All Results<span class='allcontacts-subtitle'></span></th></tr>";
-<<<<<<< HEAD
-echo "<tr valign='top'><td colspan='2'><div id = 'inside_table' ><table id = 'client_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead>
-<tr valign='top' class='contact-headers'>
-<input type = 'checkbox' id = 'allcb' name = 'allcb'/> Mark all
-<th></th>
-=======
 echo "<tr valign='top'><td colspan='2'><table id = 'client_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead>
 <tr valign='top' class='contact-headers'>
 <th class='maintable-thtwo data-header' id = 'Mark' data-name='Mark' data-index='0'>Mark</th>
->>>>>>> Importer/Exporter
 <th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='1'>Client Name</th>
 <th id = 'contact_name' class='maintable-thtwo data-header' data-name='contact_name' data-index='2'>Business</th>
 <th id = 'address' class='maintable-thtwo data-header' data-name='client_add' data-index='3'>Address</th>
@@ -209,11 +201,7 @@ if ($result->num_rows > 0) {
 		$str = serialize($foo);
 		$stren = urlencode($str);
 		echo "<tr class = 'hoverTab'>
-<<<<<<< HEAD
-		<td><input type = 'checkbox' class = 'check-box' name = 'Mark[]'/></td>
-=======
 		<td><input type = 'checkbox' name = 'Mark[]'/>
->>>>>>> Importer/Exporter
 		<td><a href = 'edit_client.php?client_info=$stren'>".$row["full_name"]."</a></td>
 		<td>".  $row["business"]."</td>
 		<td>". $row["address_line_1"]. "</td>
@@ -231,7 +219,7 @@ if ($result->num_rows > 0) {
 		<td>". $row["vertical2"]. "</td>
 		<td>". $row["vertical3"]. "</td></tr>";
     }
-	echo "</tbody></table></div></td></tr></tbody></table></div>";
+	echo "</tbody></table></td></tr></tbody></table></div>";
 } else {
     echo "0 results";
 }
@@ -257,23 +245,11 @@ $conn->close();
 		</select>
 	</div>
 </div>
-
-<!--export button-->
-<div class='button'>
-    <a href="#" id ="export" role='button'>Export</a>
-</div>
-<!--export button-->
-
-
 </div>
 </div>
 
 <!-- script for making table sortable -->
-<<<<<<< HEAD
-
-=======
 <script src="sorttable.js"></script>
->>>>>>> Importer/Exporter
 <script type="text/javascript" src="jquery-latest.js"></script>
 <script type="text/javascript" src="jquery.tablesorter.js"></script>
 <script>
@@ -295,11 +271,7 @@ $("#search").keyup(function(){
 $(document).ready(function()
     {
         $("#client_table").tablesorter();
-<<<<<<< HEAD
-				pageCreator();
-=======
 		pageCreator();
->>>>>>> Importer/Exporter
     }
 );
 function pageCreator(){
@@ -442,88 +414,4 @@ function nextPage(){
 		}
 	}
 }
-<<<<<<< HEAD
-
-function exportTableToCSV($table, filename) {
-		var $headers = $table.find('tr:has(th)')
-				,$rows = $table.find('tr:has(td:has(input:checked))')
-				// Temporary delimiter characters unlikely to be typed by keyboard
-				// This is to avoid accidentally splitting the actual contents
-				,tmpColDelim = String.fromCharCode(11) // vertical tab character
-				,tmpRowDelim = String.fromCharCode(0) // null character
-				// actual delimiter characters for CSV format
-				,colDelim = '","'
-				,rowDelim = '"\r\n"';
-				// Grab text from table into CSV formatted string
-				var csv = '"';
-				csv += formatRows($headers.map(grabRow));
-				csv += rowDelim;
-				csv += formatRows($rows.map(grabRow)) + '"';
-				// Data URI
-				var csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csv);
-		$(this)
-				.attr({
-				'download': filename
-						,'href': csvData
-						//,'target' : '_blank' //if you want it to open in a new window
-		});
-		//------------------------------------------------------------
-		// Helper Functions
-		//------------------------------------------------------------
-		// Format the output so it has the appropriate delimiters
-		function formatRows(rows){
-				return rows.get().join(tmpRowDelim)
-						.split(tmpRowDelim).join(rowDelim)
-						.split(tmpColDelim).join(colDelim);
-		}
-		// Grab and format a row from the table
-		function grabRow(i,row){
-
-				var $row = $(row);
-				//for some reason $cols = $row.find('td') || $row.find('th') won't work...
-				var $cols = $row.find('td:not(:first-child)');
-				if(!$cols.length) $cols = $row.find('th:not(:first-child)');
-				return $cols.map(grabCol)
-										.get().join(tmpColDelim);
-		}
-		// Grab and format a column from the table
-		function grabCol(j,col){
-				var $col = $(col),
-						$text = $col.text();
-				return $text.replace('"', '""'); // escape double quotes
-		}
-}
-
-// This must be a hyperlink
-$("#export").click(function (event) {
-		// var outputFile = 'export'
-		var outputFile = window.prompt("What do you want to name your output file (Note: This won't have any effect on Safari)") || 'export';
-		outputFile = outputFile.replace('.csv','') + '.csv'
-
-		// CSV
-		exportTableToCSV.apply(this, [$('#inside_table>table'), outputFile]);
-
-		// IF CSV, don't do event.preventDefault() or return false
-		// We actually need this to be a typical hyperlink
-});
-
-
-$("#view_marked").click(function(){
-    $("#inside_table>table tr").has(".check-box:not(:checked)").css("display", "none");;
-});
-
-$("#allcb").change(function(){
-	console.log("hello");
-    if($(this).attr('checked')){
-        $('#inside_table>table tr td input[type="checkbox"]').each(function(){
-            $(this).attr('checked', true);
-        });
-    }else{
-        $('#inside_table>table tr td input[type="checkbox"]').each(function(){
-            $(this).attr('checked', false);
-        });
-    }
-});
-=======
->>>>>>> Importer/Exporter
 </script>
