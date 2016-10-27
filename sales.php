@@ -108,7 +108,11 @@ $result = mysqli_query($conn, "SELECT * FROM sales LIMIT 500");
 
 echo " <div id = 'allcontacts-table' class='allcontacts-table'><table name = 'tableCSV' id = 'tableCSV' border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
 echo "<tbody>";
+<<<<<<< HEAD
 echo "<tr valign='top'><td colspan='2'><div id = 'inside_table'><table id = 'crm_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'>
+=======
+echo "<tr valign='top'><td colspan='2'><table id = 'crm_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'>
+>>>>>>> Importer/Exporter
 <th class='maintable-thtwo data-header' data-name='Mark' data-index='0'>Mark</th>
 <th class='maintable-thtwo data-header' data-name='job_id' data-index='1'>Client Name</th>
 <th class='maintable-thtwo data-header' data-name='client_name' data-index='2'>Business</th>
@@ -145,7 +149,11 @@ if ($result->num_rows > 0) {
 		array_push($foo, $row['address_line_1']);
 		$str = serialize($foo);
 		$stren = urlencode($str);
+<<<<<<< HEAD
 		echo "<tr><td class = 'data-cell'><input class = 'check-box' type = 'checkbox' name = 'Mark[]'/></td>
+=======
+		echo "<tr><td class = 'data-cell'><input type = 'checkbox' name = 'Mark[]'/></td>
+>>>>>>> Importer/Exporter
 		<td class='data-cell'><a href = 'edit_client.php?client_info=$stren'>" .$row["full_name"]."</a></td>
 		<td class='data-cell'>".  $row["business"]."</td>
 		<td class='data-cell'>".  $row["address_line_1"]."</td>
@@ -186,6 +194,7 @@ if ($result->num_rows > 0) {
 		</select>
 	</div>
 </div>
+<<<<<<< HEAD
 
 
 
@@ -195,6 +204,14 @@ if ($result->num_rows > 0) {
 </div>
 <!--export button-->
 
+=======
+<!--export button-->
+<form id = "exportForm" action = "uploadForm_export.php" method = "POST" enctype="multipart/form-data">
+		<div id="instance-actions">
+			<button id="export-accept">Export</button>
+		</div>
+	</form>
+>>>>>>> Importer/Exporter
 </div>
 </div>
 
@@ -265,8 +282,14 @@ if ($result->num_rows > 0) {
 </div>
 
 <script src="sorttable.js"></script>
+<<<<<<< HEAD
 <script type="text/javascript" src="jquery.tablesorter.js"></script>
 <script type='text/javascript'>
+=======
+<script type="text/javascript" src="jquery-latest.js"></script>
+<script type="text/javascript" src="jquery.tablesorter.js"></script>
+<script>
+>>>>>>> Importer/Exporter
 
 var fieldCount = 1;
 function showSavedSearch(){
@@ -344,7 +367,11 @@ $("#search").keyup(function(){
 $(document).ready(function()
     {
         $("#crm_table").tablesorter();
+<<<<<<< HEAD
 				pageCreator();
+=======
+		pageCreator();
+>>>>>>> Importer/Exporter
     }
 );
 function pageCreator(){
@@ -555,6 +582,7 @@ $("#export").click(function (event) {
 $("#view_marked").click(function(){
     $("#inside_table>table tr").has(".check-box:not(:checked)").css("display", "none");;
 });
+<<<<<<< HEAD
 
 
 // $("button").click(function(){
@@ -573,4 +601,6 @@ $("#view_marked").click(function(){
 // 	});
 // 	return false;
 // });
+=======
+>>>>>>> Importer/Exporter
 </script>

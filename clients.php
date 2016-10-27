@@ -10,8 +10,10 @@ require ("header.php");
 	<div class="search-cont">
 	<div class="searchcont-detail">
 		<div class="search-boxleft">
+			
 				<label>Quick Search</label>
 				<input id="search" name="frmSearch" type="text" placeholder="Search for a specific client">
+			
 				<div class="contacts-title">
 				<a id = 'advanced_search_button' class="pull-right" href="#" class="add_button" onclick = 'addField()'>Advanced Search</a>
 				<a id = 'show_saved_search' class="pull-right" class="add_button" onclick = 'showSavedSearch()' href = "#" style = "background: #ff5c33">Show Saved Search</a>
@@ -27,7 +29,7 @@ require ("header.php");
 						<table id="saved_search_table" style = 'display: none'>
 							<tbody>
 								<?php
-								$result = mysqli_query($conn, "SELECT * FROM saved_search WHERE table_type = 'CLIENT' ORDER BY search_date DESC LIMIT 10");
+								$result = mysqli_query($conn, "SELECT * FROM saved_search WHERE table_type = 'Client' ORDER BY search_date DESC LIMIT 10");
 								if (mysqli_num_rows($result) > 0) {
 							    // output data of each row
 									while($row = $result->fetch_assoc()) {
@@ -168,17 +170,25 @@ var prevSubValue = 4;
 $("#search").keyup(function(){
         _this = this;
         // Show only matching TR, hide rest of them
-        $.each($("#client_table tbody tr"), function() {
+        $.each($("#crm_table tbody tr"), function() {
             if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
                $(this).hide();
             else
                $(this).show();
         });
+<<<<<<< HEAD
     });
 
 $(document).ready(function()
     {
         $("#client_table").tablesorter();
+=======
+    }); 
+	
+$(document).ready(function() 
+    { 
+        $("#crm_table").tablesorter(); 
+>>>>>>> Importer/Exporter
 		pageCreator();
     }
 );
