@@ -135,7 +135,7 @@
 				</div><br>
 				</div>
 			<div class="newcontact-tabbtm">	
-				<input style="float: right; width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;" type = "submit" name = "account_add" value = "Save Account" onclick = "return confirm('Save Account?')"/>
+				<input class = 'save-btn' style="float: right; width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;" type = "submit" name = "account_add" value = "Save Account"/>
 			</div>
 			</form><br><br>
 			<p style = "color: #00cc33;"><?php echo $success;?></p>
@@ -159,3 +159,5 @@
 		</div>
 		</div>
 		</div>
+		<script src="AdminSweetAlert.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>

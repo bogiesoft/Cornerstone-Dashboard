@@ -25,7 +25,7 @@ while(TRUE){
 		$bs_ncoa = $_POST['bs_ncoa'];
 		$final_count = $_POST['final_count'];
 		$bs_domestic = $_POST['bs_domestic'];
-		mysqli_query($conn, "UPDATE customer_service SET initialrec_count = '$initialrec_count', manual = '$manual', uncorrected = '$uncorrected', unverifiable = '$unverifiable', completed_date = '$completed_date', data_hrs = '$data_hrs', gd_hrs = '$gd_hrs', bs_foreigns = '$bs_foreigns', bs_exact = '$bs_exact', loose = '$loose', householded = '$householded', basic = '$basic', ncoa_errors = '$ncoa_errors', bs_ncoa = '$bs_ncoa', final_count = '$final_count', bs_domestic = '$bs_domestic' WHERE job_id = '$job_id'");
+		mysqli_query($conn, 'UPDATE customer_service SET initialrec_count = "' . $initialrec_count . '", manual = "' . $manual . '", uncorrected = "' . $uncorrected . '", unverifiable = "' . $unverifiable . '", completed_date = "' . $completed_date . '", data_hrs = "' . $data_hrs . '", gd_hrs = "' . $gd_hrs . '", bs_foreigns = "' . $bs_foreigns . '", bs_exact = "' . $bs_exact . '", loose = "' . $loose . '", householded = "' . $householded . '", basic = "' . $basic . '", ncoa_errors = "' . $ncoa_errors . '", bs_ncoa = "' . $bs_ncoa . '", final_count = "' . $final_count . '", bs_domestic = "' . $bs_domestic . '" WHERE job_id = "' . $job_id . '"');
 		break;
 	}
 	else{

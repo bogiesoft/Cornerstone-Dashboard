@@ -2,11 +2,9 @@
 require ("header.php");
 require ("connection.php");
 
-	
-	$term = $_GET['title'];
-	
-	$sql = "SELECT * FROM documentation WHERE title = '$term'"; 
-	$result = mysqli_query($conn,$sql); 
+$term = $_GET['title'];	
+$sql = "SELECT * FROM documentation WHERE title = '$term'"; 
+$result = mysqli_query($conn,$sql); 
 	
 	
 	
@@ -68,8 +66,8 @@ $(document).ready(function(){
 				</div>
 			</div>
 				<div class="newcontact-tabbtm">
-					<input class="save-btn" type="submit" value="Save" name="submit_form" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
-					<input class="save-btn" type = "submit" value = "Delete" name = "delete_form" onClick = "return confirm('Are you sure you want to delete documentation?')" style="width:200px; font-size:16px; background-color:#d14700; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px; float:left">
+					<input class="store-btn" type="submit" value="Save" name="submit_form" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
+					<input class="delete-btn" type = "submit" value = "Delete" name = "delete_form" style="width:200px; font-size:16px; background-color:#d14700; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px; float:left">
 				</div>
 			</form>
 			</div>
@@ -77,3 +75,5 @@ $(document).ready(function(){
 	</div>
 </div>
 </div>
+<script src="DocumentationSweetAlert.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>	

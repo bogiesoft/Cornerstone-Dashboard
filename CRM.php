@@ -2,6 +2,7 @@
 require ("header.php");
 ?>
 <style>
+<<<<<<< HEAD
 	ul.tab {
 		list-style-type: none;
 		margin: 0;
@@ -38,11 +39,14 @@ require ("header.php");
 	#internal{
 		display: block;
 	}
+=======
+>>>>>>> master
 </style>
 <div class="dashboard-cont" style="padding-top:110px;">
 
 	<div class="dashboard-detail">
 		<div class="newcontacts-tabs">
+<<<<<<< HEAD
 			<ul class="nav nav-tabs" role="tablist">
 				<li><a href="#" class="tablinks" onclick="changeTab(event, 'CRM')">CRM</a></li>
 			</ul>
@@ -51,6 +55,9 @@ require ("header.php");
 			</div>
 		</div>
 		<div id="CRM" class="tab-content">
+=======
+
+>>>>>>> master
 			<div class="search-cont">
 				<div class="searchcont-detail">
 					<div class="search-boxleft">
@@ -102,11 +109,34 @@ $result = mysqli_query($conn, "SELECT * FROM sales");
 
 echo " <div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
 echo "<tbody>";
+<<<<<<< HEAD
 echo "<tr valign='top'><td colspan='2'><table id = 'crm_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='job_id' data-index='0'>Client Name</th><th class='maintable-thtwo data-header' data-name='client_name' data-index='1'>Business</th><th class='maintable-thtwo data-header' data-name='due_date' data-index='2'>Phone</th><th class='maintable-thtwo data-header' data-name='estimate_number' data-index='3'>City</th><th class='maintable-thtwo data-header' data-name='project_name' data-index='4'>Zip Code</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='5'>Call Back Date</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='6'>Priority</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='7'>Vertical 1</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='8'>Vertical 2</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='9'>Vertical 3</th></tr></thead><tbody>";
+=======
+echo "<tr valign='top'><td colspan='2'><table id = 'crm_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'>
+<th class='maintable-thtwo data-header' data-name='job_id' data-index='0'>Client Name</th>
+<th class='maintable-thtwo data-header' data-name='client_name' data-index='1'>Business</th>
+<th class='maintable-thtwo data-header' data-name='address_line_1' data-index='2'>Address</th>
+<th class='maintable-thtwo data-header' data-name='estimate_number' data-index='3'>City</th>
+<th class='maintable-thtwo data-header' data-name='state' data-index='4'>State</th>
+<th class='maintable-thtwo data-header' data-name='project_name' data-index='5'>Zip Code</th>
+<th class='maintable-thtwo data-header' data-name='records_total' data-index='6'>Call Back Date</th>
+<th class='maintable-thtwo data-header' data-name='records_total' data-index='7'>Priority</th>
+<th class='maintable-thtwo data-header' data-name='title' data-index='8'>title</th>
+<th class='maintable-thtwo data-header' data-name='phone' data-index='9'>Phone</th>
+
+<th class='maintable-thtwo data-header' data-name='web_address' data-index='10'>Website</th>
+<th class='maintable-thtwo data-header' data-name='email1' data-index='11'>Email</th>
+
+<th class='maintable-thtwo data-header' data-name='records_total' data-index='12'>Vertical 1</th>
+<th class='maintable-thtwo data-header' data-name='records_total' data-index='13'>Vertical 2</th>
+<th class='maintable-thtwo data-header' data-name='records_total' data-index='14'>Vertical 3</th>
+</tr></thead><tbody>";
+>>>>>>> master
 
 if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
+<<<<<<< HEAD
 	/*	$website = $row['web_address'];
 		$email = $row['email1'];
 		
@@ -116,12 +146,32 @@ if ($result->num_rows > 0) {
 		if(strlen($email) >= 15){
 			$email = substr($email, 0, 15) . "<br>" . "...";s
 		}*/
+=======
+>>>>>>> master
 		$foo=array();
 		array_push($foo, $row['full_name']);
 		array_push($foo, $row['address_line_1']);
 		$str = serialize($foo);
 		$stren = urlencode($str);
+<<<<<<< HEAD
 		echo "<tr><td class='data-cell'><a href = 'edit_client.php?client_info=$stren'>" .$row["full_name"]."</a></td><td class='data-cell'>".  $row["business"]."</td><td class='data-cell'>". $row["phone"]. "</td><td class='data-cell'>" . $row["city"] . "</td><td class='data-cell'>". $row["zipcode"]. "</td><td class='data-cell'>". $row["call_back_date"]."</td><td class='data-cell'>". $row["priority"]."</td><td class='data-cell'>". $row["vertical1"]."</td><td class='data-cell'>". $row["vertical2"]."</td><td class='data-cell'>". $row["vertical3"]."</td></tr>";
+=======
+		echo "<tr><td class='data-cell'><a href = 'edit_client.php?client_info=$stren'>" .$row["full_name"]."</a></td><td class='data-cell'>".  $row["business"].
+		"</td><td class='data-cell'>". $row["address_line_1"].
+		"</td><td class='data-cell'>" . $row["city"] .
+		"</td><td class='data-cell'>". $row["state"]. 
+		"</td><td class='data-cell'>". $row["zipcode"]. 
+		"</td><td class='data-cell'>". $row["call_back_date"].
+		"</td><td class='data-cell'>". $row["priority"].
+		"</td><td class='data-cell'>". $row["title"].
+		"</td><td class='data-cell'>". $row["phone"]. 
+		"</td><td class='data-cell'>". $row["web_address"].
+		"</td><td class='data-cell'>". $row["email1"].
+		"</td><td class='data-cell'>". $row["vertical1"].
+		"</td><td class='data-cell'>". $row["vertical2"].
+		"</td><td class='data-cell'>". $row["vertical3"].
+		"</td></tr>";
+>>>>>>> master
     }
 	echo "</tbody></table></td></tr></tbody></table></div>";
 } else {
@@ -152,6 +202,10 @@ if ($result->num_rows > 0) {
 </div>
 </div>
 
+<<<<<<< HEAD
+=======
+<!-- script for making table sortable -->
+>>>>>>> master
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="sorttable.js"></script>
 <script type="text/javascript" src="jquery-latest.js"></script> 
@@ -191,8 +245,13 @@ function showSavedSearch(){
 function addField(){
 	     if(fieldCount <= 3){
 			$(".advanced_search_area").append("<div class = 'field" + fieldCount + "'><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeField('.field" + fieldCount + "')><input style = 'margin-bottom: 4%' name = 'fieldArea" + fieldCount + "' type = 'text' placeholder = 'Find'>Where<select style = 'width: 125px; font-size: 13px' name = 'select" + fieldCount 
+<<<<<<< HEAD
 			+ "'><option selected = 'selected' value = 'full_name'>Client Name</option><option value = 'business'>Business</option><option value = 'address_line_1'>Address</option><option value = 'city'>City</option><option value = 'state'>State</option><option value = 'zipcode'>Zipcode</option><option value = 'title'>Title</option>" + 
 			"<option value = 'phone'>Phone</option><option value = 'web_address'>Website</option><option value = 'email1'>Email</option></select></div>");
+=======
+			+ "'><option selected = 'selected' value = 'full_name'>Client Name</option><option value = 'business'>Business</option><option value = 'address_line_1'>Address</option><option value = 'city'>City</option><option value = 'state'>State</option><option value = 'zipcode'>Zipcode</option><option value = 'call_back_date'>Call back date</option><option value = 'priority'>Priority</option><option value = 'title'>Title</option>" + 
+			"<option value = 'phone'>Phone</option><option value = 'web_address'>Website</option><option value = 'email1'>Email</option><option value = 'vertical1'>Vertical1</option><option value = 'vertical2'>Vertical2</option><option value = 'vertical3'>Vertical3</option></select></div>");
+>>>>>>> master
 			if(fieldCount == 1){
 				document.getElementById("advanced_search_button").innerHTML = "Add Field";
 				document.getElementById("advanced_search_submit").style.display = "inline";

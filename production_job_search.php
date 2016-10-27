@@ -66,6 +66,7 @@ html {  height: 100%;}
 <div class="clear"></div>
 
 <?php
+require("connection.php");
 //change priorities here
 if(isset($_POST['frmSearch'])){
 	$compare = $_POST['frmSearch'];
@@ -118,7 +119,7 @@ if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
 		
 		$job_id = $row["job_id"];
-		$result1 = mysqli_query($conn, "SELECT records_total, processed_by FROM mail_data WHERE job_id = '$job_id'");
+		$result1 = mysqli_query($conn, "SELECT records_total, processed_by FROM job_ticket WHERE job_id = '$job_id'");
 		$row1 = $result1->fetch_assoc();
 		$records_total = (int)$row1['records_total'];
 		$assigned_to = $row1["processed_by"];

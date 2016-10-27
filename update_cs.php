@@ -21,7 +21,7 @@ if(isset($_POST['submit_form'])){
 	$_SESSION['date'] = $today;
 	$job = $status . " job ticket" . $job_id;
 
-	$sql = "UPDATE customer_service SET postage='$postage',invoice_number='$invoice_number', invoice_date = '$invoice_date', residual_returned='$residual_returned',2week_followup='$week_followup',notes='$notes',status='$status',reason='$reason' WHERE job_id = '$job_id'";
+	$sql = 'UPDATE customer_service SET postage="' . $postage . '",invoice_number="' . $invoice_number . '", invoice_date = "' . $invoice_date . '", residual_returned="' . $residual_returned . '",2week_followup="' . $week_followup . '",notes="' . $notes . '",status="' . $status . '",reason="' . $reason . '" WHERE job_id = "' . $job_id . '"';
 
 	$result0 = $conn->query($sql) or die('Error querying database.');
 
@@ -94,7 +94,7 @@ if(isset($_POST['submit_form'])){
 	
 	$result1 = mysqli_query($conn,"DELETE FROM job_ticket WHERE job_id = '$job_id'");
 
-	$sql = "UPDATE archive_jobs SET material = '$material', type = '$type', vendor = '$vendor', height = '$height', weight = '$weight', size = '$size' WHERE job_id = '$job_id'";
+	$sql = 'UPDATE archive_jobs SET material = "' . $material . '", type = "' . $type . '", vendor = "' . $vendor . '", height = "' . $height . '", weight = "' . $weight . '", size = "' . $size . '" WHERE job_id = "' . $job_id . '"';
 	mysqli_query($conn, $sql) or die("materials error");
 	
 	$sql2 = "UPDATE archive_jobs, project_management SET archive_jobs.data_source = project_management.data_source ,archive_jobs.data_received = project_management.data_received ,archive_jobs.data_completed = project_management.data_completed,archive_jobs.dqr_sent = project_management.dqr_sent WHERE archive_jobs.job_id = project_management.job_id AND project_management.job_id = '$temp'";	
@@ -165,7 +165,6 @@ if(isset($_POST['delete_form'])){
 	mysqli_query($conn,"DELETE FROM customer_service WHERE job_id = '$job_id'")or die("error1");
 	mysqli_query($conn,"DELETE FROM job_ticket WHERE job_id = '$job_id'")or die("error3");
 	mysqli_query($conn,"DELETE FROM project_management WHERE job_id = '$job_id'")or die("error4");
-	mysqli_query($conn,"DELETE FROM mail_info WHERE job_id = '$job_id'")or die("error5");
 	mysqli_query($conn,"DELETE FROM production WHERE job_id = '$job_id'")or die("error6");
 	
 	$conn->close();

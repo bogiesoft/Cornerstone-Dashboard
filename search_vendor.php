@@ -1,8 +1,4 @@
 <?php
-require ("header.php");
-?>
-<script src="VendorSweetAlert.js"></script>
-<?php
 
 
 						require ("connection.php");
@@ -74,7 +70,7 @@ require ("header.php");
 							header("location: vendors.php");
 							exit();
 						}
-
+					require ("header.php");
 					?>
 					<div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
@@ -140,5 +136,6 @@ require ("header.php");
 	</div>
 </div>
 </div>
-			
+<script src="VendorSweetAlert.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>			
 
