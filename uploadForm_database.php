@@ -1,4 +1,3 @@
-<img id = "loadImage" src = "images/web-icons/loadingBar.gif" alt = "Smiley Face" height = "40" width = "40">
 <?php
 
 require("connection.php");
@@ -44,9 +43,28 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 		$address_line_1 = " ";
 		
 		for($j = 0; $j < count($array_indexes); $j++){ //goes through all corresponding indexes to headers and adds to sql statements for insert and update as specified
-			
+			$input = "";
+			//quotes are read by replacing with \"
 			if($array_indexes[$j] != -1){
-				$input = str_replace('"', '', $data[$i][$array_indexes[$j]]);
+				$input = str_replace('"', '\"', $data[$i][$array_indexes[$j]]);
+			}
+			//check if phone number and fax number input is correct
+			if($input != "" && (strlen($input) != 10 || preg_match("/[a-z]/i", $input)) && ($array_names[$j] == "phone" || $array_names[$j] == "fax")){
+				if($array_names[$j] == "phone"){
+					die("error in row " . ($i + 1) . " column header " . $array_names[$j] . ": Phone number not valid(eg: 8452555722)");
+				}
+				else{
+					die("error in row " . ($i + 1) . " column header " . $array_names[$j] . ": Fax number not valid(eg: 8452555722)");
+				}
+					
+			}
+			//check if email input for email1 or email2 is incorrect
+			if($input != "" && strpos($input, '@') === FALSE && ($array_names[$j] == "email1" || $array_names[$j] == "email2")){
+				die("error in row " . ($i + 1) . " column header " . $array_names[$j] . ": @ symbol needed in email(eg stevo123@gmail)");
+			}
+			//check if extension is numerical
+			if($input != "" && preg_match("/[a-z]/i", $input) && $array_names[$j] == "extension"){
+				die("error in row " . ($i + 1) . " column header " . $array_names[$j] . ": Extension number not valid(eg: 123)");
 			}
 			
 			if($array_names[$j] == "full_name" && $array_indexes[$j] != -1){
