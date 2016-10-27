@@ -39,7 +39,7 @@ if(isset($_POST['submit_form'])){
 	$rate = $_POST['rate'];
 	$processing_category = $_POST['processing_category'];
 	$mail_dim = $_POST['mail_dim'];
-	$weights_measures = $_POST['weights_measures'];
+	//$weights_measures = $_POST['weights_measures'];
 	$permit = $_POST['permit'];
 	$bmeu = $_POST['bmeu'];
 	$based_on = $_POST['based_on'];
@@ -87,25 +87,25 @@ if(isset($_POST['submit_form'])){
 
 	
 
-	$sql = "INSERT INTO job_ticket(processed_by,client_name,project_name,ticket_date,due_date,created_by,special_instructions,materials_ordered,materials_expected,estimate_number,estimate_date,estimate_created_by,expected_quantity,records_total,job_status,mail_class,rate,processing_category,
-	mail_dim,weights_measures,permit,bmeu,based_on,non_profit_number) VALUES ('$processed_by','$client_name', '$project_name', '$ticket_date', '$due_date','$created_by','$special_instructions','$materials_ordered','$materials_expected','$estimate_number','$estimate_date','$estimate_created_by','$expected_quantity','$records_total','$job_status', '$mail_class', '$rate', '$processing_category', '$mail_dim', '$wm', '$permit', '$bmeu', '$based_on', '$non_profit_number')";
+	$sql = 'INSERT INTO job_ticket(processed_by,client_name,project_name,ticket_date,due_date,created_by,special_instructions,materials_ordered,materials_expected,estimate_number,estimate_date,estimate_created_by,expected_quantity,records_total,job_status,mail_class,rate,processing_category,
+	mail_dim,weights_measures,permit,bmeu,based_on,non_profit_number) VALUES ("' . $processed_by . '","' . $client_name . '", "' . $project_name . '", "' . $ticket_date . '", "' . $due_date . '","' . $created_by . '","' . $special_instructions . '","' . $materials_ordered . '","' . $materials_expected . '","' . $estimate_number . '","' . $estimate_date . '","' . $estimate_created_by . '","' . $expected_quantity . '","' . $records_total . '","' . $job_status . '", "' . $mail_class . '", "' . $rate . '", "' . $processing_category . '", "' . $mail_dim . '", "' . $wm . '", "' . $permit . '", "' . $bmeu . '", "' . $based_on . '", "' . $non_profit_number . '")';
 	$result = $conn->query($sql) or die('Error querying database 0.');
 
 
-	$result1 = mysqli_query($conn,"SELECT job_id from job_ticket WHERE client_name='$client_name' and project_name='$project_name' ORDER BY job_id DESC");
+	$result1 = mysqli_query($conn,'SELECT job_id from job_ticket WHERE client_name="' . $client_name . '" and project_name="' . $project_name . '" ORDER BY job_id DESC');
 	$row1 = $result1->fetch_assoc();
 	
 	$_SESSION["job_id"] = $row1["job_id"];
 	$job_id = $_SESSION["job_id"];
 
-	$sql2 = "INSERT INTO project_management(job_id,data_source,data_received,data_completed,dqr_sent) VALUES ('$job_id','$data_source','$data_received','$data_completed','$dqr_sent')";
+	$sql2 = 'INSERT INTO project_management(job_id,data_source,data_received,data_completed,dqr_sent) VALUES ("' . $job_id . '","' . $data_source . '","' . $data_received . '","' . $data_completed . '","' . $dqr_sent . '")';
 	$result3 = $conn->query($sql2) or die("error");
 
-	$sql3 = "INSERT INTO production(job_id,hold_postage,postage_paid,print_template,special_address ,delivery,tasks) VALUES ('$job_id', '$hold_postage', '$postage_paid', '$print_template','$special_address','$delivery','$tasks')";
+	$sql3 = 'INSERT INTO production(job_id,hold_postage,postage_paid,print_template,special_address ,delivery,tasks) VALUES ("' . $job_id . '", "' . $hold_postage . '", "' . $postage_paid . '", "' . $print_template . '","' . $special_address . '","' . $delivery . '","' . $tasks . '")';
 	$result4 = $conn->query($sql3) or die('Error querying database 3.');
 
-	$sql4 = "INSERT INTO customer_service(job_id,completed_date,data_hrs,gd_hrs,initialrec_count,manual,uncorrected,unverifiable,bs_foreigns,bs_exact,loose,
-	householded,basic, ncoa_errors,bs_ncoa,final_count,bs_domestic) VALUES ('$job_id','$completed_date','$data_hrs','$gd_hrs','$initialrec_count','$manual','$uncorrected','$unverifiable','$bs_foreigns','$bs_exact','$loose','$householded','$basic','$ncoa_errors','$bs_ncoa','$final_count','$bs_domestic' )";
+	$sql4 = 'INSERT INTO customer_service(job_id,completed_date,data_hrs,gd_hrs,initialrec_count,manual,uncorrected,unverifiable,bs_foreigns,bs_exact,loose,
+	householded,basic, ncoa_errors,bs_ncoa,final_count,bs_domestic) VALUES ("' . $job_id . '","' . $completed_date . '","' . $data_hrs . '","' . $gd_hrs . '","' . $initialrec_count . '","' . $manual . '","' . $uncorrected . '","' . $unverifiable . '","' . $bs_foreigns . '","' . $bs_exact . '","' . $loose . '","' . $householded . '","' . $basic . '","' . $ncoa_errors . '","' . $bs_ncoa . '","' . $final_count . '","' . $bs_domestic . '")';
 	$result5 = $conn->query($sql4) or die('Error querying database 4.');
 
 	$result_processed_by = mysqli_query($conn, "SELECT processed_by FROM job_ticket WHERE job_id = '$job_id'");

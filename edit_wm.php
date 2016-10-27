@@ -44,7 +44,7 @@ require ("connection.php");
 		$based_on = $_POST['based_on'];
 		$product_num = $_POST['product_num'];
 		echo $based_on . "<br>" . $product_num . "<br>";
-		$sql = "UPDATE materials SET material='$material',type='$type',vendor='$vendor',height='$height',weight='$weight',size='$size', based_on = '$based_on', product_num = '$product_num' WHERE material_id ='$term'";
+		$sql = 'UPDATE materials SET material="' . $material . '",type="' . $type . '",vendor="' . $vendor . '",height="' . $height . '",weight="' . $weight . '",size="' . $size . '", based_on = "' . $based_on . '", product_num = "' . $product_num . '" WHERE material_id ="' . $term . '"';
 		$result = $conn->query($sql) or die('Error querying database 5');
 		$sql6 = "INSERT INTO timestamp (user,time,job,a_p) VALUES ('$user_name', '$today','$job', '$a_p')";
 		$result7 = $conn->query($sql6) or die('Error querying database 5.');
