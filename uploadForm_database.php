@@ -33,7 +33,7 @@ for($i = 0; $i < count($array_names); $i++)
 
 for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 {
-		$sql = 'INSERT INTO sales (rep, quickbooks, full_name, title, phone, fax, web_address, business, address_line_1, address_line_2, city, state, zipcode, status, call_back_date, priority, date_added, 
+		$sql = 'INSERT INTO sales (rep, quickbooks, prefix, full_name, suffix, title, phone, fax, extension, web_address, business, address_line_1, address_line_2, address_line_3, city, state, zipcode, status, call_back_date, priority, date_added, 
 				mailing_list, pie_day, second_contact, cell_phone, alt_phone, home_phone, email1, email2, vertical1, vertical2, vertical3, source, notes, _2014_pie_day, Non_Profit_Card_08_2013, 
 				Commercial_Card_08_2013, USPS_Post_Office_Mailing_03_2014, Contractor_Small_Business_Select_Mailing_03_2014, Contractor_SB_Select_Mailing_04_2014, USPS_EDDM_Regs_brochure_Mailing_04_2014,
 				USPS_9Y9_EDDM_Marketing_Card, SEPT_2014_3_5Y11_CRST_Marketing_Card, Contractor_Mailing_2016, type) VALUES (';
