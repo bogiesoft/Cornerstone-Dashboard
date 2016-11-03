@@ -1,397 +1,249 @@
-<?php
-require ("header.php");
-?>
+<?php require("header.php"); ?>
+
 <style>
+.dataTables_wrapper .dt-buttons {
+  float:none;
+  text-align:right;
+}
+th { font-size: 12px; }
+td { font-size: 11px; }
+	div.header {
+			margin: 200px auto;
+			line-height:30px;
+			max-width:500px;
+	}
+	body {
+			background: #f7f7f7;
+			color: #333;
+			font: 90%/1.45em "Helvetica Neue",HelveticaNeue,Verdana,Arial,Helvetica,sans-serif;
+	}
 </style>
-<div class="dashboard-cont" style="padding-top:110px;">
+<script type="text/javascript" language="javascript" >
 
-	<div class="dashboard-detail">
-		<div class="newcontacts-tabs">
+	$(document).ready(function() {
+		var dataTable = $('#crm-table').DataTable( {
+			lengthMenu: [[25, 100, -1], [25, 100, "All"]],
+			pageLength: 25,
 
-			<div class="search-cont">
-				<div class="searchcont-detail">
-					<div class="search-boxleft">
-						<form id = "search_form" action="vendor_search.php" method="post" >
-							<label>Quick Search</label>
-							<input id="search" name="frmSearch" type="text" placeholder="Search for a specific client">
-						</form>
-					</div>
-					<div class="contacts-title">
-						<a id = 'advanced_search_button' class="pull-right" href="#" class="add_button" onclick = 'addField()'>Advanced Search</a>
-						<a id = 'show_saved_search' class="pull-right" class="add_button" onclick = 'showSavedSearch()' href = "#" style = "background: #ff5c33">Show Saved Search</a>
-						<form class = 'advanced_search_area' action = 'advanced_search_CRM.php' method = 'post'>
-							<input id = 'advanced_search_submit' name = 'advanced_search_submit' style = 'display: none; margin-right: 5%; margin-bottom: 5%; background-color: #000000; color: #ffffff' type = 'submit' value = "Search">
-							<input id = 'advanced_search_and_save' name = 'advanced_search_and_save' style = 'display: none; margin-bottom: 5%; background-color: #000000; color: #ffffff' type = 'submit' value = "Search and Save">
-							<input id = 'advanced_save' name = 'advanced_save' style = 'display: none; margin-bottom: 5%; margin-left: 5%; background-color: #000000; color: #ffffff' type = 'submit' value = "Save">
-							<input id = 'advanced_search_name' name = 'advanced_search_name' style = 'display: none; width: 200px; margin-left: 3%; margin-bottom: 3%' type = 'text' placeholder = 'Enter Saved Search Name'>
-						</form>
-					</div>
-					<div id="saved_search_div">
-						<table id="saved_search_table" style = 'display: none'>
-							<tbody>
-								<?php
-								$result = mysqli_query($conn, "SELECT * FROM saved_search WHERE table_type = 'CRM' ORDER BY search_date DESC LIMIT 10");
-								if (mysqli_num_rows($result) > 0) {
-							    // output data of each row
-									while($row = $result->fetch_assoc()) {
-										$search_id = $row["search_id"];
-										$field1=$row["field1"];
-										$value1=$row["value1"];
-										$field2=$row["field2"];
-										$value2=$row["value2"];
-										$field3=$row["field3"];
-										$value3=$row["value3"];
-										echo "<tr id = 'row" . $search_id . "'><td class='data-cell'><a href = 'advanced_search_CRM.php?field1=$field1&value1=$value1&field2=$field2&value2=$value2&field3=$field3&value3=$value3&search_id=$search_id'>". $row["search_name"]."</a></td><td><button id = '" . $search_id . "'><img src = 'images/x_button.png' width = '25' height = '25'></button></tr>";
-									}
-								} 
-								else {
-									echo "0 Saved Searches";
-								}
-								?>
-							</tbody>
-						</table>
-					</div>
+			dom: 'Blfrtip',
+			buttons: ['selectAll','selectNone',
+				{
+					extend: 'collection',
+	        text: 'Export Selected',
+	        buttons: [
+					{
+						extend: 'copy',
+						exportOptions: {
+						columns: ':visible:not(.not-exported)',
+						 modifier: { selected: true }
+						}
+					},{
+						extend: 'csv',
+						exportOptions: {
+						columns: ':visible:not(.not-exported)',
+						 modifier: { selected: true }
+						}
+					},{
+						extend: 'excel',
+						exportOptions: {
+						columns: ':visible:not(.not-exported)',
+						 modifier: { selected: true }
+						}
+					},{
+						extend: 'pdf',
+						exportOptions: {
+						columns: ':visible:not(.not-exported)',
+						 modifier: { selected: true }
+						}
+					},{
+						extend: 'print',
+						exportOptions: {
+						columns: ':visible:not(.not-exported)',
+						 modifier: { selected: true }
+						}
+					}
+				]
+      }],
+			select: {style: 'multi'},
 
-				</div><br>
-<?php
+			// "tableTools": {
+      //   "sSwfPath": "swf/copy_csv_xls_pdf.swf",  // set swf path
+			// 	"sRowSelect": "multi",
+			// 	"aButtons": [
+      //       "select_all",
+      //       "select_none",
+      //       {
+      //           "sExtends":    "collection",
+      //           "sButtonText": "Export",
+      //           "aButtons":    [ "csv", "xls", "pdf","print" ]
+      //       }
+      //   ]
+    	// },
+			"processing": true,
+			"serverSide": true,
+			"scrollX": true,
+			"bInfo": true,
+			"ajax":{
+				url :"server-side-CRM.php", // json datasource
+				type: "post",  // method  , by default get
+				error: function(){  // error handling
+					$(".crm-table-error").html("");
+					$("#crm-table").append('<tbody class="crm-table-error"><tr><th colspan="3">No data found in the server</th></tr></tbody>');
+					$("#crm-table_processing").css("display","none");
+				}
+			},
+			"columnDefs": [ {
+			    "targets": 0,
+			    "render": function ( data, type, row) {
+						/*$foo=array();
+						array_push($foo, row[0]);
+						array_push($foo, row[1]);
+						$str = serialize($foo);
+						$stren = urlencode($str); */
+						var image = [row[0],row[1]];
+						var serializedArray = JSON.stringify(image);
+						//var x = $.param(image);
+						//var res = encodeURIComponent(x);
+						alert(serializedArray);
+			      return '<a href="edit_client.php?client_info='+serializedArray+'">'+row[0]+'</a>';
+			    }
+			  } ]
 
-$result = mysqli_query($conn, "SELECT * FROM sales");
-
-echo " <div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
-echo "<tbody>";
-echo "<tr valign='top'><td colspan='2'><table id = 'crm_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'>
-<th class='maintable-thtwo data-header' data-name='job_id' data-index='0'>Client Name</th>
-<th class='maintable-thtwo data-header' data-name='client_name' data-index='1'>Business</th>
-<th class='maintable-thtwo data-header' data-name='address_line_1' data-index='2'>Address</th>
-<th class='maintable-thtwo data-header' data-name='estimate_number' data-index='3'>City</th>
-<th class='maintable-thtwo data-header' data-name='state' data-index='4'>State</th>
-<th class='maintable-thtwo data-header' data-name='project_name' data-index='5'>Zip Code</th>
-<th class='maintable-thtwo data-header' data-name='records_total' data-index='6'>Call Back Date</th>
-<th class='maintable-thtwo data-header' data-name='records_total' data-index='7'>Priority</th>
-<th class='maintable-thtwo data-header' data-name='title' data-index='8'>title</th>
-<th class='maintable-thtwo data-header' data-name='phone' data-index='9'>Phone</th>
-
-<th class='maintable-thtwo data-header' data-name='web_address' data-index='10'>Website</th>
-<th class='maintable-thtwo data-header' data-name='email1' data-index='11'>Email</th>
-
-<th class='maintable-thtwo data-header' data-name='records_total' data-index='12'>Vertical 1</th>
-<th class='maintable-thtwo data-header' data-name='records_total' data-index='13'>Vertical 2</th>
-<th class='maintable-thtwo data-header' data-name='records_total' data-index='14'>Vertical 3</th>
-</tr></thead><tbody>";
-
-if ($result->num_rows > 0) {
-    // output data of each row
-    while($row = $result->fetch_assoc()) {
-		$foo=array();
-		array_push($foo, $row['full_name']);
-		array_push($foo, $row['address_line_1']);
-		$str = serialize($foo);
-		$stren = urlencode($str);
-		echo "<tr><td class='data-cell'><a href = 'edit_client.php?client_info=$stren'>" .$row["full_name"]."</a></td><td class='data-cell'>".  $row["business"].
-		"</td><td class='data-cell'>". $row["address_line_1"].
-		"</td><td class='data-cell'>" . $row["city"] .
-		"</td><td class='data-cell'>". $row["state"]. 
-		"</td><td class='data-cell'>". $row["zipcode"]. 
-		"</td><td class='data-cell'>". $row["call_back_date"].
-		"</td><td class='data-cell'>". $row["priority"].
-		"</td><td class='data-cell'>". $row["title"].
-		"</td><td class='data-cell'>". $row["phone"]. 
-		"</td><td class='data-cell'>". $row["web_address"].
-		"</td><td class='data-cell'>". $row["email1"].
-		"</td><td class='data-cell'>". $row["vertical1"].
-		"</td><td class='data-cell'>". $row["vertical2"].
-		"</td><td class='data-cell'>". $row["vertical3"].
-		"</td></tr>";
-    }
-	echo "</tbody></table></td></tr></tbody></table></div>";
-} else {
-    echo "0 results";
-}
-?>
-<div class="allcontacts-breadcrumbs">
-	<div class="allcontacts-breadcrumbsleft pull-left page-control">
-		<nav>
-			<ul class="pagination" id = "pag">
-				<li id = 'prev_button' class = 'previous' style = 'display:none;' onclick = "prevPage();">Prev</li>
-			</ul>
-		</nav>
-	</div>
-	<div class="items-per-page-cont pull-right">
-		<label>Jobs Per Page</label>
-		<select class="per-page-val" id = "item_count" onchange = "changeCount()">
-			<option value="10">10</option>
-			<option value="25">25</option>
-			<option value="50">50</option>
-			<option value="100">100</option>
-		</select>
-	</div>
-</div>
-</div>
-</div>
-
-</div>
-</div>
-
-<!-- script for making table sortable -->
-<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-<script src="sorttable.js"></script>
-<script type="text/javascript" src="jquery-latest.js"></script> 
-<script type="text/javascript" src="jquery.tablesorter.js"></script> 
-<script>
-
-var fieldCount = 1;
-
-$("#Jobsearch").keyup(function(){
-        _this = this;
-        // Show only matching TR, hide rest of them
-        $.each($("#client_table tbody tr"), function() {
-            if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
-               $(this).hide();
-            else
-               $(this).show();                
-        });
-    }); 
-$(document).ready(function() 
-    { 
-        $("#client_table").tablesorter(); 
-		pageCreator();
-    } 
-);
-
-function showSavedSearch(){
-	if(document.getElementById('show_saved_search').innerHTML == "Show Saved Search"){
-		document.getElementById('saved_search_table').style.display = "block";
-		document.getElementById('show_saved_search').innerHTML = "Hide Saved Search";
-	}
-	else{
-		document.getElementById('saved_search_table').style.display = "none";
-		document.getElementById('show_saved_search').innerHTML = "Show Saved Search";
-	}
-}
-
-function addField(){
-	     if(fieldCount <= 3){
-			$(".advanced_search_area").append("<div class = 'field" + fieldCount + "'><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeField('.field" + fieldCount + "')><input style = 'margin-bottom: 4%' name = 'fieldArea" + fieldCount + "' type = 'text' placeholder = 'Find'>Where<select style = 'width: 125px; font-size: 13px' name = 'select" + fieldCount 
-			+ "'><option selected = 'selected' value = 'full_name'>Client Name</option><option value = 'business'>Business</option><option value = 'address_line_1'>Address</option><option value = 'city'>City</option><option value = 'state'>State</option><option value = 'zipcode'>Zipcode</option><option value = 'call_back_date'>Call back date</option><option value = 'priority'>Priority</option><option value = 'title'>Title</option>" + 
-			"<option value = 'phone'>Phone</option><option value = 'web_address'>Website</option><option value = 'email1'>Email</option><option value = 'vertical1'>Vertical1</option><option value = 'vertical2'>Vertical2</option><option value = 'vertical3'>Vertical3</option></select></div>");
-			if(fieldCount == 1){
-				document.getElementById("advanced_search_button").innerHTML = "Add Field";
-				document.getElementById("advanced_search_submit").style.display = "inline";
-				document.getElementById("advanced_search_and_save").style.display = "inline";
-				document.getElementById("advanced_search_name").style.display = "inline";
-				document.getElementById("advanced_save").style.display = "inline";
-			}
-			
-			fieldCount++;
-		 }
-}
-function removeField(x){
-	$(x).remove();
-	fieldCount--;
-	if(fieldCount == 1){
-		document.getElementById("advanced_search_button").innerHTML = "Advanced Search";
-		document.getElementById("advanced_search_submit").style.display = "none";
-		document.getElementById("advanced_search_and_save").style.display = "none";
-		document.getElementById("advanced_search_name").style.display = "none";
-		document.getElementById("advanced_save").style.display = "none";
-	}
-}
-function changeTab(evt, cityName) {
-    // Declare all variables
-    var i, tabcontent, tablinks;
-
-    // Get all elements with class="tabcontent" and hide them
-    tabcontent = document.getElementsByClassName("tab-content");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-    }
-
-    // Get all elements with class="tablinks" and remove the class "active"
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-
-    // Show the current tab, and add an "active" class to the link that opened the tab
-    document.getElementById(cityName).style.display = "block";
-    evt.currentTarget.className += " active";
-}
-
-var numPerPage = 10;
-var subtractValue = 3;
-var prevSubValue = 5;
-
-$("#search").keyup(function(){
-        _this = this;
-        // Show only matching TR, hide rest of them
-        $.each($("#crm_table tbody tr"), function() {
-            if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
-               $(this).hide();
-            else
-               $(this).show();                
-        });
-    }); 
-	
-$(document).ready(function() 
-    { 
-        $("#crm_table").tablesorter(); 
-		pageCreator();
-    } 
-); 
-function pageCreator(){
-	$('table.table-striped.main-table.contacts-list').each(function() {
-		var currentPage = 0;
-		numPerPage = parseInt(document.getElementById('item_count').value);
-		var $table = $(this);
-		var $ul = $('ul.pagination');
-		$table.bind('repaginate', function() {
-			$table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
 		});
-		$table.trigger('repaginate');
-		var numRows = $table.find('tbody tr').length;
-		var numPages = Math.ceil(numRows / numPerPage);
-		var count = 1;
-		for (var page = 0; page < numPages; page++) {
-			var i = $('<li id = id' + count + ' class = "current"></li>').text(page + 1).bind('click', {
-				newPage: page
-			}, function(event) {
-				currentPage = event.data['newPage'];
-				$table.trigger('repaginate');
-				$(this).addClass('clickable').siblings().removeClass('clickable');
-			}).appendTo($ul).addClass('current');
-			count = count + 1;
-		}
-		if(numPages > 5){
-			$("<li id = 'next_button' class = 'next' onclick = nextPage();>Next</li>").appendTo($ul);
+
+
+		$('.search-input-text').on( 'keyup click', function () {   // for text boxes
+			var i =$(this).attr('data-column');  // getting column index
+			var v =$(this).val();  // getting search input value
+			dataTable.columns(i).search(v).draw();
+		});
+	$('.search-input-select').on( 'change', function () {   // for select box
+			var i =$(this).attr('data-column');
+			var v =$(this).val();
+			dataTable.columns(i).search(v).draw();
+		});
+
+// //If any row selected change the counter of "Row selected".
+		$('#crm-table tbody').on( 'click', 'tr', function () {
+					updateCounter();
+		});
+
+//Select All button and select none button
+	$('.buttons-select-all, .buttons-select-none').on( 'click', function () {
+			updateCounter();
+		});
+
+		function updateCounter(){
+			var len = dataTable.rows('.selected').data().length;
+			if(len>0){
+				$("#general i .counter").text('('+len+')');
+			}
+			else{$("#general i .counter").text('');}
 		}
 	});
-	document.getElementById("id1").className = "current clickable";
-	var ul = document.getElementById("pag");
-	
-	if(ul.childNodes.length > 5){
-		for(var i = 6; i < ul.childNodes.length - 1; i++){
-			ul.children[i].style.display = "none";
-			document.getElementById("next_button").style.display = "inline";
-		}
-	}
-}
-function changeCount(){
-	numPerPage = parseInt(document.getElementById('item_count').value);
-	$('#pag').empty();
-	$("<li id = 'prev_button' class = 'previous' style = 'display:none;' onclick = prevPage();>Prev</li>").appendTo("#pag");
-	subtractValue = 1;
-	prevSubValue = 2;
-	pageCreator();
-}
-function prevPage(){
-	document.getElementById("next_button").style.display = "inline";
-	var ul = document.getElementById("pag");
-	var length1 = ul.childNodes.length - prevSubValue;
-	var oldDisplayIndex = 0;
-	for(var i = length1; i >= 1; i--){
-		if(ul.children[i].style.display == "inline"){
-			oldDisplayIndex = i;
-			break;
-		}
-	}
-	
-	var newDisplayIndex = 0;
-	for(var i = oldDisplayIndex; i >= 1; i--){
-		newDisplayIndex = i;
-		if(ul.children[i].style.display == "none"){
-			break;
-		}
-		else{
-			ul.children[i].style.display = "none";
-		}
-	}
-	
-	var count = 0;
-	var lastIndex = 0;
-	for(var i = newDisplayIndex; i >= 1; i--){
-		lastIndex = i;
-		if(count == 5){
-			break;
-		}
-		else{
-			//alert("Hi");
-			ul.children[i].style.display = "inline";
-			count = count + 1;
-		}
-	}
-	if(lastIndex == 1){
-		document.getElementById("prev_button").style.display = "none";
-	}
-}
-function nextPage(){
-	document.getElementById("prev_button").style.display = "inline";
-	var ul = document.getElementById("pag");
-	
-	var displayCount = 0;
-	var lastIndexCheck = 0;
-	for(var i = 1; i < ul.childNodes.length - 1; i++){
-		if(ul.children[i].style.display != "none"){
-			displayCount++;
-		}
-		lastIndexCheck = i;
-		if(displayCount == 5){
-			break;
-		}
-	}
-	if(lastIndexCheck != ul.childNodes.length - 2){
-		var oldDisplayIndex = 0;
-		for(var i = 1; i < ul.childNodes.length - 1; i++){
-			if(ul.children[i].style.display != "none"){
-				oldDisplayIndex = i;
-				break;
-			}
-		}
-		
-		var newDisplayIndex = 0;
-		for(var i = oldDisplayIndex; i < ul.childNodes.length - 1; i++){
-			if(ul.children[i].style.display == "none"){
-				newDisplayIndex = i;
-				break;
-			}
-			else{
-				ul.children[i].style.display = "none";
-			}
-		}
-		
-		var count = 0;
-		var lastIndex = 0;
-		for(var i = newDisplayIndex; i < (ul.childNodes.length - subtractValue); i++){
-			if(count == 5){
-				break;
-			}
-			else{
-				ul.children[i].style.display = "inline";
-				count = count + 1;
-				lastIndex = i;
-			}
-			if(i == ul.childNodes.length){
-				break;
-			}
-		}
-		if(count < 5 || ul.children[lastIndex + 1].className == "next"){
-			document.getElementById("next_button").style.display = "none";
-		}
-	}
-}
-$("button").click(function(){
-    var del_id = $(this).attr("id");
-    var info = del_id;
-	if(confirm("Are you sure you want to delete"))
-	$.ajax({
-		url: 'delete_search.php',
-		type: 'POST',
-		data: {
-			id: info
-		},
-		success: function(){
-			document.getElementById("row" + del_id).style.display = "none";
-		}
-	});
-	return false;
-});
+
+
+
 </script>
+
+<div class="dashboard-cont" style="padding-top:110px;">
+	<div class="contacts-title">
+		<h1 class="pull-left">CRM</h1>
+		<a title="Filter Category" id="general" class=""><i>Record selected <small class="counter"></small></i></a>
+		<a class="pull-right" href="add_client.php" class="add_button">Upload</a>
+	</div>
+<div class="dashboard-detail">
+
+			<div class="contacts-title">
+				<a id = 'view_marked' name = 'view_marked' class="pull-right" class="add_button" href = "#" style = "background: #ff5c33">View Marked</a>
+				<a id = 'advanced_search_button' class="pull-right" href="#" class="add_button" onclick = 'addField()'>Advanced Search</a>
+				<a id = 'show_saved_search' class="pull-right" class="add_button" onclick = 'showSavedSearch()' href = "#" style = "background: #ff5c33">Show Saved Search</a>
+				<form class = 'advanced_search_area' action = 'advanced_search_CRM.php' method = 'post'>
+					<input id = 'advanced_search_submit' name = 'advanced_search_submit' style = 'display: none; margin-right: 5%; margin-bottom: 5%; background-color: #000000; color: #ffffff' type = 'submit' value = "Search">
+					<input id = 'advanced_search_and_save' name = 'advanced_search_and_save' style = 'display: none; margin-bottom: 5%; background-color: #000000; color: #ffffff' type = 'submit' value = "Search and Save">
+					<input id = 'advanced_save' name = 'advanced_save' style = 'display: none; margin-bottom: 5%; margin-left: 5%; background-color: #000000; color: #ffffff' type = 'submit' value = "Save">
+					<input id = 'advanced_search_name' name = 'advanced_search_name' style = 'display: none; width: 200px; margin-left: 3%; margin-bottom: 3%' type = 'text' placeholder = 'Enter Saved Search Name'>
+				</form>
+			</div>
+			<div id="saved_search_div">
+				<table id="saved_search_table" style = 'display: none'>
+					<tbody>
+						<?php
+						$result = mysqli_query($conn, "SELECT * FROM saved_search WHERE table_type = 'CRM' ORDER BY search_date DESC LIMIT 10");
+						if (mysqli_num_rows($result) > 0) {
+							// output data of each row
+							while($row = $result->fetch_assoc()) {
+								$search_id = $row["search_id"];
+								$field1=$row["field1"];
+								$value1=$row["value1"];
+								$field2=$row["field2"];
+								$value2=$row["value2"];
+								$field3=$row["field3"];
+								$value3=$row["value3"];
+								echo "<tr id = 'row" . $search_id . "'><td class='data-cell'><a href = 'advanced_search_CRM.php?field1=$field1&value1=$value1&field2=$field2&value2=$value2&field3=$field3&value3=$value3&search_id=$search_id'>". $row["search_name"]."</a></td><td><button id = '" . $search_id . "'><img src = 'images/x_button.png' width = '25' height = '25'></button></tr>";
+							}
+						}
+						else {
+							echo "0 Saved Searches";
+						}
+						?>
+					</tbody>
+				</table>
+			</div>
+</div>
+<div id = 'allcontacts-table' class='allcontacts-table'>
+
+	<table id="crm-table"  cellpadding="0" cellspacing="0" border="0" class="display" width="100%">
+			<thead>
+				<tr>
+					<th>Client Name</th>
+					<th>Business</th>
+					<th>Address</th>
+					<th>City</th>
+					<th>State</th>
+					<th>Zip Code</th>
+					<th>Call Back Date</th>
+					<th>Priority</th>
+					<th>Title</th>
+					<th>Phone</th>
+					<th>Website</th>
+					<th>Email</th>
+					<th>Vertical 1</th>
+					<th>Vertical 2</th>
+					<th>Vertical 3</th>
+				</tr>
+			</thead>
+			<thead>
+			<tr>
+				<td><input type="text" data-column="0"  placeholder = "Search Client Name" class="search-input-text"></td>
+	      <td><input type="text" data-column="1"  placeholder = "Search Business" class="search-input-text"></td>
+				<td><input type="text" data-column="2"  placeholder = "Search Address" class="search-input-text"></td>
+				<td><input type="text" data-column="3"  placeholder = "Search City" class="search-input-text"></td>
+				<td><input type="text" data-column="4"  placeholder = "Search State" class="search-input-text"></td>
+				<td><input type="text" data-column="5"  placeholder = "Search Zip Code" class="search-input-text"></td>
+				<td><input type="text" data-column="6"  placeholder = "Search Call Back Date" class="search-input-text"></td>
+
+				<td>
+            <select data-column="7"  class="search-input-select">
+                <option value="">(Search Priority)</option>
+								<option value="HIGH">HIGH</option>
+                <option value="CALL">CALL</option>
+                <option value="CALL BACK">CALL-BACK</option>
+								<option value="MUST CALL">MUST CALL</option>
+								<option value="LOW">LOW</option>
+            </select>
+        </td>
+				<td><input type="text" data-column="8"  placeholder = "Search Title" class="search-input-text"></td>
+				<td><input type="text" data-column="9"  placeholder = "Search Phone" class="search-input-text"></td>
+				<td><input type="text" data-column="10"  placeholder = "Search Website" class="search-input-text"></td>
+				<td><input type="text" data-column="11"  placeholder = "Search Email" class="search-input-text"></td>
+				<td><input type="text" data-column="12"  placeholder = "Search Vertical1" class="search-input-text"></td>
+				<td><input type="text" data-column="13"  placeholder = "Search Vertical2" class="search-input-text"></td>
+				<td><input type="text" data-column="14"  placeholder = "Search Vertical3" class="search-input-text"></td>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+</div>
+</div>
