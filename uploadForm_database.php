@@ -74,7 +74,7 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 				if(count($call_back_date) != 3){ //checks if date has length 3 for day, month, and year
 					die("error in row " . ($i + 1) . " column header " . $array_names[$j] . ": Date might be missing day, month, or year(eg: 1/23/2016)");
 				}
-				else{
+				else{ //checks if numerical characters are in date
 					for($ii = 0; $ii < count($call_back_date); $ii++){
 						if(!is_numeric($call_back_date[$ii])){
 							die("error in row " . ($i + 1) . " column header " . $array_names[$j] . ": Date might have non numerical character(eg: 1/23/2016)");
@@ -85,6 +85,12 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 				$input = date("Y-m-d", $timeConversion);
 				
 			}
+			//adds current date for date_added field
+			if($array_names[$j] == "date_added"){
+				date_default_timezone_set('America/New_York');
+				$today = date("Y-m-d");
+				$input = $today;
+			}
 			if($array_names[$j] == "full_name" && $array_indexes[$j] != -1){
 				$full_name = $input;
 			}
@@ -92,28 +98,30 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 				$address_line_1 = $input;
 			}
 			
-			
+			//creates UPDATE and INSERT statements similtaneously
+			//For UPDATE string, excludes the full_name and address_line_1 fields because they are keys
+			//Excludes date_added because this field can't be changed once added to the table
 			if($array_indexes[$j] != -1){
 				$sql = $sql . '"' . $input . '",';
-				if($array_names[$j] != "full_name" && $array_names[$j] != "address_line_1"){
+				if($array_names[$j] != "full_name" && $array_names[$j] != "address_line_1" && $array_names[$j] != "date_added"){
 					$sql2 = $sql2 . $array_names[$j] . ' = "' . $input . '", ';
 				}
 			}
 			else if($array_indexes[$j] != -1 && $j == count($array_indexes) - 1){
 				$sql = $sql . $input . ')';
-				if($array_names[$j] != "full_name" && $array_names[$j] != "address_line_1"){
+				if($array_names[$j] != "full_name" && $array_names[$j] != "address_line_1" && $array_names[$j] != "date_added"){
 					$sql2 = $sql2 . $array_names[$j] . ' = "' . $input . '" WHERE full_name = "' . $full_name . '" AND address_line_1 = "' . $address_line_1 . '"';
 				}
 			}
 			else if($array_indexes[$j] == -1 && $j != count($array_indexes) - 1){
 				$sql = $sql . "' ',";
-				if($array_names[$j] != "full_name" && $array_names[$j] != "address_line_1"){
+				if($array_names[$j] != "full_name" && $array_names[$j] != "address_line_1" && $array_names[$j] != "date_added"){
 					$sql2 = $sql2 . $array_names[$j] . " = ' ', ";
 				}
 			}
 			else{
 				$sql = $sql . "'Prospect')";
-				if($array_names[$j] != "full_name" && $array_names[$j] != "address_line_1"){
+				if($array_names[$j] != "full_name" && $array_names[$j] != "address_line_1" && $array_names[$j] != "date_added"){
 					$sql2 = $sql2 . $array_names[$j] . " = ' ' WHERE full_name = '$full_name' AND address_line_1 = '$address_line_1'";
 				}
 			}
@@ -130,6 +138,10 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 		}
 
 }
-
+$user_name = $_SESSION['user'];
+date_default_timezone_set('America/New_York');
+$today = date("Y-m-d G:i:s");
+$a_p = date("A");
+$job = "Uploaded to sales ";
 header("location: uploadForm.php");
 ?>
