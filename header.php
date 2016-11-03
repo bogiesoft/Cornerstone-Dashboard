@@ -1,4 +1,4 @@
-<?php 
+<?php
 require('head.php');
 require('sidebar.php');
 require("connection.php");
@@ -9,7 +9,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
-} 
+}
 
 $sql = "SELECT title FROM users WHERE user = '$temp'";
 $result = mysqli_query($conn, $sql);
@@ -28,6 +28,7 @@ $_SESSION['title'] = $title;
 			<li><a href="production.php">PRODUCTION</a></li>
 			<li><a href="project_management.php">PROJECT MANAGEMENT</a></li>
 			<li><a href="sales.php">SALES</a></li>
+      <li><a href="CRM.php">CRM</a></li>
 		</ul>
 		</div>
 			<div class="righttop">
