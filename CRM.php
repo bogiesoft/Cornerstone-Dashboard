@@ -95,16 +95,8 @@ td { font-size: 11px; }
 			"columnDefs": [ {
 			    "targets": 0,
 			    "render": function ( data, type, row) {
-						/*$foo=array();
-						array_push($foo, row[0]);
-						array_push($foo, row[1]);
-						$str = serialize($foo);
-						$stren = urlencode($str); */
 						var image = [row[0],row[1]];
 						var serializedArray = JSON.stringify(image);
-						//var x = $.param(image);
-						//var res = encodeURIComponent(x);
-						alert(serializedArray);
 			      return '<a href="edit_client.php?client_info='+serializedArray+'">'+row[0]+'</a>';
 			    }
 			  } ]
@@ -150,7 +142,7 @@ td { font-size: 11px; }
 	<div class="contacts-title">
 		<h1 class="pull-left">CRM</h1>
 		<a title="Filter Category" id="general" class=""><i>Record selected <small class="counter"></small></i></a>
-		<a class="pull-right" href="add_client.php" class="add_button">Upload</a>
+		<a class="pull-right" href="uploadForm.php" class="add_button">Upload</a>
 	</div>
 <div class="dashboard-detail">
 

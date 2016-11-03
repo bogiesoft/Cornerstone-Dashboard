@@ -1,8 +1,8 @@
 <?php
+session_start();
 require('head.php');
 require('sidebar.php');
 require("connection.php");
-session_start();
 $temp = $_SESSION["user"];
 
 $conn = new mysqli($servername, $username, $password, $dbname);
