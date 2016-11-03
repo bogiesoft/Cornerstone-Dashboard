@@ -104,7 +104,7 @@ require ("header.php");
 
 <?php
 
-$result = mysqli_query($conn, "SELECT * FROM sales LIMIT 500");
+$result = mysqli_query($conn, "SELECT * FROM sales");
 
 echo " <div id = 'allcontacts-table' class='allcontacts-table'><table name = 'tableCSV' id = 'tableCSV' border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
 echo "<tbody>";
@@ -166,6 +166,7 @@ if ($result->num_rows > 0) {
 } else {
     echo "0 results";
 }
+
 ?>
 
 <div class="allcontacts-breadcrumbs">
