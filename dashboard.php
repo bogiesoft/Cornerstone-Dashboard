@@ -56,8 +56,8 @@ echo "<br><br><h4 style = 'color: #ffffff';>Reminders</h4>";
 if ($result->num_rows > 0) {
 	while($row = $result->fetch_assoc()) {
         echo  $row["text"]. "<br>";
-    } 
-} 
+    }
+}
 $conn->close();
 
 //exit();
@@ -71,7 +71,7 @@ $conn->close();
 		<div class="dashboardbox-title"><h2><?php echo "Sales Estimates and Clients Added: " . $currentDate_display; ?></h2></div>
 		<?php
 		require ("connection.php");
-		
+
 		$result1=mysqli_query($conn,"SELECT * FROM job_ticket WHERE estimate_number != 0  ");
 		$num_rows = mysqli_num_rows($result1);
 
@@ -79,9 +79,9 @@ $conn->close();
 		$num_rows2 = mysqli_num_rows($result2);
 
 		$result3=mysqli_query($conn, "SELECT * FROM users WHERE department = 'Project Management'");
-		
+
 		$result5=mysqli_query($conn, "SELECT * FROM users WHERE department = 'Production'");
-		
+
 		$count_prod = 0;
 		while($row5 = $result5->fetch_assoc()){
 			$temp = $row5['user'];
@@ -94,8 +94,8 @@ $conn->close();
 		$num_rows7 = mysqli_num_rows($result7);
 
 		//$result8=mysqli_query($conn, "SELECT * FROM archive_jobs WHERE status = 'Closed'");
-		//$num_rows8 = mysqli_num_rows($result8);	
-		
+		//$num_rows8 = mysqli_num_rows($result8);
+
 
 		?>
 		<?php
@@ -113,7 +113,7 @@ $conn->close();
 				array_push($clients_added_monthly, $clients_added);
 				$count = $count + 1;
 				$currentMonth = $currentMonth - 1;
-				
+
 				if($currentMonth == 0){
 					$currentMonth = 12;
 					$currentYear = $currentYear - 1;
@@ -123,11 +123,11 @@ $conn->close();
 				}
 			}
 		?>
-		
+
 		<div style="width: 70%; ">
 			<canvas id="canvas_sales" height="315" width="700"></canvas>
 		</div>
-		
+
 		<!--<h3>Estimates given: <span><?php echo "$num_rows"; ?></span></h3>!-->
 		<!--<h4>Job Tickets in Process: <span><?php echo "$num_rows2"; ?></span></h4> !-->
 	</div>
@@ -136,7 +136,7 @@ $conn->close();
 		<?php
 			require('connection.php');
 			while($row3 = $result3->fetch_assoc()){
-				
+
 				$temp = $row3['user'];
 				$result4 = mysqli_query($conn, "SELECT * FROM job_ticket WHERE processed_by = '$temp'");
 				$num_rows4 = mysqli_num_rows($result4);
@@ -159,9 +159,9 @@ $conn->close();
 		<div class="dashboardbox-title"><h2>Weekly Production</h2></div>
 		<h5>Jobs in Production: <span><?php echo "$count_prod \n"; ?></span></h5><br>
 		<h5>Total Manhours:<span id = "manhours"></span></h5>
-		
+
 		<?php
-			
+
 			$result_prod_users = mysqli_query($conn, "SELECT * FROM users WHERE department = 'Production'");
 			$sql_prod_jobs = "";
 			$count = 1;
@@ -173,17 +173,17 @@ $conn->close();
 				else{
 					$sql_prod_jobs = $sql_prod_jobs . "UNION SELECT * FROM job_ticket WHERE processed_by = '$temp'";
 				}
-				
+
 				$count = $count + 1;
 			}
-			
+
 			$records_total_array = array();
 			$result_mail_data_prod = mysqli_query($conn, $sql_prod_jobs) or die("error 1");
-			
+
 			while($row_mail_data_prod = $result_mail_data_prod->fetch_assoc()){ //all records total found
 				array_push($records_total_array, $row_mail_data_prod['records_total']);
 			}
-			
+
 			$result_mail_data_prod = mysqli_query($conn, $sql_prod_jobs) or die("error 2");
 			$sql_prod_tasks = "";
 			$count = 1;
@@ -195,17 +195,17 @@ $conn->close();
 				else{
 					$sql_prod_tasks = $sql_prod_tasks . "UNION SELECT * FROM production WHERE job_id = '$temp'";
 				}
-				
+
 				$count = $count + 1;
 			}
-			
+
 			$result_tasks = null;
-			
+
 			if($sql_prod_tasks != ""){
 				$result_tasks = mysqli_query($conn, $sql_prod_tasks) or die("error 3");
 			}
 			$index = 0;
-			
+
 			//calculate hours
 			if($result_tasks != null){
 				while($row_tasks = $result_tasks->fetch_assoc()){
@@ -228,34 +228,34 @@ $conn->close();
 									if($time_unit_array[$i] == "hr."){
 										$add_hours = $records_total / (int)$records_per_array[$i] * (int)$time_number_array[$i] / (int)$people_array[$i];
 										$hours = $hours + $add_hours;
-												
+
 									}
 									else if($time_unit_array[$i] == "min."){
-												
+
 										$add_hours = $records_total / (int)$records_per_array[$i] * (int)$time_number_array[$i] / 60 / (int)$people_array[$i];
 										$hours = $hours + $add_hours;
-												
+
 									}
 									else if($time_unit_array[$i] == "sec."){
-												
-												
+
+
 										$add_hours = $records_total / (int)$records_per_array[$i] * (int)$time_number_array[$i] / 3600 / (int)$people_array[$i];
 										$hours = $hours + $add_hours;
-												
+
 									}
 								}
 							}
 						}
 					}
-					
+
 					$index = $index + 1;
 				}
 			}
-			
+
 			$hours = (int)$hours;
-			
+
 		?>
-		
+
 		<div id="canvas-holder" style = "width: 40%; margin-left: 185px; margin-top: -115px">
 			<canvas id="canvas_prod" width="500" height="500"/>
 		</div>
@@ -277,7 +277,7 @@ $conn->close();
 				$jobs_invoiced = mysqli_num_rows($result_invoiced_jobs) + mysqli_num_rows($result_current_invoiced);
 				array_push($jobs_closed_monthly, $jobs_closed);
 				array_push($jobs_invoiced_monthly, $jobs_invoiced);
-				
+
 				if($currentMonth == 0){
 					$currentMonth = 12;
 					$currentYear = $currentYear - 1;
@@ -307,25 +307,25 @@ echo "<tr valign='top'><td colspan='2'><table border='0' cellspacing='0' cellpad
 
 if ($result9->num_rows > 0) {
     // output data of each row
-	
+
     while($row9 = $result9->fetch_assoc()) {
-		
+
 		$foo=$row9['job_id'];
-		
+
 		$result8 = mysqli_query($conn,"SELECT job_id,client_name,project_name,due_date,job_status FROM job_ticket WHERE job_id = '$foo'");
 		$row8 = $result8->fetch_assoc();
 		$user_name = $row9['processed_by'];
-		
+
 		$sql = "SELECT first_name, last_name FROM users WHERE user = '$user_name'";
 		$result10 = mysqli_query($conn, $sql) or die("error");
-		
+
 		$name = "";
-		
+
 		if($result10->num_rows > 0){
 			$row10 = $result10->fetch_assoc();
 			$name = $row10['first_name'] . ' ' . $row10['last_name'];
 		}
-		
+
 		echo "<tr><td><a href='edit_job.php?job_id=$foo'>".$row8["job_id"]."</a></td><td>".  $row8["client_name"]."</td><td>". $row8["project_name"]. "</td><td>". $row8["due_date"]. "</td><td>". $row8["job_status"]."</td><td>". $row9["records_total"]."</td><td>". $name."</td></tr>";
     }
 	echo "</tbody></table></td></tr></tbody></table></div>";
@@ -350,7 +350,7 @@ if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
 		$time = strtotime($row['time']);
 		$myFormatForView = date("M d, Y g:i", $time);
-        echo "<tr><td>" . $row['user'] . "</td><td>" . $row['job'] ."</td><td>".$myFormatForView. " ". $row['a_p']. "</td></tr>"; 
+        echo "<tr><td>" . $row['user'] . "</td><td>" . $row['job'] ."</td><td>".$myFormatForView. " ". $row['a_p']. "</td></tr>";
     }
 	echo "</tbody></table></td></tr></tbody></table></div>";
 } else {
@@ -376,7 +376,7 @@ function hide(target) {
 var firstTime = localStorage.getItem("first_time");
 
 $(document).ready(function(e)
-{		
+{
 	if (!sessionStorage.alreadyClicked) {
 		$('#popup').animate({"top":"50%","marginTop":"-200px"},1000);
 		sessionStorage.alreadyClicked = 1;
@@ -428,7 +428,7 @@ while(count < 5){
 	if(currentMonth == 11){
 		monthLabels[count] = "Dec";
 	}
-	
+
 	count++;
 	currentMonth = currentMonth - 1;
 }
@@ -496,8 +496,8 @@ var jobs_invoiced_monthly = <?php echo json_encode($jobs_invoiced_monthly); ?>;
 		]
 
 	}
-	
-	
+
+
 	var hours = <?php echo json_encode($hours); ?>;
 	if(hours > 40){
 		document.getElementById("manhours").innerHTML = " 40+";
@@ -508,7 +508,7 @@ var jobs_invoiced_monthly = <?php echo json_encode($jobs_invoiced_monthly); ?>;
 	var free_hours = 40 - hours;
 	var manhours_color = "#ffffff";
 	var manhours_highlight = "#ffffff";
-	
+
 	if(hours <= 15){
 		manhours_color = "#80ff80";
 		manhours_highlight = "#99ff99";
@@ -526,7 +526,7 @@ var jobs_invoiced_monthly = <?php echo json_encode($jobs_invoiced_monthly); ?>;
 		manhours_highlight = "#e63900";
 		free_hours = 0;
 	}
-	
+
 	var doughnutData = [
 				{
 					value: free_hours,
