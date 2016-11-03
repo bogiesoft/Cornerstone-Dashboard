@@ -47,6 +47,7 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 			//quotes are read by replacing with \"
 			if($array_indexes[$j] != -1){
 				$input = str_replace('"', '\"', $data[$i][$array_indexes[$j]]);
+				$input = str_replace("'", "\'", $input);
 			}
 			//check if phone number and fax number input is correct
 			if($input != "" && (strlen($input) != 10 || preg_match("/[a-z]/i", $input)) && ($array_names[$j] == "phone" || $array_names[$j] == "fax")){
@@ -66,7 +67,24 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 			if($input != "" && preg_match("/[a-z]/i", $input) && $array_names[$j] == "extension"){
 				die("error in row " . ($i + 1) . " column header " . $array_names[$j] . ": Extension number not valid(eg: 123)");
 			}
-			
+			//check if call back date input field is readable
+			if($array_names[$j] == "call_back_date" && $input != ""){
+				echo $input . "<br>";
+				$call_back_date = explode("/", $input);
+				if(count($call_back_date) != 3){ //checks if date has length 3 for day, month, and year
+					die("error in row " . ($i + 1) . " column header " . $array_names[$j] . ": Date might be missing day, month, or year(eg: 1/23/2016)");
+				}
+				else{
+					for($ii = 0; $ii < count($call_back_date); $ii++){
+						if(!is_numeric($call_back_date[$ii])){
+							die("error in row " . ($i + 1) . " column header " . $array_names[$j] . ": Date might have non numerical character(eg: 1/23/2016)");
+						}
+					}
+				}
+				$timeConversion = strtotime($input);
+				$input = date("Y-m-d", $timeConversion);
+				
+			}
 			if($array_names[$j] == "full_name" && $array_indexes[$j] != -1){
 				$full_name = $input;
 			}
@@ -106,7 +124,6 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 		$rows = mysqli_num_rows($result_match);
 		if($rows == 0){
 			mysqli_query($conn, $sql) or die("error");
-			echo $sql . "<br><br>";
 		}
 		else{
 			mysqli_query($conn, $sql2) or die("error");
