@@ -1,162 +1,386 @@
 <?php require("header.php"); ?>
 
 <style>
-.dataTables_wrapper .dt-buttons {
-  float:none;
-  text-align:right;
-}
-th { font-size: 12px; }
-td { font-size: 11px; }
-	div.header {
-			margin: 200px auto;
-			line-height:30px;
-			max-width:500px;
-	}
-	body {
-			background: #f7f7f7;
-			color: #333;
-			font: 90%/1.45em "Helvetica Neue",HelveticaNeue,Verdana,Arial,Helvetica,sans-serif;
-	}
+
+  #crm-table tr td {
+      height: 20px;
+  }
+  .dataTables_wrapper { font-size: 12px }
+  .dataTables_wrapper .dt-buttons {
+    float:none;
+    text-align:right;
+  }
+
+  	div.header {
+  			margin: 200px auto;
+  			line-height:30px;
+  			max-width:500px;
+  	}
+  	body {
+  			background: #f7f7f7;
+  			color: #333;
+  			font: 90%/1.45em "Helvetica Neue",HelveticaNeue,Verdana,Arial,Helvetica,sans-serif;
+  	}
 </style>
 <script type="text/javascript" language="javascript" >
 
 	$(document).ready(function() {
-		var dataTable = $('#crm-table').DataTable( {
-			lengthMenu: [[25, 100, -1], [25, 100, "All"]],
-			pageLength: 25,
+    var selected = [];
+    var index;
+//====================create datatable==========================================
+  		var dataTable = $('#crm-table').DataTable( {
+  			dom: 'B<"toolbar">lfrtip',
+        select: {style: 'multi'},
+  			buttons: ['selectAll','selectNone',
+          {
+              extend: 'selected',
+              text: 'Show selected rows only',
+              action: function ( e, dt, button, config ) {
+                  if (button.text() == 'Show selected rows only') {
+                      dt.rows({ selected: false }).nodes().to$().css({"display":"none"});
+                      button.text('Show all');
+                  }
+                  else {
+                      dt.rows({ selected: false }).nodes().to$().css({"display":"table-row"});
+                      button.text('Show selected rows only');
+                  }
+              }
+          },
 
-			dom: 'Blfrtip',
-			buttons: ['selectAll','selectNone',
-				{
-					extend: 'collection',
-	        text: 'Export Selected',
-	        buttons: [
-					{
-						extend: 'copy',
-						exportOptions: {
-						columns: ':visible:not(.not-exported)',
-						 modifier: { selected: true }
-						}
-					},{
-						extend: 'csv',
-						exportOptions: {
-						columns: ':visible:not(.not-exported)',
-						 modifier: { selected: true }
-						}
-					},{
-						extend: 'excel',
-						exportOptions: {
-						columns: ':visible:not(.not-exported)',
-						 modifier: { selected: true }
-						}
-					},{
-						extend: 'pdf',
-						exportOptions: {
-						columns: ':visible:not(.not-exported)',
-						 modifier: { selected: true }
-						}
-					},{
-						extend: 'print',
-						exportOptions: {
-						columns: ':visible:not(.not-exported)',
-						 modifier: { selected: true }
-						}
-					}
-				]
-      }],
-			select: {style: 'multi'},
 
-			// "tableTools": {
-      //   "sSwfPath": "swf/copy_csv_xls_pdf.swf",  // set swf path
-			// 	"sRowSelect": "multi",
-			// 	"aButtons": [
-      //       "select_all",
-      //       "select_none",
-      //       {
-      //           "sExtends":    "collection",
-      //           "sButtonText": "Export",
-      //           "aButtons":    [ "csv", "xls", "pdf","print" ]
-      //       }
-      //   ]
-    	// },
-			"processing": true,
-			"serverSide": true,
-			"scrollX": true,
-			"bInfo": true,
-			"ajax":{
-				url :"server-side-CRM.php", // json datasource
-				type: "post",  // method  , by default get
-				error: function(){  // error handling
-					$(".crm-table-error").html("");
-					$("#crm-table").append('<tbody class="crm-table-error"><tr><th colspan="3">No data found in the server</th></tr></tbody>');
-					$("#crm-table_processing").css("display","none");
-				}
-			},
-			"columnDefs": [ {
-			    "targets": 0,
-			    "render": function ( data, type, row) {
-						/*$foo=array();
-						array_push($foo, row[0]);
-						array_push($foo, row[1]);
-						$str = serialize($foo);
-						$stren = urlencode($str); */
-						var image = [row[0],row[1]];
-						var serializedArray = JSON.stringify(image);
-						//var x = $.param(image);
-						//var res = encodeURIComponent(x);
-						alert(serializedArray);
-			      return '<a href="edit_client.php?client_info='+serializedArray+'">'+row[0]+'</a>';
-			    }
-			  } ]
+          {
+  					extend: 'collection',
+  	        text: 'Export Selected',
+  	        buttons: [
+  					{
+  						extend: 'copy',
+  						exportOptions: {
+  						columns: ':visible:not(.not-exported)',
+  						 modifier: { selected: true }
+  						}
+  					},{
+  						extend: 'csv',
+  						exportOptions: {
+  						columns: ':visible:not(.not-exported)',
+  						 modifier: { selected: true }
+  						}
+  					},{
+  						extend: 'excel',
+  						exportOptions: {
+  						columns: ':visible:not(.not-exported)',
+  						 modifier: { selected: true }
+  						}
+  					},{
+  						extend: 'pdfHtml5',
+  						orientation: 'landscape',
+              pageSize: 'LEGAL',
+  						exportOptions: {
+  						//columns: ':visible:not(.not-exported)',
+              //columns: ':not(.no-print)',
+  						 modifier: { selected: true }
+  						}
+  					},{
+  						extend: 'print',
+  						exportOptions: {
+  						columns: ':visible:not(.not-exported)',
+  						 modifier: { selected: true }
+  						}
+  					}
+  				]
+        }],
+  			"processing": true,
+        "bpaging":   false,
+  			"serverSide": true,
+        "lengthMenu": [[10, 25, 50, 100, 500, -1], [10, 25, 50, 100, 500, "All"]],
+        "deferRender": true,
+  			"scrollX": true,
+  			"ajax":{
+  				url :"server-side-CRM.php", // json datasource
+  				type: "post",  // method  , by default get
+  				error: function(){  // error handling
+  					$(".crm-table-error").html("");
+  					$("#crm-table").append('<tbody class="crm-table-error"><tr><th colspan="3">No data found in the server</th></tr></tbody>');
+  					$("#crm-table_processing").css("display","none");
+  				}
+  			},
+        "rowCallback": function( row, data, iDisplayIndex ) {
+          var info = $('#crm-table').DataTable().page.info();
+          var page = info.page;
+          var length = info.length;
+          index =  (page * length + (iDisplayIndex +1));
+          $('td:eq(-1)', row).html(index);
+        },
 
-		});
 
+  			"columnDefs": [ {
+  			    "targets": 0,
+  			    "render": function ( data, type, row) {
+              var str = serialize([row[0], row[2]]);
+              var stren = urlencode(str);
+  			      return '<a href="edit_client.php?client_info='+stren+'">'+row[0]+'</a>'; //link for each client name
+  			    },
+  			  }]
+  		});
+//save search button
+$("div.toolbar").html('<button id = "save_button" class = "dt-button" style = "margin-left: 150px;">Save search</button>');
+//==============================================================================
+$('.buttons-csv').on('click', function(){
+  console.log("hello");
+  confirm("Are you sure you want to export to CSV?");
+
+});
+
+$('#crm-table').on('page.dt', function(){
+    var info = dataTable.page.info();
+    var pageCount = info.page;
+    var length = info.length;
+    for (i = 0; i < length; i++){
+      if(jQuery.inArray(pageCount*length+i, selected) !== -1){
+        var $tablerows = $("#crm-table tbody tr");
+        $tablerows.each(function(n) {
+          console.log((parseInt($(this).find("td:eq(-1)").text()))-10+"selected row");
+          console.log("page"+ (pageCount*length+i));
+          if ((parseInt($(this).find("td:eq(-1)").text())-10)==pageCount*length+i) {
+            console.log(true);
+            $(this).attr('selected', true);
+          }
+        });
+        console.log(pageCount*length+i);
+
+      }
+      console.log(selected);
+    }
+    console.log( 'Showing page: '+pageCount+' of '+info.pages );
+});
+
+$('button.destroy_pager').on('click', function() {
+        console.log("hello");
+        //dataTable.paging = false;
+        // to reload
+        //dataTable.ajax.reload();
+    });
 
 		$('.search-input-text').on( 'keyup click', function () {   // for text boxes
 			var i =$(this).attr('data-column');  // getting column index
 			var v =$(this).val();  // getting search input value
 			dataTable.columns(i).search(v).draw();
 		});
-	$('.search-input-select').on( 'change', function () {   // for select box
-			var i =$(this).attr('data-column');
-			var v =$(this).val();
-			dataTable.columns(i).search(v).draw();
-		});
 
-// //If any row selected change the counter of "Row selected".
+  	$('.search-input-select').on( 'change', function () {   // for select box
+  			var i =$(this).attr('data-column');
+  			var v =$(this).val();
+  			dataTable.columns(i).search(v).draw();
+  	});
+
+
+// If any row selected change the counter of "Row selected".
 		$('#crm-table tbody').on( 'click', 'tr', function () {
+      selected.push(parseInt($(this).find('td:eq(-1)').text()));
 					updateCounter();
 		});
 
 //Select All button and select none button
-	$('.buttons-select-all, .buttons-select-none').on( 'click', function () {
-			updateCounter();
-		});
+  	$('.buttons-select-all, .buttons-select-none').on( 'click', function () {
+  			updateCounter();
+  	});
 
-		function updateCounter(){
-			var len = dataTable.rows('.selected').data().length;
-			if(len>0){
-				$("#general i .counter").text('('+len+')');
-			}
-			else{$("#general i .counter").text('');}
-		}
+  	function updateCounter(){
+  		var len = dataTable.rows('.selected').data().length;
+  		if(len>0){
+  			$("#general i .counter").text('('+len+')');
+  		}
+  		else{$("#general i .counter").text('');}
+  	}
+
+    function serialize (mixedValue) {
+      //  discuss at: http://locutus.io/php/serialize/
+      // original by: Arpad Ray (mailto:arpad@php.net)
+      // improved by: Dino
+      // improved by: Le Torbi (http://www.letorbi.de/)
+      // improved by: Kevin van Zonneveld (http://kvz.io/)
+      // bugfixed by: Andrej Pavlovic
+      // bugfixed by: Garagoth
+      // bugfixed by: Russell Walker (http://www.nbill.co.uk/)
+      // bugfixed by: Jamie Beck (http://www.terabit.ca/)
+      // bugfixed by: Kevin van Zonneveld (http://kvz.io/)
+      // bugfixed by: Ben (http://benblume.co.uk/)
+      // bugfixed by: Codestar (http://codestarlive.com/)
+      //    input by: DtTvB (http://dt.in.th/2008-09-16.string-length-in-bytes.html)
+      //    input by: Martin (http://www.erlenwiese.de/)
+      //      note 1: We feel the main purpose of this function should be to ease
+      //      note 1: the transport of data between php & js
+      //      note 1: Aiming for PHP-compatibility, we have to translate objects to arrays
+      //   example 1: serialize(['Kevin', 'van', 'Zonneveld'])
+      //   returns 1: 'a:3:{i:0;s:5:"Kevin";i:1;s:3:"van";i:2;s:9:"Zonneveld";}'
+      //   example 2: serialize({firstName: 'Kevin', midName: 'van'})
+      //   returns 2: 'a:2:{s:9:"firstName";s:5:"Kevin";s:7:"midName";s:3:"van";}'
+
+      var val, key, okey
+      var ktype = ''
+      var vals = ''
+      var count = 0
+
+      var _utf8Size = function (str) {
+        var size = 0
+        var i = 0
+        var l = str.length
+        var code = ''
+        for (i = 0; i < l; i++) {
+          code = str.charCodeAt(i)
+          if (code < 0x0080) {
+            size += 1
+          } else if (code < 0x0800) {
+            size += 2
+          } else {
+            size += 3
+          }
+        }
+        return size
+      }
+
+      var _getType = function (inp) {
+        var match
+        var key
+        var cons
+        var types
+        var type = typeof inp
+
+        if (type === 'object' && !inp) {
+          return 'null'
+        }
+
+        if (type === 'object') {
+          if (!inp.constructor) {
+            return 'object'
+          }
+          cons = inp.constructor.toString()
+          match = cons.match(/(\w+)\(/)
+          if (match) {
+            cons = match[1].toLowerCase()
+          }
+          types = ['boolean', 'number', 'string', 'array']
+          for (key in types) {
+            if (cons === types[key]) {
+              type = types[key]
+              break
+            }
+          }
+        }
+        return type
+      }
+
+      var type = _getType(mixedValue)
+
+      switch (type) {
+        case 'function':
+          val = ''
+          break
+        case 'boolean':
+          val = 'b:' + (mixedValue ? '1' : '0')
+          break
+        case 'number':
+          val = (Math.round(mixedValue) === mixedValue ? 'i' : 'd') + ':' + mixedValue
+          break
+        case 'string':
+          val = 's:' + _utf8Size(mixedValue) + ':"' + mixedValue + '"'
+          break
+        case 'array':
+        case 'object':
+          val = 'a'
+          /*
+          if (type === 'object') {
+            var objname = mixedValue.constructor.toString().match(/(\w+)\(\)/);
+            if (objname === undefined) {
+              return;
+            }
+            objname[1] = serialize(objname[1]);
+            val = 'O' + objname[1].substring(1, objname[1].length - 1);
+          }
+          */
+
+          for (key in mixedValue) {
+            if (mixedValue.hasOwnProperty(key)) {
+              ktype = _getType(mixedValue[key])
+              if (ktype === 'function') {
+                continue
+              }
+
+              okey = (key.match(/^[0-9]+$/) ? parseInt(key, 10) : key)
+              vals += serialize(okey) + serialize(mixedValue[key])
+              count++
+            }
+          }
+          val += ':' + count + ':{' + vals + '}'
+          break
+        case 'undefined':
+        default:
+          // Fall-through
+          // if the JS object has a property which contains a null value,
+          // the string cannot be unserialized by PHP
+          val = 'N'
+          break
+      }
+      if (type !== 'object' && type !== 'array') {
+        val += ';'
+      }
+
+      return val
+    }
+
+    function urlencode (str) {
+      //       discuss at: http://locutus.io/php/urlencode/
+      //      original by: Philip Peterson
+      //      improved by: Kevin van Zonneveld (http://kvz.io)
+      //      improved by: Kevin van Zonneveld (http://kvz.io)
+      //      improved by: Brett Zamir (http://brett-zamir.me)
+      //      improved by: Lars Fischer
+      //         input by: AJ
+      //         input by: travc
+      //         input by: Brett Zamir (http://brett-zamir.me)
+      //         input by: Ratheous
+      //      bugfixed by: Kevin van Zonneveld (http://kvz.io)
+      //      bugfixed by: Kevin van Zonneveld (http://kvz.io)
+      //      bugfixed by: Joris
+      // reimplemented by: Brett Zamir (http://brett-zamir.me)
+      // reimplemented by: Brett Zamir (http://brett-zamir.me)
+      //           note 1: This reflects PHP 5.3/6.0+ behavior
+      //           note 1: Please be aware that this function
+      //           note 1: expects to encode into UTF-8 encoded strings, as found on
+      //           note 1: pages served as UTF-8
+      //        example 1: urlencode('Kevin van Zonneveld!')
+      //        returns 1: 'Kevin+van+Zonneveld%21'
+      //        example 2: urlencode('http://kvz.io/')
+      //        returns 2: 'http%3A%2F%2Fkvz.io%2F'
+      //        example 3: urlencode('http://www.google.nl/search?q=Locutus&ie=utf-8')
+      //        returns 3: 'http%3A%2F%2Fwww.google.nl%2Fsearch%3Fq%3DLocutus%26ie%3Dutf-8'
+
+      str = (str + '')
+
+      // Tilde should be allowed unescaped in future versions of PHP (as reflected below),
+      // but if you want to reflect current
+      // PHP behavior, you would need to add ".replace(/~/g, '%7E');" to the following.
+      return encodeURIComponent(str)
+        .replace(/!/g, '%21')
+        .replace(/"/g, '%22')
+        .replace(/\(/g, '%28')
+        .replace(/\)/g, '%29')
+        .replace(/\*/g, '%2A')
+        .replace(/%20/g, '+')
+    }
+
 	});
-
-
-
 </script>
 
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 		<h1 class="pull-left">CRM</h1>
-		<a title="Filter Category" id="general" class=""><i>Record selected <small class="counter"></small></i></a>
 		<a class="pull-right" href="add_client.php" class="add_button">Upload</a>
 	</div>
 <div class="dashboard-detail">
 
 			<div class="contacts-title">
-				<a id = 'view_marked' name = 'view_marked' class="pull-right" class="add_button" href = "#" style = "background: #ff5c33">View Marked</a>
-				<a id = 'advanced_search_button' class="pull-right" href="#" class="add_button" onclick = 'addField()'>Advanced Search</a>
+        <a title="Filter Category" id="general" class=""><i>Record selected <small class="counter"></small></i></a>
+
 				<a id = 'show_saved_search' class="pull-right" class="add_button" onclick = 'showSavedSearch()' href = "#" style = "background: #ff5c33">Show Saved Search</a>
 				<form class = 'advanced_search_area' action = 'advanced_search_CRM.php' method = 'post'>
 					<input id = 'advanced_search_submit' name = 'advanced_search_submit' style = 'display: none; margin-right: 5%; margin-bottom: 5%; background-color: #000000; color: #ffffff' type = 'submit' value = "Search">
@@ -166,6 +390,7 @@ td { font-size: 11px; }
 				</form>
 			</div>
 			<div id="saved_search_div">
+
 				<table id="saved_search_table" style = 'display: none'>
 					<tbody>
 						<?php
@@ -192,7 +417,7 @@ td { font-size: 11px; }
 			</div>
 </div>
 <div id = 'allcontacts-table' class='allcontacts-table'>
-
+  <button class="form_button destroy_pager" type="button" onclick="" title="Destroy pager">Destroy pager</button>
 	<table id="crm-table"  cellpadding="0" cellspacing="0" border="0" class="display" width="100%">
 			<thead>
 				<tr>
@@ -213,7 +438,7 @@ td { font-size: 11px; }
 					<th>Vertical 3</th>
 				</tr>
 			</thead>
-			<thead>
+			<tfoot>
 			<tr>
 				<td><input type="text" data-column="0"  placeholder = "Search Client Name" class="search-input-text"></td>
 	      <td><input type="text" data-column="1"  placeholder = "Search Business" class="search-input-text"></td>
@@ -221,7 +446,7 @@ td { font-size: 11px; }
 				<td><input type="text" data-column="3"  placeholder = "Search City" class="search-input-text"></td>
 				<td><input type="text" data-column="4"  placeholder = "Search State" class="search-input-text"></td>
 				<td><input type="text" data-column="5"  placeholder = "Search Zip Code" class="search-input-text"></td>
-				<td><input type="text" data-column="6"  placeholder = "Search Call Back Date" class="search-input-text"></td>
+				<td><input type="text" data-column="6"  placeholder = "Search call_back_date" class="search-input-text"></td>
 
 				<td>
             <select data-column="7"  class="search-input-select">
@@ -241,7 +466,7 @@ td { font-size: 11px; }
 				<td><input type="text" data-column="13"  placeholder = "Search Vertical2" class="search-input-text"></td>
 				<td><input type="text" data-column="14"  placeholder = "Search Vertical3" class="search-input-text"></td>
 			</tr>
-		</thead>
+		</tfoot>
 		<tbody>
 		</tbody>
 	</table>
