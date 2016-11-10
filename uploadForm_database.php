@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require("connection.php");
 $data = array();
 $handle = fopen($_FILES['fileUpload']["tmp_name"], 'r');
@@ -39,23 +39,32 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 				USPS_9Y9_EDDM_Marketing_Card, SEPT_2014_3_5Y11_CRST_Marketing_Card, Contractor_Mailing_2016, type) VALUES (';
 		
 		$sql2 = 'UPDATE sales SET ';
-		$full_name = " ";
-		$address_line_1 = " ";
+		$full_name = "";
+		$address_line_1 = "";
 		
 		for($j = 0; $j < count($array_indexes); $j++){ //goes through all corresponding indexes to headers and adds to sql statements for insert and update as specified
 			$input = "";
 			//quotes are read by replacing with \"
 			if($array_indexes[$j] != -1){
 				$input = str_replace('"', '\"', $data[$i][$array_indexes[$j]]);
-				$input = str_replace("'", "\'", $input);
+				$input = str_replace("'", "\'", $input); 
 			}
-			//check if phone number and fax number input is correct
-			if($input != "" && (strlen($input) != 10 || preg_match("/[a-z]/i", $input)) && ($array_names[$j] == "phone" || $array_names[$j] == "fax")){
+			//check if all phone/fax fields are valid inputs
+			if($input != "" && (strlen($input) != 10 || preg_match("/[a-z]/i", $input)) && ($array_names[$j] == "phone" || $array_names[$j] == "fax" || $array_names[$j] == "cell_phone" || $array_names[$j] == "alt_phone" || $array_names[$j] == "home_phone")){
 				if($array_names[$j] == "phone"){
 					die("error in row " . ($i + 1) . " column header " . $array_names[$j] . ": Phone number not valid(eg: 8452555722)");
 				}
-				else{
+				else if($array_names[$j] == "fax"){
 					die("error in row " . ($i + 1) . " column header " . $array_names[$j] . ": Fax number not valid(eg: 8452555722)");
+				}
+				else if($array_names[$j] == "cell_phone"){
+					die("error in row " . ($i + 1) . " column header " . $array_names[$j] . ": Cell Phone number not valid(eg: 8452555722)");
+				}
+				else if($array_names[$j] == "alt_phone"){
+					die("error in row " . ($i + 1) . " column header " . $array_names[$j] . ": Alternate Phone number not valid(eg: 8452555722)");
+				}
+				else if($array_names[$j] == "home_phone"){
+					die("error in row " . ($i + 1) . " column header " . $array_names[$j] . ": Home Phone number not valid(eg: 8452555722)");
 				}
 					
 			}
@@ -67,12 +76,11 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 			if($input != "" && preg_match("/[a-z]/i", $input) && $array_names[$j] == "extension"){
 				die("error in row " . ($i + 1) . " column header " . $array_names[$j] . ": Extension number not valid(eg: 123)");
 			}
-			//check if call back date input field is readable
-			if($array_names[$j] == "call_back_date" && $input != ""){
-				echo $input . "<br>";
+			//check if call back date input field is readable or date added is readable
+			if(($array_names[$j] == "call_back_date" || $array_names[$j] == "date_added") && $input != ""){
 				$call_back_date = explode("/", $input);
 				if(count($call_back_date) != 3){ //checks if date has length 3 for day, month, and year
-					die("error in row " . ($i + 1) . " column header " . $array_names[$j] . ": Date might be missing day, month, or year(eg: 1/23/2016)");
+					die("error in row " . ($i + 1) . " column header " . $array_names[$j] . ": Date might be missing day, month, or year(eg: 1/23/2016) or must be left blank");
 				}
 				else{ //checks if numerical characters are in date
 					for($ii = 0; $ii < count($call_back_date); $ii++){
@@ -86,10 +94,9 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 				
 			}
 			//adds current date for date_added field
-			if($array_names[$j] == "date_added"){
+			if($array_names[$j] == "date_added" && $input == ""){
 				date_default_timezone_set('America/New_York');
-				$today = date("Y-m-d");
-				$input = $today;
+				$input = date("Y-m-d");
 			}
 			if($array_names[$j] == "full_name" && $array_indexes[$j] != -1){
 				$full_name = $input;
@@ -101,13 +108,13 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 			//creates UPDATE and INSERT statements similtaneously
 			//For UPDATE string, excludes the full_name and address_line_1 fields because they are keys
 			//Excludes date_added because this field can't be changed once added to the table
-			if($array_indexes[$j] != -1){
+			if($array_indexes[$j] != -1 || $array_names[$j] == "date_added"){
 				$sql = $sql . '"' . $input . '",';
 				if($array_names[$j] != "full_name" && $array_names[$j] != "address_line_1" && $array_names[$j] != "date_added"){
 					$sql2 = $sql2 . $array_names[$j] . ' = "' . $input . '", ';
 				}
 			}
-			else if($array_indexes[$j] != -1 && $j == count($array_indexes) - 1){
+			else if(($array_indexes[$j] != -1 || $array_names[$j] == "date_added") && $j == count($array_indexes) - 1){
 				$sql = $sql . $input . ')';
 				if($array_names[$j] != "full_name" && $array_names[$j] != "address_line_1" && $array_names[$j] != "date_added"){
 					$sql2 = $sql2 . $array_names[$j] . ' = "' . $input . '" WHERE full_name = "' . $full_name . '" AND address_line_1 = "' . $address_line_1 . '"';
@@ -138,10 +145,13 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 		}
 
 }
+
+$job = "CSV file uploaded to CRM";
 $user_name = $_SESSION['user'];
 date_default_timezone_set('America/New_York');
 $today = date("Y-m-d G:i:s");
 $a_p = date("A");
-$job = "Uploaded to sales ";
+$sql_timestamp = "INSERT INTO timestamp (user, time, job, a_p) VALUES ('$user_name', '$today', '$job', '$a_p')";
+mysqli_query($conn, $sql_timestamp);
 header("location: uploadForm.php");
 ?>

@@ -244,26 +244,6 @@ require ("connection.php");
 				<input name="mail_dim" type="text" value="<?php echo $mail_dim ; ?>" class="contact-prefix">
 				</div>
 				<div class="tabinner-detail">
-				<label>Weights and Measures</label>
-				<select name = 'wm[]'multiple>
-					<?php
-					$result = mysqli_query($conn, "SELECT * FROM materials ORDER BY vendor");
-					$wm_array = explode(",", $weights_measures);
-					$index = 0;
-					while($row = $result->fetch_assoc()){
-						if($wm_array[$index] == $row['material_id']){
-							echo "<option selected = 'selected' value = '" . $row['material_id'] . "'>" . $row['vendor'] . str_repeat('&nbsp;', 7) . $row['material'] . str_repeat('&nbsp;', 7) . $row['type'] . "</option>";
-						}
-						else{
-							echo "<option value = '" . $row['material_id'] . "'>" . $row['vendor'] . str_repeat('&nbsp;', 7) . $row['material'] . str_repeat('&nbsp;', 7) . $row['type'] . "</option>";
-						}
-						
-						$index = $index + 1;
-					}
-					?>
-					</select>
-				</div>
-				<div class="tabinner-detail">
 				<label>Permit</label>
 				<input name="permit" type="text" value="<?php echo $permit ; ?>" class="contact-prefix">
 				</div>
@@ -347,31 +327,55 @@ require ("connection.php");
 				<label>Method of Delivery</label>
 				<input name="delivery" type="text" value="<?php echo $delivery ; ?>" class="contact-prefix">
 				</div>
+				 <div class="tabinner-detail">
+							<label>Tasks</label>
+
+							<div id="list1" class="dropdown-check-list" tabindex="100">
+							<span class="anchor">Select Tasks</span>
+							<ul name = "item" id="items" class="items">
+								<li><input type="checkbox" name = "tasks[]" value = "Mail Merge"/>Mail Merge</li>
+								<li><input type="checkbox" name = "tasks[]" value = "Letter Printing"/>Letter Printing</li>
+								<li><input type="checkbox" name = "tasks[]" value = "Letter Printing"/>In-House Envelope Print</li>
+								<li><input type="checkbox" name = "tasks[]" value = "Tabbing"/>Tabbing </li>
+								<li><input type="checkbox" name = "tasks[]" value = "Folding"/>Folding </li>
+								<li><input type="checkbox" name = "tasks[]" value = "Inserting"/>Inserting </li>
+								<li><input type="checkbox" name = "tasks[]" value = "Sealing"/>Sealing</li>
+								<li><input type="checkbox" name = "tasks[]" value = "Collating"/>Collating</li>
+								<li><input type="checkbox" name = "tasks[]" value = "Labeling"/>Labeling</li>
+								<li><input type="checkbox" name = "tasks[]" value = "Print Permit"/>Print Permit</li>
+								<li><input type="checkbox" name = "tasks[]" value = "Correct Permit"/>Correct Permit</li>
+								<li><input type="checkbox" name = "tasks[]" value = "Carrier Route"/>Carrier Route</li>
+								<li><input type="checkbox" name = "tasks[]" value = "Endorsement line"/>Endorsement line</li>
+								<li><input type="checkbox" name = "tasks[]" value = "Address Printing"/>Address Printing</li>
+								<li><input type="checkbox" name = "tasks[]" value = "Tag as Political"/>Tag as Political</li>
+								<li><input type="checkbox" name = "tasks[]" value = "Inkjet Printing"/>Inkjet Printing</li>
+								<li><input type="checkbox" name = "tasks[]" value = "Glue Dots"/>Glue Dots</li>
+							</ul>
+						</div>
+
+					    <script type="text/javascript">
+
+							  var checkList = document.getElementById('list1');
+						var items = document.getElementById('items');
+								checkList.getElementsByClassName('anchor')[0].onclick = function (evt) {
+									if (items.classList.contains('visible')){
+										items.classList.remove('visible');
+										items.style.display = "none";
+									}
+									
+									else{
+										items.classList.add('visible');
+										items.style.display = "block";
+									}
+
+								}
+
+								items.onblur = function(evt) {
+									items.classList.remove('visible');
+								}
+						</script>
 				
-				<div class="tabinner-detail">
-				<label>Tasks</label>
-				<select name="tasks[]" multiple>
-					  <option selected = "selected" value = "<?php echo $tasks;?>"><?php echo $tasks; ?></option>
-					  <option value="Mail Merge">Mail Merge</option>
-					  <option value="Letter Printing">Letter Printing</option>
-					  <option value="In-House Envelope Printing">In-House Envelope Printing</option>
-					  <option value="Tabbing">Tabbing</option>
-					  <option value="Folding">Folding</option>
-					  <option value="Inserting">Inserting</option>
-					  <option value="Sealing">Sealing</option>
-					  <option value="Collating">Collating</option>
-					  <option value="Labeling">Labeling</option>
-					  <option value="Print Permit">Print Permit</option>
-					  <option value="Correct Permit">Correct Permit</option>
-					  <option value="Carrier Route">Carrier Route</option>
-					  <option value="Endorsement line">Endorsement line</option>
-					  <option value="Address Printing">Address Printing</option>
-					  <option value="Tag as Political">Tag as Political</option>
-					  <option value="Inkjet Printing">Inkjet Printing</option>
-					  <option value="Glue Dots">Glue Dots</option>
-					</select>
-				</div>
-				
+					</div>
 				<div class="tabinner-detail">
 				<label>Completed Date</label>
 				<input name="completed_date" type="date" value="<?php echo $completed_date ; ?>" class="contact-prefix">
@@ -436,7 +440,46 @@ require ("connection.php");
 				<label>Final Count</label>
 				<input name="final_count" type="text" value="<?php echo $final_count ; ?>"  class="contact-prefix">
 				</div>
-			</div>	
+			</div>
+				<div class="tabinner-detail">
+                    <label>Weights and Measures</label>
+                    <a class="pull-right" onclick = 'addWeights_Measures()'>Add Weights and Measures</a>
+                    <table id="W_MTable" border="1" cellpadding="1" cellspacing="1" style='text-align: center; vertical-align: middle;'>
+                        <thead>
+                        <tr>
+                            <th>Select</th><th>Vendor</th><th>Material</th><th>type</th><th>Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody id="W_M_tbody">
+                        <?php
+                        $result = mysqli_query($conn, "SELECT * FROM materials ORDER BY vendor");
+                        while($row = $result->fetch_assoc()){
+                                echo "<tr id='1'>
+                                        <td ><input type='checkbox' id='checkbox1' checked name='wm[]' value='" . $row['material_id'] . "'></td>
+                                        <td>"; $result = $conn->query("select vendor_name from vendors");
+                                            echo "<select class='vendors' id='vendors1' name='vendor' style='width:220px;'><option value=''>Select</option>";
+                                            while ($row = $result->fetch_assoc()) {
+                                                          unset($vendor_name);
+                                                          $vendor_name = $row['vendor_name']; 
+                                                          echo '<option value="'.$vendor_name.'">'.$vendor_name.'</option>';
+                                                          
+                                            }
+                                            echo "</select>
+                                        </td>
+ 
+                                        <td>";
+                                            echo "<select class='materials' id='materials1' name='vendor' style='width:220px;'><option value=''>Select</option></select>
+                                        </td>
+                                        <td>
+                                            <select class='types' id='types1' name='vendor' style='width:220px;'><option value=''>Select</option></select>
+                                        </td>
+                                        <td><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeWeights_Measures('#1')></td>
+                                    </tr>";
+                                    }
+                        ?>
+                        </tbody>
+                    </table>
+                    </div>
 				<div class="tabinner-detail">				
 				<label>Special Instructions</label>
 				<textarea name="special_instructions" class="contact-prefix" cols="80" rows="25"><?php echo $special_instructions ; ?></textarea>
