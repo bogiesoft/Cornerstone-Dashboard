@@ -35,6 +35,9 @@ require ("header.php");
 	$(function() {
 		id_of_row=parseInt($( "tr:last" ).attr('id'));
 		number_of_rows=id_of_row;
+		if(isNaN(number_of_rows)){
+			number_of_rows = 0;
+		}
     $(document).on('change', '.vendors',function(){
     	var id=$(this).parent().parent().attr('id');
     	getMaterials(id);
@@ -552,7 +555,8 @@ require ("connection.php");
 					<?php
 						$result_wm = mysqli_query($conn, "SELECT weights_measures FROM job_ticket WHERE job_id = '$job_id'");
 						$row_wm = "";
-						if(mysqli_num_rows($result_wm) > 0){
+						$num_rows = mysqli_num_rows($result_wm);
+						if($num_rows > 0){
 							$row_wm = $result_wm->fetch_assoc();
 						}
 						
