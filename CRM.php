@@ -1,7 +1,6 @@
 <?php require("header.php"); ?>
 
 <style>
-
   #crm-table tr td {
       height: 20px;
   }
@@ -10,7 +9,6 @@
     float:none;
     text-align:right;
   }
-
   	div.header {
   			margin: 200px auto;
   			line-height:30px;
@@ -23,7 +21,6 @@
   	}
 </style>
 <script type="text/javascript" language="javascript" >
-
 	$(document).ready(function() {
     var selected = [];
     var index;
@@ -46,8 +43,6 @@
                   }
               }
           },
-
-
           {
   					extend: 'collection',
   	        text: 'Export Selected',
@@ -110,8 +105,6 @@
           index =  (page * length + (iDisplayIndex +1));
           $('td:eq(-1)', row).html(index);
         },
-
-
   			"columnDefs": [ {
   			    "targets": 0,
   			    "render": function ( data, type, row) {
@@ -127,9 +120,7 @@ $("div.toolbar").html('<button id = "save_button" class = "dt-button" style = "m
 $('.buttons-csv').on('click', function(){
   console.log("hello");
   confirm("Are you sure you want to export to CSV?");
-
 });
-
 $('#crm-table').on('page.dt', function(){
     var info = dataTable.page.info();
     var pageCount = info.page;
@@ -146,44 +137,36 @@ $('#crm-table').on('page.dt', function(){
           }
         });
         console.log(pageCount*length+i);
-
       }
       console.log(selected);
     }
     console.log( 'Showing page: '+pageCount+' of '+info.pages );
 });
-
 $('button.destroy_pager').on('click', function() {
         console.log("hello");
         //dataTable.paging = false;
         // to reload
         //dataTable.ajax.reload();
     });
-
 		$('.search-input-text').on( 'keyup click', function () {   // for text boxes
 			var i =$(this).attr('data-column');  // getting column index
 			var v =$(this).val();  // getting search input value
 			dataTable.columns(i).search(v).draw();
 		});
-
   	$('.search-input-select').on( 'change', function () {   // for select box
   			var i =$(this).attr('data-column');
   			var v =$(this).val();
   			dataTable.columns(i).search(v).draw();
   	});
-
-
 // If any row selected change the counter of "Row selected".
 		$('#crm-table tbody').on( 'click', 'tr', function () {
       selected.push(parseInt($(this).find('td:eq(-1)').text()));
 					updateCounter();
 		});
-
 //Select All button and select none button
   	$('.buttons-select-all, .buttons-select-none').on( 'click', function () {
   			updateCounter();
   	});
-
   	function updateCounter(){
   		var len = dataTable.rows('.selected').data().length;
   		if(len>0){
@@ -191,7 +174,6 @@ $('button.destroy_pager').on('click', function() {
   		}
   		else{$("#general i .counter").text('');}
   	}
-
     function serialize (mixedValue) {
       //  discuss at: http://locutus.io/php/serialize/
       // original by: Arpad Ray (mailto:arpad@php.net)
@@ -214,12 +196,10 @@ $('button.destroy_pager').on('click', function() {
       //   returns 1: 'a:3:{i:0;s:5:"Kevin";i:1;s:3:"van";i:2;s:9:"Zonneveld";}'
       //   example 2: serialize({firstName: 'Kevin', midName: 'van'})
       //   returns 2: 'a:2:{s:9:"firstName";s:5:"Kevin";s:7:"midName";s:3:"van";}'
-
       var val, key, okey
       var ktype = ''
       var vals = ''
       var count = 0
-
       var _utf8Size = function (str) {
         var size = 0
         var i = 0
@@ -237,18 +217,15 @@ $('button.destroy_pager').on('click', function() {
         }
         return size
       }
-
       var _getType = function (inp) {
         var match
         var key
         var cons
         var types
         var type = typeof inp
-
         if (type === 'object' && !inp) {
           return 'null'
         }
-
         if (type === 'object') {
           if (!inp.constructor) {
             return 'object'
@@ -268,9 +245,7 @@ $('button.destroy_pager').on('click', function() {
         }
         return type
       }
-
       var type = _getType(mixedValue)
-
       switch (type) {
         case 'function':
           val = ''
@@ -297,14 +272,12 @@ $('button.destroy_pager').on('click', function() {
             val = 'O' + objname[1].substring(1, objname[1].length - 1);
           }
           */
-
           for (key in mixedValue) {
             if (mixedValue.hasOwnProperty(key)) {
               ktype = _getType(mixedValue[key])
               if (ktype === 'function') {
                 continue
               }
-
               okey = (key.match(/^[0-9]+$/) ? parseInt(key, 10) : key)
               vals += serialize(okey) + serialize(mixedValue[key])
               count++
@@ -323,10 +296,8 @@ $('button.destroy_pager').on('click', function() {
       if (type !== 'object' && type !== 'array') {
         val += ';'
       }
-
       return val
     }
-
     function urlencode (str) {
       //       discuss at: http://locutus.io/php/urlencode/
       //      original by: Philip Peterson
@@ -353,9 +324,7 @@ $('button.destroy_pager').on('click', function() {
       //        returns 2: 'http%3A%2F%2Fkvz.io%2F'
       //        example 3: urlencode('http://www.google.nl/search?q=Locutus&ie=utf-8')
       //        returns 3: 'http%3A%2F%2Fwww.google.nl%2Fsearch%3Fq%3DLocutus%26ie%3Dutf-8'
-
       str = (str + '')
-
       // Tilde should be allowed unescaped in future versions of PHP (as reflected below),
       // but if you want to reflect current
       // PHP behavior, you would need to add ".replace(/~/g, '%7E');" to the following.
@@ -367,7 +336,6 @@ $('button.destroy_pager').on('click', function() {
         .replace(/\*/g, '%2A')
         .replace(/%20/g, '+')
     }
-
 	});
 </script>
 

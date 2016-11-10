@@ -1,4 +1,13 @@
+<?php
+session_start();
+$errors = array();
 
+if(isset($_SESSION["import_errors"])){
+	$errors = $_SESSION["import_errors"];
+	$_SESSION["import_errors"] = array();
+}
+
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,6 +24,8 @@
         <script src="Upload-css/toastr.js"></script>
 
         <script src="Upload-css/require.js"></script>
+		<script src="sweetalert/dist/sweetalert.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="sweetalert/dist/sweetalert.css">
 
 <script>
 var CodeVersion = '3.0.8';
@@ -88,7 +99,7 @@ var CodeVersion = '3.0.8';
     <input type="file" id="fileUpload" name = "fileUpload" form = "importForm"/>
     <input type="button" id="upload" value="Upload" onclick="this.disabled='disabled'"/>
     <hr />
-	<ul style = "border: 2px solid #009966; border-radius: 5px; width: 52%; list-style-type: circle; list-style-position: inside; padding-left: 2%">
+	<ul style = "border: 2px solid #009966; border-radius: 5px; width: 70%; list-style-type: circle; list-style-position: inside; padding-left: 2%">
 		<li><b>Phone/Fax Fields:</b> Must be 10 digit number with no other characters. (e.g 1234567899)</li>
 		<li><b>Extension:</b> Can only be numerical(Do not include Ext. within)</li>
 		<li><b>Call Back Date/Date Added:</b> Must be entered in correct date format as shown - month/day/year (e.g 3/31/2016)
@@ -119,7 +130,7 @@ var CodeVersion = '3.0.8';
           <div id="data-fields"></div>
       <?php
 		require("connection.php");
-
+		
 		$result = mysqli_query($conn,"SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'sales'");
 
 		echo "<table id = 'import_table' border='1'>
@@ -147,7 +158,16 @@ var CodeVersion = '3.0.8';
     	  <button id="import-accept" onclick = "displayLoading()">Import</button><img id = "loadImage" style = "display:none" src = "images/web-icons/loadingBar.gif" alt = "Smiley Face" height = "40" width = "40">
     	</div>
     </form>
-
+	<?php
+		if(count($errors) > 0){
+			echo "<h4>" . count($errors) . " error(s) found" . "</h4>";
+			echo "<ul style = 'border: 2px solid #ff8080; border-radius: 5px; width: 52%; list-style-type: circle; list-style-position: inside; padding-left: 2%'>";
+			for($i = 0; $i < count($errors); $i++){
+				echo "<li>" . $errors[$i] . "</li>";
+			}
+			echo "</ul>";
+		}
+	?>
    </div><!-- #set_map -->
    <div id="upload_file" class="hide">
 <h3>Uploading...</h3>
@@ -159,6 +179,21 @@ var CodeVersion = '3.0.8';
     </body>
 </html>
 <script>
+
+window.onload = function(){
+		var errors = <?php echo json_encode($errors); ?>;
+		number_errors = errors.length;
+		
+		if(number_errors > 0){
+			showErrorMessage();
+		}
+		
+		function showErrorMessage(){
+		swal({   title: number_errors + " error(s) found",   text: "Errors listed below",   type: "warning",      confirmButtonColor: "#4FD8FC",   confirmButtonText: "OK",   closeOnConfirm: true }, 
+			function(){ saveNotClicked=false; $( ".store-btn" ).click();});
+		};
+	}
+
 function displayLoading()
 {
 	document.getElementById("loadImage").style.display = "block";

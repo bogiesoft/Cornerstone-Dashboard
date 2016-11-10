@@ -1,6 +1,7 @@
 <?php
 session_start();
 require("connection.php");
+require("head.php");
 $data = array();
 $handle = fopen($_FILES['fileUpload']["tmp_name"], 'r');
 while($row = fgetcsv($handle , 100000 , ",")) {
@@ -31,6 +32,10 @@ for($i = 0; $i < count($array_names); $i++)
 	}
 }
 
+$error = array();
+$sql_statements = array();
+
+
 for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 {
 		$sql = 'INSERT INTO sales (rep, quickbooks, prefix, full_name, suffix, title, phone, fax, extension, web_address, business, address_line_1, address_line_2, address_line_3, city, state, zipcode, status, call_back_date, priority, date_added, 
@@ -49,43 +54,46 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 				$input = str_replace('"', '\"', $data[$i][$array_indexes[$j]]);
 				$input = str_replace("'", "\'", $input); 
 			}
+			
+			if($input != "" && preg_match("/[0-9]/i", $input) && $array_names[$j] == "full_name"){
+				array_push($error, "error in row " . ($i + 1) . " column header " . $array_names[$j] . ": Numeric character found");
+			}
 			//check if all phone/fax fields are valid inputs
 			if($input != "" && (strlen($input) != 10 || preg_match("/[a-z]/i", $input)) && ($array_names[$j] == "phone" || $array_names[$j] == "fax" || $array_names[$j] == "cell_phone" || $array_names[$j] == "alt_phone" || $array_names[$j] == "home_phone")){
 				if($array_names[$j] == "phone"){
-					die("error in row " . ($i + 1) . " column header " . $array_names[$j] . ": Phone number not valid(eg: 8452555722)");
+					array_push($error, "error in row " . ($i + 1) . " column header " . $array_names[$j]);
 				}
 				else if($array_names[$j] == "fax"){
-					die("error in row " . ($i + 1) . " column header " . $array_names[$j] . ": Fax number not valid(eg: 8452555722)");
+					array_push($error, "error in row " . ($i + 1) . " column header " . $array_names[$j]);
 				}
 				else if($array_names[$j] == "cell_phone"){
-					die("error in row " . ($i + 1) . " column header " . $array_names[$j] . ": Cell Phone number not valid(eg: 8452555722)");
+					array_push($error, "error in row " . ($i + 1) . " column header " . $array_names[$j]);
 				}
 				else if($array_names[$j] == "alt_phone"){
-					die("error in row " . ($i + 1) . " column header " . $array_names[$j] . ": Alternate Phone number not valid(eg: 8452555722)");
+					array_push($error, "error in row " . ($i + 1) . " column header " . $array_names[$j]);
 				}
 				else if($array_names[$j] == "home_phone"){
-					die("error in row " . ($i + 1) . " column header " . $array_names[$j] . ": Home Phone number not valid(eg: 8452555722)");
-				}
-					
+					array_push($error, "error in row " . ($i + 1) . " column header " . $array_names[$j]);
+				}	
 			}
 			//check if email input for email1 or email2 is incorrect
 			if($input != "" && strpos($input, '@') === FALSE && ($array_names[$j] == "email1" || $array_names[$j] == "email2")){
-				die("error in row " . ($i + 1) . " column header " . $array_names[$j] . ": @ symbol needed in email(eg stevo123@gmail)");
+				array_push($error, "error in row " . ($i + 1) . " column header " . $array_names[$j]);
 			}
 			//check if extension is numerical
 			if($input != "" && preg_match("/[a-z]/i", $input) && $array_names[$j] == "extension"){
-				die("error in row " . ($i + 1) . " column header " . $array_names[$j] . ": Extension number not valid(eg: 123)");
+				array_push($error, "error in row " . ($i + 1) . " column header " . $array_names[$j]);
 			}
 			//check if call back date input field is readable or date added is readable
 			if(($array_names[$j] == "call_back_date" || $array_names[$j] == "date_added") && $input != ""){
 				$call_back_date = explode("/", $input);
 				if(count($call_back_date) != 3){ //checks if date has length 3 for day, month, and year
-					die("error in row " . ($i + 1) . " column header " . $array_names[$j] . ": Date might be missing day, month, or year(eg: 1/23/2016) or must be left blank");
+					array_push($error, "error in row " . ($i + 1) . " column header " . $array_names[$j]);
 				}
 				else{ //checks if numerical characters are in date
 					for($ii = 0; $ii < count($call_back_date); $ii++){
 						if(!is_numeric($call_back_date[$ii])){
-							die("error in row " . ($i + 1) . " column header " . $array_names[$j] . ": Date might have non numerical character(eg: 1/23/2016)");
+							array_push($error, "error in row " . ($i + 1) . " column header " . $array_names[$j]);
 						}
 					}
 				}
@@ -135,23 +143,58 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 		}
 		
 		//checks if already in database and will either update or insert
+		//only does import if $error array is empty
 		$result_match = mysqli_query($conn, "SELECT * FROM sales WHERE full_name = '$full_name' AND address_line_1 = '$address_line_1'");
 		$rows = mysqli_num_rows($result_match);
 		if($rows == 0){
-			mysqli_query($conn, $sql) or die("error");
+			array_push($sql_statements, $sql);
 		}
 		else{
-			mysqli_query($conn, $sql2) or die("error");
+			array_push($sql_statements, $sql2);
 		}
 
 }
 
-$job = "CSV file uploaded to CRM";
-$user_name = $_SESSION['user'];
-date_default_timezone_set('America/New_York');
-$today = date("Y-m-d G:i:s");
-$a_p = date("A");
-$sql_timestamp = "INSERT INTO timestamp (user, time, job, a_p) VALUES ('$user_name', '$today', '$job', '$a_p')";
-mysqli_query($conn, $sql_timestamp);
-header("location: uploadForm.php");
+if(count($error) == 0){
+	for($i = 0; $i < count($sql_statements); $i++){
+		mysqli_query($conn, $sql_statements[$i]) or die("error querying database");
+	}
+	$job = "CSV file uploaded to CRM";
+	$user_name = $_SESSION['user'];
+	date_default_timezone_set('America/New_York');
+	$today = date("Y-m-d G:i:s");
+	$a_p = date("A");
+	$sql_timestamp = "INSERT INTO timestamp (user, time, job, a_p) VALUES ('$user_name', '$today', '$job', '$a_p')";
+	mysqli_query($conn, $sql_timestamp);
+}
+else{
+	$_SESSION["import_errors"] = $error;
+}
 ?>
+<script>
+//sweetalert error message displayed if more than 1 error or sucess message if 0 errors
+	var error_string = "";
+	var number_errors = 0;
+	window.onload = function(){
+		var errors = <?php echo json_encode($error); ?>;
+		number_errors = errors.length;
+		for(var i = 0; i < errors.length; i++){
+			error_string = error_string + errors[i] + "\n";
+		}
+		if(errors.length > 0){
+			window.location.replace("uploadForm.php");
+		}
+		else{
+			showSuccessMessage();
+		}
+		
+		function showSuccessMessage(){
+		swal({   title: "Import Successful!",   text: "Redirecting...",   type: "success",      confirmButtonColor: "#4FD8FC",   closeOnConfirm: false }, 
+			function(){ saveNotClicked=false; $( ".store-btn" ).click();});  
+			 window.setTimeout(function () {
+			location.href = "uploadForm.php";
+			}, 2000);
+		};
+	}
+	
+</script>
