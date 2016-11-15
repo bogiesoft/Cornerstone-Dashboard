@@ -5,26 +5,24 @@ Follow this tutorial for further clarification --> https://coderexample.com/data
 require("connection.php");
 // storing  request (ie, get/post) global array to a variable
 $requestData= $_REQUEST;
-
-
 $columns = array(
 // datatable column index  => database column name
-
-	0 =>'full_name',
-	1 => 'business',
-	2=> 'address_line_1',
-	3=> 'city',
-	4=> 'state',
-	5=> 'zipcode',
-	6=> 'call_back_date',
-	7=> 'priority',
-	8=> 'title',
-	9=> 'phone',
-	10=> 'web_address',
-	11=> 'email1',
-	12=> 'vertical1',
-	13=> 'vertical2',
-	14=> 'vertical3',
+	0=> 'mark',
+	1 =>'full_name',
+	2 => 'business',
+	3=> 'address_line_1',
+	4=> 'city',
+	5=> 'state',
+	6=> 'zipcode',
+	7=> 'call_back_date',
+	8=> 'priority',
+	9=> 'title',
+	10=> 'phone',
+	11=> 'web_address',
+	12=> 'email1',
+	13=> 'vertical1',
+	14=> 'vertical2',
+	15=> 'vertical3',
 
 );
 
@@ -52,12 +50,11 @@ if( !empty($requestData['search']['value']) ) {   // if there is a search parame
 	$sql.=" OR email1 LIKE '".$requestData['search']['value']."%' ";
 	$sql.=" OR vertical1 LIKE '".$requestData['search']['value']."%' ";
 	$sql.=" OR vertical2 LIKE '".$requestData['search']['value']."%' ";
-
 	$sql.=" OR vertical3 LIKE '".$requestData['search']['value']."%' )";
 }
 //getting records as per search parameters
 for ($i = 0; $i < count($columns); $i++) {
-	if( !empty($requestData['columns'][$i]['search']['value']) && $i == 7){   //for Priority column only
+	if( !empty($requestData['columns'][$i]['search']['value']) && $i == 8){   //for Priority column only
 			$sql.=" AND ".$columns[$i]." = '".$requestData['columns'][$i]['search']['value']."' ";
 	}
 	else if( !empty($requestData['columns'][$i]['search']['value']) ){   //each column name search
@@ -65,9 +62,12 @@ for ($i = 0; $i < count($columns); $i++) {
 	}
 }
 
+$jsonsql = $sql;
+
 $query=mysqli_query($conn, $sql);
 $totalFiltered = mysqli_num_rows($query); // when there is a search parameter then we have to modify total number filtered rows as per search result.
 
+//Here's where I think I might be getting error from, not sure.
 if ($requestData['length'] > 0 ){
     $sql.=" ORDER BY ". $columns[$requestData['order'][0]['column']]."   ".$requestData['order'][0]['dir']."   LIMIT ".$requestData['start']." ,".$requestData['length']."   ";
 } else {
@@ -79,7 +79,7 @@ $query=mysqli_query($conn, $sql);
 $data = array();
 while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 	$nestedData=array();
-
+	$nestedData[] = $row["mark"];
 	$nestedData[] = $row["full_name"];
 	$nestedData[] = $row["business"];
 	$nestedData[] = $row["address_line_1"];
@@ -100,8 +100,8 @@ while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 }
 
 
-
 $json_data = array(
+			"sql"							=> $jsonsql,
 			"draw"            => intval( $requestData['draw'] ),   // for every request/draw by clientside , they send a number as a parameter, when they recieve a response/data they first check the draw number, so we are sending same number in draw.
 			"recordsTotal"    => intval( $totalData ),  // total number of records
 			"recordsFiltered" => intval( $totalFiltered ), // total number of records after searching, if there is no searching then totalFiltered = totalData

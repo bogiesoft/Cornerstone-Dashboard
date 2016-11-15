@@ -25,10 +25,18 @@
 <script type="text/javascript" language="javascript" >
 
 	$(document).ready(function() {
-    var selected = [];
-    var index;
+    //on page load set the 'mark' column in database to 0
+    $.ajax({
+      type:'POST',
+      url: 'CRM_updateMarked.php',
+      data: {
+        'function': 0
+      }
+    });
+
 //====================create datatable==========================================
   		var dataTable = $('#crm-table').DataTable( {
+
   			dom: 'B<"toolbar">lfrtip',
         select: {style: 'multi'},
   			buttons: ['selectAll','selectNone',
@@ -46,8 +54,6 @@
                   }
               }
           },
-
-
           {
   					extend: 'collection',
   	        text: 'Export Selected',
@@ -89,10 +95,8 @@
   				]
         }],
   			"processing": true,
-        "bpaging":   false,
   			"serverSide": true,
-        "lengthMenu": [[10, 25, 50, 100, 500, -1], [10, 25, 50, 100, 500, "All"]],
-        "deferRender": true,
+        "deferRender": false,
   			"scrollX": true,
   			"ajax":{
   				url :"server-side-CRM.php", // json datasource
@@ -103,27 +107,83 @@
   					$("#crm-table_processing").css("display","none");
   				}
   			},
-        "rowCallback": function( row, data, iDisplayIndex ) {
-          var info = $('#crm-table').DataTable().page.info();
-          var page = info.page;
-          var length = info.length;
-          index =  (page * length + (iDisplayIndex +1));
-          $('td:eq(-1)', row).html(index);
-        },
-
-
   			"columnDefs": [ {
-  			    "targets": 0,
+  			    "targets": 1,
   			    "render": function ( data, type, row) {
-              var str = serialize([row[0], row[2]]);
+              var str = serialize([row[1], row[3]]);
               var stren = urlencode(str);
-  			      return '<a href="edit_client.php?client_info='+stren+'">'+row[0]+'</a>'; //link for each client name
+  			      return '<a href="edit_client.php?client_info='+stren+'">'+row[1]+'</a>'; //link for each client name
   			    },
-  			  }]
-  		});
+  			  },{
+         'targets': 0,
+         'searchable': false,
+         'orderable': false,
+         'className': 'dt-body-center',
+         'render': function (data, type, row){
+           //console.log(row);
+           if (row[0] == 1) {
+             return '<input type="checkbox" id = "checkbox" name="id[]" checked>';
+           }else {
+             return '<input type="checkbox" id = "checkbox" name="id[]">';
+           }
+         }
+       }
+        ],
+        'select': {
+            style: 'multi',
+          },
+          "order": [[ 1, "asc" ]]
+  	});
 //save search button
 $("div.toolbar").html('<button id = "save_button" class = "dt-button" style = "margin-left: 150px;">Save search</button>');
 //==============================================================================
+$.fn.DataTable.TableTools.buttons.download = $.extend(
+    true,
+    {},
+    $.fn.DataTable.TableTools.buttonBase,
+    {
+        "sButtonText": "Download",
+        "sUrl":      "",
+        "sType":     "POST",
+        "fnData":    false,
+        "fnClick": function( button, config ) {
+            var dt = new $.fn.DataTable.Api( this.s.dt );
+            var data = dt.ajax.params() || {};
+
+            // Optional static additional parameters
+            // data.customParameter = ...;
+
+            if ( config.fnData ) {
+                config.fnData( data );
+            }
+
+            var iframe = $('<iframe/>', {
+                    id: "RemotingIFrame"
+                }).css( {
+                    border: 'none',
+                    width: 0,
+                    height: 0
+                } )
+                .appendTo( 'body' );
+
+            var contentWindow = iframe[0].contentWindow;
+            contentWindow.document.open();
+            contentWindow.document.close();
+
+            var form = contentWindow.document.createElement( 'form' );
+            form.setAttribute( 'method', config.sType );
+            form.setAttribute( 'action', config.sUrl );
+
+            var input = contentWindow.document.createElement( 'input' );
+            input.name = 'json';
+            input.value = JSON.stringify( data );
+
+            form.appendChild( input );
+            contentWindow.document.body.appendChild( form );
+            form.submit();
+        }
+    }
+);
 $('.buttons-csv').on('click', function(){
   console.log("hello");
   confirm("Are you sure you want to export to CSV?");
@@ -131,33 +191,12 @@ $('.buttons-csv').on('click', function(){
 });
 
 $('#crm-table').on('page.dt', function(){
-    var info = dataTable.page.info();
-    var pageCount = info.page;
-    var length = info.length;
-    for (i = 0; i < length; i++){
-      if(jQuery.inArray(pageCount*length+i, selected) !== -1){
-        var $tablerows = $("#crm-table tbody tr");
-        $tablerows.each(function(n) {
-          console.log((parseInt($(this).find("td:eq(-1)").text()))-10+"selected row");
-          console.log("page"+ (pageCount*length+i));
-          if ((parseInt($(this).find("td:eq(-1)").text())-10)==pageCount*length+i) {
-            console.log(true);
-            $(this).attr('selected', true);
-          }
-        });
-        console.log(pageCount*length+i);
-
-      }
-      console.log(selected);
-    }
-    console.log( 'Showing page: '+pageCount+' of '+info.pages );
+  console.log("page");
 });
 
-$('button.destroy_pager').on('click', function() {
-        console.log("hello");
-        //dataTable.paging = false;
-        // to reload
-        //dataTable.ajax.reload();
+    $('#export').on('click', function() {
+      var sqlsend = dataTable.ajax.json().sql;
+      window.location.href="server-side-CSV.php?val="+sqlsend;
     });
 
 		$('.search-input-text').on( 'keyup click', function () {   // for text boxes
@@ -175,12 +214,44 @@ $('button.destroy_pager').on('click', function() {
 
 // If any row selected change the counter of "Row selected".
 		$('#crm-table tbody').on( 'click', 'tr', function () {
-      selected.push(parseInt($(this).find('td:eq(-1)').text()));
 					updateCounter();
 		});
 
+
+	$('.buttons-select-all').on( 'click', function () {
+    // Check checkboxes for all rows in the table
+    var sqlsend = dataTable.ajax.json().sql;
+    $.ajax({
+      type:'POST',
+      url: 'CRM_updateMarked.php',
+      data: {
+        'function': 2,
+        'Select': 'all',
+        'sql': sqlsend
+      }
+    });
+      $('input[type="checkbox"]').each(function(){
+          $(this).attr('checked', true);
+      });
+      updateCounter();
+  });
+
 //Select All button and select none button
-  	$('.buttons-select-all, .buttons-select-none').on( 'click', function () {
+  	$('.buttons-select-none').on( 'click', function (event) {
+      console.log(this);
+      var sqlsend = dataTable.ajax.json().sql;
+      $.ajax({
+        type:'POST',
+        url: 'CRM_updateMarked.php',
+        data: {
+          'function': 2,
+          'Select': 'none',
+          'sql': sqlsend
+        }
+      });
+        $('input[type="checkbox"]').each(function(){
+            $(this).attr('checked', false);
+        });
   			updateCounter();
   	});
 
@@ -368,6 +439,23 @@ $('button.destroy_pager').on('click', function() {
         .replace(/%20/g, '+')
     }
 
+    $('#crm-table tbody').on('click','tr',function() {
+        var checked = $(this).find('input[type="checkbox"]').prop('checked');
+        var clientName = $(this).find('td').eq(1).text();
+        var Address = $(this).find('td').eq(3).text();
+        $.ajax({
+          type:'POST',
+          url: 'CRM_updateMarked.php',
+          data: {
+            'function': 1,
+            'checked': checked,
+            'CName': clientName,
+            'address': Address
+          }
+        });
+
+    });
+
 	});
 </script>
 
@@ -417,10 +505,13 @@ $('button.destroy_pager').on('click', function() {
 			</div>
 </div>
 <div id = 'allcontacts-table' class='allcontacts-table'>
-  <button class="form_button destroy_pager" type="button" onclick="" title="Destroy pager">Destroy pager</button>
+  <div class='button DTTT_button'>
+  <a href="#" class="form_button csv1"  id ="export" role='button'>Export</a>
+</div>
 	<table id="crm-table"  cellpadding="0" cellspacing="0" border="0" class="display" width="100%">
 			<thead>
 				<tr>
+          <th>Mark</th>
 					<th>Client Name</th>
 					<th>Business</th>
 					<th>Address</th>
@@ -440,16 +531,17 @@ $('button.destroy_pager').on('click', function() {
 			</thead>
 			<tfoot>
 			<tr>
-				<td><input type="text" data-column="0"  placeholder = "Search Client Name" class="search-input-text"></td>
-	      <td><input type="text" data-column="1"  placeholder = "Search Business" class="search-input-text"></td>
-				<td><input type="text" data-column="2"  placeholder = "Search Address" class="search-input-text"></td>
-				<td><input type="text" data-column="3"  placeholder = "Search City" class="search-input-text"></td>
-				<td><input type="text" data-column="4"  placeholder = "Search State" class="search-input-text"></td>
-				<td><input type="text" data-column="5"  placeholder = "Search Zip Code" class="search-input-text"></td>
-				<td><input type="text" data-column="6"  placeholder = "Search call_back_date" class="search-input-text"></td>
+        <td></td>
+				<td><input type="text" data-column="1"  placeholder = "Search Client Name" class="search-input-text"></td>
+	      <td><input type="text" data-column="2"  placeholder = "Search Business" class="search-input-text"></td>
+				<td><input type="text" data-column="3"  placeholder = "Search Address" class="search-input-text"></td>
+				<td><input type="text" data-column="4"  placeholder = "Search City" class="search-input-text"></td>
+				<td><input type="text" data-column="5"  placeholder = "Search State" class="search-input-text"></td>
+				<td><input type="text" data-column="6"  placeholder = "Search Zip Code" class="search-input-text"></td>
+				<td><input type="text" data-column="7"  placeholder = "Search call_back_date" class="search-input-text"></td>
 
 				<td>
-            <select data-column="7"  class="search-input-select">
+            <select data-column="8"  class="search-input-select">
                 <option value="">(Search Priority)</option>
 								<option value="HIGH">HIGH</option>
                 <option value="CALL">CALL</option>
@@ -458,13 +550,13 @@ $('button.destroy_pager').on('click', function() {
 								<option value="LOW">LOW</option>
             </select>
         </td>
-				<td><input type="text" data-column="8"  placeholder = "Search Title" class="search-input-text"></td>
-				<td><input type="text" data-column="9"  placeholder = "Search Phone" class="search-input-text"></td>
-				<td><input type="text" data-column="10"  placeholder = "Search Website" class="search-input-text"></td>
-				<td><input type="text" data-column="11"  placeholder = "Search Email" class="search-input-text"></td>
-				<td><input type="text" data-column="12"  placeholder = "Search Vertical1" class="search-input-text"></td>
-				<td><input type="text" data-column="13"  placeholder = "Search Vertical2" class="search-input-text"></td>
-				<td><input type="text" data-column="14"  placeholder = "Search Vertical3" class="search-input-text"></td>
+				<td><input type="text" data-column="9"  placeholder = "Search Title" class="search-input-text"></td>
+				<td><input type="text" data-column="10"  placeholder = "Search Phone" class="search-input-text"></td>
+				<td><input type="text" data-column="11"  placeholder = "Search Website" class="search-input-text"></td>
+				<td><input type="text" data-column="12"  placeholder = "Search Email" class="search-input-text"></td>
+				<td><input type="text" data-column="13"  placeholder = "Search Vertical1" class="search-input-text"></td>
+				<td><input type="text" data-column="14"  placeholder = "Search Vertical2" class="search-input-text"></td>
+				<td><input type="text" data-column="15"  placeholder = "Search Vertical3" class="search-input-text"></td>
 			</tr>
 		</tfoot>
 		<tbody>
