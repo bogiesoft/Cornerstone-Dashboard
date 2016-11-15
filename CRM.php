@@ -342,7 +342,7 @@ $('button.destroy_pager').on('click', function() {
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 		<h1 class="pull-left">CRM</h1>
-		<a class="pull-right" href="add_client.php" class="add_button">Upload</a>
+		<a class="pull-right" href="uploadForm.php" class="add_button">Upload</a>
 	</div>
 <div class="dashboard-detail">
 

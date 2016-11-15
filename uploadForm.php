@@ -13,12 +13,13 @@ if(isset($_SESSION["import_errors"])){
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-        <title>DataConsulate</title>
+        <title>Cornerstone Dashboard</title>
 
         <link href="//fonts.googleapis.com/css?family=Lato:300,400|Montserrat" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="Upload-css/dc.css" type="text/css" />
         <link rel="stylesheet" href="Upload-css/scrollbar.css" type="text/css" />
         <link href="Upload-css/toastr.css" rel="stylesheet"/>
+		<link rel="shortcut icon" type="image/png" href="images/favicon.ico">
 
         <script src="Upload-css/jquery.js"></script>
         <script src="Upload-css/toastr.js"></script>
@@ -100,6 +101,8 @@ var CodeVersion = '3.0.8';
     <input type="button" id="upload" value="Upload" onclick="this.disabled='disabled'"/>
     <hr />
 	<ul style = "border: 2px solid #009966; border-radius: 5px; width: 70%; list-style-type: circle; list-style-position: inside; padding-left: 2%">
+		<li>All input must not exceed max length of 45</li>
+		<li><b>Full Name/Prefix/Suffix Fields:</b> No numerical characters allowed</li>
 		<li><b>Phone/Fax Fields:</b> Must be 10 digit number with no other characters. (e.g 1234567899)</li>
 		<li><b>Extension:</b> Can only be numerical(Do not include Ext. within)</li>
 		<li><b>Call Back Date/Date Added:</b> Must be entered in correct date format as shown - month/day/year (e.g 3/31/2016)
@@ -108,6 +111,8 @@ var CodeVersion = '3.0.8';
 			</ul>
 		</li>
 		<li><b>Email Fields: </b> Must include @gmail, @aol, @yahoo, etc. (e.g James123@gmail)</li>
+		<li><b>Country: </b> Must only be used for a <u>FOREIGN</u> country or left blank. DO NOT enter United States in this field</li>
+		<li><b>Address Line 3: </b> Only used for FOREIGN addresses and a Country field must be included
 	</ul>
 	<fieldset>
 		<div class="widget-corner-upper"></div>
@@ -161,7 +166,7 @@ var CodeVersion = '3.0.8';
 	<?php
 		if(count($errors) > 0){
 			echo "<h4>" . count($errors) . " error(s) found" . "</h4>";
-			echo "<ul style = 'border: 2px solid #ff8080; border-radius: 5px; width: 52%; list-style-type: circle; list-style-position: inside; padding-left: 2%'>";
+			echo "<ul style = 'border: 2px solid #ff8080; border-radius: 5px; width: 68%; list-style-type: circle; list-style-position: inside; padding-left: 2%'>";
 			for($i = 0; $i < count($errors); $i++){
 				echo "<li>" . $errors[$i] . "</li>";
 			}
