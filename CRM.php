@@ -506,7 +506,32 @@
     }
   }
 
-
+  
+  var search_counter = 5;
+  function addSearchCounter(search, add_button, minus_button){
+	if(search_counter != 0){
+		$(add_button).hide();
+		$(search).css('visibility','visible');
+		$(minus_button).show();
+		search_counter--;
+	}
+	else{
+		showErrorMessage();
+	}
+	
+	function showErrorMessage(){
+		swal({   title: "Limit",   text: "Only 5 search boxes allowed",   type: "warning",      confirmButtonColor: "#4FD8FC",   confirmButtonText: "OK",   closeOnConfirm: true }, 
+			function(){ saveNotClicked=false; $( ".store-btn" ).click();});
+	};
+}
+function minusSearchCounter(search, add_button, minus_button){
+		$(minus_button).hide();
+		$(search).css('visibility','hidden');
+		$(search).val("");
+		$(add_button).show();
+		search_counter++;
+		$('.search_col').click();
+}
 
 </script>
 <div class="dashboard-cont" style="padding-top:110px;">
@@ -599,16 +624,16 @@
 			<tfoot>
 			<tr>
         <td></td>
-				<td><input type="text" text = "full_name" data-column="1"  placeholder = "Search Client Name" class="search-input-text search_col"></input></td>
-	      <td><input type="text" text = "business" data-column="2"  placeholder = "Search Business" class="search-input-text search_col"></td>
-				<td><input type="text" text = "address_line_1" data-column="3"  placeholder = "Search Address" class="search-input-text search_col"></td>
-				<td><input type="text" text = "city" data-column="4"  placeholder = "Search City" class="search-input-text search_col"></td>
-				<td><input type="text" text = "state" data-column="5"  placeholder = "Search State" class="search-input-text search_col"></td>
-				<td><input type="text" text = "zipcode" data-column="6"  placeholder = "Search Zip Code" class="search-input-text search_col"></td>
-				<td><input type="text" text = "call_back_date" data-column="7"  placeholder = "Search call_back_date" class="search-input-text search_col"></td>
+				<td><input type="text" text = "full_name" data-column="1"  placeholder = "Search Client Name" class="search-input-text search_col search_box1" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button1' onclick = "minusSearchCounter('.search_box1', '.add_button1', '.minus_button1')">-</button><button class = "add_button1" onclick = "addSearchCounter('.search_box1', '.add_button1', '.minus_button1')">+</button></td>
+				<td><input type="text" text = "business" data-column="2"  placeholder = "Search Business" class="search-input-text search_col search_box2" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button2' onclick = "minusSearchCounter('.search_box2', '.add_button2', '.minus_button2')">-</button><button class = "add_button2" onclick = "addSearchCounter('.search_box2', '.add_button2', '.minus_button2')">+</button></td>
+				<td><input type="text" text = "address_line_1" data-column="3"  placeholder = "Search Address" class="search-input-text search_col search_box3" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button3' onclick = "minusSearchCounter('.search_box3', '.add_button3', '.minus_button3')">-</button><button class = "add_button3" onclick = "addSearchCounter('.search_box3', '.add_button3', '.minus_button3')">+</button></td>
+				<td><input type="text" text = "city" data-column="4"  placeholder = "Search City" class="search-input-text search_col search_box4" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button4' onclick = "minusSearchCounter('.search_box4', '.add_button4', '.minus_button4')">-</button><button class = "add_button4" onclick = "addSearchCounter('.search_box4', '.add_button4', '.minus_button4')">+</button></td>
+				<td><input type="text" text = "state" data-column="5"  placeholder = "Search State" class="search-input-text search_col search_box5" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button5' onclick = "minusSearchCounter('.search_box5', '.add_button5', '.minus_button5')">-</button><button class = "add_button5" onclick = "addSearchCounter('.search_box5', '.add_button5', '.minus_button5')">+</button></td>
+				<td><input type="text" text = "zipcode" data-column="6"  placeholder = "Search Zip Code" class="search-input-text search_col search_box6" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button6' onclick = "minusSearchCounter('.search_box6', '.add_button6', '.minus_button6')">-</button><button class = "add_button6" onclick = "addSearchCounter('.search_box6', '.add_button6', '.minus_button6')">+</button></td>
+				<td><input type="text" text = "call_back_date" data-column="7"  placeholder = "Search call_back_date" class="search-input-text search_col search_box7" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button7' onclick = "minusSearchCounter('.search_box7', '.add_button7', '.minus_button7')">-</button><button class = "add_button7" onclick = "addSearchCounter('.search_box7', '.add_button7', '.minus_button7')">+</button></td>
 
 				<td>
-            <select text = "priority" data-column="8"  class="search-input-select search_col">
+            <select text = "priority" data-column="8"  class="search-input-select search_col search_box8" style = "visibility: hidden">
                 <option value="">(Search Priority)</option>
 								<option value="HIGH">HIGH</option>
                 <option value="CALL">CALL</option>
@@ -616,14 +641,15 @@
 								<option value="MUST CALL">MUST CALL</option>
 								<option value="LOW">LOW</option>
             </select>
+			<button style = 'display: none' class = 'minus_button8' onclick = "minusSearchCounter('.search_box8', '.add_button8', '.minus_button8')">-</button><button class = "add_button8" onclick = "addSearchCounter('.search_box8', '.add_button8', '.minus_button8')">+</button>
         </td>
-				<td><input type="text" text = "title" data-column="9"  placeholder = "Search Title" class="search-input-text search_col"></td>
-				<td><input type="text" text = "phone" data-column="10"  placeholder = "Search Phone" class="search-input-text search_col"></td>
-				<td><input type="text" text = "web_address" data-column="11"  placeholder = "Search Website" class="search-input-text search_col"></td>
-				<td><input type="text" text = "email1" data-column="12"  placeholder = "Search Email" class="search-input-text search_col"></td>
-				<td><input type="text" text = "vertical1" data-column="13"  placeholder = "Search Vertical1" class="search-input-text search_col"></td>
-				<td><input type="text" text = "vertical2" data-column="14"  placeholder = "Search Vertical2" class="search-input-text search_col"></td>
-				<td><input type="text" text = "vertical3" data-column="15"  placeholder = "Search Vertical3" class="search-input-text search_col"></td>
+				<td><input type="text" text = "title" data-column="9"  placeholder = "Search Title" class="search-input-text search_col search_box9" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button9' onclick = "minusSearchCounter('.search_box9', '.add_button9', '.minus_button9')">-</button><button class = "add_button9" onclick = "addSearchCounter('.search_box9', '.add_button9', '.minus_button9')">+</button></td>
+				<td><input type="text" text = "phone" data-column="10"  placeholder = "Search Phone" class="search-input-text search_col search_box10" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button10' onclick = "minusSearchCounter('.search_box10', '.add_button10', '.minus_button10')">-</button><button class = "add_button10" onclick = "addSearchCounter('.search_box10', '.add_button10', '.minus_button10')">+</button></td>
+				<td><input type="text" text = "web_address" data-column="11"  placeholder = "Search Website" class="search-input-text search_col search_box11" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button11' onclick = "minusSearchCounter('.search_box11', '.add_button11', '.minus_button11')">-</button><button class = "add_button11" onclick = "addSearchCounter('.search_box11', '.add_button11', '.minus_button11')">+</button></td>
+				<td><input type="text" text = "email1" data-column="12"  placeholder = "Search Email" class="search-input-text search_col search_box12" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button12' onclick = "minusSearchCounter('.search_box12', '.add_button12', '.minus_button12')">-</button><button class = "add_button12" onclick = "addSearchCounter('.search_box12', '.add_button12', '.minus_button12')">+</button></td>
+				<td><input type="text" text = "vertical1" data-column="13"  placeholder = "Search Vertical1" class="search-input-text search_col search_box13" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button13' onclick = "minusSearchCounter('.search_box13', '.add_button13', '.minus_button13')">-</button><button class = "add_button13" onclick = "addSearchCounter('.search_box13', '.add_button13', '.minus_button13')">+</button></td>
+				<td><input type="text" text = "vertical2" data-column="14"  placeholder = "Search Vertical2" class="search-input-text search_col search_box14" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button14' onclick = "minusSearchCounter('.search_box14', '.add_button14', '.minus_button14')">-</button><button class = "add_button14" onclick = "addSearchCounter('.search_box14', '.add_button14', '.minus_button14')">+</button></td>
+				<td><input type="text" text = "vertical3" data-column="15"  placeholder = "Search Vertical3" class="search-input-text search_col search_box15" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button15' onclick = "minusSearchCounter('.search_box15', '.add_button15', '.minus_button15')">-</button><button class = "add_button15" onclick = "addSearchCounter('.search_box15', '.add_button15', '.minus_button15')">+</button></td>
 			</tr>
 		</tfoot>
 		<tbody>
