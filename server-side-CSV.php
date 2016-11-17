@@ -10,7 +10,7 @@ header("Pragma: no-cache"); // HTTP 1.0
 header("Expires: 0"); // Proxies
 // create a file pointer connected to the output stream
 $output = fopen('php://output', 'w');
-$sql = $_GET['val'].'AND mark = 1';
+$sql = $_GET['val'].' AND mark = 1';
 // output the column headings
 fputcsv($output, array('Client Name', 'business', 'Address','City', 'State', 'Zip code','Call back date', 'Priority', 'Title','Phone', 'Web Address', 'Email','Vertical1','Vertical2','Vertical3'));
 $rows = mysqli_query($conn, $sql);

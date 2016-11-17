@@ -26,6 +26,7 @@
 
 	$(document).ready(function() {
     //on page load set the 'mark' column in database to 0
+    var count = 0;
     $.ajax({
       type:'POST',
       url: 'CRM_updateMarked.php',
@@ -409,18 +410,19 @@
         var val = '';
         var col_name ='';
         var search_name = '';
+        var search_count = 0;
         $( '.search_col' ).each(function() {
-          if ($(this).val()!=(null || '')) {
-            val =val+","+$(this).val();
-            col_name = col_name+","+$(this).attr("text");
+          if ($(this).val()!=(null || '')) {    //when column search input field is not empty
+              val =val+","+$(this).val();
+              col_name = col_name+","+$(this).attr("text");
           }
         });
         if (val == '') {
           alert("Search something before saving!");
         }
-        else
+        else{
           search_name = prompt("Please enter a name for search. Search cannot be empty!", "");
-        $.ajax({
+         $.ajax({
           type:'POST',
           url: 'CRM_updateMarked.php',
           data: {
@@ -431,7 +433,25 @@
           }
         });
         window.location.reload();
+      }
       });
+
+    $('.search_col').on('keyup',function(){
+      if(count>3){
+        console.log("disable"+count);
+        $("input.search_col").map(function() {
+          console.log($(this).val());
+
+          if ($(this).val()==(null || '')) {    //when column search input field is not empty
+            $(this).prop('disabled', true);
+          }
+        });
+      }
+      else{
+        console.log("increment"+count);
+        count++;
+      }
+    });
 
     $('.delete_button').on('click', function(){
       var del_id = $(this).attr("id");
@@ -450,11 +470,19 @@
       	});
     });
 
+
+      $('.newbutton').on('click', function(){
+        console.log("tisss");
+        $($(this).parent().attr("input")).show();
+        $(this).remove();
+        //$('.test').show();
+      });
+
 	});
 
-  function SavedSearch(field1, value1, field2, value2, field3, value3, field4, value4){
-    var search_field = [field1, field2, field3, field4];
-    var search_value = [value1, value2, value3, value4];
+  function SavedSearch(field1, value1, field2, value2, field3, value3, field4, value4, field5, value5){
+    var search_field = [field1, field2, field3, field4, field5];
+    var search_value = [value1, value2, value3, value4, value5];
     for (i = 0; i < search_field.length; i++) {
       if (search_field[i]!= "$$$") {
         $( '.search_col' ).each(function() {
@@ -479,8 +507,8 @@
   }
 
 
-</script>
 
+</script>
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 		<h1 class="pull-left">CRM</h1>
@@ -503,6 +531,7 @@
 				<table id="saved_search_table" style = 'display: none'>
 					<tbody>
 						<?php
+            $columnIntable = 0;
 						$result = mysqli_query($conn, "SELECT * FROM saved_search WHERE table_type = 'CRM' ORDER BY search_date DESC LIMIT 10");
 						if (mysqli_num_rows($result) > 0) {
 							// output data of each row
@@ -516,7 +545,17 @@
 								$value3=$row["value3"];
                 $field4=$row["field4"];
 								$value4=$row["value4"];
-								echo "<tr id = 'row" . $search_id . "'><td class='data-cell'><button id = '" . $search_id . "' class = 'saved_search_button' onClick = 'SavedSearch(\"$field1\", \"$value1\",\"$field2\", \"$value2\",\"$field3\", \"$value3\",\"$field4\", \"$value4\")'>". $row["search_name"]."</button></td><td><button id = '" . $search_id . "' class = 'delete_button'><img src = 'images/x_button.png' width = '25' height = '25'></button></tr>";
+                $field5=$row["field5"];
+								$value5=$row["value5"];
+                if($columnIntable == 0){
+                  echo "<tr id = 'row" . $search_id . "'>";
+                }
+                  echo "<td class='data-cell'><button id = '" . $search_id . "' class = 'saved_search_button' onClick = 'SavedSearch(\"$field1\", \"$value1\",\"$field2\", \"$value2\",\"$field3\", \"$value3\",\"$field4\", \"$value4\",\"$field5\", \"$value5\")'>". $row["search_name"]."</button></td><td><button id = '" . $search_id . "' class = 'delete_button'><img src = 'images/x_button.png' width = '25' height = '25'></button>";
+                  $columnIntable++;
+                if($columnIntable == 3){
+                  echo "</tr>";
+                  $columnIntable =0;
+                }
 							}
 						}
 						else {
@@ -529,7 +568,7 @@
 </div>
 <div id = 'allcontacts-table' class='allcontacts-table'>
   <div class='button DTTT_button'>
-  <a href="#" class="form_button csv1"  id ="export" role='button'>Export CSV</a>
+    <a href="#" class="form_button csv1"  id ="export" role='button'>Export CSV</a>
   </div>
   <!--save search button-->
   <div id="popup" style="display: none">some text here</div>
@@ -560,7 +599,7 @@
 			<tfoot>
 			<tr>
         <td></td>
-				<td><input type="text" text = "full_name" data-column="1"  placeholder = "Search Client Name" class="search-input-text search_col"></td>
+				<td><input type="text" text = "full_name" data-column="1"  placeholder = "Search Client Name" class="search-input-text search_col"></input></td>
 	      <td><input type="text" text = "business" data-column="2"  placeholder = "Search Business" class="search-input-text search_col"></td>
 				<td><input type="text" text = "address_line_1" data-column="3"  placeholder = "Search Address" class="search-input-text search_col"></td>
 				<td><input type="text" text = "city" data-column="4"  placeholder = "Search City" class="search-input-text search_col"></td>
