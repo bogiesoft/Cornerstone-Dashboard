@@ -1,6 +1,7 @@
 <?php require("header.php"); ?>
 
 <style>
+
   #crm-table tr td {
       height: 20px;
   }
@@ -9,6 +10,7 @@
     float:none;
     text-align:right;
   }
+
   	div.header {
   			margin: 200px auto;
   			line-height:30px;
@@ -21,12 +23,21 @@
   	}
 </style>
 <script type="text/javascript" language="javascript" >
+
 	$(document).ready(function() {
-    var selected = [];
-    var index;
+    //on page load set the 'mark' column in database to 0
+    $.ajax({
+      type:'POST',
+      url: 'CRM_updateMarked.php',
+      data: {
+        'function': 0
+      }
+    });
+
 //====================create datatable==========================================
   		var dataTable = $('#crm-table').DataTable( {
-  			dom: 'B<"toolbar">lfrtip',
+
+  			dom: 'Blfrtip',
         select: {style: 'multi'},
   			buttons: ['selectAll','selectNone',
           {
@@ -84,10 +95,8 @@
   				]
         }],
   			"processing": true,
-        "bpaging":   false,
   			"serverSide": true,
-        "lengthMenu": [[10, 25, 50, 100, 500, -1], [10, 25, 50, 100, 500, "All"]],
-        "deferRender": true,
+        "deferRender": false,
   			"scrollX": true,
   			"ajax":{
   				url :"server-side-CRM.php", // json datasource
@@ -98,75 +107,134 @@
   					$("#crm-table_processing").css("display","none");
   				}
   			},
-        "rowCallback": function( row, data, iDisplayIndex ) {
-          var info = $('#crm-table').DataTable().page.info();
-          var page = info.page;
-          var length = info.length;
-          index =  (page * length + (iDisplayIndex +1));
-          $('td:eq(-1)', row).html(index);
-        },
   			"columnDefs": [ {
-  			    "targets": 0,
+  			    "targets": 1,
   			    "render": function ( data, type, row) {
-              var str = serialize([row[0], row[2]]);
+              var str = serialize([row[1], row[3]]);
               var stren = urlencode(str);
-  			      return '<a href="edit_client.php?client_info='+stren+'">'+row[0]+'</a>'; //link for each client name
+  			      return '<a href="edit_client.php?client_info='+stren+'">'+row[1]+'</a>'; //link for each client name
   			    },
-  			  }]
-  		});
-//save search button
-$("div.toolbar").html('<button id = "save_button" class = "dt-button" style = "margin-left: 150px;">Save search</button>');
+  			  },{
+         'targets': 0,
+         'searchable': false,
+         'orderable': false,
+         'className': 'dt-body-center',
+         'render': function (data, type, row){
+           //console.log(row);
+           if (row[0] == 1) {
+             return '<input type="checkbox" id = "checkbox" name="id[]" checked>';
+           }else {
+             return '<input type="checkbox" id = "checkbox" name="id[]">';
+           }
+         }
+       }
+        ],
+        'select': {
+            style: 'multi',
+          },
+          "order": [[ 1, "asc" ]]
+  	});
+
 //==============================================================================
-$('.buttons-csv').on('click', function(){
-  console.log("hello");
-  confirm("Are you sure you want to export to CSV?");
-});
-$('#crm-table').on('page.dt', function(){
-    var info = dataTable.page.info();
-    var pageCount = info.page;
-    var length = info.length;
-    for (i = 0; i < length; i++){
-      if(jQuery.inArray(pageCount*length+i, selected) !== -1){
-        var $tablerows = $("#crm-table tbody tr");
-        $tablerows.each(function(n) {
-          console.log((parseInt($(this).find("td:eq(-1)").text()))-10+"selected row");
-          console.log("page"+ (pageCount*length+i));
-          if ((parseInt($(this).find("td:eq(-1)").text())-10)==pageCount*length+i) {
-            console.log(true);
-            $(this).attr('selected', true);
-          }
-        });
-        console.log(pageCount*length+i);
+
+//save search button
+  $('#save_button').on('click', function(){
+    var val = '';
+    var col_name ='';
+    var search_name = '';
+    var rowCount = $('#saved_search_table tr').length;
+    $( '.search_col' ).each(function() {
+      if ($(this).val()!=(null || '')) {
+        val =val+","+$(this).val();
+        col_name = col_name+","+$(this).attr("text");
       }
-      console.log(selected);
-    }
-    console.log( 'Showing page: '+pageCount+' of '+info.pages );
-});
-$('button.destroy_pager').on('click', function() {
-        console.log("hello");
-        //dataTable.paging = false;
-        // to reload
-        //dataTable.ajax.reload();
     });
+    if (val == '') {
+      alert("Search something before saving!");
+    }
+    else
+      search_name = prompt("Please enter a name for search. Search cannot be empty!", "");
+    $.ajax({
+      type:'POST',
+      url: 'CRM_updateMarked.php',
+      data: {
+        'function': 3,
+        'search_name': search_name,
+        'val': val,
+        'col_name': col_name,
+        'id': rowCount
+      }
+    });
+    console.log(val);
+    console.log(col_name);
+
+  });
+
+  $('#crm-table').on('page.dt', function(){
+    console.log("page");
+  });
+
+    $('#export').on('click', function() {
+      var sqlsend = dataTable.ajax.json().sql;
+      window.location.href="server-side-CSV.php?val="+sqlsend;
+    });
+
 		$('.search-input-text').on( 'keyup click', function () {   // for text boxes
 			var i =$(this).attr('data-column');  // getting column index
 			var v =$(this).val();  // getting search input value
 			dataTable.columns(i).search(v).draw();
 		});
+
   	$('.search-input-select').on( 'change', function () {   // for select box
   			var i =$(this).attr('data-column');
   			var v =$(this).val();
   			dataTable.columns(i).search(v).draw();
   	});
+
+
 // If any row selected change the counter of "Row selected".
 		$('#crm-table tbody').on( 'click', 'tr', function () {
-      selected.push(parseInt($(this).find('td:eq(-1)').text()));
 					updateCounter();
 		});
+
+
+	$('.buttons-select-all').on( 'click', function () {
+    // Check checkboxes for all rows in the table
+    var sqlsend = dataTable.ajax.json().sql;
+    $.ajax({
+      type:'POST',
+      url: 'CRM_updateMarked.php',
+      data: {
+        'function': 2,
+        'Select': 'all',
+        'sql': sqlsend
+      }
+    });
+      $('input[type="checkbox"]').each(function(){
+          $(this).attr('checked', true);
+      });
+      updateCounter();
+  });
+
 //Select All button and select none button
-  	$('.buttons-select-all, .buttons-select-none').on( 'click', function () {
+  	$('.buttons-select-none').on( 'click', function (event) {
+      console.log(this);
+      var sqlsend = dataTable.ajax.json().sql;
+      $.ajax({
+        type:'POST',
+        url: 'CRM_updateMarked.php',
+        data: {
+          'function': 2,
+          'Select': 'none',
+          'sql': sqlsend
+        }
+      });
+        $('input[type="checkbox"]').each(function(){
+            $(this).attr('checked', false);
+        });
   			updateCounter();
   	});
+
   	function updateCounter(){
   		var len = dataTable.rows('.selected').data().length;
   		if(len>0){
@@ -174,6 +242,7 @@ $('button.destroy_pager').on('click', function() {
   		}
   		else{$("#general i .counter").text('');}
   	}
+
     function serialize (mixedValue) {
       //  discuss at: http://locutus.io/php/serialize/
       // original by: Arpad Ray (mailto:arpad@php.net)
@@ -196,10 +265,12 @@ $('button.destroy_pager').on('click', function() {
       //   returns 1: 'a:3:{i:0;s:5:"Kevin";i:1;s:3:"van";i:2;s:9:"Zonneveld";}'
       //   example 2: serialize({firstName: 'Kevin', midName: 'van'})
       //   returns 2: 'a:2:{s:9:"firstName";s:5:"Kevin";s:7:"midName";s:3:"van";}'
+
       var val, key, okey
       var ktype = ''
       var vals = ''
       var count = 0
+
       var _utf8Size = function (str) {
         var size = 0
         var i = 0
@@ -217,15 +288,18 @@ $('button.destroy_pager').on('click', function() {
         }
         return size
       }
+
       var _getType = function (inp) {
         var match
         var key
         var cons
         var types
         var type = typeof inp
+
         if (type === 'object' && !inp) {
           return 'null'
         }
+
         if (type === 'object') {
           if (!inp.constructor) {
             return 'object'
@@ -245,7 +319,9 @@ $('button.destroy_pager').on('click', function() {
         }
         return type
       }
+
       var type = _getType(mixedValue)
+
       switch (type) {
         case 'function':
           val = ''
@@ -272,12 +348,14 @@ $('button.destroy_pager').on('click', function() {
             val = 'O' + objname[1].substring(1, objname[1].length - 1);
           }
           */
+
           for (key in mixedValue) {
             if (mixedValue.hasOwnProperty(key)) {
               ktype = _getType(mixedValue[key])
               if (ktype === 'function') {
                 continue
               }
+
               okey = (key.match(/^[0-9]+$/) ? parseInt(key, 10) : key)
               vals += serialize(okey) + serialize(mixedValue[key])
               count++
@@ -296,8 +374,10 @@ $('button.destroy_pager').on('click', function() {
       if (type !== 'object' && type !== 'array') {
         val += ';'
       }
+
       return val
     }
+
     function urlencode (str) {
       //       discuss at: http://locutus.io/php/urlencode/
       //      original by: Philip Peterson
@@ -324,7 +404,9 @@ $('button.destroy_pager').on('click', function() {
       //        returns 2: 'http%3A%2F%2Fkvz.io%2F'
       //        example 3: urlencode('http://www.google.nl/search?q=Locutus&ie=utf-8')
       //        returns 3: 'http%3A%2F%2Fwww.google.nl%2Fsearch%3Fq%3DLocutus%26ie%3Dutf-8'
+
       str = (str + '')
+
       // Tilde should be allowed unescaped in future versions of PHP (as reflected below),
       // but if you want to reflect current
       // PHP behavior, you would need to add ".replace(/~/g, '%7E');" to the following.
@@ -336,13 +418,75 @@ $('button.destroy_pager').on('click', function() {
         .replace(/\*/g, '%2A')
         .replace(/%20/g, '+')
     }
+
+    $('#crm-table tbody').on('click','tr',function() {
+        var checked = $(this).find('input[type="checkbox"]').prop('checked');
+        var clientName = $(this).find('td').eq(1).text();
+        var Address = $(this).find('td').eq(3).text();
+        $.ajax({
+          type:'POST',
+          url: 'CRM_updateMarked.php',
+          data: {
+            'function': 1,
+            'checked': checked,
+            'CName': clientName,
+            'address': Address
+          }
+        });
+    });
+
+    $('.delete_button').on('click', function(){
+      var del_id = $(this).attr("id");
+      var info = del_id;
+      if(confirm("Are you sure you want to delete"))
+      	$.ajax({
+      		url: 'CRM_updateMarked.php',
+      		type: 'POST',
+      		data: {
+      			id: info,
+            'function': 4
+      		},
+      		success: function(){
+      			document.getElementById("row" + del_id).style.display = "none";
+      		}
+      	});
+    });
+
 	});
+
+  function SavedSearch(field1, value1, field2, value2, field3, value3, field4, value4){
+    var search_field = [field1, field2, field3, field4];
+    var search_value = [value1, value2, value3, value4];
+    for (i = 0; i < search_field.length; i++) {
+      if (search_field[i]!= "$$$") {
+        $( '.search_col' ).each(function() {
+          if ($(this).attr("text") == search_field[i]) {
+            $(this).val(search_value[i]);
+          }
+        });
+      }
+    }
+    $( '.search_col' ).click();
+  }
+
+  function showSavedSearch(){
+    if(document.getElementById('show_saved_search').innerHTML == "Show Saved Search"){
+      document.getElementById('saved_search_table').style.display = "block";
+      document.getElementById('show_saved_search').innerHTML = "Hide Saved Search";
+    }
+    else{
+      document.getElementById('saved_search_table').style.display = "none";
+      document.getElementById('show_saved_search').innerHTML = "Show Saved Search";
+    }
+  }
+
+
 </script>
 
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 		<h1 class="pull-left">CRM</h1>
-		<a class="pull-right" href="uploadForm.php" class="add_button">Upload</a>
+		<a class="pull-right" href="add_client.php" class="add_button">Upload</a>
 	</div>
 <div class="dashboard-detail">
 
@@ -358,7 +502,6 @@ $('button.destroy_pager').on('click', function() {
 				</form>
 			</div>
 			<div id="saved_search_div">
-
 				<table id="saved_search_table" style = 'display: none'>
 					<tbody>
 						<?php
@@ -373,7 +516,9 @@ $('button.destroy_pager').on('click', function() {
 								$value2=$row["value2"];
 								$field3=$row["field3"];
 								$value3=$row["value3"];
-								echo "<tr id = 'row" . $search_id . "'><td class='data-cell'><a href = 'advanced_search_CRM.php?field1=$field1&value1=$value1&field2=$field2&value2=$value2&field3=$field3&value3=$value3&search_id=$search_id'>". $row["search_name"]."</a></td><td><button id = '" . $search_id . "'><img src = 'images/x_button.png' width = '25' height = '25'></button></tr>";
+                $field4=$row["field4"];
+								$value4=$row["value4"];
+								echo "<tr id = 'row" . $search_id . "'><td class='data-cell'><button id = '" . $search_id . "' class = 'saved_search_button' onClick = 'SavedSearch(\"$field1\", \"$value1\",\"$field2\", \"$value2\",\"$field3\", \"$value3\",\"$field4\", \"$value4\")'>". $row["search_name"]."</button></td><td><button id = '" . $search_id . "' class = 'delete_button'><img src = 'images/x_button.png' width = '25' height = '25'></button></tr>";
 							}
 						}
 						else {
@@ -385,10 +530,16 @@ $('button.destroy_pager').on('click', function() {
 			</div>
 </div>
 <div id = 'allcontacts-table' class='allcontacts-table'>
-  <button class="form_button destroy_pager" type="button" onclick="" title="Destroy pager">Destroy pager</button>
+  <div class='button DTTT_button'>
+  <a href="#" class="form_button csv1"  id ="export" role='button'>Export CSV</a>
+  </div>
+  <!--save search button-->
+  <button id = "save_button" class = "dt-button" style = "margin-left: 150px;">Save search</button>
+
 	<table id="crm-table"  cellpadding="0" cellspacing="0" border="0" class="display" width="100%">
 			<thead>
 				<tr>
+          <th>Mark</th>
 					<th>Client Name</th>
 					<th>Business</th>
 					<th>Address</th>
@@ -408,16 +559,17 @@ $('button.destroy_pager').on('click', function() {
 			</thead>
 			<tfoot>
 			<tr>
-				<td><input type="text" data-column="0"  placeholder = "Search Client Name" class="search-input-text"></td>
-	      <td><input type="text" data-column="1"  placeholder = "Search Business" class="search-input-text"></td>
-				<td><input type="text" data-column="2"  placeholder = "Search Address" class="search-input-text"></td>
-				<td><input type="text" data-column="3"  placeholder = "Search City" class="search-input-text"></td>
-				<td><input type="text" data-column="4"  placeholder = "Search State" class="search-input-text"></td>
-				<td><input type="text" data-column="5"  placeholder = "Search Zip Code" class="search-input-text"></td>
-				<td><input type="text" data-column="6"  placeholder = "Search call_back_date" class="search-input-text"></td>
+        <td></td>
+				<td><input type="text" text = "full_name" data-column="1"  placeholder = "Search Client Name" class="search-input-text search_col"></td>
+	      <td><input type="text" text = "business" data-column="2"  placeholder = "Search Business" class="search-input-text search_col"></td>
+				<td><input type="text" text = "address_line_1" data-column="3"  placeholder = "Search Address" class="search-input-text search_col"></td>
+				<td><input type="text" text = "city" data-column="4"  placeholder = "Search City" class="search-input-text search_col"></td>
+				<td><input type="text" text = "state" data-column="5"  placeholder = "Search State" class="search-input-text search_col"></td>
+				<td><input type="text" text = "zipcode" data-column="6"  placeholder = "Search Zip Code" class="search-input-text search_col"></td>
+				<td><input type="text" text = "call_back_date" data-column="7"  placeholder = "Search call_back_date" class="search-input-text search_col"></td>
 
 				<td>
-            <select data-column="7"  class="search-input-select">
+            <select text = "priority" data-column="8"  class="search-input-select search_col">
                 <option value="">(Search Priority)</option>
 								<option value="HIGH">HIGH</option>
                 <option value="CALL">CALL</option>
@@ -426,13 +578,13 @@ $('button.destroy_pager').on('click', function() {
 								<option value="LOW">LOW</option>
             </select>
         </td>
-				<td><input type="text" data-column="8"  placeholder = "Search Title" class="search-input-text"></td>
-				<td><input type="text" data-column="9"  placeholder = "Search Phone" class="search-input-text"></td>
-				<td><input type="text" data-column="10"  placeholder = "Search Website" class="search-input-text"></td>
-				<td><input type="text" data-column="11"  placeholder = "Search Email" class="search-input-text"></td>
-				<td><input type="text" data-column="12"  placeholder = "Search Vertical1" class="search-input-text"></td>
-				<td><input type="text" data-column="13"  placeholder = "Search Vertical2" class="search-input-text"></td>
-				<td><input type="text" data-column="14"  placeholder = "Search Vertical3" class="search-input-text"></td>
+				<td><input type="text" text = "title" data-column="9"  placeholder = "Search Title" class="search-input-text search_col"></td>
+				<td><input type="text" text = "phone" data-column="10"  placeholder = "Search Phone" class="search-input-text search_col"></td>
+				<td><input type="text" text = "web_address" data-column="11"  placeholder = "Search Website" class="search-input-text search_col"></td>
+				<td><input type="text" text = "email1" data-column="12"  placeholder = "Search Email" class="search-input-text search_col"></td>
+				<td><input type="text" text = "vertical1" data-column="13"  placeholder = "Search Vertical1" class="search-input-text search_col"></td>
+				<td><input type="text" text = "vertical2" data-column="14"  placeholder = "Search Vertical2" class="search-input-text search_col"></td>
+				<td><input type="text" text = "vertical3" data-column="15"  placeholder = "Search Vertical3" class="search-input-text search_col"></td>
 			</tr>
 		</tfoot>
 		<tbody>
