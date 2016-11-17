@@ -36,16 +36,13 @@ function save_search(){
   $val = explode(",", $_POST['val']);
   $col_name = explode(",",$_POST['col_name']);
   $today = date("Y-m-d");
-  $id = $_POST['id']+1;
   if (count($val)<5) {
     for($i = count($val); $i < 5; $i++) {
       $val[$i] = "$$$";
       $col_name[$i] = "$$$";
     }
   }
-  echo $id;
-  echo $col_name[0].$col_name[1].$col_name[2].$col_name[3].$col_name[4];
-  $sql = "INSERT into saved_search (search_id, search_name, search_date,field1,value1, field2, value2, field3, value3, table_type, field4, value4) VALUES ('$id','$search_name', '$today','$col_name[1]','$val[1]', '$col_name[2]','$val[2]', '$col_name[3]','$val[3]', 'CRM','$col_name[4]','$val[4]')";
+  $sql = "INSERT into saved_search (search_name, search_date,field1,value1, field2, value2, field3, value3, table_type, field4, value4) VALUES ('$search_name', '$today','$col_name[1]','$val[1]', '$col_name[2]','$val[2]', '$col_name[3]','$val[3]', 'CRM','$col_name[4]','$val[4]')";
   return $sql;
 }
 

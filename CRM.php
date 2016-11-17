@@ -137,38 +137,6 @@
 
 //==============================================================================
 
-//save search button
-  $('#save_button').on('click', function(){
-    var val = '';
-    var col_name ='';
-    var search_name = '';
-    var rowCount = $('#saved_search_table tr').length;
-    $( '.search_col' ).each(function() {
-      if ($(this).val()!=(null || '')) {
-        val =val+","+$(this).val();
-        col_name = col_name+","+$(this).attr("text");
-      }
-    });
-    if (val == '') {
-      alert("Search something before saving!");
-    }
-    else
-      search_name = prompt("Please enter a name for search. Search cannot be empty!", "");
-    $.ajax({
-      type:'POST',
-      url: 'CRM_updateMarked.php',
-      data: {
-        'function': 3,
-        'search_name': search_name,
-        'val': val,
-        'col_name': col_name,
-        'id': rowCount
-      }
-    });
-    console.log(val);
-    console.log(col_name);
-
-  });
 
   $('#crm-table').on('page.dt', function(){
     console.log("page");
@@ -435,6 +403,36 @@
         });
     });
 
+
+    //save search button
+      $('#save_button').on('click', function(){
+        var val = '';
+        var col_name ='';
+        var search_name = '';
+        $( '.search_col' ).each(function() {
+          if ($(this).val()!=(null || '')) {
+            val =val+","+$(this).val();
+            col_name = col_name+","+$(this).attr("text");
+          }
+        });
+        if (val == '') {
+          alert("Search something before saving!");
+        }
+        else
+          search_name = prompt("Please enter a name for search. Search cannot be empty!", "");
+        $.ajax({
+          type:'POST',
+          url: 'CRM_updateMarked.php',
+          data: {
+            'function': 3,
+            'search_name': search_name,
+            'val': val,
+            'col_name': col_name,
+          }
+        });
+        window.location.reload();
+      });
+
     $('.delete_button').on('click', function(){
       var del_id = $(this).attr("id");
       var info = del_id;
@@ -486,7 +484,7 @@
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 		<h1 class="pull-left">CRM</h1>
-		<a class="pull-right" href="add_client.php" class="add_button">Upload</a>
+		<a class="pull-right" href="uploadForm.php" class="add_button">Upload</a>
 	</div>
 <div class="dashboard-detail">
 
@@ -534,8 +532,10 @@
   <a href="#" class="form_button csv1"  id ="export" role='button'>Export CSV</a>
   </div>
   <!--save search button-->
-  <button id = "save_button" class = "dt-button" style = "margin-left: 150px;">Save search</button>
+  <div id="popup" style="display: none">some text here</div>
 
+  <button id = "save_button" class = "dt-button" style = "margin-left: 150px;">Save search</button>
+</div>
 	<table id="crm-table"  cellpadding="0" cellspacing="0" border="0" class="display" width="100%">
 			<thead>
 				<tr>
