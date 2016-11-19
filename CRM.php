@@ -1,6 +1,7 @@
 <?php require("header.php"); ?>
 
 <style>
+
   #crm-table tr td {
       height: 20px;
   }
@@ -9,6 +10,7 @@
     float:none;
     text-align:right;
   }
+
   	div.header {
   			margin: 200px auto;
   			line-height:30px;
@@ -21,152 +23,133 @@
   	}
 </style>
 <script type="text/javascript" language="javascript" >
+
 	$(document).ready(function() {
-    var selected = [];
-    var index;
+    //on page load set the 'mark' column in database to 0
+    var count = 0;
+    $.ajax({
+      type:'POST',
+      url: 'CRM_updateMarked.php',
+      data: {
+        'function': 0
+      }
+    });
+
 //====================create datatable==========================================
   		var dataTable = $('#crm-table').DataTable( {
-  			dom: 'B<"toolbar">lfrtip',
-        select: {style: 'multi'},
-  			buttons: ['selectAll','selectNone',
-          {
-              extend: 'selected',
-              text: 'Show selected rows only',
-              action: function ( e, dt, button, config ) {
-                  if (button.text() == 'Show selected rows only') {
-                      dt.rows({ selected: false }).nodes().to$().css({"display":"none"});
-                      button.text('Show all');
-                  }
-                  else {
-                      dt.rows({ selected: false }).nodes().to$().css({"display":"table-row"});
-                      button.text('Show selected rows only');
-                  }
-              }
-          },
-          {
-  					extend: 'collection',
-  	        text: 'Export Selected',
-  	        buttons: [
-  					{
-  						extend: 'copy',
-  						exportOptions: {
-  						columns: ':visible:not(.not-exported)',
-  						 modifier: { selected: true }
-  						}
-  					},{
-  						extend: 'csv',
-  						exportOptions: {
-  						columns: ':visible:not(.not-exported)',
-  						 modifier: { selected: true }
-  						}
-  					},{
-  						extend: 'excel',
-  						exportOptions: {
-  						columns: ':visible:not(.not-exported)',
-  						 modifier: { selected: true }
-  						}
-  					},{
-  						extend: 'pdfHtml5',
-  						orientation: 'landscape',
-              pageSize: 'LEGAL',
-  						exportOptions: {
-  						//columns: ':visible:not(.not-exported)',
-              //columns: ':not(.no-print)',
-  						 modifier: { selected: true }
-  						}
-  					},{
-  						extend: 'print',
-  						exportOptions: {
-  						columns: ':visible:not(.not-exported)',
-  						 modifier: { selected: true }
-  						}
-  					}
-  				]
-        }],
+
+  			dom: '<"toolbar">lfrtip',
+  			
   			"processing": true,
-        "bpaging":   false,
   			"serverSide": true,
-        "lengthMenu": [[10, 25, 50, 100, 500, -1], [10, 25, 50, 100, 500, "All"]],
-        "deferRender": true,
+        "deferRender": false,
   			"scrollX": true,
   			"ajax":{
   				url :"server-side-CRM.php", // json datasource
   				type: "post",  // method  , by default get
+          data: {"function": 0},
   				error: function(){  // error handling
   					$(".crm-table-error").html("");
   					$("#crm-table").append('<tbody class="crm-table-error"><tr><th colspan="3">No data found in the server</th></tr></tbody>');
   					$("#crm-table_processing").css("display","none");
   				}
   			},
-        "rowCallback": function( row, data, iDisplayIndex ) {
-          var info = $('#crm-table').DataTable().page.info();
-          var page = info.page;
-          var length = info.length;
-          index =  (page * length + (iDisplayIndex +1));
-          $('td:eq(-1)', row).html(index);
-        },
   			"columnDefs": [ {
-  			    "targets": 0,
+  			    "targets": 1,
   			    "render": function ( data, type, row) {
-              var str = serialize([row[0], row[2]]);
+              var str = serialize([row[1], row[3]]);
               var stren = urlencode(str);
-  			      return '<a href="edit_client.php?client_info='+stren+'">'+row[0]+'</a>'; //link for each client name
+  			      return '<a href="edit_client.php?client_info='+stren+'">'+row[1]+'</a>'; //link for each client name
   			    },
-  			  }]
-  		});
-//save search button
-$("div.toolbar").html('<button id = "save_button" class = "dt-button" style = "margin-left: 150px;">Save search</button>');
+  			  },{
+         'targets': 0,
+         'searchable': false,
+         'orderable': false,
+         'className': 'dt-body-center',
+         'render': function (data, type, row){
+           //console.log(row);
+           if (row[0] == 1) {
+             return '<input type="checkbox" id = "checkbox" name="id[]" checked>';
+           }else {
+             return '<input type="checkbox" id = "checkbox" name="id[]">';
+           }
+         }
+       }
+     ],
+          "order": [[ 1, "asc" ]]
+  	});
+
+$("div.toolbar").html('<div class="dt-buttons"><a id = "save_button" class = "dt-button" style = "margin-left: 150px;">Save search</a><a href="#" class="dt-button csv1"  id ="export" role="button">Export CSV</a><a class="dt-button buttons-select-all" tabindex="0" aria-controls="crm-table" href="#"><span>Select all</span></a><a class="dt-button buttons-select-none" tabindex="0" aria-controls="crm-table" href="#"><span>Deselect all</span></a><a class="dt-button buttons-selected" tabindex="0" aria-controls="crm-table" href="#"><span>Show selected rows only</span></a></div>')
 //==============================================================================
-$('.buttons-csv').on('click', function(){
-  console.log("hello");
-  confirm("Are you sure you want to export to CSV?");
-});
-$('#crm-table').on('page.dt', function(){
-    var info = dataTable.page.info();
-    var pageCount = info.page;
-    var length = info.length;
-    for (i = 0; i < length; i++){
-      if(jQuery.inArray(pageCount*length+i, selected) !== -1){
-        var $tablerows = $("#crm-table tbody tr");
-        $tablerows.each(function(n) {
-          console.log((parseInt($(this).find("td:eq(-1)").text()))-10+"selected row");
-          console.log("page"+ (pageCount*length+i));
-          if ((parseInt($(this).find("td:eq(-1)").text())-10)==pageCount*length+i) {
-            console.log(true);
-            $(this).attr('selected', true);
-          }
-        });
-        console.log(pageCount*length+i);
-      }
-      console.log(selected);
-    }
-    console.log( 'Showing page: '+pageCount+' of '+info.pages );
-});
-$('button.destroy_pager').on('click', function() {
-        console.log("hello");
-        //dataTable.paging = false;
-        // to reload
-        //dataTable.ajax.reload();
+
+
+  $('#crm-table').on('page.dt', function(){
+    console.log("page");
+  });
+
+    $('#export').on('click', function() {
+      var sqlsend = dataTable.ajax.json().sql;
+      window.location.href="server-side-CSV.php?val="+sqlsend;
     });
+
 		$('.search-input-text').on( 'keyup click', function () {   // for text boxes
 			var i =$(this).attr('data-column');  // getting column index
 			var v =$(this).val();  // getting search input value
 			dataTable.columns(i).search(v).draw();
 		});
+
   	$('.search-input-select').on( 'change', function () {   // for select box
   			var i =$(this).attr('data-column');
   			var v =$(this).val();
   			dataTable.columns(i).search(v).draw();
   	});
-// If any row selected change the counter of "Row selected".
-		$('#crm-table tbody').on( 'click', 'tr', function () {
-      selected.push(parseInt($(this).find('td:eq(-1)').text()));
-					updateCounter();
-		});
+
+
+
+	$('.buttons-select-all').on( 'click', function () {
+    // Check checkboxes for all rows in the table
+    var sqlsend = dataTable.ajax.json().sql;
+    $.ajax({
+      type:'POST',
+      url: 'CRM_updateMarked.php',
+      data: {
+        'function': 2,
+        'Select': 'all',
+        'sql': sqlsend
+      }
+    });
+      $('input[type="checkbox"]').each(function(){
+          $(this).attr('checked', true);
+      });
+      updateCounter();
+      var ref = $('#crm-table').DataTable();
+      ref.ajax.reload();
+  });
+
 //Select All button and select none button
-  	$('.buttons-select-all, .buttons-select-none').on( 'click', function () {
+  	$('.buttons-select-none').on( 'click', function (event) {
+      console.log(this);
+      var sqlsend = dataTable.ajax.json().sql;
+      $.ajax({
+        type:'POST',
+        url: 'CRM_updateMarked.php',
+        data: {
+          'function': 2,
+          'Select': 'none',
+          'sql': sqlsend
+        }
+      });
+        $('input[type="checkbox"]').each(function(){
+            $(this).attr('checked', false);
+        });
   			updateCounter();
   	});
+
+    $('.buttons-selected').on('click', function(event){
+      dataTable.ajax.data('"function":0, "mark_sql": "mark = 1"').load();
+
+    });
+
   	function updateCounter(){
   		var len = dataTable.rows('.selected').data().length;
   		if(len>0){
@@ -174,6 +157,7 @@ $('button.destroy_pager').on('click', function() {
   		}
   		else{$("#general i .counter").text('');}
   	}
+
     function serialize (mixedValue) {
       //  discuss at: http://locutus.io/php/serialize/
       // original by: Arpad Ray (mailto:arpad@php.net)
@@ -196,10 +180,12 @@ $('button.destroy_pager').on('click', function() {
       //   returns 1: 'a:3:{i:0;s:5:"Kevin";i:1;s:3:"van";i:2;s:9:"Zonneveld";}'
       //   example 2: serialize({firstName: 'Kevin', midName: 'van'})
       //   returns 2: 'a:2:{s:9:"firstName";s:5:"Kevin";s:7:"midName";s:3:"van";}'
+
       var val, key, okey
       var ktype = ''
       var vals = ''
       var count = 0
+
       var _utf8Size = function (str) {
         var size = 0
         var i = 0
@@ -217,15 +203,18 @@ $('button.destroy_pager').on('click', function() {
         }
         return size
       }
+
       var _getType = function (inp) {
         var match
         var key
         var cons
         var types
         var type = typeof inp
+
         if (type === 'object' && !inp) {
           return 'null'
         }
+
         if (type === 'object') {
           if (!inp.constructor) {
             return 'object'
@@ -245,7 +234,9 @@ $('button.destroy_pager').on('click', function() {
         }
         return type
       }
+
       var type = _getType(mixedValue)
+
       switch (type) {
         case 'function':
           val = ''
@@ -272,12 +263,14 @@ $('button.destroy_pager').on('click', function() {
             val = 'O' + objname[1].substring(1, objname[1].length - 1);
           }
           */
+
           for (key in mixedValue) {
             if (mixedValue.hasOwnProperty(key)) {
               ktype = _getType(mixedValue[key])
               if (ktype === 'function') {
                 continue
               }
+
               okey = (key.match(/^[0-9]+$/) ? parseInt(key, 10) : key)
               vals += serialize(okey) + serialize(mixedValue[key])
               count++
@@ -296,8 +289,10 @@ $('button.destroy_pager').on('click', function() {
       if (type !== 'object' && type !== 'array') {
         val += ';'
       }
+
       return val
     }
+
     function urlencode (str) {
       //       discuss at: http://locutus.io/php/urlencode/
       //      original by: Philip Peterson
@@ -324,7 +319,9 @@ $('button.destroy_pager').on('click', function() {
       //        returns 2: 'http%3A%2F%2Fkvz.io%2F'
       //        example 3: urlencode('http://www.google.nl/search?q=Locutus&ie=utf-8')
       //        returns 3: 'http%3A%2F%2Fwww.google.nl%2Fsearch%3Fq%3DLocutus%26ie%3Dutf-8'
+
       str = (str + '')
+
       // Tilde should be allowed unescaped in future versions of PHP (as reflected below),
       // but if you want to reflect current
       // PHP behavior, you would need to add ".replace(/~/g, '%7E');" to the following.
@@ -336,9 +333,132 @@ $('button.destroy_pager').on('click', function() {
         .replace(/\*/g, '%2A')
         .replace(/%20/g, '+')
     }
-	});
-</script>
 
+    $('#crm-table tbody').on('click','tr',function() {
+      console.log($(this).find('input'));
+      if($(this).find('input').data('clicked')){
+        var checked = $(this).find('input[type="checkbox"]').prop('checked');
+        var clientName = $(this).find('td').eq(1).text();
+        var Address = $(this).find('td').eq(3).text();
+        $.ajax({
+          type:'POST',
+          url: 'CRM_updateMarked.php',
+          data: {
+            'function': 1,
+            'checked': checked,
+            'CName': clientName,
+            'address': Address
+          }
+        });
+      }
+      updateCounter();
+    });
+
+
+    //save search button
+      $('#save_button').on('click', function(){
+        var val = '';
+        var col_name ='';
+        var search_name = '';
+        var search_count = 0;
+        $( '.search_col' ).each(function() {
+          if ($(this).val()!=(null || '')) {    //when column search input field is not empty
+              val =val+","+$(this).val();
+              col_name = col_name+","+$(this).attr("text");
+          }
+        });
+        if (val == '') {
+          alert("Search something before saving!");
+        }
+        else{
+          search_name = prompt("Please enter a name for search. Search cannot be empty!", "");
+         $.ajax({
+          type:'POST',
+          url: 'CRM_updateMarked.php',
+          data: {
+            'function': 3,
+            'search_name': search_name,
+            'val': val,
+            'col_name': col_name,
+          }
+        });
+        window.location.reload();
+      }
+      });
+
+
+    $('.delete_button').on('click', function(){
+      var del_id = $(this).attr("id");
+      var info = del_id;
+      if(confirm("Are you sure you want to delete"))
+      	$.ajax({
+      		url: 'CRM_updateMarked.php',
+      		type: 'POST',
+      		data: {
+      			id: info,
+            'function': 4
+      		},
+      		success: function(){
+      			document.getElementById("row" + del_id).style.display = "none";
+      		}
+      	});
+    });
+
+	});
+
+  function SavedSearch(field1, value1, field2, value2, field3, value3, field4, value4, field5, value5){
+    var search_field = [field1, field2, field3, field4, field5];
+    var search_value = [value1, value2, value3, value4, value5];
+    for (i = 0; i < search_field.length; i++) {
+      if (search_field[i]!= "$$$") {
+        $( '.search_col' ).each(function() {
+          if ($(this).attr("text") == search_field[i]) {
+            $(this).val(search_value[i]);
+          }
+        });
+      }
+    }
+    $( '.search_col' ).click();
+  }
+
+  function showSavedSearch(){
+    if(document.getElementById('show_saved_search').innerHTML == "Show Saved Search"){
+      document.getElementById('saved_search_table').style.display = "block";
+      document.getElementById('show_saved_search').innerHTML = "Hide Saved Search";
+    }
+    else{
+      document.getElementById('saved_search_table').style.display = "none";
+      document.getElementById('show_saved_search').innerHTML = "Show Saved Search";
+    }
+  }
+
+  var search_counter = 5;
+  function addSearchCounter(search, add_button, minus_button){
+	if(search_counter != 0){
+		$(add_button).hide();
+		$(search).css('visibility','visible');
+		$(minus_button).show();
+		search_counter--;
+	}
+	else{
+		showErrorMessage();
+	}
+
+	function showErrorMessage(){
+		swal({   title: "Limit",   text: "Only 5 search boxes allowed. Press '-' button to choose another column.",   type: "warning",      confirmButtonColor: "#4FD8FC",   confirmButtonText: "OK",   closeOnConfirm: true },
+			function(){ saveNotClicked=false; $( ".store-btn" ).click();});
+	};
+}
+function minusSearchCounter(search, add_button, minus_button){
+		$(minus_button).hide();
+		$(search).css('visibility','hidden');
+		$(search).val("");
+		$(add_button).show();
+		search_counter++;
+		$('.search_col').click();
+}
+
+</script>
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 		<h1 class="pull-left">CRM</h1>
@@ -358,10 +478,10 @@ $('button.destroy_pager').on('click', function() {
 				</form>
 			</div>
 			<div id="saved_search_div">
-
 				<table id="saved_search_table" style = 'display: none'>
 					<tbody>
 						<?php
+            $columnIntable = 0;
 						$result = mysqli_query($conn, "SELECT * FROM saved_search WHERE table_type = 'CRM' ORDER BY search_date DESC LIMIT 10");
 						if (mysqli_num_rows($result) > 0) {
 							// output data of each row
@@ -373,7 +493,19 @@ $('button.destroy_pager').on('click', function() {
 								$value2=$row["value2"];
 								$field3=$row["field3"];
 								$value3=$row["value3"];
-								echo "<tr id = 'row" . $search_id . "'><td class='data-cell'><a href = 'advanced_search_CRM.php?field1=$field1&value1=$value1&field2=$field2&value2=$value2&field3=$field3&value3=$value3&search_id=$search_id'>". $row["search_name"]."</a></td><td><button id = '" . $search_id . "'><img src = 'images/x_button.png' width = '25' height = '25'></button></tr>";
+                $field4=$row["field4"];
+								$value4=$row["value4"];
+                $field5=$row["field5"];
+								$value5=$row["value5"];
+                if($columnIntable == 0){
+                  echo "<tr id = 'row" . $search_id . "'>";
+                }
+                  echo "<td class='data-cell'><button id = '" . $search_id . "' class = 'saved_search_button' onClick = 'SavedSearch(\"$field1\", \"$value1\",\"$field2\", \"$value2\",\"$field3\", \"$value3\",\"$field4\", \"$value4\",\"$field5\", \"$value5\")'>". $row["search_name"]."</button></td><td><button id = '" . $search_id . "' class = 'delete_button'><img src = 'images/x_button.png' width = '25' height = '25'></button>";
+                  $columnIntable++;
+                if($columnIntable == 3){
+                  echo "</tr>";
+                  $columnIntable =0;
+                }
 							}
 						}
 						else {
@@ -385,10 +517,11 @@ $('button.destroy_pager').on('click', function() {
 			</div>
 </div>
 <div id = 'allcontacts-table' class='allcontacts-table'>
-  <button class="form_button destroy_pager" type="button" onclick="" title="Destroy pager">Destroy pager</button>
+
 	<table id="crm-table"  cellpadding="0" cellspacing="0" border="0" class="display" width="100%">
 			<thead>
 				<tr>
+          <th>Mark</th>
 					<th>Client Name</th>
 					<th>Business</th>
 					<th>Address</th>
@@ -407,33 +540,35 @@ $('button.destroy_pager').on('click', function() {
 				</tr>
 			</thead>
 			<tfoot>
-			<tr>
-				<td><input type="text" data-column="0"  placeholder = "Search Client Name" class="search-input-text"></td>
-	      <td><input type="text" data-column="1"  placeholder = "Search Business" class="search-input-text"></td>
-				<td><input type="text" data-column="2"  placeholder = "Search Address" class="search-input-text"></td>
-				<td><input type="text" data-column="3"  placeholder = "Search City" class="search-input-text"></td>
-				<td><input type="text" data-column="4"  placeholder = "Search State" class="search-input-text"></td>
-				<td><input type="text" data-column="5"  placeholder = "Search Zip Code" class="search-input-text"></td>
-				<td><input type="text" data-column="6"  placeholder = "Search call_back_date" class="search-input-text"></td>
+        <tr>
+          <td></td>
+  				<td><input type="text" text = "full_name" data-column="1"  placeholder = "Search Client Name" class="search-input-text search_col search_box1" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button1' onclick = "minusSearchCounter('.search_box1', '.add_button1', '.minus_button1')">-</button><button class = "add_button1" onclick = "addSearchCounter('.search_box1', '.add_button1', '.minus_button1')">+</button></td>
+  				<td><input type="text" text = "business" data-column="2"  placeholder = "Search Business" class="search-input-text search_col search_box2" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button2' onclick = "minusSearchCounter('.search_box2', '.add_button2', '.minus_button2')">-</button><button class = "add_button2" onclick = "addSearchCounter('.search_box2', '.add_button2', '.minus_button2')">+</button></td>
+  				<td><input type="text" text = "address_line_1" data-column="3"  placeholder = "Search Address" class="search-input-text search_col search_box3" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button3' onclick = "minusSearchCounter('.search_box3', '.add_button3', '.minus_button3')">-</button><button class = "add_button3" onclick = "addSearchCounter('.search_box3', '.add_button3', '.minus_button3')">+</button></td>
+  				<td><input type="text" text = "city" data-column="4"  placeholder = "Search City" class="search-input-text search_col search_box4" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button4' onclick = "minusSearchCounter('.search_box4', '.add_button4', '.minus_button4')">-</button><button class = "add_button4" onclick = "addSearchCounter('.search_box4', '.add_button4', '.minus_button4')">+</button></td>
+  				<td><input type="text" text = "state" data-column="5"  placeholder = "Search State" class="search-input-text search_col search_box5" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button5' onclick = "minusSearchCounter('.search_box5', '.add_button5', '.minus_button5')">-</button><button class = "add_button5" onclick = "addSearchCounter('.search_box5', '.add_button5', '.minus_button5')">+</button></td>
+  				<td><input type="text" text = "zipcode" data-column="6"  placeholder = "Search Zip Code" class="search-input-text search_col search_box6" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button6' onclick = "minusSearchCounter('.search_box6', '.add_button6', '.minus_button6')">-</button><button class = "add_button6" onclick = "addSearchCounter('.search_box6', '.add_button6', '.minus_button6')">+</button></td>
+  				<td><input type="text" text = "call_back_date" data-column="7"  placeholder = "Search call_back_date" class="search-input-text search_col search_box7" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button7' onclick = "minusSearchCounter('.search_box7', '.add_button7', '.minus_button7')">-</button><button class = "add_button7" onclick = "addSearchCounter('.search_box7', '.add_button7', '.minus_button7')">+</button></td>
 
-				<td>
-            <select data-column="7"  class="search-input-select">
-                <option value="">(Search Priority)</option>
-								<option value="HIGH">HIGH</option>
-                <option value="CALL">CALL</option>
-                <option value="CALL BACK">CALL-BACK</option>
-								<option value="MUST CALL">MUST CALL</option>
-								<option value="LOW">LOW</option>
-            </select>
-        </td>
-				<td><input type="text" data-column="8"  placeholder = "Search Title" class="search-input-text"></td>
-				<td><input type="text" data-column="9"  placeholder = "Search Phone" class="search-input-text"></td>
-				<td><input type="text" data-column="10"  placeholder = "Search Website" class="search-input-text"></td>
-				<td><input type="text" data-column="11"  placeholder = "Search Email" class="search-input-text"></td>
-				<td><input type="text" data-column="12"  placeholder = "Search Vertical1" class="search-input-text"></td>
-				<td><input type="text" data-column="13"  placeholder = "Search Vertical2" class="search-input-text"></td>
-				<td><input type="text" data-column="14"  placeholder = "Search Vertical3" class="search-input-text"></td>
-			</tr>
+  				<td>
+              <select text = "priority" data-column="8"  class="search-input-select search_col search_box8" style = "visibility: hidden">
+                  <option value="">(Search Priority)</option>
+  								<option value="HIGH">HIGH</option>
+                  <option value="CALL">CALL</option>
+                  <option value="CALL BACK">CALL-BACK</option>
+  								<option value="MUST CALL">MUST CALL</option>
+  								<option value="LOW">LOW</option>
+              </select>
+  			<button style = 'display: none' class = 'minus_button8' onclick = "minusSearchCounter('.search_box8', '.add_button8', '.minus_button8')">-</button><button class = "add_button8" onclick = "addSearchCounter('.search_box8', '.add_button8', '.minus_button8')">+</button>
+          </td>
+  				<td><input type="text" text = "title" data-column="9"  placeholder = "Search Title" class="search-input-text search_col search_box9" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button9' onclick = "minusSearchCounter('.search_box9', '.add_button9', '.minus_button9')">-</button><button class = "add_button9" onclick = "addSearchCounter('.search_box9', '.add_button9', '.minus_button9')">+</button></td>
+  				<td><input type="text" text = "phone" data-column="10"  placeholder = "Search Phone" class="search-input-text search_col search_box10" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button10' onclick = "minusSearchCounter('.search_box10', '.add_button10', '.minus_button10')">-</button><button class = "add_button10" onclick = "addSearchCounter('.search_box10', '.add_button10', '.minus_button10')">+</button></td>
+  				<td><input type="text" text = "web_address" data-column="11"  placeholder = "Search Website" class="search-input-text search_col search_box11" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button11' onclick = "minusSearchCounter('.search_box11', '.add_button11', '.minus_button11')">-</button><button class = "add_button11" onclick = "addSearchCounter('.search_box11', '.add_button11', '.minus_button11')">+</button></td>
+  				<td><input type="text" text = "email1" data-column="12"  placeholder = "Search Email" class="search-input-text search_col search_box12" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button12' onclick = "minusSearchCounter('.search_box12', '.add_button12', '.minus_button12')">-</button><button class = "add_button12" onclick = "addSearchCounter('.search_box12', '.add_button12', '.minus_button12')">+</button></td>
+  				<td><input type="text" text = "vertical1" data-column="13"  placeholder = "Search Vertical1" class="search-input-text search_col search_box13" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button13' onclick = "minusSearchCounter('.search_box13', '.add_button13', '.minus_button13')">-</button><button class = "add_button13" onclick = "addSearchCounter('.search_box13', '.add_button13', '.minus_button13')">+</button></td>
+  				<td><input type="text" text = "vertical2" data-column="14"  placeholder = "Search Vertical2" class="search-input-text search_col search_box14" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button14' onclick = "minusSearchCounter('.search_box14', '.add_button14', '.minus_button14')">-</button><button class = "add_button14" onclick = "addSearchCounter('.search_box14', '.add_button14', '.minus_button14')">+</button></td>
+  				<td><input type="text" text = "vertical3" data-column="15"  placeholder = "Search Vertical3" class="search-input-text search_col search_box15" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button15' onclick = "minusSearchCounter('.search_box15', '.add_button15', '.minus_button15')">-</button><button class = "add_button15" onclick = "addSearchCounter('.search_box15', '.add_button15', '.minus_button15')">+</button></td>
+  			</tr>
 		</tfoot>
 		<tbody>
 		</tbody>
