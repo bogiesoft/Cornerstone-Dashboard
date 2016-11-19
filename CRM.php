@@ -409,10 +409,25 @@ $("div.toolbar").html('<div class="dt-buttons"><a id = "save_button" class = "dt
   function SavedSearch(field1, value1, field2, value2, field3, value3, field4, value4, field5, value5){
     var search_field = [field1, field2, field3, field4, field5];
     var search_value = [value1, value2, value3, value4, value5];
+	for(i = 1; i <= 15; i++){
+		$(".search_box" + i).css('visibility', 'hidden');
+		$(".search_box" + i).val("");
+		$(".minus_button" + i).hide();
+		$(".add_button" + i).show();
+	}
     for (i = 0; i < search_field.length; i++) {
       if (search_field[i]!= "$$$") {
         $( '.search_col' ).each(function() {
           if ($(this).attr("text") == search_field[i]) {
+			var className = $(this).attr('class');
+			var classNameSplit = className.split(" ");
+			var input_class = classNameSplit[2];
+			var number = input_class[input_class.length - 1];
+			var addButton = ".add_button" + number;
+			var minusButton = ".minus_button" + number;
+			$(addButton).hide();
+			$(minusButton).show();
+			$(this).css('visibility', 'visible');
             $(this).val(search_value[i]);
           }
         });
