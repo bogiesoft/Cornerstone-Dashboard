@@ -52,21 +52,25 @@ function delete_search(){
 }
 
 if($_POST['function'] == 0){
+    global $sql;
   $sql = onPageLoad();
 }
 if ($_POST['function'] == 1) {
+    global $sql;
   $sql = singleMarkedUpdate();
 }
 else if ($_POST['function'] == 2) {
+    global $sql;
   $sql = multiMarkedUpdate();
 }
 else if ($_POST['function'] == 3) {
+    global $sql;
   $sql = save_search();
 }
 else if ($_POST['function'] == 4) {
+  global $sql;
   $sql = delete_search();
 }
-echo $sql;
 mysqli_query($conn, $sql) or die (mysqli_error($conn));
 
 ?>

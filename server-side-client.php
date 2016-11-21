@@ -2,60 +2,36 @@
 /*
 Follow this tutorial for further clarification --> https://coderexample.com/datatable-demo-server-side-in-phpmysql-and-ajax/
 */
-$sql = "";
-$totalData = "";
-$totalFiltered = "";
-if($_POST['function'] ==1){
-	// getting total number records without any search
-	require("connection.php");
-	global $sql, $totalData, $totalFiltered;
-	$sql = "SELECT * FROM sales";
-	$query=mysqli_query($conn, $sql);
-	$totalData = mysqli_num_rows($query);
-	$totalFiltered = $totalData;  // when there is no search parameter then total number rows = total number filtered rows.
-
-
-	$sql = "SELECT * FROM sales WHERE 1=1";
-}
-else if($_POST['function'] == 0){
-	selectMark();
-}
-
-function selectMark(){
-	require("connection.php");
-	// getting total number records without any search
-	global $sql, $totalData, $totalFiltered;
-
-	$sql = "SELECT * FROM sales WHERE mark = 1";
-	$query=mysqli_query($conn, $sql) or die(mysqli_error($conn));
-	$totalData = mysqli_num_rows($query);
-	$totalFiltered = $totalData;  // when there is no search parameter then total number rows = total number filtered rows.
-
-	$sql = "SELECT * FROM sales WHERE 1=1 AND mark = 1";
-}
-
-
 require("connection.php");
+
+// getting total number records without any search
+$sql = "SELECT * FROM sales WHERE type = 'Client'";
+$query=mysqli_query($conn, $sql);
+$totalData = mysqli_num_rows($query);
+$totalFiltered = $totalData;  // when there is no search parameter then total number rows = total number filtered rows.
+
+
+$sql = "SELECT * FROM sales WHERE 1=1 AND type = 'Client'";
+
 // storing  request (ie, get/post) global array to a variable
 $requestData= $_REQUEST;
 $columns = array(
 // datatable column index  => database column name
-	0=> 'mark',
-	1 =>'full_name',
-	2 => 'business',
-	3=> 'address_line_1',
-	4=> 'city',
-	5=> 'state',
-	6=> 'zipcode',
-	7=> 'call_back_date',
-	8=> 'priority',
-	9=> 'title',
-	10=> 'phone',
-	11=> 'web_address',
-	12=> 'email1',
-	13=> 'vertical1',
-	14=> 'vertical2',
-	15=> 'vertical3',
+	0 =>'full_name',
+	1 => 'business',
+	2=> 'address_line_1',
+	3=> 'city',
+	4=> 'state',
+	5=> 'zipcode',
+	6=> 'call_back_date',
+	7=> 'priority',
+	8=> 'title',
+	9=> 'phone',
+	10=> 'web_address',
+	11=> 'email1',
+	12=> 'vertical1',
+	13=> 'vertical2',
+	14=> 'vertical3',
 
 );
 
@@ -79,7 +55,7 @@ $columns = array(
 
 	//getting records as per search parameters
 	for ($i = 0; $i < count($columns); $i++) {
-		if( !empty($requestData['columns'][$i]['search']['value']) && $i == 8){   //for Priority column only
+		if( !empty($requestData['columns'][$i]['search']['value']) && $i == 7){   //for Priority column only
 				$sql.=" AND ".$columns[$i]." = '".$requestData['columns'][$i]['search']['value']."' ";
 		}
 		else if( !empty($requestData['columns'][$i]['search']['value']) ){   //each column name search
@@ -100,7 +76,6 @@ $columns = array(
 	$data = array();
 	while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 		$nestedData=array();
-		$nestedData[] = $row["mark"];
 		$nestedData[] = $row["full_name"];
 		$nestedData[] = $row["business"];
 		$nestedData[] = $row["address_line_1"];
