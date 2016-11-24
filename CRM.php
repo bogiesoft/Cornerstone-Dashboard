@@ -479,6 +479,16 @@
   function SavedSearch(field1, value1, field2, value2, field3, value3, field4, value4, field5, value5){
     var search_field = [field1, field2, field3, field4, field5];
     var search_value = [value1, value2, value3, value4, value5];
+	var error_subtract = 0;
+	var check_dup = 0;
+	for(var j = 1; j <= 15; j++)
+	{
+		$(".minus_button" + j).hide();
+		$(".add_button" + j).show();
+	}
+	$(".search-input-text").val("");
+	$(".search-input-text").css("visibility", "hidden");
+	$('.search_col').click();
     for (i = 0; i < search_field.length; i++) {
       if (search_field[i]!= "$$$") {
         $( '.search_col' ).each(function() {
@@ -489,10 +499,16 @@
             var minusbutton = $(this).siblings().attr('class');
             $('.'+plusbutton).hide();   //+ button
             $('.'+minusbutton).show();   //- button
+			search_counter--;
+			if(check_dup % 2 == 0){
+				error_subtract++;
+			}
+			check_dup++;
           }
         });
       }
     }
+	search_counter = search_counter + error_subtract;
     $( '.search_col' ).click();
   }
 
