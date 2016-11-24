@@ -15,16 +15,6 @@
     text-align:right;
   }
 
-  	div.header {
-  			margin: 200px auto;
-  			line-height:30px;
-  			max-width:500px;
-  	}
-  	body {
-  			background: #f7f7f7;
-  			color: #333;
-  			font: 90%/1.45em "Helvetica Neue",HelveticaNeue,Verdana,Arial,Helvetica,sans-serif;
-  	}
 </style>
 <script type="text/javascript" language="javascript" >
     var dataTable = null;
