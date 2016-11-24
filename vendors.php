@@ -48,7 +48,7 @@ if ($result->num_rows > 0) {
 			echo "<div class='vendor-right'>";
 				echo "<p>Phone: ".$row["vendor_phone"]."</p>";
 				echo "<p>Email: ".$row["vendor_email"]."</p>";
-				echo "<p>Website: ".$row["vendor_website"]."</p>";
+				echo "<p>Website: ".$row["vendor_website"]."</p><br>";
 			echo "</div>";
 			echo "</div>";
     }

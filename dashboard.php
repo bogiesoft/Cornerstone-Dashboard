@@ -124,8 +124,8 @@ $conn->close();
 			}
 		?>
 
-		<div style="width: 70%; ">
-			<canvas id="canvas_sales" height="315" width="700"></canvas>
+		<div style="width: 50%; ">
+			<canvas id="canvas_sales" height="825" width="2000"></canvas>
 		</div>
 
 		<!--<h3>Estimates given: <span><?php echo "$num_rows"; ?></span></h3>!-->
@@ -151,13 +151,13 @@ $conn->close();
 		?>
 		<div class = "pm_labels" style = "float: right">
 		</div>
-		<div id="canvas-holder" style = "width: 50%; margin: 0 auto;">
-			<canvas id="chart-area" width="150" height="150"/>
+		<div id="canvas-holder" style = "width: 70%; margin: 0 auto;">
+			<canvas id="chart-area" width="100" height="100"/>
 		</div>
 	</div>
 	<div class="dashboardtop-box fundraising-stats">
 		<div class="dashboardbox-title"><h2>Weekly Production</h2></div>
-		<h5>Jobs in Production: <span><?php echo "$count_prod \n"; ?></span></h5><br>
+		<h5>Jobs in Production: <span><?php echo "$count_prod \n"; ?></span></h5>
 		<h5>Total Manhours:<span id = "manhours"></span></h5>
 
 		<?php
@@ -256,8 +256,8 @@ $conn->close();
 
 		?>
 
-		<div id="canvas-holder" style = "width: 40%; margin-left: 185px; margin-top: -115px">
-			<canvas id="canvas_prod" width="500" height="500"/>
+		<div id="canvas-holder" style = "width: 30%; margin-left: 50%; margin-top: -200px">
+			<canvas id="canvas_prod" width="300" height="300"/>
 		</div>
 	</div>
 	<div class="dashboardtop-box fundraising-stats">
@@ -287,7 +287,7 @@ $conn->close();
 				}
 			}
 		?>
-		<div style="width: 70%; ">
+		<div style="width: 50%; ">
 			<canvas id="canvas_cs" height="315" width="700"></canvas>
 		</div>
 	</div>
