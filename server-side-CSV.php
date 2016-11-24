@@ -2,12 +2,12 @@
 require("connection.php");
 date_default_timezone_set('US/Eastern');
 // output headers so that the file is downloaded rather than displayed
-header('Content-type: application/csv');
-header('Content-Disposition: attachment; filename=Sales -'.date('Y-m-d H:i:s') .'.csv');
-//header("Content-Transfer-Encoding: UTF-8");
-header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1
-header("Pragma: no-cache"); // HTTP 1.0
-header("Expires: 0"); // Proxies
+// header('Content-type: application/csv');
+header('Content-Disposition: attachment; filename=Sales -'.date('Y-m-d H:i:s').' #Records '.$_GET["NumRecords"].'.csv');
+// //header("Content-Transfer-Encoding: UTF-8");
+// header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1
+// header("Pragma: no-cache"); // HTTP 1.0
+// header("Expires: 0"); // Proxies
 // create a file pointer connected to the output stream
 $output = fopen('php://output', 'w');
 $sql = $_GET['val'].' AND mark = 1';
