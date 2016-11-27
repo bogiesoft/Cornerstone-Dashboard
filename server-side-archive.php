@@ -27,13 +27,13 @@ $columns = array(
 );
 
 	if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
-		$sql.=" AND (job_id LIKE '".$requestData['search']['value']."%' ";
-		$sql.=" OR client_name LIKE '".$requestData['search']['value']."%' ";
-		$sql.=" OR project_name LIKE '".$requestData['search']['value']."%' ";
-		$sql.=" OR records_total LIKE '".$requestData['search']['value']."%' ";
-		$sql.=" OR invoice_number LIKE '".$requestData['search']['value']."%' ";
-		$sql.=" OR archive_date LIKE '".$requestData['search']['value']."%' ";
-		$sql.=" OR reason LIKE '".$requestData['search']['value']."%' )";
+		$sql.=" AND (job_id LIKE '%".$requestData['search']['value']."%' ";
+		$sql.=" OR client_name LIKE '%".$requestData['search']['value']."%' ";
+		$sql.=" OR project_name LIKE '%".$requestData['search']['value']."%' ";
+		$sql.=" OR records_total LIKE '%".$requestData['search']['value']."%' ";
+		$sql.=" OR invoice_number LIKE '%".$requestData['search']['value']."%' ";
+		$sql.=" OR archive_date LIKE '%".$requestData['search']['value']."%' ";
+		$sql.=" OR reason LIKE '%".$requestData['search']['value']."%' )";
 	}
 
 	$jsonsql = $sql;

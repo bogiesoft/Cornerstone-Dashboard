@@ -349,7 +349,7 @@
         .replace(/\*/g, '%2A')
         .replace(/%20/g, '+')
     }
-
+    //quick search box
     $("#searchbox").on("keyup search input paste cut", function() {
    		dataTable.search(this.value).draw();
 		});
