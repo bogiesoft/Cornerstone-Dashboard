@@ -47,11 +47,8 @@ html {  height: 100%;}
 	<div class="search-cont">
 	<div class="searchcont-detail">
 		<div class="search-boxleft">
-			<form id = "search_form" action="production_job_search.php" method="post">
 				<label>Quick Search</label>
-				<input id="search" name="frmSearch" type="text" placeholder="Search for a job">
-			</form>
-			<div class="search-boxright pull-right"><a href="#" onclick = "document.getElementById('search_form').submit()">Submit</a></div>
+				<input id="searchbox" name="frmSearch" type="text" placeholder="Search for a job">
 		</div>
 	</div>
 	</div>
@@ -76,7 +73,7 @@ while($prod_row = $result_prod_users->fetch_assoc()){
 	else{
 		$sql = $sql . " UNION SELECT * FROM job_ticket WHERE processed_by = '$user'";
 	}
-	
+
 	$count = $count + 1;
 }
 
@@ -115,7 +112,7 @@ if ($result->num_rows > 0) {
     // output data of each row
 	$job_count = 1;
     while($row = $result->fetch_assoc()) {
-		
+
 		$job_id = $row["job_id"];
 		$result1 = mysqli_query($conn, "SELECT records_total, processed_by FROM job_ticket WHERE job_id = '$job_id'");
 		$row1 = $result1->fetch_assoc();
@@ -123,16 +120,16 @@ if ($result->num_rows > 0) {
 		$assigned_to = $row1["processed_by"];
 		$result2 = mysqli_query($conn, "SELECT department, first_name, last_name FROM users WHERE user = '$assigned_to'");
 		$row2 = $result2->fetch_assoc();
-		
+
 		if($row2["department"] == "Production"){
-			
+
 			$result_priority = mysqli_query($conn, "SELECT priority FROM job_ticket WHERE job_id = '$job_id'");
 			$prow = $result_priority->fetch_assoc();
 			$level = $prow['priority'];
-			
+
 			$color_priority = "#e9eced";
 			$value = "None";
-			
+
 			if($level == 1){
 				$color_priority = "#80ff80";
 				$value = "Low";
@@ -148,7 +145,7 @@ if ($result->num_rows > 0) {
 			echo "<div data-role='main' class='ui-content'>";
 				echo "<div class='vendor-left' style = 'background: " . $color_priority . "'>";
 					$x = $row["job_id"];
-					echo "<h3><a href='edit_job.php?job_id=$x'>".$row["job_id"]."</a></h1>";
+					echo "<h3><a id = 'jobid' href='edit_job.php?job_id=$x'>".$row["job_id"]."</a></h1>";
 					echo "<p>Client name: ".$row["client_name"]."</p>";
 					echo "<p>Project name: ".$row["project_name"]."</p>";
 					echo "<p style = 'margin-bottom: -80px;'><form action = '' method = 'post'><select style = 'width: 95px' name = 'priority" . $job_count . "' onchange = 'this.form.submit()'>";
@@ -160,7 +157,7 @@ if ($result->num_rows > 0) {
 					$name = $row2["first_name"] . " " . $row2["last_name"];
 					echo "<p>Assigned to: ".$name."</p>";
 					echo "<form style = 'margin-left: 650px;' action = '' method = 'post'><select onchange = 'this.form.submit()' name = 'assign_to" . $job_count . "' style = 'width: 150px'><option selected disabled value = 'None'>--Assign To--</option>";
-					
+
 					$result_users = mysqli_query($conn, "SELECT user FROM users");
 					while($row_users = $result_users->fetch_assoc()){
 						$user = $row_users['user'];
@@ -169,40 +166,40 @@ if ($result->num_rows > 0) {
 						$name = $row_name['first_name'] . " " . $row_name['last_name'];
 						echo "<option value = '" . $user . "'>" . $name . "</option>";
 					}
-					
+
 					echo "</select></form>";
 				echo "</div>";
-					
-		
+
+
 						echo "<div>";
-								
+
 						//put efficiency code here
-						
+
 						$result3 = mysqli_query($conn, "SELECT tasks FROM production WHERE job_id = '$job_id'");
 						$row3 = $result3->fetch_assoc();
-						
+
 						$sql = "SELECT * FROM production_data";
 						$result4 = mysqli_query($conn, $sql);
-						
+
 						$match = FALSE;
 						$count = 1;
-						
+
 						while($row4 = $result4->fetch_assoc()){
 							$production_record = (int)$row4['total_records'];
 							$match = FALSE;
-							
+
 							$job_tasks_array = explode(",", $row3['tasks']);
 							$production_tasks_array = explode(",", $row4['job']);
 							$sameSize = FALSE;
-								
+
 							if(sizeOf($production_tasks_array) == sizeOf($job_tasks_array)){
 								$sameSize = TRUE;
 							}
 							sort($job_tasks_array);
 							$production_tasks_array2 = $production_tasks_array;
 							sort($production_tasks_array2);
-								
-								
+
+
 							if($production_tasks_array2 == $job_tasks_array && $sameSize == TRUE){
 								$records_per_array = explode(",", $row4['records_per']);
 								$time_unit_array = explode(",", $row4['time_unit']);
@@ -210,31 +207,31 @@ if ($result->num_rows > 0) {
 								$people_array = explode(",", $row4['people']);
 								$hours = 0;
 								//$job_count = 1;
-								
+
 								for($i = 0; $i < count($time_unit_array); $i++){
 									if((int)$records_per_array[$i] != 0 && (int)$time_number_array[$i] != 0){
 										if($time_unit_array[$i] == "hr."){
-											
+
 												$add_hours = $records_total / (int)$records_per_array[$i] * (int)$time_number_array[$i] / (int)$people_array[$i];
 												$hours = $hours + $add_hours;
-											
+
 										}
 										else if($time_unit_array[$i] == "min."){
-											
+
 												$add_hours = $records_total / (int)$records_per_array[$i] * (int)$time_number_array[$i] / 60 / (int)$people_array[$i];
 												$hours = $hours + $add_hours;
-											
+
 										}
 										else if($time_unit_array[$i] == "sec."){
-											
-											
+
+
 												$add_hours = $records_total / (int)$records_per_array[$i] * (int)$time_number_array[$i] / 3600 / (int)$people_array[$i];
 												$hours = $hours + $add_hours;
-											
+
 										}
 									}
 								}
-									
+
 								echo "<ul style = 'list-style-type: none;'>";
 								//$job_count = 1;
 								for($i = 0; $i < count($records_per_array); $i++){
@@ -253,11 +250,11 @@ if ($result->num_rows > 0) {
 								else{
 									$efficiency = "Low";
 								}
-								
+
 								array_push($hours_array, $hours);
 								array_push($canvas_id_array, "canvas_prod" . $job_count);
 								echo "<li style = 'margin-left: 580px; margin-top: -100px;'><h2 style = 'margin-bottom: 135px;'>Efficiency: " . $efficiency . "</h2></li>";
-									
+
 								echo "<li style = 'margin-left: 500px; margin-top: -125px;'><div id='canvas-holder' style = 'width: 40%; margin-left: 185px; margin-top: -115px'>
 									<canvas id='canvas_prod" . $job_count . "' width='500' height='500'/>
 									</div></li>";
@@ -266,13 +263,14 @@ if ($result->num_rows > 0) {
 								$job_count = $job_count + 1;
 							}
 						}
-	
+
 						if($count == 1){
 							echo "<i>0 results</i>";
 						}
 				echo "</div>";
+				echo "</div>";
 		}
-		
+
 		//$job_count = $job_count + 1;
     }
 } else {
@@ -286,11 +284,28 @@ $conn->close();
 </div>
 </div>
 <script>
+	$(document).ready(function(){
+		$("#searchbox").on("keyup input paste cut", function() {
+			//searchbox value
+			var search_val = $(this).val();
+			//compare the searchbox value with each job id
+			$("a[id=jobid]").each(function(){
+				if($(this).text().search(search_val)!=-1){
+					//show div
+					$(this).parent().parent().parent().show();
+				}
+				else{
+					//hide div
+					$(this).parent().parent().parent().hide();
+				}
+			});
+		});
+	});
 		var hours = <?php echo json_encode($hours_array); ?>;
 		var id = <?php echo json_encode($canvas_id_array); ?>;
 		var maxHours = 40;
 		var data = [];
-		
+
 		for(var i = 0; i < hours.length; i++){
 			var efficiency = hours[i] / 40 * 100;
 			var percent = 100 - efficiency;
@@ -301,10 +316,10 @@ $conn->close();
 				percent = 100;
 			}
 			var leftover = 100 - percent;
-			
+
 			var color = "#FFFFFF";
 			var highlight = "#FFFFFF";
-			
+
 			if(percent > 70){
 				color = "#80ff80";
 				highlight = "#99ff99";
@@ -317,7 +332,7 @@ $conn->close();
 				color = "#ff4d4d";
 				highlight = "#ff6666";
 			}
-		
+
 			var doughnutData = [
 					{
 						value: leftover,
@@ -332,12 +347,12 @@ $conn->close();
 						label: "Efficiency"
 					}
 				];
-				
+
 				data[i] = doughnutData;
 		}
 
 			window.onload = function(){
-				
+
 				for(var i = 0; i < id.length; i++){
 					var ctx = document.getElementById(id[i]).getContext("2d");
 					window.myDoughnut = new Chart(ctx).Doughnut(data[i], {responsive : true});

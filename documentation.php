@@ -12,7 +12,7 @@ require ("header.php");
 		<div class="search-boxleft">
 			<form id = "form-id" action="documentation_search.php" method="post">
 				<label>Quick Search</label>
-				<input id="search" name="frmSearch" type="text" placeholder="Search documentation by user, title etc.">
+				<input id="searchbox" name="frmSearch" type="text" placeholder="Search documentation by user, title etc.">
 			</form>
 			<div class="search-boxright pull-right"><a href="#" onclick = "document.getElementById('form-id').submit()">Submit</a></div>
 		</div>
@@ -27,11 +27,11 @@ $result = mysqli_query($conn,"SELECT * FROM documentation");
 
 if ($result->num_rows > 0) {
     // output data of each row
-	
+
     while($row = $result->fetch_assoc()) {
 		$temp = $row['title'];
 		echo "<div class='doc-block'>";
-		echo "<a href='edit_doc.php?title=$temp'><h2>".$row['title']."</h2></a>"."<p>Written by ".$row['user']." on ".$row['timestamp']."</p><br>";
+		echo "<a href='edit_doc.php?title=$temp'><h2>".$row['title']."</h2></a>"."<p>Written by <b>".$row['user']."</b> on ".$row['timestamp']."</p><br>";
 		echo "<p>".$row['text']."</p>";
 		echo "</div>";
     }
@@ -43,4 +43,24 @@ $conn->close();
 ?>
 </div>
 </div>
-</div>				
+</div>
+<script>
+	$(document).ready(function(){
+		$("#searchbox").on("keyup input paste cut", function() {
+			//searchbox value
+			var search_val = $(this).val();
+			//compare the searchbox value with each job id
+			$("div.doc-block").each(function(){
+				//if title.text OR username.text OR paragraphText.text contains the string in searchbox
+				if($(this).children("a").text().toLowerCase().search(search_val)!=-1 || $(':nth-child(2)', this).children().text().toLowerCase().search(search_val)!=-1 || $(':nth-child(4)', this).text().toLowerCase().search(search_val)!=-1){
+					//show div
+					$(this).show();
+				}
+				else{
+					//hide div
+					$(this).hide();
+				}
+			});
+		});
+	});
+</script>

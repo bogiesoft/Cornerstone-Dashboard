@@ -8,36 +8,36 @@ $id_array = array();
 
 ?>
 <style>
-#blue_sheet_labels p{
-	margin-right: 380px;
-}
-.input_fields{
-	height: 20px;
-}
-.label_margin_bottom{
-	margin-bottom: 5px;
-}
+	#blue_sheet_labels p{
+		margin-right: 380px;
+	}
+	.input_fields{
+		height: 20px;
+	}
+	.label_margin_bottom{
+		margin-bottom: 5px;
+	}
 
-.tooltiptext {
-    visibility: hidden;
-    width: 120px;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
+	.tooltiptext {
+	    visibility: hidden;
+	    width: 120px;
+	    background-color: black;
+	    color: #fff;
+	    text-align: center;
+	    border-radius: 6px;
+	    padding: 5px 0;
 
-    /* Position the tooltip */
-    position: absolute;
-    z-index: 11000;
-	position: relative;
-    display: inline-block;
-    border-bottom: 1px dotted black;
-}
+	    /* Position the tooltip */
+	    position: absolute;
+	    z-index: 11000;
+		position: relative;
+	    display: inline-block;
+	    border-bottom: 1px dotted black;
+	}
 
-.hover_info:hover .tooltiptext{
-    visibility: visible;
-}
+	.hover_info:hover .tooltiptext{
+	    visibility: visible;
+	}
 </style>
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
@@ -47,19 +47,15 @@ $id_array = array();
 	<div class="search-cont">
 	<div class="searchcont-detail">
 		<div class="search-boxleft">
-		<form id = "search_form" action="production_job_search.php" method="post">
 				<label>Quick Search</label>
-				<input id="search" name="frmSearch" type="text" placeholder="Search for a specific job">
-			</form>
-		<div class="search-boxright pull-right"><a href="#" onclick = "document.getElementById('search_form').submit()">Submit</a></div>
-	
+				<input id="searchbox" name="frmSearch" type="text" placeholder="Search for a specific job">
 		</div>
 	</div>
 	</div>
 <div class="clear"></div>
 <?php
 require ("connection.php");
-	 
+
 $result_prod_users = mysqli_query($conn, "SELECT user FROM users WHERE department = 'Project Management'");
 $sql = "";
 $count = 1;
@@ -71,7 +67,7 @@ while($prod_row = $result_prod_users->fetch_assoc()){
 	else{
 		$sql = $sql . " UNION SELECT * FROM job_ticket WHERE processed_by = '$user'";
 	}
-	
+
 	$count = $count + 1;
 }
 
@@ -114,7 +110,7 @@ if ($result->num_rows > 0) {
     // output data of each row
 	$job_count = 1;
     while($row = $result->fetch_assoc()) {
-		
+
 		$job_id = $row["job_id"];
 		$result1 = mysqli_query($conn, "SELECT * FROM job_ticket WHERE job_id = '$job_id'");
 		$result_blue_sheet = mysqli_query($conn, "SELECT * FROM customer_service WHERE job_id = '$job_id'");
@@ -124,16 +120,16 @@ if ($result->num_rows > 0) {
 		$assigned_to = $row1["processed_by"];
 		$result2 = mysqli_query($conn, "SELECT department, first_name, last_name FROM users WHERE user = '$assigned_to'");
 		$row2 = $result2->fetch_assoc();
-		
+
 		if($row2["department"] == "Project Management"){
-			
+
 			$result_priority = mysqli_query($conn, "SELECT priority FROM job_ticket WHERE job_id = '$job_id'");
 			$prow = $result_priority->fetch_assoc();
 			$level = $prow['priority'];
-			
+
 			$color_priority = "#e9eced";
 			$value = "None";
-			
+
 			if($level == 1){
 				$color_priority = "#80ff80";
 				$value = "Low";
@@ -149,7 +145,7 @@ if ($result->num_rows > 0) {
 			echo "<div data-role='main' class='ui-content'>";
 				echo "<div class='vendor-left' style = 'background: " . $color_priority . "'>";
 					$x = $row["job_id"];
-					echo "<h3><a href='edit_job.php?job_id=$x'>".$row["job_id"]."</a></h1>";
+					echo "<h3><a id = 'jobid' href='edit_job.php?job_id=$x'>".$row["job_id"]."</a></h3>";
 					echo "<p>Client name: ".$row["client_name"]."</p>";
 					echo "<p>Job name: ".$row["project_name"]."</p>";
 					echo "<p style = 'margin-bottom: -80px;'><form action = '' method = 'post'><select style = 'width: 95px' name = 'priority" . $job_count . "' onchange = 'this.form.submit()'>";
@@ -163,15 +159,15 @@ if ($result->num_rows > 0) {
 					echo "<p class = 'hover_info'>Records total: ".$row1["records_total"]."<span style = 'height: 20px; width: 250px' class = 'tooltiptext'>Foreigns: " . $row_blue_sheet['bs_foreigns'] . ", Domestic: " . $row_blue_sheet['bs_domestic'] . "</span></p>";
 					$name = $row2["first_name"] . " " . $row2["last_name"];
 					echo "<p style = 'margin-right: 190px'>Assigned to: ".$name."</p><br>";
-					
+
 					$result_ys_percent = mysqli_query($conn, "SELECT percent FROM project_management WHERE job_id = '$job_id'");
 					$row_ys_percent = $result_ys_percent->fetch_assoc();
 					$percent = $row_ys_percent["percent"];
-					
+
 					$form_id = "assigned_to" . $job_count;
 					echo "<form id = 'assigned_to" . $job_count . "' style = 'margin-left: 750px;' action = '' method = 'post'><select onchange = 'checkPercent(" . $percent . ", \"" . $form_id . "\");' name = 'assign_to" . $job_count . "' style = 'width: 120px'><option selected disabled value = 'None'>--Assign To--</option>";
 					$processed_by = $name;
-					
+
 					$result_users = mysqli_query($conn, "SELECT user FROM users");
 					while($row_users = $result_users->fetch_assoc()){
 						$user = $row_users['user'];
@@ -180,28 +176,28 @@ if ($result->num_rows > 0) {
 						$name = $row_name['first_name'] . " " . $row_name['last_name'];
 						echo "<option value = '" . $user . "'>" . $name . "</option>";
 					}
-					
+
 					echo "</select></form>";
 					echo "
 					<a href='yellow_sheet.php?job_id=$job_id'><div id='canvas-holder' style = 'width: 15%; float: right; margin-top:-200px'>
 						<canvas id='canvas_pm" . $job_count . "' width='1' height='1'/>
 					</div></a>";
-					
+
 					array_push($id_array, 'canvas_pm' . $job_count);
 					array_push($percent_array, $percent);
-					
-					
-				echo "<div id = 'show" . $job_count . "' style = 'display: none'>";	
-				
+
+
+				echo "<div id = 'show" . $job_count . "' style = 'display: none'>";
+
 				$result_mail_info = mysqli_query($conn, "SELECT * FROM job_ticket WHERE job_id = '$job_id'");
 				$row_mail_info = $result_mail_info->fetch_assoc();
-				
+
 				echo "<div class='vendor-left' style = 'background: " . $color_priority . "; '>";
 					echo "<h3 style = 'margin-right: 200px'><p><i>Job Info:</i></p></h3>";
 					echo "<p>Class: ".$row_mail_info["mail_class"]."</p>";
 					echo "<p>Category: ".$row_mail_info["processing_category"]."</p>";
 					echo "<p>BMEU: ".$row_mail_info["bmeu"]."</p>";
-					
+
 				echo "</div>";
 				echo "<div class='vendor-right' style = 'background: " . $color_priority . "; '>";
 					echo "<p style = 'visibility: hidden;'>Here</p>";
@@ -216,7 +212,7 @@ if ($result->num_rows > 0) {
 					echo "<p>Source: ".$row_pm["data_source"]."</p>";
 					echo "<p>Processed by: ".$processed_by."</p>";
 					echo "<p style = 'visibility:hidden'>   </p>";
-					
+
 				echo "</div>";
 				echo "<div class='vendor-right' style = 'background: " . $color_priority . "; '>";
 					echo "<p style = 'visibility: hidden;'>Here</p>";
@@ -224,16 +220,16 @@ if ($result->num_rows > 0) {
 					echo "<p>Date complete: ".$row_pm["data_completed"]."</p>";
 					echo "<p>DQR date: ".$row_pm["dqr_sent"]."</p>";
 				echo "</div><br>";
-				
+
 				require ("connection.php");
 				$result_wm = mysqli_query($conn, "SELECT weights_measures FROM job_ticket WHERE job_id = '$job_id'");
 				$row_wm = "";
 				if(mysqli_num_rows($result_wm) > 0){
 					$row_wm = $result_wm->fetch_assoc();
 				}
-				
+
 				$materials_array = array();
-				
+
 				if($row_wm != ""){
 					$materials_array = explode(",", $row_wm['weights_measures']);
 				}
@@ -251,10 +247,10 @@ if ($result->num_rows > 0) {
 							}
 					}
 						echo "</tbody></table></td></tr></tbody></table></div>";
-				 
+
 				$result_blue_sheet = mysqli_query($conn, "SELECT * FROM customer_service WHERE job_id = '$job_id'");
 				$row_blue_sheet = $result_blue_sheet->fetch_assoc();
-				
+
 				echo "<div id = 'blue_sheet_inputs' class='vendor-left' style = 'background: " . $color_priority . "; width: 40% '>";
 					echo "<h3 style = 'margin-right: 200px'><p><i>Blue Sheet</i></p></h3>";
 					echo "<form style = 'margin-left: 50px' action = 'update_blue_sheet.php' method = 'post'>";
@@ -276,7 +272,7 @@ if ($result->num_rows > 0) {
 					echo "<p style = 'margin-bottom: 5px'><input type = 'date' class = 'input_fields' name = 'completed_date' value = '" . $row_blue_sheet['completed_date'] . "'></p>";
 					echo "<input type = 'submit' name = 'submit_form" . $job_count . "' value = 'Save'>";
 					echo "</form>";
-					
+
 				echo "</div>";
 				echo "<div id = 'blue_sheet_labels' class='vendor-right' style = 'background: " . $color_priority . "'>";
 					echo "<p style = 'visibility: hidden;'>Here</p>";
@@ -306,17 +302,15 @@ if ($result->num_rows > 0) {
 				array_push($job_id_array, $job_id);
 		}
 	}
-	
+
 	$_SESSION['blue_sheet_job_ids'] = $job_id_array;
 }
 ?>
 </div>
 </div>
 <script src="PMSweetAlert.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<script src="sorttable.js"></script>
-<script type="text/javascript" src="jquery-latest.js"></script> 
-<script type="text/javascript" src="jquery.tablesorter.js"></script> 
+
+<script type="text/javascript" src="jquery.tablesorter.js"></script>
 <script>
 
 $("#search").keyup(function(){
@@ -326,15 +320,30 @@ $("#search").keyup(function(){
             if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
                $(this).hide();
             else
-               $(this).show();                
+               $(this).show();
         });
-    }); 
-	
-$(document).ready(function() 
-    { 
-        $("#w_m_table").tablesorter(); 
+    });
+
+$(document).ready(function()
+    {
+			$("#searchbox").on("keyup input paste cut", function() {
+				//searchbox value
+				var search_val = $(this).val();
+				//compare the searchbox value with each job id
+				$("a[id=jobid]").each(function(){
+					if($(this).text().search(search_val)!=-1){
+						//show div
+						$(this).parent().parent().parent().show();
+					}
+					else{
+						//hide div
+						$(this).parent().parent().parent().hide();
+					}
+				});
+			});
+        $("#w_m_table").tablesorter();
 		pageCreator();
-    } 
+    }
 );
 function showJob(div, button){
 	if(document.getElementById(button).innerHTML == "Info"){
@@ -357,7 +366,7 @@ for(var i = 0; i < percent.length; i++){
 	var toDo = 100 - percent[i];
 	var color = "#FFFFFF";
 	var highlight = "#FFFFFF";
-	
+
 	if(percent[i] < 30){
 		color = "#ff4d4d";
 		highlight = "#ff6666";
@@ -374,7 +383,7 @@ for(var i = 0; i < percent.length; i++){
 		color = "#ccffcc";
 		highlight = "#e6ffe6";
 	}
-	
+
 	var doughnutData = [
 					{
 						value: toDo,
@@ -389,12 +398,12 @@ for(var i = 0; i < percent.length; i++){
 						label: "% Complete"
 					}
 				];
-				
+
 	data[i] = doughnutData;
 }
 
 window.onload = function(){
-				
+
 for(var i = 0; i < id.length; i++){
 	var ctx = document.getElementById(id[i]).getContext("2d");
 	window.myDoughnut = new Chart(ctx).Doughnut(data[i], {responsive : true});

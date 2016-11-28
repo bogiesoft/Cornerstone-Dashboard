@@ -36,21 +36,21 @@ $columns = array(
 );
 
 	if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
-		$sql.=" AND ( full_name LIKE '".$requestData['search']['value']."%' ";
-		$sql.=" OR business LIKE '".$requestData['search']['value']."%' ";
-		$sql.=" OR address_line_1 LIKE '".$requestData['search']['value']."%' ";
-		$sql.=" OR city LIKE '".$requestData['search']['value']."%' ";
-		$sql.=" OR state LIKE '".$requestData['search']['value']."%' ";
-		$sql.=" OR zipcode LIKE '".$requestData['search']['value']."%' ";
-		$sql.=" OR call_back_date LIKE '".$requestData['search']['value']."%' ";
-		$sql.=" OR priority LIKE '".$requestData['search']['value']."%' ";
-		$sql.=" OR title LIKE '".$requestData['search']['value']."%' ";
-		$sql.=" OR phone LIKE '".$requestData['search']['value']."%' ";
-		$sql.=" OR web_address LIKE '".$requestData['search']['value']."%' ";
-		$sql.=" OR email1 LIKE '".$requestData['search']['value']."%' ";
-		$sql.=" OR vertical1 LIKE '".$requestData['search']['value']."%' ";
-		$sql.=" OR vertical2 LIKE '".$requestData['search']['value']."%' ";
-		$sql.=" OR vertical3 LIKE '".$requestData['search']['value']."%' )";
+		$sql.=" AND ( full_name LIKE '%".$requestData['search']['value']."%' ";
+		$sql.=" OR business LIKE '%".$requestData['search']['value']."%' ";
+		$sql.=" OR address_line_1 LIKE '%".$requestData['search']['value']."%' ";
+		$sql.=" OR city LIKE '%".$requestData['search']['value']."%' ";
+		$sql.=" OR state LIKE '%".$requestData['search']['value']."%' ";
+		$sql.=" OR zipcode LIKE '%".$requestData['search']['value']."%' ";
+		$sql.=" OR call_back_date LIKE '%".$requestData['search']['value']."%' ";
+		$sql.=" OR priority LIKE '%".$requestData['search']['value']."%' ";
+		$sql.=" OR title LIKE '%".$requestData['search']['value']."%' ";
+		$sql.=" OR phone LIKE '%".$requestData['search']['value']."%' ";
+		$sql.=" OR web_address LIKE '%".$requestData['search']['value']."%' ";
+		$sql.=" OR email1 LIKE '%".$requestData['search']['value']."%' ";
+		$sql.=" OR vertical1 LIKE '%".$requestData['search']['value']."%' ";
+		$sql.=" OR vertical2 LIKE '%".$requestData['search']['value']."%' ";
+		$sql.=" OR vertical3 LIKE '%".$requestData['search']['value']."%' )";
 	}
 
 	//getting records as per search parameters
@@ -59,7 +59,7 @@ $columns = array(
 				$sql.=" AND ".$columns[$i]." = '".$requestData['columns'][$i]['search']['value']."' ";
 		}
 		else if( !empty($requestData['columns'][$i]['search']['value']) ){   //each column name search
-		    $sql.=" AND ".$columns[$i]."  LIKE '".$requestData['columns'][$i]['search']['value']."%' ";
+		    $sql.=" AND ".$columns[$i]."  LIKE '%".$requestData['columns'][$i]['search']['value']."%' ";
 		}
 	}
 
