@@ -13,6 +13,7 @@ $result = mysqli_query($conn,$sql);
 	
 		$title = $row['title'];
 		$text = $row['text'];
+		
 		$display = "yes";
     
 	} 
@@ -37,7 +38,7 @@ $(document).ready(function(){
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 	<h1 class="pull-left">Edit Documentation</h1>
-	<a class="pull-right" href="documentation.php" style="margin-right:20px; background-color:#d14700;">Back to Docs</a>
+	<a class="pull-right" href="documentation.php?p=1" style="margin-right:20px; background-color:#d14700;">Back to Docs</a>
 	<div class="clear"></div>
 	</div>
 <div class="dashboard-detail">
@@ -56,6 +57,10 @@ $(document).ready(function(){
 					<div class="tabinner-detail">
 					<label>Title</label>
 					<input name="title" type="text" value="<?php echo $title; ?>" class="contact-prefix" style="width:95%;">
+					<div class="clear"></div>
+					</div>
+					<label>Description</label>
+					<input name="description" type="text" value="<?php echo $description; ?>" class="contact-prefix" style="width:95%;">
 					<div class="clear"></div>
 					</div>
 					<div class="tabinner-detail">
