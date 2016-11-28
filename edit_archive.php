@@ -29,7 +29,138 @@ $_SESSION['deleted_archived_job_id'] = $job_id;
     }
 
 </script>
-
+<script>
+    var id_of_row;
+    var id_of_task;
+    var number_of_rows;
+    var number_of_tasks;
+    $(function() {
+        id_of_row=parseInt($( "tr:last" ).attr('id'));
+        number_of_rows=id_of_row;
+    $(document).on('change', '.vendors',function(){
+        var id=$(this).parent().parent().attr('id');
+        getMaterials(id);
+    });
+    $(document).on('change', '.materials',function(){
+        var id=$(this).parent().parent().attr('id');
+        getTypes(id);
+    });
+    $(document).on('change', '.types',function(){
+        var id=$(this).parent().parent().attr('id');
+        getMaterialsID(id);
+    });
+    $(document).on('change', '.tasks',function(){
+        var id=$(this).parent().parent().attr('id');
+        getTasks(id);
+    });
+ 
+});
+function getMaterialsID(row_id){
+        var vendor=$("#vendors"+row_id).val();
+        var material = $("#materials"+row_id).val(); 
+        var type=$("#types"+row_id).val(); 
+        $.ajax({
+        url: 'getMaterialsID.php',
+        type: 'post',
+        data:{vendor:vendor,material:material,type:type},
+        success: function(data){
+            var result=jQuery.parseJSON(data);
+            $.each(result,function( index, value ) {
+                $("#checkbox"+row_id).attr("value", value);
+            });
+        }
+    });
+ 
+};
+function addWeights_Measures(){
+    if(number_of_rows<20){
+        number_of_rows=number_of_rows+1;
+        id_of_row=id_of_row+1;
+        $("#W_M_tbody").append( "<tr id='"+id_of_row+"'><td >           <input type='checkbox' id='checkbox"+id_of_row+"'checked name='wm[]' value=''>        </td>     <td>          <select class='vendors' id='vendors"+id_of_row+"' name='vendor' style='width:220px;'>             <option value=''>Select</option>            </select>     </td>     <td>          <select class='materials' id='materials"+id_of_row+"' name='material' style='width:220px;'>               <option value=''>Select</option>            </select>     </td>     <td>          <select class='types' id='types"+id_of_row+"' name='vendor' style='width:220px;'>             <option value=''>Select</option>            </select>     </td> <td><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeWeights_Measures('#" + id_of_row + "')></td>  </tr>");
+        getVendors(id_of_row);
+ 
+    }
+};
+function addTasks(){
+    if(number_of_tasks<20){
+        number_of_tasks=number_of_tasks+1;
+        id_of_task=id_of_task+1;
+        $("#Taskbody").append(  "<tr id='"+id_of_task+"'><td >          <input type='checkbox' id='checkbox"+id_of_task+"'checked name='wm[]' value=''>       </td>     <td>          <select class='tasks' id='tasks"+id_of_task+"' name='tasks' style='width:220px;'></select></td></tr>");
+         
+ 
+    }
+};
+ 
+function removeWeights_Measures(row_id){
+    $(row_id).remove();
+    number_of_rows--;
+};
+function removeTasks(row_id){
+    $(row_id).remove();
+    number_of_task--;
+};
+function getVendors(row_id)
+{
+    $.ajax({
+        url: 'getVendors.php',
+        type: 'post',
+        success: function(data){
+            $("#materials"+row_id).children().remove();
+            $("#materials"+row_id).append("<option value=''>Select</option>");
+            $("#types"+row_id).children().remove();
+            $("#types"+row_id).append("<option value=''>Select</option>");
+            var result=jQuery.parseJSON(data);
+            $.each(result,function( index, value ) {
+                $("#vendors"+row_id).append('<option value="'+value+'">'+value+'</option>');
+            });
+        }
+    });
+ 
+};
+function getMaterials(row_id)
+{
+   var vendor = $("#vendors"+row_id).val(); 
+    $.ajax({
+        url: 'getMaterials.php',
+        type: 'post',
+        data: {
+            vendor: vendor
+        },
+        success: function(data){
+            $("#materials"+row_id).children().remove();
+            $("#materials"+row_id).append("<option value=''>Select</option>");
+            $("#types"+row_id).children().remove();
+            $("#types"+row_id).append("<option value=''>Select</option>");
+            var result=jQuery.parseJSON(data);
+            $.each(result,function( index, value ) {
+                $("#materials"+row_id).append('<option value="'+value+'">'+value+'</option>');
+            });
+        }
+    });
+};
+ 
+function getTypes(row_id)
+{
+    var vendor=$("#vendors"+row_id).val();
+    var material = $("#materials"+row_id).val(); 
+    $.ajax({
+        url: 'getTypes.php',
+        type: 'post',
+        data: {
+            vendor: vendor,
+            material:material
+        },
+        success: function(data){
+            $("#types"+row_id).children().remove();
+            $("#types"+row_id).append("<option value=''>Select</option>");
+            var result=jQuery.parseJSON(data);
+            $.each(result,function( index, value ) {
+                $("#types"+row_id).append('<option value="'+value+'">'+value+'</option>');
+            });
+        }
+    });
+};
+</script>
 
 <?php
 require ("connection.php");
@@ -473,7 +604,7 @@ require ("connection.php");
                                         <td>
                                             <select class='types' id='types1' name='vendor' style='width:220px;'><option value=''>Select</option></select>
                                         </td>
-                                        <td><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeWeights_Measures('#1')></td>
+                                        <td><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeWeights_Measures('1')></td>
                                     </tr>";
                                     }
                         ?>
