@@ -6,7 +6,7 @@ require ("header.php");
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 	<h1 class="pull-left">Add Documentation</h1>
-	<a class="pull-right" href="documentation.php" style="margin-right:20px; background-color:#d14700;">Back to Docs</a>
+	<a class="pull-right" href="documentation.php?p=1" style="margin-right:20px; background-color:#d14700;">Back to Docs</a>
 	<div class="clear"></div>
 	</div>
 <div class="dashboard-detail">
@@ -25,6 +25,11 @@ require ("header.php");
 					<div class="tabinner-detail">
 					<label>Title</label>
 					<input name="title" type="text" class="contact-prefix" style="width:95%;">
+					<div class="clear"></div>
+					</div>
+					<div class="tabinner-detail">
+					<label>Description</label>
+					<input name="description" type="text" class="contact-prefix" style="width:95%;">
 					<div class="clear"></div>
 					</div>
 					<div class="tabinner-detail">
