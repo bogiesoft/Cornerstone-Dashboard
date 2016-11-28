@@ -13,7 +13,7 @@ $result = mysqli_query($conn,$sql);
 	
 		$title = $row['title'];
 		$text = $row['text'];
-		
+		$description = $row['description'];
 		$display = "yes";
     
 	} 
