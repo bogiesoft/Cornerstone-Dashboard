@@ -31,8 +31,9 @@ if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
 		$temp = $row['title'];
 		echo "<div class='doc-block'>";
-		echo "<a href='edit_doc.php?title=$temp'><h2>".$row['title']."</h2></a>"."<p>Written by <b>".$row['user']."</b> on ".$row['timestamp']."</p><br>";
-		echo "<p>".$row['text']."</p>";
+		echo "<div class='search-boxright pull-right'><a href='edit_doc.php?title=$temp'>Edit</a></div>";
+		echo "<a href='view_doc.php?title=$temp'><h2>".$row['title']."</h2></a>"."<p>Written by <b>".$row['user']."</b> on ".$row['timestamp']."</p><br>";
+		echo "<p>".$row['description']."</p>";
 		echo "</div>";
     }
 } else {

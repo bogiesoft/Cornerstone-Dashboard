@@ -2,21 +2,21 @@
 require ("header.php");
 require ("connection.php");
 
-$term = $_GET['title'];	
-$sql = "SELECT * FROM documentation WHERE title = '$term'"; 
-$result = mysqli_query($conn,$sql); 
-	
-	
-	
+$term = $_GET['title'];
+$sql = "SELECT * FROM documentation WHERE title = '$term'";
+$result = mysqli_query($conn,$sql);
+
+
+
 	if ($result->num_rows > 0) {
-		$row = $result->fetch_assoc();	
-	
+		$row = $result->fetch_assoc();
+
 		$title = $row['title'];
 		$text = $row['text'];
-		
+		$description = $row['description'];
 		$display = "yes";
-    
-	} 
+
+	}
 	else {
 		echo "No results found";
 		$display = "no";
