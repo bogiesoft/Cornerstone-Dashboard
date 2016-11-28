@@ -143,9 +143,12 @@ var CodeVersion = '3.0.8';
 			<td align=center> <b>Data Field</b></td><td>File Field</td>";
 		if($result -> num_rows>0){
 			while($data = $result->fetch_assoc()){
+				if($data["COLUMN_NAME"] != "mark" && $data["COLUMN_NAME"] != "import_date" && $data["COLUMN_NAME"] != "import_id")
+				{
 					echo "<tr>";
 					echo "<td align=center>$data[COLUMN_NAME]</td><td><select class = 'import_dropdown' name= $data[COLUMN_NAME] form = 'importForm' ><option value = 'none' style = 'display: none'>Choose one provided</option></select></td>";
 					echo "</tr>";
+				}
 			}
 		}else
 			echo "no result";
@@ -163,6 +166,7 @@ var CodeVersion = '3.0.8';
     	  <button id="import-accept" onclick = "displayLoading()">Import</button><img id = "loadImage" style = "display:none" src = "images/web-icons/loadingBar.gif" alt = "Smiley Face" height = "40" width = "40">
     	</div>
     </form>
+	 <button id="import-accept" class = "import_history_button" onclick = "displayHistory()">Import History</button><img id = "loadImage" style = "display:none" src = "images/web-icons/loadingBar.gif" alt = "Smiley Face" height = "40" width = "40">
 	<?php
 		if(count($errors) > 0){
 			echo "<h4>" . count($errors) . " error(s) found" . "</h4>";
@@ -172,6 +176,25 @@ var CodeVersion = '3.0.8';
 			}
 			echo "</ul>";
 		}
+		
+		echo "<div class = 'import_history_div' style = 'display: none'><br>";
+		echo "<table id = 'import_history_table' border='1'>
+		<tr>
+			<td align=center><b>Import Id</b></td><td>Date</td><td>Delete</td>";
+		
+		$result_history = mysqli_query($conn, "SELECT DISTINCT import_id, import_date FROM sales WHERE import_id != 0");
+		
+		if($result_history->num_rows>0){
+			while($data = $result_history->fetch_assoc()){
+				$id = $data["import_id"];
+				echo "<tr>";
+				echo "<td align=center>$data[import_id]</td><td>$data[import_date]</td><td><a onclick = 'return confirm(\"Are You Sure?\")' href = 'delete_import.php?id=$id'>Delete</a></td>";
+				echo "</tr>";
+			}
+		}else
+			echo "no result";
+		echo "</table>";
+		echo "</div>";
 	?>
    </div><!-- #set_map -->
    <div id="upload_file" class="hide">
@@ -202,5 +225,16 @@ window.onload = function(){
 function displayLoading()
 {
 	document.getElementById("loadImage").style.display = "block";
+}
+function displayHistory()
+{
+	if($(".import_history_button").text() == "Import History"){
+		$(".import_history_div").show();
+		$(".import_history_button").html("Hide History");
+	}
+	else{
+		$(".import_history_div").hide();
+		$(".import_history_button").html("Import History");
+	}
 }
 </script>
