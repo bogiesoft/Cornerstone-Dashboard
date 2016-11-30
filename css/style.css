@@ -22,7 +22,7 @@ h5 {}
 h6 {}
 p { box-sizing:inherit !important; }
 a:focus { outline:none; }
-ul, ul li, ul ol, ul li ul, ul li ul li { list-style:none; padding:0; margin:0; }
+ul, ul li, ul ol, ul li ul, ul li ul li {  padding:0; margin:0; padding-left: 1em;  }
 form{display:inline-block;}
 .wrapper { }
 .container { margin:0 auto; width:1142px;  }

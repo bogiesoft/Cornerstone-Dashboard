@@ -15,7 +15,7 @@ if(isset($_POST['submit_form'])){
 	$result7 = $conn->query($sql6) or die('Error querying database 5.');
 
 	$sql = 'UPDATE documentation SET title="' . $title . '",text="' . $text . '", user="' . $user_name . '", timestamp="' . $today . '", description="' .$description . '" WHERE title ="' . $title . '"';
-	$result = $conn->query($sql) or die('Error querying database.');
+	$result = $conn->query($sql) or die(mysqli_error($conn));
 
 	$conn->close();
 	header("location: documentation.php?p=1");
@@ -35,7 +35,7 @@ else{
 	mysqli_query($conn, $sql);
 
 	$conn->close();
-	header("location: documentation.php?p=1");
+	header("location: documentation.php");
 	exit();
 }
 ?>

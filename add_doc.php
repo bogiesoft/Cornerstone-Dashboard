@@ -23,14 +23,23 @@ require ("header.php");
 			<form action="add_new_doc.php" method="post">
 				<div class="newdoctab-inner">
 					<div class="tabinner-detail">
-					<label>Title</label>
-					<input name="title" type="text" class="contact-prefix" style="width:95%;">
-					<div class="clear"></div>
+						<label>Title</label>
+						<input name="title" type="text" class="contact-prefix" style="width:95%;">
+						<div class="clear"></div>
 					</div>
 					<div class="tabinner-detail">
-					<label>Text</label>
-					<textarea name="text" style="float:left; width:600px; height:300px;"></textarea>
-					<div class="clear"></div>
+						<label>Description</label>
+						<input name="description" type="text" class="contact-prefix" style="width:95%;">
+						<div class="clear"></div>
+					</div>
+					<div class="tabinner-detail">
+						<ul class="nav nav-tabs" role="tablist">
+							<li role="presentation" class="active"><a  id = "text_label" role="tab" data-toggle="tab" aria-expanded="true">Text</a></li>
+							<li role="presentation" class="active"><a  id = "preview_label" role="tab" data-toggle="tab" aria-expanded="true">Preview</a></li>
+						</ul>
+						<textarea id = "text" name="text" style="float:left; width:600px; height:300px;"></textarea>
+						<div id='fake_textarea' name = 'fake_textarea' contenteditable = "true" style="display: none;"></div>
+						<div class="clear"></div>
 					</div>
 				</div>
 			</div>
@@ -43,7 +52,30 @@ require ("header.php");
 	</div>
 	</div>
 </div>
-				
+
 </div>
+
 <script src="DocumentationSweetAlert.js"></script>
+<link rel="stylesheet" href="css/likeaboss.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="likeaboss.js" type="text/javascript"></script>
+<script type="text/javascript" src="micromarkdown/micromarkdown.js"></script>
+<script>
+	$(document).ready(function(){
+		$("textarea").likeaboss();
+		var textarea = $('#text');
+		var preview = $('#fake_textarea');
+		$('#preview_label').on('click', function(){
+			var input = textarea.val();
+			console.log(input);
+			preview.html(micromarkdown.parse(input));
+			preview.show();
+			textarea.hide();
+		});
+
+		$('#text_label').on('click', function(){
+			preview.hide();
+			textarea.show();
+		});
+	});
+</script>

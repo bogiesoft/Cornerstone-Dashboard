@@ -24,17 +24,6 @@ $result = mysqli_query($conn,$sql);
 	}
 
 ?>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<script>
-$(document).ready(function(){
-    if($display = "no"){
-        $("form").hide();
-    }
-	if($display = "yes"){
-        $("form").show();
-    }
-});
-</script>
 
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
@@ -56,7 +45,7 @@ $(document).ready(function(){
 					</div>
 					<div class="tabinner-detail">
 					<label>Written by <?php echo $user; ?> on <?php echo $timestamp; ?></label>
-					<div name="text" style="float:left; width:600px; height:300px;"><?php echo $text; ?></div>
+					<div id = "text" name="text" style="float:left; width:600px; height:300px;"><?php echo $text; ?></div>
 					<div class="clear"></div>
 					</div>
 				</div>
@@ -69,3 +58,16 @@ $(document).ready(function(){
 </div>
 <script src="DocumentationSweetAlert.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script type="text/javascript" src="micromarkdown/micromarkdown.js"></script>
+<script>
+  var input = $('#text').text();
+$(document).ready(function(){
+  $('#text').html(micromarkdown.parse(input));
+    if($display = "no"){
+        $("form").hide();
+    }
+	if($display = "yes"){
+        $("form").show();
+    }
+});
+</script>
