@@ -90,7 +90,7 @@ $conn->close();
 	
 	var events = [];
 	var today = new Date();
-	var dd = today.getDate() + 1;
+	var dd = today.getDate();
 	var mm = today.getMonth() + 1;
 	var yyyy = today.getFullYear();
 	var index = 0;
