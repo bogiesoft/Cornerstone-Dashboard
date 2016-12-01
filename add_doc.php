@@ -37,10 +37,8 @@ require ("header.php");
 							<li role="presentation" class="active"><a  id = "text_label" role="tab" data-toggle="tab" aria-expanded="true">Text</a></li>
 							<li role="presentation" class="active"><a  id = "preview_label" role="tab" data-toggle="tab" aria-expanded="true">Preview</a></li>
 						</ul>
-						<form action = "image_blog.php" method="post" enctype="multipart/form-data">
-							<input name = "file[]" id="fileInput" type="file" style="display:none;" onchange='getFilename(this)'/>
+							<input name = "file" id="fileInput" type="file" style="display:none;" onchange='getFilename(this)' form = "importForm"/>
 							<input type="button" value="Choose Files!" onclick="document.getElementById('fileInput').click();" />
-						</form>
 						<textarea id = "text" name="text" style="float:left; width:600px; height:300px;"></textarea>
 						<div id='fake_textarea' name = 'fake_textarea' contenteditable = "true" style="display: none;"></div>
 						<div class="clear"></div>
@@ -50,6 +48,8 @@ require ("header.php");
 				<div class="newcontact-tabbtm">
 					<input class="store-btn" type="submit" value="Save" name="submit_form" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
 				</div>
+			</form>
+			<form id = "importForm" action = "image_blog.php" method = "POST" enctype="multipart/form-data">
 			</form>
 			</div>
 		</div>
@@ -67,14 +67,16 @@ require ("header.php");
 <script>
 
 function getFilename(name){
-	var filename = $(name).val();
-	$.ajax({
-		 type:'POST',
-		 url: 'image_blog.php',
-		 data: {
-			 'file': filename
-		 }
-	 });
+	document.getElementById("importForm").submit();
+	// var filename = $(name).val().replace(/C:\\fakepath\\/i, '');
+	// console.log(filename);
+	// $.ajax({
+	// 	 type:'POST',
+	// 	 url: 'image_blog.php',
+	// 	 data: {
+	// 		 'file': filename
+	// 	 }
+	//  });
 }
 	$(document).ready(function(){
 		//  $('#imageFile').live('change', function(){
