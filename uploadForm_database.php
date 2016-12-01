@@ -39,6 +39,7 @@ for($i = 0; $i < count($array_names); $i++)
 
 $error = array();
 $sql_statements = array();
+$update_statements = array();
 
 
 for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
@@ -167,7 +168,8 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 			array_push($sql_statements, $sql);
 		}
 		else{
-			array_push($sql_statements, $sql2);
+			//array_push($sql_statements, $sql2);
+			array_push($update_statements, $sql2);
 		}
 
 }
@@ -192,14 +194,19 @@ else{
 //sweetalert error message displayed if more than 1 error or sucess message if 0 errors
 	var error_string = "";
 	var number_errors = 0;
+	var update_statements = <?php echo json_encode($update_statements); ?>;
 	window.onload = function(){
 		var errors = <?php echo json_encode($error); ?>;
 		number_errors = errors.length;
+		number_updates = update_statements.length;
 		for(var i = 0; i < errors.length; i++){
 			error_string = error_string + errors[i] + "\n";
 		}
 		if(errors.length > 0){
 			window.location.replace("uploadForm.php");
+		}
+		else if(number_updates > 0){
+			warnBeforeRedirect();
 		}
 		else{
 			showSuccessMessage();
@@ -212,6 +219,24 @@ else{
 			location.href = "uploadForm.php";
 			}, 2000);
 		};
+		function warnBeforeRedirect() {
+		swal({   title: number_updates + " clients will be updated",   text: "Would you like to update clients?",   type: "warning",   showCancelButton: true,   confirmButtonColor: "#DD6B55",   confirmButtonText: "Yes, update all!",   closeOnConfirm: false }, 
+			function(isConfirm){ if(isConfirm){ 
+			 $.ajax({
+                    type: "POST",
+                    url: 'storeUpdatesSession.php',
+                    data: {updates_array : update_statements},
+                    success: function(data)
+                    {
+                        location.href = "uploadForm.php";
+                    }
+                });
+	} 
+		else{window.setTimeout(function () {
+			location.href = "uploadForm.php";
+			}, 1000);};  
+		});
+		};  
 	}
 	
 </script>
