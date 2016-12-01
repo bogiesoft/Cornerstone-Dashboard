@@ -1,16 +1,20 @@
 
+
 <?php
+
   $name = '';
-  $name = $_POST["file"];
-  echo $name;
-  $tmp_name = $_POST['file'];
-  if (!empty($name)) {
-      $location = '/Applications/XAMPP/xamppfiles/htdocs/Cornerstone1/images/';
-      if  (move_uploaded_file($tmp_name, $location.$name)){
-          echo 'Uploaded';
+  if (isset($_FILES["file"]["name"])) {
+      $name = $_FILES["file"]["name"];
+      $tmp_name = $_FILES['file']['tmp_name'];
+      $error = $_FILES['file']['error'];
+      if (!empty($name)) {
+          $location = '/Applications/XAMPP/xamppfiles/htdocs/Cornerstone1/images/';
+          if  (move_uploaded_file($tmp_name, $location.$name)){
+              echo 'Uploaded';
+          }
+      } else {
+          echo 'please choose a file';
       }
-  } else {
-      echo 'please choose a file';
   }
 
 ?>
