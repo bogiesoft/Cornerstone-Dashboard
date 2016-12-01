@@ -60,6 +60,8 @@ $result = mysqli_query($conn,$sql);
 							<li role="presentation" class="active"><a  id = "text_label" role="tab" data-toggle="tab" aria-expanded="true">Text</a></li>
 							<li role="presentation" class="active"><a  id = "preview_label" role="tab" data-toggle="tab" aria-expanded="true">Preview</a></li>
 						</ul>
+						<input name = "file" id="fileInput" type="file" style="display:none;" form = "uploadImage"/>
+						<input type="button" value="Choose Files!" onclick="document.getElementById('fileInput').click();" />
 						<textarea id = "text" name="text" style="float:left; width:600px; height:300px;"><?php echo $text; ?></textarea>
 						<div id='fake_textarea' name = 'fake_textarea' contenteditable = "true" style="display: none;"></div>
 						<div class="clear"></div>
@@ -70,6 +72,23 @@ $result = mysqli_query($conn,$sql);
 					<input class="store-btn" type="submit" value="Save" name="submit_form" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
 					<input class="delete-btn" type = "submit" value = "Delete" name = "delete_form" style="width:200px; font-size:16px; background-color:#d14700; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px; float:left">
 				</div>
+			</form>
+			<form id = "uploadImage" action = "<?php
+			  $name = '';
+				$tmp_name ='';
+			  if (isset($_FILES["file"]["name"])) {
+			      $name = $_FILES["file"]["name"];
+			      $tmp_name = $_FILES['file']['tmp_name'];
+			      $error = $_FILES['file']['error'];
+			      if (!empty($name)) {
+			          $location = '/Applications/XAMPP/xamppfiles/htdocs/Cornerstone1/images/';
+			          move_uploaded_file($tmp_name, $location.$name);
+			      } else {
+			          echo 'please choose a file';
+			      }
+			  }
+
+			?>" method = "POST" enctype="multipart/form-data">
 			</form>
 			</div>
 		</div>
@@ -82,24 +101,52 @@ $result = mysqli_query($conn,$sql);
 <script src="likeaboss.js" type="text/javascript"></script>
 <script type="text/javascript" src="micromarkdown/micromarkdown.js"></script>
 <script>
-$(document).ready(function(){
-	$("textarea").likeaboss();
-	var textarea = $('#text');
-	var preview = $('#fake_textarea');
-	$('#preview_label').on('click', function(){
-		var input = textarea.val();
-		console.log(input);
-		preview.html(micromarkdown.parse(input));
-		preview.show();
-		textarea.hide();
-		$('.likeaboss_toolbar').hide();
-	});
+	$(document).ready(function(){
+		//restore back the saved value when page reload
+		$("#title").val(localStorage.getItem("title_val"));
+		$("#description").val(localStorage.getItem("description_val"));
+		$("#text").val(localStorage.getItem("textarea_val"));
+		$("textarea").likeaboss();
+		var textarea = $('#text');
+		var preview = $('#fake_textarea');
 
-	$('#text_label').on('click', function(){
-		preview.hide();
-		textarea.show();
-		$('.likeaboss_toolbar').show();
-	});
+		$('#preview_label').on('click', function(){
+			var input = textarea.val();
+			preview.html(micromarkdown.parse(input));
+			preview.show();
+			textarea.hide();
+			$('.likeaboss_toolbar').hide();
+		});
+
+		$('#text_label').on('click', function(){
+			console.log(localStorage.getItem("title_val"));
+			preview.hide();
+			textarea.show();
+			$('.likeaboss_toolbar').show();
+		});
+
+		$( "#fileInput" ).change(function() {
+			nameoffile = $(this).val().replace(/^.*\\/, "");
+			console.log(nameoffile);
+			var imageURL = "![An Image](/Cornerstone1/images/"+nameoffile+")";
+			textarea.val(textarea.val() +"\n"+ imageURL);
+
+			localStorage.setItem("textarea_val", $(textarea).val());
+			localStorage.setItem("title_val", $('#title').val());
+			localStorage.setItem("description_val",$('#description').val());
+
+			document.getElementById("uploadImage").submit(function () {
+					return false;
+			});
+		});
+
+		$('.store-btn').on('click', function(){
+			localStorage.removeItem("textarea_val");
+			localStorage.removeItem("title_val");
+			localStorage.removeItem("description_val");
+
+		});
+
     if($display = "no"){
         $("form").hide();
     }

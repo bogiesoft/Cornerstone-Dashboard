@@ -15,7 +15,7 @@ th, td { padding-top:0 !important; padding-bottom:0 !important;}
 body {  color:#666; font-size:14px; line-height:36px; background-color:#e9eced; font-family: 'Montserrat', sans-serif; }
 h1, h2, h3, h4, h5, h6 { padding:0; margin:0; font-weight:normal; font-family: 'Montserrat', sans-serif; }
 h1 {}
-h2 {}
+h2 {display: inline-block;}
 h3 {}
 h4 {}
 h5 {}
