@@ -2,37 +2,29 @@
 require ("header.php");
 require ("connection.php");
 
-$term = $_GET['title'];	
-$sql = "SELECT * FROM documentation WHERE title = '$term'"; 
-$result = mysqli_query($conn,$sql); 
-	
-	
-	
+$term = $_GET['title'];
+$sql = "SELECT * FROM documentation WHERE title = '$term'";
+$result = mysqli_query($conn,$sql);
+
+
+
 	if ($result->num_rows > 0) {
-		$row = $result->fetch_assoc();	
-	
+		$row = $result->fetch_assoc();
+
 		$title = $row['title'];
 		$text = $row['text'];
+		$description = $row['description'];
 		$display = "yes";
-    
-	} 
+
+	}
 	else {
 		echo "No results found";
 		$display = "no";
 	}
 
 ?>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<script>
-$(document).ready(function(){
-    if($display = "no"){
-        $("form").hide();
-    }
-	if($display = "yes"){
-        $("form").show();
-    }
-});
-</script>
+
+
 
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
@@ -59,9 +51,18 @@ $(document).ready(function(){
 					<div class="clear"></div>
 					</div>
 					<div class="tabinner-detail">
-					<label>Text</label>
-					<textarea name="text" style="float:left; width:600px; height:300px;"><?php echo $text; ?></textarea>
-					<div class="clear"></div>
+						<label>Description</label>
+						<input name="description" type="text" value="<?php echo $description; ?>" class="contact-prefix" style="width:95%;">
+						<div class="clear"></div>
+					</div>
+					<div class="tabinner-detail">
+						<ul class="nav nav-tabs" role="tablist">
+							<li role="presentation" class="active"><a  id = "text_label" role="tab" data-toggle="tab" aria-expanded="true">Text</a></li>
+							<li role="presentation" class="active"><a  id = "preview_label" role="tab" data-toggle="tab" aria-expanded="true">Preview</a></li>
+						</ul>
+						<textarea id = "text" name="text" style="float:left; width:600px; height:300px;"><?php echo $text; ?></textarea>
+						<div id='fake_textarea' name = 'fake_textarea' contenteditable = "true" style="display: none;"></div>
+						<div class="clear"></div>
 					</div>
 				</div>
 			</div>
@@ -76,4 +77,34 @@ $(document).ready(function(){
 </div>
 </div>
 <script src="DocumentationSweetAlert.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>	
+<link rel="stylesheet" href="css/likeaboss.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="likeaboss.js" type="text/javascript"></script>
+<script type="text/javascript" src="micromarkdown/micromarkdown.js"></script>
+<script>
+$(document).ready(function(){
+	$("textarea").likeaboss();
+	var textarea = $('#text');
+	var preview = $('#fake_textarea');
+	$('#preview_label').on('click', function(){
+		var input = textarea.val();
+		console.log(input);
+		preview.html(micromarkdown.parse(input));
+		preview.show();
+		textarea.hide();
+		$('.likeaboss_toolbar').hide();
+	});
+
+	$('#text_label').on('click', function(){
+		preview.hide();
+		textarea.show();
+		$('.likeaboss_toolbar').show();
+	});
+    if($display = "no"){
+        $("form").hide();
+    }
+	if($display = "yes"){
+        $("form").show();
+    }
+});
+</script>
