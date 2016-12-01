@@ -67,12 +67,12 @@ require ("header.php");
 <script>
 
 function getFilename(name){
-	console.log($(name).val());
+	var filename = $(name).val();
 	$.ajax({
 		 type:'POST',
 		 url: 'image_blog.php',
 		 data: {
-			 'file': $(name).val()
+			 'file': filename
 		 }
 	 });
 }
