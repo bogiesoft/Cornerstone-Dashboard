@@ -30,8 +30,12 @@ if(isset($_POST['submit_form'])){
 		}
 		$count = $count + 1;
 	}
-	
-	$percent = (int)($check_count / $max * 100);
+	if($max == 0){
+		$percent = 100;
+	}
+	else{
+		$percent = (int)($check_count / $max * 100);
+	}
 	
 	mysqli_query($conn, "UPDATE project_management SET percent = '$percent' WHERE job_id = '$job_id'") or die("error");
 	header("location: project_management.php");

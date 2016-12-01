@@ -7,7 +7,6 @@
   height: 200px;
   width: 200px;
   margin: 2em auto;
-  box-shadow: 0 0 1em black;
   border-radius: 100%;
   position: relative;
   text-align: center;
@@ -19,14 +18,12 @@
   width: 160px;
   left: 50%;
   top: 50%;
-  box-shadow: inset 0 0 1em black;
   content: attr(data-pct)"%";
   margin-top: -80px;
   margin-left: -80px;
   border-radius: 100%;
   line-height: 160px;
   font-size: 2em;
-  text-shadow: 0 0 0.5em black;
 }
 
 input {
@@ -36,7 +33,7 @@ input {
 
 /* Make things perty */
 html {  height: 100%;}
-h1{ margin: 0; text-transform: uppercase;text-shadow: 0 0 0.5em black;}
+h1{ margin: 0; text-transform: uppercase;}
 h2 { font-weight: 300}
 input { border: 1px solid #666; background: #333; color: #fff; padding: 0.5em; box-shadow: none; outline: none !important; margin: 1em  auto; text-align: center;}
 </style>
@@ -64,24 +61,7 @@ input { border: 1px solid #666; background: #333; color: #fff; padding: 0.5em; b
 	$result = mysqli_query($conn, $sql);
 	$row2= $result->fetch_assoc();
 	
-	echo "<div data-role='main' class='ui-content'>";
-			echo "<div class='vendor-left'>";
-				$x = $job_id;
-				echo "<h3><a href='edit_job.php?job_id=$x'>".$row2["project_name"]."</a></h1>";
-				echo "<p>Total Records: ".$row1["records_total"]."</p>";
-				echo "<p>Due Date: ".$row2["due_date"]."</p>";
-			echo "</div>";
-			echo "<div class='vendor-right'>";
-			
-			$user = $row1['processed_by'];
-			$result = mysqli_query($conn, "SELECT * FROM users WHERE user = '$user'");
-			$row3 = $result->fetch_assoc();
-			$name = $row3['first_name'] . " " . $row3['last_name'];
-			
-				echo "<p>Processed by: ".$name."</p>";
-				echo "<p>Client Name: ".$row2["client_name"]."</p>";
-				echo "<p>Job Status: ".$row2["job_status"]."</p>";
-	echo "</div><br><br>";
+	
 	
 	$sql = "SELECT * FROM production_data";
 	$result = mysqli_query($conn, $sql);
@@ -109,10 +89,10 @@ input { border: 1px solid #666; background: #333; color: #fff; padding: 0.5em; b
 		if($production_tasks_array2 == $job_tasks_array && $sameSize == TRUE){
 			echo "<h1>Data</h1>";
 			if($count == 1 && count($production_tasks_array2) > 1){
-				echo "<h1 style = 'float: right; margin-top: -100px'>Efficiency</h1>";
+				echo "<h1 style = 'float: right; margin-top: -5%'>Efficiency</h1>";
 			}
 			else if($count == 1 && count($production_tasks_array2) == 1){
-				echo "<h1 style = 'float: right; margin-top: -130px'>Efficiency</h1>";
+				echo "<h1 style = 'float: right; margin-top: -5%'>Efficiency</h1>";
 			}
 			$records_per_array = explode(",", $row2['records_per']);
 			$time_unit_array = explode(",", $row2['time_unit']);
@@ -207,7 +187,7 @@ input { border: 1px solid #666; background: #333; color: #fff; padding: 0.5em; b
 				$percent = 0;
 			}
 			echo "
-					<li><div id='canvas-holder' style = 'width: 15%; float: right; margin-top:-200px'>
+					<li><div id='canvas-holder' style = 'width: 15%; float: right; margin-top:-20%'>
 						<canvas id='canvas_prod' width='1' height='1'/>
 					</div></li>";
 			echo "</ul><br><br><br>";

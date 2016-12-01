@@ -13,10 +13,11 @@ $array_names = array();
 $result_highest_id = mysqli_query($conn, "SELECT MAX(import_id) AS max FROM sales");
 $row = $result_highest_id->fetch_assoc();
 $import_id = $row["max"] + 1;
+$import_name = $_POST["import_name"];
 $result = mysqli_query($conn,"SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'sales'");
 while($row = $result->fetch_assoc())
 {
-	if($row['COLUMN_NAME'] != "mark" && $row['COLUMN_NAME'] != "import_date" && $row["COLUMN_NAME"] != "import_id")
+	if($row['COLUMN_NAME'] != "mark" && $row['COLUMN_NAME'] != "import_date" && $row["COLUMN_NAME"] != "import_id" && $row["COLUMN_NAME"] != "import_name" && $row["COLUMN_NAME"] != "import_status")
 	array_push($array_names, $row['COLUMN_NAME']);
 }
 //checks if header in csv matches input from select drop down
@@ -45,7 +46,7 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 		$sql = 'INSERT INTO sales (rep, quickbooks, prefix, full_name, suffix, title, phone, fax, extension, web_address, business, country, address_line_1, address_line_2, address_line_3, city, state, zipcode, status, call_back_date, priority, date_added, 
 				mailing_list, pie_day, second_contact, cell_phone, alt_phone, home_phone, email1, email2, vertical1, vertical2, vertical3, source, notes, _2014_pie_day, Non_Profit_Card_08_2013, 
 				Commercial_Card_08_2013, USPS_Post_Office_Mailing_03_2014, Contractor_Small_Business_Select_Mailing_03_2014, Contractor_SB_Select_Mailing_04_2014, USPS_EDDM_Regs_brochure_Mailing_04_2014,
-				USPS_9Y9_EDDM_Marketing_Card, SEPT_2014_3_5Y11_CRST_Marketing_Card, Contractor_Mailing_2016, type, import_id) VALUES (';
+				USPS_9Y9_EDDM_Marketing_Card, SEPT_2014_3_5Y11_CRST_Marketing_Card, Contractor_Mailing_2016, type, import_id, import_name, import_status) VALUES (';
 		
 		$sql2 = 'UPDATE sales SET ';
 		$full_name = "";
@@ -139,9 +140,9 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 				}
 			}
 			else if(($array_indexes[$j] != -1 || $array_names[$j] == "date_added") && $j == count($array_indexes) - 1){
-				$sql = $sql . $input . ',"' . $import_id . '")';
+				$sql = $sql . $input . ',"' . $import_id . '", "' . $import_name . '", "Insert")';
 				if($array_names[$j] != "full_name" && $array_names[$j] != "address_line_1" && $array_names[$j] != "date_added"){
-					$sql2 = $sql2 . $array_names[$j] . ' = "' . $input . '" WHERE full_name = "' . $full_name . '" AND address_line_1 = "' . $address_line_1 . '"';
+					$sql2 = $sql2 . $array_names[$j] . ' = "' . $input . ', import_id = ' . $import_id . ', import_name = ' . $import_name .  ', import_status = "Update" WHERE full_name = "' . $full_name . '" AND address_line_1 = "' . $address_line_1 . '"';
 				}
 			}
 			else if($array_indexes[$j] == -1 && $j != count($array_indexes) - 1){
@@ -151,9 +152,9 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 				}
 			}
 			else{
-				$sql = $sql . "'Prospect', " . $import_id . ")";
+				$sql = $sql . "'Prospect', " . $import_id . ", '" . $import_name . "', 'Insert')";
 				if($array_names[$j] != "full_name" && $array_names[$j] != "address_line_1" && $array_names[$j] != "date_added"){
-					$sql2 = $sql2 . $array_names[$j] . " = ' ' WHERE full_name = '$full_name' AND address_line_1 = '$address_line_1'";
+					$sql2 = $sql2 . $array_names[$j] . " = ' ', import_id = " . $import_id . ", import_name = " . $import_name . ", import_status = 'Update' WHERE full_name = '$full_name' AND address_line_1 = '$address_line_1'";
 				}
 			}
 		}

@@ -179,7 +179,7 @@ if ($result->num_rows > 0) {
 
 					echo "</select></form>";
 					echo "
-					<a href='yellow_sheet.php?job_id=$job_id'><div id='canvas-holder' style = 'width: 15%; float: right; margin-top:-200px'>
+					<a href='yellow_sheet.php?job_id=$job_id'><div id='canvas-holder' style = 'width: 15%; float: right; margin-top:-12%'>
 						<canvas id='canvas_pm" . $job_count . "' width='1' height='1'/>
 					</div></a>";
 

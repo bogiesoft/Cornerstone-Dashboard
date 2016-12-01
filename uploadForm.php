@@ -143,7 +143,7 @@ var CodeVersion = '3.0.8';
 			<td align=center> <b>Data Field</b></td><td>File Field</td>";
 		if($result -> num_rows>0){
 			while($data = $result->fetch_assoc()){
-				if($data["COLUMN_NAME"] != "mark" && $data["COLUMN_NAME"] != "import_date" && $data["COLUMN_NAME"] != "import_id")
+				if($data["COLUMN_NAME"] != "mark" && $data["COLUMN_NAME"] != "import_date" && $data["COLUMN_NAME"] != "import_id" && $data["COLUMN_NAME"] != "import_name" && $data["COLUMN_NAME"] != "import_status")
 				{
 					echo "<tr>";
 					echo "<td align=center>$data[COLUMN_NAME]</td><td><select class = 'import_dropdown' name= $data[COLUMN_NAME] form = 'importForm' ><option value = 'none' style = 'display: none'>Choose one provided</option></select></td>";
@@ -155,13 +155,12 @@ var CodeVersion = '3.0.8';
 		echo "</table>";
 	?>
 </div>
-
-
       <div class="widget-corner-lower"></div>
     </fieldset>
 
 	<!--import button-->
 	<form id = "importForm" action = "uploadForm_database.php" method = "POST" enctype="multipart/form-data">
+	<label>Import Name</label><input name = "import_name">
     	<div id="instance-actions">
     	  <button id="import-accept" onclick = "displayLoading()">Import</button><img id = "loadImage" style = "display:none" src = "images/web-icons/loadingBar.gif" alt = "Smiley Face" height = "40" width = "40">
     	</div>
@@ -180,15 +179,15 @@ var CodeVersion = '3.0.8';
 		echo "<div class = 'import_history_div' style = 'display: none'><br>";
 		echo "<table id = 'import_history_table' border='1'>
 		<tr>
-			<td align=center><b>Import Id</b></td><td>Date</td><td>Delete</td>";
+			<td align=center><b>Import Name</b></td><td>Date</td><td>Delete</td>";
 		
-		$result_history = mysqli_query($conn, "SELECT DISTINCT import_id, import_date FROM sales WHERE import_id != 0");
+		$result_history = mysqli_query($conn, "SELECT DISTINCT import_id, import_date, import_name FROM sales WHERE import_id != 0");
 		
 		if($result_history->num_rows>0){
 			while($data = $result_history->fetch_assoc()){
 				$id = $data["import_id"];
 				echo "<tr>";
-				echo "<td align=center>$data[import_id]</td><td>$data[import_date]</td><td><a onclick = 'return confirm(\"Are You Sure?\")' href = 'delete_import.php?id=$id'>Delete</a></td>";
+				echo "<td align=center>$data[import_name]</td><td>$data[import_date]</td><td><a onclick = 'return confirm(\"Are You Sure?\")' href = 'delete_import.php?id=$id'>Delete</a></td>";
 				echo "</tr>";
 			}
 		}else
