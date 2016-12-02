@@ -10,21 +10,18 @@ require ("header.php");
 			<div class="search-cont">
 				<div class="searchcont-detail">
 					<div class="search-boxleft">
-						<form id = "form-id" action = "documentation.php?p=0" method="post">
 							<label>Quick Search</label>
 							<input id="searchbox" name="frmSearch" type="text" placeholder="Search documentation by user, title etc.">
-						</form>
-
-						<div >
-							<form name = "formSortBy" id = "formSortBy" action = "documentation.php?sortby=" method = "POST" enctype="multipart/form-data">
-								<select id= "sortby" name = "sortby" style="width: 150px; float:right; display:inline-block;" >
-									<option value="">Choose one</option>
-		  						<option value="date">Date</option>
-		  						<option value="user">User</option>
-		  						<option value="View Count">View Count</option>
-								</select>
-							</form>
-					</div>
+							<div style="text-align:right;">
+								<form name = "formSortBy" id = "formSortBy" action = "documentation.php?sortby=" method = "POST" enctype="multipart/form-data">
+									<select id= "sortby" name = "sortby" style=" width: 150px; border: 1px solid #666; display: inline-block;" >
+										<option value="">Sort by</option>
+			  						<option value="date">Date</option>
+			  						<option value="user">User</option>
+			  						<option value="View Count">View Count</option>
+									</select>
+								</form>
+						</div>
 				</div>
 			</div>
 		<div class="clear"></div>
@@ -193,8 +190,11 @@ jQuery(function($){
 				}
 			});
 		});
-//fort according to date and user
+
+		$("#sortby").val(localStorage.getItem("select_val"));
+//sort according to date and user
 		$('#sortby').on('change', function(){
+			localStorage.setItem("select_val", $(this).val());
 			$('#formSortBy').attr('action',$('#formSortBy').attr('action')+$(this).val());
 			document.getElementById("formSortBy").submit();
 		});
