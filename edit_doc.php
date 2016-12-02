@@ -127,7 +127,6 @@ $result = mysqli_query($conn,$sql);
 
 		$( "#fileInput" ).change(function() {
 			nameoffile = $(this).val().replace(/^.*\\/, "");
-			console.log(nameoffile);
 			var imageURL = "![An Image](/Cornerstone1/images/"+nameoffile+")";
 			textarea.val(textarea.val() +"\n"+ imageURL);
 
