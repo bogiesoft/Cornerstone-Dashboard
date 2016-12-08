@@ -14,6 +14,8 @@ $result_highest_id = mysqli_query($conn, "SELECT MAX(import_id) AS max FROM sale
 $row = $result_highest_id->fetch_assoc();
 $import_id = $row["max"] + 1;
 $import_name = $_POST["import_name"];
+date_default_timezone_set('America/New_York');
+$import_date = date("Y-m-d H:i:s");
 $result = mysqli_query($conn,"SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'sales'");
 while($row = $result->fetch_assoc())
 {
@@ -119,6 +121,10 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 			if($array_names[$j] == "country" && $input != ""){
 				$foreign_country = TRUE;
 			}
+			//checks if type is input Client or Prospect
+			if($array_names[$j] == "type" && $input != "" && $input != "Prospect" && $input != "Client"){
+				array_push($error, "error in row " . ($i + 1) . " column header " . $_POST[$array_names[$j]] . " applied to " . $array_names[$j] . ": <b>Can only be input <i> Prospect </i> or <i> Client </i>. Can also be left blank as default <i> Prospect </i></b>");
+			}
 			//adds current date for date_added field
 			if($array_names[$j] == "date_added" && $input == ""){
 				date_default_timezone_set('America/New_York');
@@ -143,7 +149,7 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 			else if(($array_indexes[$j] != -1 || $array_names[$j] == "date_added") && $j == count($array_indexes) - 1){
 				$sql = $sql . $input . ',"' . $import_id . '", "' . $import_name . '", "Insert")';
 				if($array_names[$j] != "full_name" && $array_names[$j] != "address_line_1" && $array_names[$j] != "date_added"){
-					$sql2 = $sql2 . $array_names[$j] . ' = "' . $input . ', import_id = ' . $import_id . ', import_name = ' . $import_name .  ', import_status = "Update" WHERE full_name = "' . $full_name . '" AND address_line_1 = "' . $address_line_1 . '"';
+					$sql2 = $sql2 . $array_names[$j] . ' = "' . $input . ', import_id = ' . $import_id . ', import_date = "' . $import_date . '", import_name = "' . $import_name .  '", import_status = "Update" WHERE full_name = "' . $full_name . '" AND address_line_1 = "' . $address_line_1 . '"';
 				}
 			}
 			else if($array_indexes[$j] == -1 && $j != count($array_indexes) - 1){
@@ -155,7 +161,7 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 			else{
 				$sql = $sql . "'Prospect', " . $import_id . ", '" . $import_name . "', 'Insert')";
 				if($array_names[$j] != "full_name" && $array_names[$j] != "address_line_1" && $array_names[$j] != "date_added"){
-					$sql2 = $sql2 . $array_names[$j] . " = ' ', import_id = " . $import_id . ", import_name = " . $import_name . ", import_status = 'Update' WHERE full_name = '$full_name' AND address_line_1 = '$address_line_1'";
+					$sql2 = $sql2 . $array_names[$j] . " = 'Prospect', import_id = " . $import_id . ", import_name = '" . $import_name . "', import_date = '" . $import_date .  "', import_status = 'Update' WHERE full_name = '$full_name' AND address_line_1 = '$address_line_1'";
 				}
 			}
 		}
@@ -220,7 +226,7 @@ else{
 			}, 2000);
 		};
 		function warnBeforeRedirect() {
-		swal({   title: number_updates + " clients will be updated",   text: "Would you like to update clients?",   type: "warning",   showCancelButton: true,   confirmButtonColor: "#DD6B55",   confirmButtonText: "Yes, update all!",   closeOnConfirm: false }, 
+		swal({   title: number_updates + " clients will be updated with inserted clients",   text: "Would you like to update duplicate clients?",   type: "warning",   showCancelButton: true,   confirmButtonColor: "#DD6B55",   confirmButtonText: "Yes, update all!",   closeOnConfirm: false }, 
 			function(isConfirm){ if(isConfirm){ 
 			 $.ajax({
                     type: "POST",
