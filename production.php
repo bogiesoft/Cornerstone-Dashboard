@@ -42,6 +42,7 @@ html {  height: 100%;}
 	<div class="contacts-title">
 	<h1 class="pull-left">Production</h1>
 	<a class="pull-right" href="production_data.php" style="margin-right:20px; background-color:#d14700;">Time Tracking</a>
+	<a class="pull-right" href="inventory.php" style="margin-right:20px; background-color:#429ef4;">Inventory</a>
 	</div>
 <div class="dashboard-detail">
 	<div class="search-cont">

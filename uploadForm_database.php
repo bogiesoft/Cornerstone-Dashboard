@@ -19,7 +19,7 @@ $import_date = date("Y-m-d H:i:s");
 $result = mysqli_query($conn,"SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'sales'");
 while($row = $result->fetch_assoc())
 {
-	if($row['COLUMN_NAME'] != "mark" && $row['COLUMN_NAME'] != "import_date" && $row["COLUMN_NAME"] != "import_id" && $row["COLUMN_NAME"] != "import_name" && $row["COLUMN_NAME"] != "import_status")
+	if($row['COLUMN_NAME'] != "mark" && $row['COLUMN_NAME'] != "import_date" && $row["COLUMN_NAME"] != "import_id" && $row["COLUMN_NAME"] != "import_name" && $row["COLUMN_NAME"] != "import_status" && $row["COLUMN_NAME"] != "crid" && $row["COLUMN_NAME"] != "non_profit")
 	array_push($array_names, $row['COLUMN_NAME']);
 }
 //checks if header in csv matches input from select drop down

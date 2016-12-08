@@ -7,16 +7,25 @@ require ("header.php");
 		document.getElementById("notes").style.display = "none";
 		document.getElementById("mailing_history").style.display = "none";
 		document.getElementById("client_info").style.display = "block";
+		document.getElementById("crids").style.display = "none";
 	};
 	function showNotes(){
 		document.getElementById("notes").style.display = "block";
 		document.getElementById("mailing_history").style.display = "none";
 		document.getElementById("client_info").style.display = "none";
+		document.getElementById("crids").style.display = "none";
 	};
 	function showMailingHistory(){
 		document.getElementById("notes").style.display = "none";
 		document.getElementById("mailing_history").style.display = "block";
 		document.getElementById("client_info").style.display = "none";
+		document.getElementById("crids").style.display = "none";
+	};
+	function showCrids(){
+		document.getElementById("client_info").style.display = "none";
+		document.getElementById("notes").style.display = "none";
+		document.getElementById("mailing_history").style.display = "none";
+		document.getElementById("crids").style.display = "block";
 	};
 </script>
 <div class="dashboard-cont" style="padding-top:110px;">
@@ -32,6 +41,7 @@ require ("header.php");
 				<li role="presentation" class="active"><a  role="tab" data-toggle="tab" aria-expanded="true" onclick = 'showClientInfo()'>Client Info</a></li>
 				<li role="presentation" class="active"><a  role="tab" data-toggle="tab" aria-expanded="true" onclick = 'showNotes()'>Notes</a></li>
 				<li role="presentation" class="active"><a  role="tab" data-toggle="tab" aria-expanded="true" onclick = 'showMailingHistory()'>Mailing History</a></li>
+				<li role="presentation" class="active"><a  role="tab" data-toggle="tab" aria-expanded="true" onclick = 'showCrids()'>CRIDS</a></li>
 			</ul>
 
 			<div class="newcontactstabs-outer">
@@ -253,6 +263,20 @@ require ("header.php");
 									</div>
 									<div class="tabinner-detail">
 										<input type="checkbox" name="Contractor_Mailing_2016" class="contact-prefix" value='Y' style="width:10%; float:left;"><label style="width:30%; float:left">Contractor Mailing 2016</label>
+										<div class="clear"></div>
+									</div>
+								</div>
+							</div>
+							<div class="newcontactstab-detail" id="crids" style = 'display:none;'>
+								<div class="newcontacttab-inner">
+									<div class="tabinner-detail">
+										<label>CRID</label>
+										<input name="crid" type="text"  class="contact-prefix">
+										<div class="clear"></div>
+									</div>
+									<div class="tabinner-detail">
+										<label>Non-Profit</label>
+										<input name="non-profit" type="text"  class="contact-prefix">
 										<div class="clear"></div>
 									</div>
 								</div>
