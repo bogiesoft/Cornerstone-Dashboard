@@ -575,6 +575,7 @@
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 		<h1 class="pull-left">CRM</h1>
+    <a class="pull-right" href="DQR/index.php" class="add_button">DQR Generator</a>
 		<a class="pull-right" href="uploadForm.php" class="add_button">Upload</a>
 	</div>
 <div class="dashboard-detail">

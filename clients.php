@@ -147,7 +147,14 @@ require ("header.php");
 							var stren = urlencode(str);
 							return '<a href="edit_client.php?client_info='+stren+'">'+row[0]+'</a>'; //link for each client name
 						},
-					}
+					},{
+  			    "targets": 1,
+  			    "render": function ( data, type, row) {
+              var str = serialize([row[0], row[2]]);
+              var stren = urlencode(str);
+  			      return '<a href="edit_client.php?client_info='+stren+'">'+row[1]+'</a>'; //link for each business name
+  			    }
+  			  }
 			]
 		});
 	//==============================================================================
