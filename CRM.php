@@ -56,7 +56,14 @@
               var str = serialize([row[1], row[3]]);
               var stren = urlencode(str);
   			      return '<a href="edit_client.php?client_info='+stren+'">'+row[1]+'</a>'; //link for each client name
-  			    },
+  			    }
+  			  },{
+  			    "targets": 2,
+  			    "render": function ( data, type, row) {
+              var str = serialize([row[1], row[3]]);
+              var stren = urlencode(str);
+  			      return '<a href="edit_client.php?client_info='+stren+'">'+row[2]+'</a>'; //link for each business name
+  			    }
   			  },{
            'targets': 0,
            'searchable': false,
@@ -72,7 +79,7 @@
          }
       ]
   	});
-
+//buttons above table
   $("div.toolbar").html('<div class="dt-buttons"><a href="#" class="dt-button csv1"  id ="export" role="button">Export CSV</a><a class="dt-button buttons-select-all" tabindex="0" aria-controls="crm-table" href="#"><span>Select all</span></a><a class="dt-button buttons-select-none" tabindex="0" aria-controls="crm-table" href="#"><span>Deselect all</span></a><a class="dt-button filterRow buttons-showMarked" tabindex="0" aria-controls="crm-table" href="#">Show selected rows only</a></div>')
   //==============================================================================
 

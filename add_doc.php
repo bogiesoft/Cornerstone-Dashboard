@@ -24,12 +24,12 @@ require ("header.php");
 				<div class="newdoctab-inner">
 					<div class="tabinner-detail">
 						<label>Title</label>
-						<input name="title" type="text" class="contact-prefix" style="width:95%;">
+						<input id = "title" name="title" type="text" class="contact-prefix" style="width:95%;">
 						<div class="clear"></div>
 					</div>
 					<div class="tabinner-detail">
 						<label>Description</label>
-						<input name="description" type="text" class="contact-prefix" style="width:95%;">
+						<input id = "description" name="description" type="text" class="contact-prefix" style="width:95%;">
 						<div class="clear"></div>
 					</div>
 					<div class="tabinner-detail">
@@ -37,6 +37,8 @@ require ("header.php");
 							<li role="presentation" class="active"><a  id = "text_label" role="tab" data-toggle="tab" aria-expanded="true">Text</a></li>
 							<li role="presentation" class="active"><a  id = "preview_label" role="tab" data-toggle="tab" aria-expanded="true">Preview</a></li>
 						</ul>
+							<input name = "file" id="fileInput" type="file" style="display:none;" form = "uploadImage"/>
+							<input type="button" value="Choose Files!" onclick="document.getElementById('fileInput').click();" />
 						<textarea id = "text" name="text" style="float:left; width:600px; height:300px;"></textarea>
 						<div id='fake_textarea' name = 'fake_textarea' contenteditable = "true" style="display: none;"></div>
 						<div class="clear"></div>
@@ -46,6 +48,23 @@ require ("header.php");
 				<div class="newcontact-tabbtm">
 					<input class="store-btn" type="submit" value="Save" name="submit_form" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
 				</div>
+			</form>
+			<form id = "uploadImage" action = "<?php
+			  $name = '';
+				$tmp_name ='';
+			  if (isset($_FILES["file"]["name"])) {
+			      $name = $_FILES["file"]["name"];
+			      $tmp_name = $_FILES['file']['tmp_name'];
+			      $error = $_FILES['file']['error'];
+			      if (!empty($name)) {
+			          $location = '/Applications/XAMPP/xamppfiles/htdocs/Cornerstone1/images/';
+			          move_uploaded_file($tmp_name, $location.$name);
+			      } else {
+			          echo 'please choose a file';
+			      }
+			  }
+
+			?>" method = "POST" enctype="multipart/form-data">
 			</form>
 			</div>
 		</div>
@@ -62,20 +81,47 @@ require ("header.php");
 <script type="text/javascript" src="micromarkdown/micromarkdown.js"></script>
 <script>
 	$(document).ready(function(){
+		$("#title").val(localStorage.getItem("title_val"));
+		$("#description").val(localStorage.getItem("description_val"));
+		$("#text").val(localStorage.getItem("textarea_val"));
 		$("textarea").likeaboss();
 		var textarea = $('#text');
 		var preview = $('#fake_textarea');
+
 		$('#preview_label').on('click', function(){
 			var input = textarea.val();
-			console.log(input);
 			preview.html(micromarkdown.parse(input));
 			preview.show();
 			textarea.hide();
 		});
 
 		$('#text_label').on('click', function(){
+			console.log(localStorage.getItem("title_val"));
 			preview.hide();
 			textarea.show();
 		});
+
+		$( "#fileInput" ).change(function() {
+			nameoffile = $(this).val().replace(/^.*\\/, "");
+			console.log(nameoffile);
+			var imageURL = "![An Image](/Cornerstone1/images/"+nameoffile+")";
+			textarea.val(textarea.val() +"\n"+ imageURL);
+
+			localStorage.setItem("textarea_val", $(textarea).val());
+			localStorage.setItem("title_val", $('#title').val());
+			localStorage.setItem("description_val",$('#description').val());
+
+			document.getElementById("uploadImage").submit(function () {
+					return false;
+			});
+		});
+
+		$('.store-btn').on('click', function(){
+			localStorage.removeItem("textarea_val");
+			localStorage.removeItem("title_val");
+			localStorage.removeItem("description_val");
+
+		});
+
 	});
 </script>
