@@ -6,7 +6,9 @@ if(isset($_SESSION["import_errors"])){
 	$errors = $_SESSION["import_errors"];
 	$_SESSION["import_errors"] = array();
 }
-
+/*if(isset($_SESSION["test"])){
+	die($_SESSION["test"][0]);
+}*/
 ?>
 <!DOCTYPE html>
 <html>
@@ -112,7 +114,8 @@ var CodeVersion = '3.0.8';
 		</li>
 		<li><b>Email Fields: </b> Must include @gmail, @aol, @yahoo, etc. (e.g James123@gmail)</li>
 		<li><b>Country: </b> Must only be used for a <u>FOREIGN</u> country or left blank. DO NOT enter United States in this field</li>
-		<li><b>Address Line 3: </b> Only used for FOREIGN addresses and a Country field must be included
+		<li><b>Address Line 3: </b> Only used for FOREIGN addresses and a Country field must be included</li>
+		<li><b>Type: </b> Must either be <i> Prospect </i> or <i>Client</i>. Can also be left blank for default <i> Prospect </i></li>
 	</ul>
 	<fieldset>
 		<div class="widget-corner-upper"></div>
@@ -179,15 +182,15 @@ var CodeVersion = '3.0.8';
 		echo "<div class = 'import_history_div' style = 'display: none'><br>";
 		echo "<table id = 'import_history_table' border='1'>
 		<tr>
-			<td align=center><b>Import Name</b></td><td>Date</td><td>Delete</td>";
+			<td align=center><b>Import Name</b></td><td>Date</td><td>Delete</td><td>View</td>";
 		
-		$result_history = mysqli_query($conn, "SELECT DISTINCT import_id, import_date, import_name FROM sales WHERE import_id != 0");
+		$result_history = mysqli_query($conn, "SELECT DISTINCT import_id, import_date, import_name FROM sales WHERE import_id != 0 ORDER BY import_date DESC");
 		
 		if($result_history->num_rows>0){
 			while($data = $result_history->fetch_assoc()){
 				$id = $data["import_id"];
 				echo "<tr>";
-				echo "<td align=center>$data[import_name]</td><td>$data[import_date]</td><td><a onclick = 'return confirm(\"Are You Sure?\")' href = 'delete_import.php?id=$id'>Delete</a></td>";
+				echo "<td align=center>$data[import_name]</td><td>$data[import_date]</td><td><a onclick = 'return confirm(\"Are You Sure?\")' href = 'delete_import.php?id=$id'>Delete</a></td><td><a href = 'view_import.php?id=$id'>View</a></td>";
 				echo "</tr>";
 			}
 		}else
