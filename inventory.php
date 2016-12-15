@@ -553,12 +553,7 @@
 <div class="dashboard-detail">
     <div class ="search-cont">
       <div class="searchcont-detail">
-        <div class="search-boxleft">
-          <label>Quick Search</label>
-					<input id="searchbox" name="frmSearch" type="text" placeholder="Search for inventory">
-
-    			
-        </div>
+      
 			<div id="saved_search_div">
 				<table id="saved_search_table" style = 'display: none'>
 					<tbody>
@@ -634,4 +629,26 @@
 		</tbody>
 	</table>
 </div>
+<?php	
+		$inventory_history = mysqli_query($conn, "SELECT * FROM inventory WHERE quantity < 50");
+		
+		if($inventory_history->num_rows>0){
+			echo "<div class = 'import_history_div'><br>";
+			echo "<label style = 'color: #f45342'>Inventory Needed</label>";
+			echo "<table id = 'inventory_history_table' border='1'>
+			<tr>
+				<td align=center><b>Material</b></td><td>Type</td><td>Vendor</td><td>Phone</td><td>Email</td><td>Quantity(based on current jobs)</td>";
+			while($data = $inventory_history->fetch_assoc()){
+				$vendor = $data["vendor"];
+				$result_vendor = mysqli_query($conn, "SELECT * FROM vendors WHERE vendor_name = '$vendor'");
+				$row = $result_vendor->fetch_assoc();
+				echo "<tr>";
+				echo "<td align=center>$data[material]</td><td>$data[type]</td><td><a href = 'vendors.php'>$data[vendor]</a></td><td>$row[vendor_phone]</td><td>$row[vendor_email]</td><td>$data[quantity]</td>";
+				echo "</tr>";
+			}
+		}else
+			echo "Inventory Full";
+		echo "</table>";
+		echo "</div>";
+?>
 </div>
