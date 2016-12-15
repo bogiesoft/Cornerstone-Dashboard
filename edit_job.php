@@ -186,7 +186,8 @@ require ("connection.php");
 		$non_profit_number = $row['non_profit_number'];
 		$processed_by = $row['processed_by'];
 		$records_total = $row['records_total'];
-				
+		$_SESSION["current_records_total"] = $records_total;
+		$_SESSION["old_wm"] = $weights_measures;		
 		
 		$sql2 = "SELECT * FROM project_management WHERE job_id = '$job_id'"; 
 		$result2 = mysqli_query($conn,$sql2);
