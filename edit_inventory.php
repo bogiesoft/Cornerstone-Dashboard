@@ -3,13 +3,18 @@ require ("connection.php");
 $material_id = $_GET["material_id"];
 if(isset($_POST["submit_form"])){
 	$material = $_POST["material"];
+	$type = $_POST["type"];
 	$vendor = $_POST["vendor"];
 	$location = $_POST["location"];
 	$material_color = $_POST["material_color"];
 	$quantity = $_POST["quantity"];
 	$per_box = $_POST["per_box"];
 	
-	mysqli_query($conn, "UPDATE inventory SET material = '$material', vendor = '$vendor', location = '$location', material_color = '$material_color', quantity = '$quantity', per_box = '$per_box' WHERE material_id = '$material_id'");
+	mysqli_query($conn, "UPDATE inventory SET material = '$material', type = '$type', vendor = '$vendor', location = '$location', material_color = '$material_color', quantity = '$quantity', per_box = '$per_box' WHERE material_id = '$material_id'");
+	header("location: inventory.php");
+}
+else if(isset($_POST["delete_form"])){
+	mysqli_query($conn, "DELETE FROM inventory WHERE material_id = '$material_id'");
 	header("location: inventory.php");
 }
 require ("header.php");
@@ -18,6 +23,7 @@ $result = mysqli_query($conn, "SELECT * FROM inventory WHERE material_id = '$mat
 $data = $result->fetch_assoc();
 
 $material = $data["material"];
+$type = $data["type"];
 $vendor = $data["vendor"];
 $location = $data["location"];
 $material_color = $data["material_color"];
@@ -29,7 +35,7 @@ var deleteNotClicked=true;
 var saveNotClicked=true;
 $(document).ready(function(){
 
-	$(".store-btn").click(function(e){
+	$(".save-btn").click(function(e){
 		if(saveNotClicked)
 		{ 
 			showSaveMessage();
@@ -67,8 +73,22 @@ $(document).ready(function(){
 					<div class="clear"></div>
 					</div>
 					<div class="tabinner-detail">
+					<label>Type</label>
+					<input id="type" name="type" type="text" class="contact-prefix" value = "<?php echo $type; ?>">
+					<div class="clear"></div>
+					</div>
+					<div class="tabinner-detail">
 					<label>Vendor</label>
-					<input name="vendor" type="text" class="contact-prefix" value = "<?php echo $vendor; ?>">
+					<select name = "vendor">
+					<option select = "selected" value = "<?php echo $vendor;?>"><?php echo $vendor; ?></option>
+					<?php
+						$result = mysqli_query($conn, "SELECT * FROM vendors");
+						while($row = $result->fetch_assoc()){
+							$vendor = $row["vendor_name"];
+							echo "<option value = '" . $vendor . "'>" . $vendor . "</option>";
+						}
+					?>
+					</select>
 					<div class="clear"></div>
 					</div>
 					<div class="tabinner-detail">
@@ -97,6 +117,7 @@ $(document).ready(function(){
 				</div>
 				<div class="newcontact-tabbtm">
 					<input class="save-btn store-btn" type="submit" value="Save" name="submit_form" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
+					<input class="delete-btn store-btn" type="submit" value="Delete" name="delete_form" style="width:200px; font-size:16px; background-color:#d14700; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
 				</div>
 			</form>
 			

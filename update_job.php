@@ -3,7 +3,8 @@ require ("connection.php");
 
 session_start();
 $job_id = $_SESSION["job_id"]; 
-
+$wm = $_POST["wm"];
+$records_total = $_POST['records_total'];
 if(isset($_POST['submit_form'])){
 			//session_start();
 			
@@ -37,7 +38,6 @@ if(isset($_POST['submit_form'])){
 			$based_on = $_POST['based_on'];
 			$non_profit_number = $_POST['non_profit_number'];
 			}
-			$records_total = $_POST['records_total'];
 			$data_source = $_POST['data_source'];
 			$data_received = date("Y-m-d", strtotime($_POST['data_received']));
 			$data_completed = date("Y-m-d", strtotime($_POST['data_completed']));
@@ -96,6 +96,24 @@ if(isset($_POST['submit_form'])){
 			exit();
 }
 else if(isset($_POST['delete_form'])){
+	for($i = 0; $i < count($wm); $i++){
+		$id = $wm[$i];
+		$result = mysqli_query($conn, "SELECT * FROM materials WHERE material_id = '$id'");
+		$row = $result->fetch_assoc();
+		$vendor_name = $row["vendor"];
+		if($vendor_name == "CRST Inventory"){
+			$material = $row["material"];
+			$type = $row["type"];
+			$result_match = mysqli_query($conn, "SELECT * FROM inventory WHERE material = '$material' AND type = '$type'");
+			if($result_match->num_rows > 0){
+				$row2 = $result_match->fetch_assoc();
+				$quantity = $row2["quantity"];
+				$material_id = $row2["material_id"];
+				$quantity = $quantity + $records_total;
+				mysqli_query($conn, "UPDATE inventory SET quantity = '$quantity' WHERE material_id = '$material_id'");
+			}
+		}
+	}
 	$user_name = $_SESSION['user'];
 	date_default_timezone_set('America/New_York');
 	$today = date("Y-m-d G:i:s");

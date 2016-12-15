@@ -8,7 +8,10 @@ if(isset($_POST['submit_form'])){
 	$a_p = date("A");
 	$job = "assigned job ticket";
 	$_SESSION['date'] = $today;
-
+    $records_total = $_POST['records_total'];
+	if(!is_numeric($records_total)){
+		$records_total = 0;
+	}
 	$client_name = $_POST['client_name'];
 	$project_name = $_POST['project_name'];
 	$_SESSION["client_name"] = $client_name;
@@ -35,6 +38,27 @@ if(isset($_POST['submit_form'])){
 	if(is_array($wm_array)){
 		$wm = implode(",", $_POST['wm']);
 	}
+	for($i = 0; $i < count($wm_array); $i++){
+		$id = $wm_array[$i];
+		$result = mysqli_query($conn, "SELECT * FROM materials WHERE material_id = '$id'");
+		$row = $result->fetch_assoc();
+		$vendor = $row["vendor"];
+		if($vendor == "CRST Inventory"){
+			$material = $row["material"];
+			$type = $row["type"];
+			$result_match = mysqli_query($conn, "SELECT * FROM inventory WHERE material = '$material' AND type = '$type'");
+			if($result_match->num_rows > 0){
+				$row2 = $result_match->fetch_assoc();
+				$quantity = $row2["quantity"];
+				$material_id = $row2["material_id"];
+				$quantity = $quantity - $records_total;
+				mysqli_query($conn, "UPDATE inventory SET quantity = '$quantity' WHERE material_id = '$material_id'");
+			}
+			else{
+				mysqli_query($conn, "INSERT INTO inventory (material, type, vendor, location, material_color, quantity, per_box) VALUES ('$material', '$type', 'CRST Inventory', '', '', 0, 0)");
+			}
+		}
+	}
 	$mail_class = $_POST['mail_class'];
 	$rate = $_POST['rate'];
 	$processing_category = $_POST['processing_category'];
@@ -45,7 +69,6 @@ if(isset($_POST['submit_form'])){
 	$based_on = $_POST['based_on'];
 	$non_profit_number = $_POST['non_profit_number'];
 
-	$records_total = $_POST['records_total'];
 	$data_source = $_POST['data_source'];
 	$data_received = date("Y-m-d", strtotime($_POST['data_received']));
 	$data_completed = date("Y-m-d", strtotime($_POST['data_completed']));

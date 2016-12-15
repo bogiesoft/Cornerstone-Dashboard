@@ -2,13 +2,14 @@
 require ("connection.php");
 if(isset($_POST["submit_form"])){
 	$material = $_POST["material"];
+	$type = $_POST["type"];
 	$vendor = $_POST["vendor"];
 	$location = $_POST["location"];
 	$material_color = $_POST["material_color"];
 	$quantity = $_POST["quantity"];
 	$per_box = $_POST["per_box"];
 	
-	mysqli_query($conn, "INSERT INTO inventory (material, vendor, location, material_color, quantity, per_box) VALUES ('$material', '$vendor', '$location', '$material_color', '$quantity', '$per_box')");
+	mysqli_query($conn, "INSERT INTO inventory (material, type, vendor, location, material_color, quantity, per_box) VALUES ('$material', '$type', '$vendor', '$location', '$material_color', '$quantity', '$per_box')");
 	header("location: inventory.php");
 }
 require ("header.php");
@@ -56,8 +57,22 @@ $(document).ready(function(){
 					<div class="clear"></div>
 					</div>
 					<div class="tabinner-detail">
+					<label>Type</label>
+					<input id="type" name="type" type="text" class="contact-prefix">
+					<div class="clear"></div>
+					</div>
+					<div class="tabinner-detail">
 					<label>Vendor</label>
-					<input name="vendor" type="text" class="contact-prefix">
+					<select name = "vendor">
+					<?php
+						$result2 = mysqli_query($conn, "SELECT * FROM vendors") or die("error");
+						while($row2 = $result2->fetch_assoc()){
+							$vendor_name = $row2["vendor_name"];
+							echo "<option value = '" . $vendor_name . "'>" . $vendor_name . "</option>";
+						}
+						
+						echo "</select>";
+					?>
 					<div class="clear"></div>
 					</div>
 					<div class="tabinner-detail">
