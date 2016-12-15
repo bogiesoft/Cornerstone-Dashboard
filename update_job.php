@@ -5,9 +5,57 @@ session_start();
 $job_id = $_SESSION["job_id"]; 
 $wm = $_POST["wm"];
 $records_total = $_POST['records_total'];
+$record_change = $_SESSION["current_records_total"] - $records_total;
 if(isset($_POST['submit_form'])){
-			//session_start();
-			
+			$array_old = explode(",", $_SESSION["old_wm"]);
+			for($i = 0; $i < count($wm); $i++){
+				$id = $wm[$i];
+				$result = mysqli_query($conn, "SELECT * FROM materials WHERE material_id = '$id'");
+				$row = $result->fetch_assoc();
+				$vendor = $row["vendor"];
+				if(in_array($wm[$i], $array_old) && $vendor == "CRST Inventory"){
+					$material = $row["material"];
+					$type = $row["type"];
+					$result_match = mysqli_query($conn, "SELECT * FROM inventory WHERE material = '$material' AND type = '$type'");
+					if($result_match->num_rows > 0){
+						$row2 = $result_match->fetch_assoc();
+						$quantity = $row2["quantity"];
+						$material_id = $row2["material_id"];
+						$quantity = $quantity + $record_change;
+						mysqli_query($conn, "UPDATE inventory SET quantity = '$quantity' WHERE material_id = '$material_id'");
+					}
+				}
+				else if(!in_array($wm[$i], $array_old) && $vendor == "CRST Inventory"){
+					$material = $row["material"];
+					$type = $row["type"];
+					$result_match = mysqli_query($conn, "SELECT * FROM inventory WHERE material = '$material' AND type = '$type'");
+					if($result_match->num_rows > 0){
+						$row2 = $result_match->fetch_assoc();
+						$quantity = $row2["quantity"];
+						$material_id = $row2["material_id"];
+						$quantity = $quantity - $records_total;
+						mysqli_query($conn, "UPDATE inventory SET quantity = '$quantity' WHERE material_id = '$material_id'");
+					}
+				}
+			}
+			for($ii = 0; $ii < count($array_old); $ii++){
+						$id = $array_old[$ii];
+						$result2 = mysqli_query($conn, "SELECT * FROM materials WHERE material_id = '$id'");
+						$row2 = $result2->fetch_assoc();
+						$vendor2 = $row2["vendor"];
+						if(!in_array($array_old[$ii], $wm) && $vendor2 == "CRST Inventory"){
+							$material = $row2["material"];
+							$type = $row2["type"];
+							$result_match = mysqli_query($conn, "SELECT * FROM inventory WHERE material = '$material' AND type = '$type'");
+							if($result_match->num_rows > 0){
+								$row3 = $result_match->fetch_assoc();
+								$quantity = $row3["quantity"];
+								$material_id = $row3["material_id"];
+								$quantity = $quantity + $records_total;
+								mysqli_query($conn, "UPDATE inventory SET quantity = '$quantity' WHERE material_id = '$material_id'");
+							}
+						}
+					}
 			$user_name = $_SESSION['user'];
 			date_default_timezone_set('America/New_York');
 			$today = date("Y-m-d G:i:s");
