@@ -26,17 +26,19 @@ $columns = array(
 // datatable column index  => database column name
 	0 => 'material_id',
 	1=> 'material',
-	2 =>'vendor',
-	3 => 'location',
-	4=> 'material_color',
-	5=> 'quantity',
-	6=> 'per_box',
+	2=> 'type',
+	3 =>'vendor',
+	4 => 'location',
+	5=> 'material_color',
+	6=> 'quantity',
+	7=> 'per_box',
 
 );
 
 	if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
 		$sql.=" AND ( material_id LIKE '%".$requestData['search']['value']."%' ";
 		$sql.=" OR material LIKE '%".$requestData['search']['value']."%' ";
+		$sql.=" OR type LIKE '%".$requestData['search']['value']."%' ";
 		$sql.=" OR vendor LIKE '%".$requestData['search']['value']."%' ";
 		$sql.=" OR location LIKE '%".$requestData['search']['value']."%' ";
 		$sql.=" OR material_color LIKE '%".$requestData['search']['value']."%' ";
@@ -66,6 +68,7 @@ $columns = array(
 		$nestedData=array();
 		$nestedData[] = $row["material_id"];
 		$nestedData[] = $row["material"];
+		$nestedData[] = $row["type"];
 		$nestedData[] = $row["vendor"];
 		$nestedData[] = $row["location"];
 		$nestedData[] = $row["material_color"];
