@@ -1,6 +1,6 @@
 <?php
 	//  Include PHPExcel_IOFactory
-	include 'Classes/PHPExcel/IOFactory.php';
+	include('Classes/PHPExcel/IOFactory.php');
 	require_once dirname(__FILE__).'/Classes/PHPExcel.php';
 	$color = array('Moved'=>'015aad','Moved Errors'=>'132a51', 'Fixed'=>'00F5FF','Duplicate'=>'2E8B57','Foreigns'=>'8B008B','Not Sent'=>'8A360F','Unknown'=>'FF0000');
 	$colString;
@@ -91,7 +91,6 @@
 				$first_row+=$findEndDataRow-1;
 				$dropdown++;
 		}
-
 		// Save $objPHPExcel1 to browser as an .xls file
 		$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, "Excel5");
 		header("Content-Type: application/vnd.ms-excel");
