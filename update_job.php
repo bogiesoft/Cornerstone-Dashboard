@@ -2,6 +2,10 @@
 require ("connection.php");
 
 session_start();
+$user_name = $_SESSION['user'];
+date_default_timezone_set('America/New_York');
+$today = date("Y-m-d G:i:s");
+$a_p = date("A");
 $job_id = $_SESSION["job_id"]; 
 $wm = $_POST["wm"];
 $records_total = $_POST['records_total'];
@@ -23,6 +27,14 @@ if(isset($_POST['submit_form'])){
 						$material_id = $row2["material_id"];
 						$quantity = $quantity + $record_change;
 						mysqli_query($conn, "UPDATE inventory SET quantity = '$quantity' WHERE material_id = '$material_id'");
+						if($quantity < 50){
+							$inventory_alert = " depleted inventory";
+							$production_users = mysqli_query($conn, "SELECT user FROM users WHERE department = 'Production'");
+							while($row_users = $production_users->fetch_assoc()){
+								$production_user = $row_users["user"];
+								mysqli_query($conn, "INSERT INTO timestamp (user, time, job, a_p, processed_by, viewed) VALUES ('$user_name', '$today', '$inventory_alert', '$a_p', '$production_user', 'no')") or die("noooo");
+							}
+						}
 					}
 				}
 				else if(!in_array($wm[$i], $array_old) && $vendor == "CRST Inventory"){
@@ -35,6 +47,14 @@ if(isset($_POST['submit_form'])){
 						$material_id = $row2["material_id"];
 						$quantity = $quantity - $records_total;
 						mysqli_query($conn, "UPDATE inventory SET quantity = '$quantity' WHERE material_id = '$material_id'");
+						if($quantity < 50){
+							$inventory_alert = " depleted inventory";
+							$production_users = mysqli_query($conn, "SELECT user FROM users WHERE department = 'Production'");
+							while($row_users = $production_users->fetch_assoc()){
+								$production_user = $row_users["user"];
+								mysqli_query($conn, "INSERT INTO timestamp (user, time, job, a_p, processed_by, viewed) VALUES ('$user_name', '$today', '$inventory_alert', '$a_p', '$production_user', 'no')") or die("noooo");
+							}
+						}
 					}
 				}
 			}
@@ -53,13 +73,17 @@ if(isset($_POST['submit_form'])){
 								$material_id = $row3["material_id"];
 								$quantity = $quantity + $records_total;
 								mysqli_query($conn, "UPDATE inventory SET quantity = '$quantity' WHERE material_id = '$material_id'");
+								if($quantity < 50){
+									$inventory_alert = " depleted inventory";
+									$production_users = mysqli_query($conn, "SELECT user FROM users WHERE department = 'Production'");
+									while($row_users = $production_users->fetch_assoc()){
+										$production_user = $row_users["user"];
+										mysqli_query($conn, "INSERT INTO timestamp (user, time, job, a_p, processed_by, viewed) VALUES ('$user_name', '$today', '$inventory_alert', '$a_p', '$production_user', 'no')") or die("noooo");
+									}
+								}
 							}
 						}
 					}
-			$user_name = $_SESSION['user'];
-			date_default_timezone_set('America/New_York');
-			$today = date("Y-m-d G:i:s");
-			$a_p = date("A");
 			$job = "updated job ticket " . $job_id;
 			
 			$client_name = $_POST['client_name'];			
