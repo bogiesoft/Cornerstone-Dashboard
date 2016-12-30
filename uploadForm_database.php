@@ -7,7 +7,11 @@ $handle = fopen($_FILES['fileUpload']["tmp_name"], 'r');
 while($row = fgetcsv($handle , 100000 , ",")) {
    $data[] = $row;
 }
-
+if(count($data) > 201){
+	$_SESSION["max_on_importer"] = "SET";
+	header("location: uploadForm.php");
+	die(count($data));
+}
 //Get all Column names in array
 $array_names = array();
 $result_highest_id = mysqli_query($conn, "SELECT MAX(import_id) AS max FROM sales");
@@ -42,19 +46,20 @@ for($i = 0; $i < count($array_names); $i++)
 $error = array();
 $sql_statements = array();
 $update_statements = array();
-
-
+$check = 0;
 for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 {
 		$sql = 'INSERT INTO sales (rep, quickbooks, prefix, full_name, suffix, title, phone, fax, extension, web_address, business, country, address_line_1, address_line_2, address_line_3, city, state, zipcode, status, call_back_date, priority, date_added, 
 				mailing_list, pie_day, second_contact, cell_phone, alt_phone, home_phone, email1, email2, vertical1, vertical2, vertical3, source, notes, _2014_pie_day, Non_Profit_Card_08_2013, 
 				Commercial_Card_08_2013, USPS_Post_Office_Mailing_03_2014, Contractor_Small_Business_Select_Mailing_03_2014, Contractor_SB_Select_Mailing_04_2014, USPS_EDDM_Regs_brochure_Mailing_04_2014,
 				USPS_9Y9_EDDM_Marketing_Card, SEPT_2014_3_5Y11_CRST_Marketing_Card, Contractor_Mailing_2016, type, import_id, import_name, import_status) VALUES (';
+				
 		
 		$sql2 = 'UPDATE sales SET ';
 		$full_name = "";
 		$address_line_1 = "";
 		$foreign_country = FALSE;
+		$insert_values = array();
 		
 		for($j = 0; $j < count($array_indexes); $j++){ //goes through all corresponding indexes to headers and adds to sql statements for insert and update as specified
 			$input = "";
@@ -100,7 +105,13 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 			//check if call back date input field is readable or date added is readable
 			if(($array_names[$j] == "call_back_date" || $array_names[$j] == "date_added") && $input != ""){
 				$call_back_date = explode("/", $input);
-				if(count($call_back_date) != 3){ //checks if date has length 3 for day, month, and year
+				$default_date = explode("-", $input);
+				if(count($default_date) == 3){
+					if($default_date[0] == "0000" && $default_date[1] == "00" && $default_date[2] == "00"){
+						$input = "0000-00-00";
+					}
+				}
+				else if(count($call_back_date) != 3){ //checks if date has length 3 for day, month, and year
 					array_push($error, "error in row " . ($i + 1) . " column header " . $_POST[$array_names[$j]] . " applied to " . $array_names[$j] . ": <b>incorrect data format (e.g 1/23/2016)</b>");
 				}
 				else{ //checks if numerical characters are in date
@@ -109,10 +120,9 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 							array_push($error, "error in row " . ($i + 1) . " column header " . $_POST[$array_names[$j]] . " applied to " . $array_names[$j] . ": <b>unreadable date. Please check input</b>");
 						}
 					}
+					$timeConversion = strtotime($input);
+					$input = date("Y-m-d", $timeConversion);
 				}
-				$timeConversion = strtotime($input);
-				$input = date("Y-m-d", $timeConversion);
-				
 			}
 			//checks if address line 3 is allowed to be entered or if country field has input
 			if($foreign_country == FALSE && $array_names[$j] == "address_line_3" && $input != ""){
@@ -174,10 +184,8 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 			array_push($sql_statements, $sql);
 		}
 		else{
-			//array_push($sql_statements, $sql2);
 			array_push($update_statements, $sql2);
 		}
-
 }
 
 if(count($error) == 0){
@@ -190,10 +198,11 @@ if(count($error) == 0){
 	$today = date("Y-m-d G:i:s");
 	$a_p = date("A");
 	$sql_timestamp = "INSERT INTO timestamp (user, time, job, a_p) VALUES ('$user_name', '$today', '$job', '$a_p')";
-	mysqli_query($conn, $sql_timestamp);
+	mysqli_query($conn, $sql_timestamp) or die("error");
 }
 else{
 	$_SESSION["import_errors"] = $error;
+	header("location: uploadForm.php");
 }
 ?>
 <script>
@@ -237,12 +246,12 @@ else{
                         location.href = "uploadForm.php";
                     }
                 });
-	} 
-		else{window.setTimeout(function () {
-			location.href = "uploadForm.php";
+			} 
+			else{window.setTimeout(function () {
+				location.href = "uploadForm.php";
 			}, 1000);};  
 		});
 		};  
-	}
+	};
 	
 </script>
