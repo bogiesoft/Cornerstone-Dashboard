@@ -5,6 +5,6 @@
 	$_SESSION["test"] = $updates;
 	
 	for($i = 0; $i < count($updates); $i++){
-		mysqli_query($conn, $updates[$i]);
+		mysqli_query($conn, $updates[$i]) or die("error");
 	}
 ?>
