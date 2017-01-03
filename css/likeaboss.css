@@ -1,15 +1,14 @@
 .likeaboss_container {
-
+	margin:10px 0 2px 0;
 }
 
 .likeaboss_container .likeaboss_toolbar {
 	height: 20px;
-	margin-bottom: 2px;
+	
 }
 
 .likeaboss_container .likeaboss_toolbar a {
-	text-indent: -5000px;
-	display:  block;
+	display:  inline-block;
 	float:  left;
 	height: 16px;
 	width: 16px;
