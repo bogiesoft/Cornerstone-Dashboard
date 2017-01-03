@@ -1,5 +1,4 @@
 <html>
-
   <head>
     <title>Drag drop Images, PDF, Docs and other files Example : PHP + Dropzone.js</title>
     <style type="text/css">
@@ -85,6 +84,7 @@
     <label style="display: block; font-size: 1.65em; text-align: center;">Welcome to DQR generator. Drop some excel files into the box below and press merge button<br> to get DQR file with seperate color coded values.</label>
     <div id="container">
       <form action="upload.php" method="post" name="uploadform" id = "uploadform" enctype="multipart/form-data">
+	  <input name = "upload_name" placeholder = "Enter file name">
         <div id="drop-zone">
             Drop files here...
             <div id="clickHere">
@@ -94,8 +94,9 @@
         </div>
       </form>
       <div id="modal-content">
-        <input id= "submit"type="submit" value="Generate" />
+        <input id= "submit"type="submit" value="Generate"/>
       </div>
+	   <button onclick = "removeTable()">Delete</button>
     </div>
 
 
@@ -106,13 +107,15 @@
         $("#drop-zone").after('<div class="drop-zone-table"><table id="filelist"><th>Files</th><th>Choice</th><tbody id= "filelistbody"></tbody></table></div>');
         var files = $('#file').prop('files');
         $.map(files, function (val) {
-          $('#filelistbody').append("<tr><td>"+val.name+"</td><td><select class='chosen" + (count) + "' name='chosen" + (count) + "' ><option value=''></option><option value='Moved'>Moved</option><option value='Moved Errors'>Moved Errors</option><option value='Fixed'>Fixed</option><option value='Duplicate'>Duplicate</option><option value='Foreigns'>Foreigns</option><option value='Not Sent'>Not Sent</option><option value='Unknown'>Unknown</option></select></td></tr>");
+          $('#filelistbody').append("<tr><td>"+val.name+"</td><td><select class='chosen" + (count) + "' name='chosen" + (count) + "' ><option value=''></option><option value='Moved'>Moved</option><option value='Moved Errors'>Moved Errors</option><option value='Fixed'>Fixed</option><option value='Duplicate'>Duplicate</option><option value='Foreigns'>Foreigns</option><option value='Householded'>Householded</option><option value='Not Sent'>Not Sent</option><option value='Unknown'>Unknown</option></select></td></tr>");
           count++;
         });
       });
 
       $('#submit').on('click', function(){
         $('#uploadform').submit();
+		$(".drop-zone-table").remove();
+		location.reload();
       });
 
       $(function () {
@@ -164,7 +167,10 @@
             $("#" + dropZoneId).removeClass(mouseOverClass);
         }, true);
       });
-
+	  function removeTable(){
+		  $(".drop-zone-table").remove();
+		 location.reload();
+	  }
     </script>
   </body>
 </html>
