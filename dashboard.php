@@ -270,7 +270,7 @@ $conn->close();
 				$date = $currentYear . "-" . $currentMonth;
 				$result_closed_jobs = mysqli_query($conn, "SELECT * FROM archive_jobs WHERE status = 'Closed' AND archive_date LIKE '%{$date}%'");
 				$result_invoiced_jobs = mysqli_query($conn, "SELECT * FROM archive_jobs WHERE invoice_number != 0 AND invoice_date LIKE '%{$date}%'");
-				$result_current_invoiced = mysqli_query($conn, "SELECT * FROM customer_service WHERE invoice_date LIKE '%{$date}%'");
+				$result_current_invoiced = mysqli_query($conn, "SELECT * FROM customer_service WHERE invoice_date LIKE '%{$date}%' AND invoice_number != 0");
 				$count = $count + 1;
 				$currentMonth = $currentMonth - 1;
 				$jobs_closed = mysqli_num_rows($result_closed_jobs);

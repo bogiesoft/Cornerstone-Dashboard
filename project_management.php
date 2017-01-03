@@ -42,6 +42,7 @@ $id_array = array();
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 	<h1 class="pull-left">Project Management</h1>
+	<a class="pull-right" href="DQR/index.php" style="margin-right:20px; background-color:#429ef4;">DQR Generator</a>
 	</div>
 <div class="dashboard-detail">
 	<div class="search-cont">

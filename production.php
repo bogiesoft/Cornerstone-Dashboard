@@ -321,11 +321,11 @@ $conn->close();
 			var color = "#FFFFFF";
 			var highlight = "#FFFFFF";
 
-			if(percent > 70){
+			if(percent >= 70){
 				color = "#80ff80";
 				highlight = "#99ff99";
 			}
-			else if(percent > 40){
+			else if(percent >= 37.5){
 				color = "#ffe066";
 				highlight = "#ffe680";
 			}

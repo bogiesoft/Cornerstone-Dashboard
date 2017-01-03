@@ -15,7 +15,7 @@
 <!--scripts for CRM table-->
   <link rel="stylesheet" type="text/css" href="css/jquery.dataTables.css">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css">
-  <link rel="stylesheet" type="text/css" href="css/material.min.css">
+  <!--<link rel="stylesheet" type="text/css" href="css/material.min.css">-->
 
   <script type="text/javascript" language="javascript" src="jquery.dataTables.js"></script>
   <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.12/js/dataTables.material.min.js"></script>
