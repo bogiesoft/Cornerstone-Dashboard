@@ -29,11 +29,15 @@ require ("header.php");
 			<?php
 				require ("connection.php");
 				$sql = "SELECT * FROM documentation";
-				if(!empty($_GET) && $_GET['sortby'] == 'date'){
-					$sql.=" ORDER BY timestamp DESC";
+				if(isset($_GET['sortby'])){
+					if($_GET['sortby'] == 'date'){
+						$sql.=" ORDER BY timestamp DESC";
+					}
 				}
-				if(!empty($_GET) && $_GET['sortby'] == 'user'){
-					$sql.=" ORDER BY user desc";
+				if(isset($_GET["sortby"])){
+					if($_GET['sortby'] == 'user'){
+						$sql.=" ORDER BY user DESC";
+					}
 				}
 				$result = mysqli_query($conn,$sql) or die (mysqli_error($conn));
 
@@ -42,7 +46,7 @@ require ("header.php");
 				    while($row = $result->fetch_assoc()) {
 						$temp = $row['title'];
 						echo "<div class='doc-block'>";
-						echo "<nav class='search-boxright pull-right'><a href='edit_doc.php?title=$temp'>Edit</a></nav>";
+						echo "<a class='search-boxright pull-right' href='edit_doc.php?title=$temp'><img style='height:25px; width:25px;' src='images/web-icons/edit_pencil-blue.png'></img></a>";
 						echo "<a href='view_doc.php?title=$temp'><h2>".$row['title']."</h2></a>"."<p>Written by <b>".$row['user']."</b> on ".$row['timestamp']."</p><br>";
 						echo "<p>".$row['description']."</p>";
 						echo "</div>";

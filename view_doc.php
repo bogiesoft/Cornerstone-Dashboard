@@ -28,33 +28,17 @@ $result = mysqli_query($conn,$sql);
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 	<h1 class="pull-left">View Documentation</h1>
-	<a class="pull-right" href="documentation.php" style="margin-right:20px; background-color:#d14700;">Back to Docs</a>
+	<a class="pull-right" href="documentation.php" >Back to Docs</a>
 	<div class="clear"></div>
 	</div>
 <div class="dashboard-detail">
-	<div class="newcontacts-tabs">
-	<div class="newcontactstabs-outer">
-		<div class="tab-content">
-			<div role="tabpanel" class="tab-pane active" id="home">
-			<div class="newcontactstab-detail">
-			<form action="update_doc.php" method="post">
-				<div class="newdoctab-inner">
-					<div class="tabinner-detail">
-					<h3><?php echo $title; ?></h3>
-					<div class="clear"></div>
-					</div>
-					<div class="tabinner-detail">
-					<label>Written by <?php echo $user; ?> on <?php echo $timestamp; ?></label>
-					<div id = "text" name="text" style="float:left; width:600px; height:300px;"><?php echo $text; ?></div>
-					<div class="clear"></div>
-					</div>
-				</div>
-			</div>
-			</form>
-			</div>
+		<div class="view_doc_post">
+				<h2><?php echo $title; ?></h1>
+				<label>Written by <?php echo $user; ?> on <?php echo $timestamp; ?></label>
+				<div id = "text" name="text"><?php echo $text; ?></div>
 		</div>
-	</div>
 </div>
+			
 </div>
 <script src="DocumentationSweetAlert.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>

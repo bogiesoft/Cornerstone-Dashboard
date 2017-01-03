@@ -29,7 +29,7 @@ $result = mysqli_query($conn,$sql);
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 	<h1 class="pull-left">Edit Documentation</h1>
-	<a class="pull-right" href="documentation.php" style="margin-right:20px; background-color:#d14700;">Back to Docs</a>
+	<a class="pull-right" href="documentation.php">Back to Docs</a>
 	<div class="clear"></div>
 	</div>
 <div class="dashboard-detail">
@@ -58,18 +58,23 @@ $result = mysqli_query($conn,$sql);
 					<div class="tabinner-detail">
 						<ul class="nav nav-tabs" role="tablist">
 							<li role="presentation" class="active"><a  id = "text_label" role="tab" data-toggle="tab" aria-expanded="true">Text</a></li>
-							<li role="presentation" class="active"><a  id = "preview_label" role="tab" data-toggle="tab" aria-expanded="true">Preview</a></li>
+							<li role="presentation" ><a  id = "preview_label" role="tab" data-toggle="tab" aria-expanded="true">Preview</a></li>
+							<input name = "file" id="fileInput" type="file" style="display:none;" form = "uploadImage"/>
+						<li><input style="width:222px; color:white; background-color:#d14700; border:none; text-align:center; font-size:16px; font-weight:400; line-height:1.5; float:right; height:42px;" type="button" value="Choose File" onclick="document.getElementById('fileInput').click();" /></li>
 						</ul>
-						<input name = "file" id="fileInput" type="file" style="display:none;" form = "uploadImage"/>
-						<input type="button" value="Choose Files!" onclick="document.getElementById('fileInput').click();" />
-						<textarea id = "text" name="text" style="float:left; width:600px; height:300px;"><?php echo $text; ?></textarea>
+						<textarea id = "text" name="text" style="float:left; width:600px; height:300px; margin-top:5px;"><?php echo $text; ?></textarea>
 						<div id='fake_textarea' name = 'fake_textarea' contenteditable = "true" style="display: none;"></div>
 						<div class="clear"></div>
 					</div>
 				</div>
 			</div>
+						</div>
+		</div>
+	</div>
+</div>
+</div>
 				<div class="newcontact-tabbtm">
-					<input class="store-btn" type="submit" value="Save" name="submit_form" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
+					<input class="store-btn pull-right" type="submit" value="Save" name="submit_form" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
 					<input class="delete-btn" type = "submit" value = "Delete" name = "delete_form" style="width:200px; font-size:16px; background-color:#d14700; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px; float:left">
 				</div>
 			</form>
@@ -90,11 +95,7 @@ $result = mysqli_query($conn,$sql);
 
 			?>" method = "POST" enctype="multipart/form-data">
 			</form>
-			</div>
-		</div>
-	</div>
-</div>
-</div>
+
 <script src="DocumentationSweetAlert.js"></script>
 <link rel="stylesheet" href="css/likeaboss.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
