@@ -33,7 +33,26 @@ $_SESSION['title'] = $title;
 		</div>
 			<div class="righttop">
 			<li class="dropdown">
-				<a class="dropbtn"><i class="icon"><img src="images/web-icons/user.png"></i><?php echo $temp; ?></a>
+				<a class="dropbtn" href = "profile_settings.php"><i class="icon">
+				<?php
+				if(!file_exists("images/profiles/" . $temp . ".jpg") && !file_exists("images/profiles/" . $temp . ".png")){
+					echo "<img src='images/web-icons/user.png'>";
+				}
+				else{
+					if(file_exists("images/profiles/" . $temp . ".jpg")){
+						echo "<img src='images/profiles/" . $temp . ".JPG'>";
+					}
+					else if(file_exists("images/profiles/" . $temp . ".JPG")){
+						echo "<img src='images/profiles/" . $temp . ".JPG'>";
+					}
+					else{
+						echo "<img src='images/profiles/" . $temp . ".png'>";
+					}
+					
+				}
+				?>
+				
+				</i><?php echo $temp; ?></a>
 					<div class="dropdown-content">
 					<a href="logout.php">Log Out</a>
 					<?php
