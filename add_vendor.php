@@ -5,7 +5,7 @@ require ("header.php");
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 	<h1 class="pull-left">Add Vendor</h1>
-	<a class="pull-right" href="vendors.php" style="margin-right:20px; background-color:#d14700;">Back to Vendors</a>
+	<a class="pull-right" href="vendors.php">Back to Vendors</a>
 	<div class="clear"></div>
 	</div>
 <div class="dashboard-detail">
