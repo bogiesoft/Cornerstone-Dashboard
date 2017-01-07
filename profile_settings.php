@@ -20,7 +20,7 @@ $row = $result->fetch_assoc();
 $name = $row["first_name"] . " " . $row["last_name"];
 $email = $row["email"];
 if(file_exists("images/profiles/" . $temp . ".jpg")){
-	echo "<div style = 'background: #ffffff'><img src='images/profiles/" . $temp . ".JPG' width = '200' height = '200'>";
+	echo "<div style = 'background: #ffffff'><img src='images/profiles/" . $temp . ".jpg' width = '200' height = '200'>";
 }
 else if(file_exists("images/profiles/" . $temp . ".JPG")){
 	echo "<div style = 'background: #ffffff'><img src='images/profiles/" . $temp . ".JPG' width = '200' height = '200'>";
