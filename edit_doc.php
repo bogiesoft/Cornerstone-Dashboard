@@ -62,7 +62,7 @@ $result = mysqli_query($conn,$sql);
 							<input name = "file" id="fileInput" type="file" style="display:none;" form = "uploadImage"/>
 						<li><input style="width:222px; color:white; background-color:#d14700; border:none; text-align:center; font-size:16px; font-weight:400; line-height:1.5; float:right; height:42px;" type="button" value="Choose File" onclick="document.getElementById('fileInput').click();" /></li>
 						</ul>
-						<textarea id = "text" name="text" style="float:left; width:600px; height:300px; margin-top:5px;"><?php echo $text; ?></textarea>
+						<textarea class="article-input" id="text" name = "text" type="text" rows="9" style = "width: 600px; height: 300px"><?php echo $text; ?></textarea>
 						<div id='fake_textarea' name = 'fake_textarea' contenteditable = "true" style="display: none;"></div>
 						<div class="clear"></div>
 					</div>
@@ -106,8 +106,7 @@ $result = mysqli_query($conn,$sql);
 		//restore back the saved value when page reload
 		$("#title").val(localStorage.getItem("title_val"));
 		$("#description").val(localStorage.getItem("description_val"));
-		$("#text").val(localStorage.getItem("textarea_val"));
-		$("textarea").likeaboss();
+		$("#text").likeaboss();
 		var textarea = $('#text');
 		var preview = $('#fake_textarea');
 
@@ -128,7 +127,7 @@ $result = mysqli_query($conn,$sql);
 
 		$( "#fileInput" ).change(function() {
 			nameoffile = $(this).val().replace(/^.*\\/, "");
-			var imageURL = "![An Image](/Cornerstone1/images/"+nameoffile+")";
+			var imageURL = "![An Image](images/"+nameoffile+")";
 			textarea.val(textarea.val() +"\n"+ imageURL);
 
 			localStorage.setItem("textarea_val", $(textarea).val());
