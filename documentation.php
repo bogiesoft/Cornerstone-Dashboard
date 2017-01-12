@@ -31,12 +31,12 @@ require ("header.php");
 				$sql = "SELECT * FROM documentation";
 				if(isset($_GET['sortby'])){
 					if($_GET['sortby'] == 'date'){
-						$sql.=" ORDER BY timestamp DESC";
+						$sql = $sql . " ORDER BY timestamp DESC";
 					}
 				}
 				if(isset($_GET["sortby"])){
 					if($_GET['sortby'] == 'user'){
-						$sql.=" ORDER BY user DESC";
+						$sql = $sql . " ORDER BY user DESC";
 					}
 				}
 				$result = mysqli_query($conn,$sql) or die (mysqli_error($conn));
@@ -44,11 +44,34 @@ require ("header.php");
 				if ($result->num_rows > 0) {
 				    // output data of each row
 				    while($row = $result->fetch_assoc()) {
+						$user = $row["user"];
 						$temp = $row['title'];
+						$string_date = $row["timestamp"];
+						$new_date = strtotime($string_date);
+						$new_format_month_to_day = date("M d", $new_date);
+						$new_format_year = date("Y", $new_date);
 						echo "<div class='doc-block'>";
 						echo "<a class='search-boxright pull-right' href='edit_doc.php?title=$temp'><img style='height:25px; width:25px;' src='images/web-icons/edit_pencil-blue.png'></img></a>";
-						echo "<a href='view_doc.php?title=$temp'><h2>".$row['title']."</h2></a>"."<p>Written by <b>".$row['user']."</b> on ".$row['timestamp']."</p><br>";
+						echo "<a href='view_doc.php?title=$temp'><h2>".$row['title']."</h2></a>"."<p>Written by <b>".$row['user']."</b></p><br>";
+						echo "<div>";
+						if(file_exists("images/profiles/" . $user . ".jpg") || file_exists("images/profiles/" . $user . ".JPG") || file_exists("images/profiles/" . $user . ".png")){
+							if(file_exists("images/profiles/" . $user . ".jpg")){
+								echo "<img src = 'images/profiles/" . $user . ".jpg' width = '100' height = '100'>";
+							}
+							else if(file_exists("images/profiles/" . $user . ".JPG")){
+								echo "<img src = 'images/profiles/" . $user . ".JPG' width = '100' height = '100'>";
+							}
+							else{
+								echo "<img src = 'images/profiles/" . $user . ".png' width = '100' height = '100'>";
+							}
+						}
+					    else{
+							echo "<img src = 'images/web-icons/user.png' width = '100' height = '100'>";
+						}
+						echo "</div>";
 						echo "<p>".$row['description']."</p>";
+						echo "<div class='date'>
+								<p> $new_format_month_to_day <span>$new_format_year</span></p></div>";
 						echo "</div>";
 				    }
 				} else {
@@ -207,6 +230,37 @@ jQuery(function($){
 </script>
 
 <style>
+.date {
+	width: 130px; height: 100px;
+	background: #fcfcfc; 
+	background: linear-gradient(top, #fcfcfc 0%,#dad8d8 100%); 
+	background: -moz-linear-gradient(top, #fcfcfc 0%, #dad8d8 100%); 
+	background: -webkit-linear-gradient(top, #fcfcfc 0%,#dad8d8 100%);
+	border: 1px solid #d2d2d2;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
+	-moz-box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
+	-webkit-box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
+}
+.date p {
+	font-family: Helvetica, sans-serif; 
+	font-size: 30px; text-align: center; color: #9e9e9e; 
+}
+.date p span {
+	background: #d10000; 
+	background: linear-gradient(top, #d10000 0%, #7a0909 100%);
+	background: -moz-linear-gradient(top, #d10000 0%, #7a0909 100%);
+	background: -webkit-linear-gradient(top, #d10000 0%, #7a0909 100%);
+	font-size: 45px; font-weight: bold; color: #fff; text-transform: uppercase; 	
+	display: block;
+	border-top: 3px solid #a13838;
+	border-radius: 0 0 10px 10px;
+	-moz-border-radius: 0 0 10px 10px;
+	-webkit-border-radius: 0 0 10px 10px;
+	padding: 6px 0 6px 0;
+}
 	ul#items{
 		margin:1em 0;
 		width:auto;
