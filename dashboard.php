@@ -68,7 +68,8 @@ $conn->close();
 	<div class="dashboard-detail">
 	<div class="dashboard-top">
 	<div class="dashboardtop-box contact-stats">
-		<div class="dashboardbox-title"><h2><?php echo "Sales Estimates and Clients Added: " . $currentDate_display; ?></h2></div>
+	<div class="box_container">
+		<div class="dashboardbox-title"><h2><?php echo "Sales - Estimates and Clients Added: " . $currentDate_display; ?></h2></div>
 		<?php
 		require ("connection.php");
 
@@ -124,15 +125,19 @@ $conn->close();
 			}
 		?>
 
-		<div style="width: 50%; ">
+		<div style="width: 75%; margin:0 auto;">
 			<canvas id="canvas_sales" height="825" width="2000"></canvas>
 		</div>
 
 		<!--<h3>Estimates given: <span><?php echo "$num_rows"; ?></span></h3>!-->
 		<!--<h4>Job Tickets in Process: <span><?php echo "$num_rows2"; ?></span></h4> !-->
+		
+	</div>
 	</div>
 	<div id = "project_management_box" class="dashboardtop-box fundraising-stats">
+		<div class="box_container">
 		<div class="dashboardbox-title"><h2>Project Management Current Jobs:</h2></div>
+		
 		<?php
 			require('connection.php');
 			while($row3 = $result3->fetch_assoc()){
@@ -149,16 +154,20 @@ $conn->close();
 				}
 			}
 		?>
-		<div class = "pm_labels" style = "float: right">
+		<div class="box_left" style="display:inline-block; float:left; width:50%;">
+			<canvas id="chart-area" height="125" width="125" style="padding-left:45px;"/>
 		</div>
-		<div id="canvas-holder" style = "width: 70%; margin: 0 auto;">
-			<canvas id="chart-area" width="100" height="100"/>
+		<div class="box_right" style="display:inline-block; float:right; width:50%;">
+		<p>Total Jobs in PM: 1</p>
+		</div>
 		</div>
 	</div>
 	<div class="dashboardtop-box fundraising-stats">
+	<div class="box_container">
 		<div class="dashboardbox-title"><h2>Weekly Production</h2></div>
-		<h5>Jobs in Production: <span><?php echo "$count_prod \n"; ?></span></h5>
-		<h5>Total Manhours:<span id = "manhours"></span></h5>
+		<div class="box_left" style="display:inline-block; float:left; width:45%;">
+		<p>Jobs in Production: <span style="color:#e60000;"><?php echo "$count_prod \n"; ?></span></p>
+		<p>Total Manhours:<span id = "manhours" style="color:#e60000;"></span></p>
 
 		<?php
 
@@ -255,10 +264,11 @@ $conn->close();
 			$hours = (int)$hours;
 
 		?>
-
-		<div id="canvas-holder" style = "width: 30%; margin-left: 50%; margin-top: -200px">
+		</div>
+		<div class="box_right" style="display:inline-block; float:right; width:45%;">
 			<canvas id="canvas_prod" width="300" height="300"/>
 		</div>
+	</div>
 	</div>
 	<div class="dashboardtop-box fundraising-stats">
 		<div class="dashboardbox-title"><h2><?php echo "Customer Service Jobs Closed and Invoiced: " . $currentDate_display;?></h2></div>
