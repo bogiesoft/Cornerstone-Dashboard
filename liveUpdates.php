@@ -20,28 +20,18 @@
 </script>
 
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname= "crst_dashboard";
+require('connection.php');
 session_start();
 $user = $_SESSION['user'];
-
-// Create Connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-} 
 
 $result = mysqli_query($conn,"SELECT * FROM timestamp WHERE processed_by='$user' and viewed='no' ORDER BY time DESC LIMIT 5");
 if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
-        echo "<div class='notifications' style = 'font-size: 10px'>" . $row['user'] . " " . $row['job'] ."  <button class='delete' id='".$row['id']."'>Delete</button></div>"; 
+        echo "<div class='notifications' style = 'font-size: 14px; text-align:center; color:#cc0000; padding-bottom:5px;'>" . $row['user'] . " " . $row['job'] ."  <img src='images/multiply-1.png' style='height:20px; width:20px; cursor:pointer;' class='delete' id='".$row['id']."'></img></div>"; 
     }
 } else {
-    echo "0 unread updates";
+    echo "<p style='text-align:center; color:#356CAC; font-weight:bold; '>0 unread updates</p>";
 }
 ?>
 

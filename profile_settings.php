@@ -3,8 +3,11 @@ require("header.php");
 require("connection.php");
 ?>
 <div class="dashboard-cont" style="padding-top:110px;">
-<h1>Profile</h1>
-
+	<div class="contacts-title">
+	<h1 class="pull-left">Profile</h1>
+	</div>
+<div class="dashboard-detail">
+<!----
 <?php
 $temp = $_SESSION["user"];
 if(isset($_POST["submit"])){
@@ -33,10 +36,19 @@ else{
 }
 echo "<form action='' method='post' enctype='multipart/form-data'>
     <input type='file' name='fileToUpload' id='fileToUpload'>
-    <input type='submit' value='Upload Image' name='submit'>
-</form>";
-echo "<h3>$name</h3>";
+</div>";
 	
-echo "</div>";
 ?>
+---->
+<div class="profile-block">
+	<div class="image-block">
+		<img src="images/profiles/mbroc.jpg">
+	</div>
+</div>
+</div>
+	<div class="newcontact-tabbtm">
+		<input class="save-btn" type="submit" value="Save" name="submit_form" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
+		<input class="delete-btn" type = "submit" value = "Delete" name = "delete_form" style="width:200px; font-size:16px; background-color:#d14700; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px; float:left">
+	</div>
+</form>
 </div>
