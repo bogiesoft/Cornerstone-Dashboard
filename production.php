@@ -2,47 +2,12 @@
 	require("header.php");
 	require("connection.php");
 ?>
-<style>
-#cont {
-  display: block;
-  height: 200px;
-  width: 200px;
-  margin: 2em auto;
-  box-shadow: 0 0 1em black;
-  border-radius: 100%;
-  position: relative;
-  text-align: center;
-}
-#cont:after {
-  position: absolute;
-  display: block;
-  height: 160px;
-  width: 160px;
-  left: 50%;
-  top: 50%;
-  box-shadow: inset 0 0 1em black;
-  content: attr(data-pct)"%";
-  margin-top: -80px;
-  margin-left: -80px;
-  border-radius: 100%;
-  line-height: 160px;
-  font-size: 2em;
-  text-shadow: 0 0 0.5em black;
-}
 
-input {
-  color: #000;
-}
-
-
-/* Make things perty */
-html {  height: 100%;}
-</style>
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 	<h1 class="pull-left">Production</h1>
-	<a class="pull-right" href="production_data.php" style="margin-right:20px; background-color:#d14700;">Time Tracking</a>
-	<a class="pull-right" href="inventory.php" style="margin-right:20px; background-color:#429ef4;">Inventory</a>
+	<a class="pull-right" href="production_data.php">Time Tracking</a>
+	<a class="pull-right" href="inventory.php" style="margin-right:20px; background-color:#d14700;">Inventory</a>
 	</div>
 <div class="dashboard-detail">
 	<div class="search-cont">
