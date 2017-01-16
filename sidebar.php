@@ -3,7 +3,7 @@
   <div class="menu">
   <ul style = "list-style-type: none; padding: 0; margin: 0">
     <li class = "sidelink"><a href="clients.php"><i><img src="images/web-icons/user.png"></i>Clients<span></span></a><div class="clear"></div></li>
-    <li class = "sidelink"><a href="vendors.php"><i><img src="images/web-icons/users.png"></i>Vendors</a><div class="clear"></div></li>
+    <li class = "sidelink"><a href="vendors.php"><i><img src="images/web-icons/funnel.png"></i>Vendors</a><div class="clear"></div></li>
     <li class = "sidelink"><a href="documentation.php"><i><img src="images/web-icons/notepad-1.png"></i>Documentation</a><div class="clear"></div></li>
 	<li class = "sidelink"><a href="reminders.php"><i><img src="images/web-icons/calendar-1.png"></i>Calendar</a><div class="clear"></div></li>
     <li class = "sidelink"><a href="weights_and_measure.php"><i><img src="images/web-icons/windows-3.png"></i>Weights and Measures</a><div class="clear"></div></li>

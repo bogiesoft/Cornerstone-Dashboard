@@ -1,44 +1,7 @@
 <?php
 require ("header.php");
 ?>
-<style>
-	ul.tab {
-		list-style-type: none;
-		margin: 0;
-		padding: 0;
-		overflow: hidden;
-		border: 1px solid #ccc;
-		background-color: #f1f1f1;
-	}
 
-	/* Float the list items side by side */
-	ul.tab li {float: left;}
-
-	/* Style the links inside the list items */
-	ul.tab li a {
-		display: inline-block;
-		color: black;
-		text-align: center;
-		padding: 14px 16px;
-		text-decoration: none;
-		transition: 0.3s;
-		font-size: 17px;
-	}
-
-	/* Change background color of links on hover */
-	ul.tab li a:hover {background-color: #ddd;}
-
-	/* Create an active/current tablink class */
-	ul.tab li a:focus, .active {background-color: #ccc;}
-
-	/* Style the tab content */
-	.tab-content {
-		display: none;
-	}
-	#internal{
-		display: block;
-	}
-</style>
 
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
@@ -47,7 +10,6 @@ require ("header.php");
 	<div class="dashboard-detail">
 
 <div id="internal" class="tab-content">
-<h3>In Process</h3><br>
  <?php
 
 $job_count = 1;
@@ -77,7 +39,7 @@ $result = mysqli_query($conn,"SELECT * FROM job_ticket WHERE processed_by = ''")
 
 echo " <div id = 'table-scroll' class='allcontacts-table'><table id = 'table' border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
 echo "<tbody>";
-echo "<tr valign='top'><th class='allcontacts-title'>All Clients<span class='allcontacts-subtitle'></span></th></tr>";
+echo "<tr valign='top'><th class='allcontacts-title'>Current Job Tickets<span class='allcontacts-subtitle'></span></th></tr>";
 echo "<tr valign='top'><td colspan='2'><table id = 'client_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Job ID</th><th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Assign to</th><th id = 'contact_name' class='maintable-thtwo data-header' data-name='contact_name' data-index='1'>Client Name</th><th id = 'address' class='maintable-thtwo data-header' data-name='client_add' data-index='2'>Project Name</th><th id = 'phone' class='maintable-thtwo data-header' data-name='contact_phone' data-index='3'>Due Date</th><th id = 'email' class='maintable-thtwo data-header' data-name='contact_email' data-index='4'>Estimate Number</th><th id = 'website' class='maintable-thtwo data-header' data-name='website' data-index='5'>Job Status</th></tr></thead><tbody>";
 
 if ($result->num_rows > 0) {

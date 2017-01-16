@@ -109,6 +109,23 @@
 				</div>
 				<div class="newcontacttab-inner">
 					<div class="tabinner-detail">
+					<label>City</label>
+					<input name="v_city" type="text" value="<?php echo $v_city; ?>" class="contact-prefix">
+					<div class="clear"></div>
+					</div>
+					<div class="tabinner-detail">
+					<label>State</label>
+					<input name="v_state" type="text" value="<?php echo $v_state; ?>" class="contact-prefix">
+					<div class="clear"></div>
+					</div>
+					<div class="tabinner-detail">
+					<label>ZIP Code</label>
+					<input name="v_zip" type="text" value="<?php echo $v_zip; ?>" class="contact-prefix">
+					<div class="clear"></div>
+					</div>
+				</div>
+				<div class="newcontacttab-inner">
+					<div class="tabinner-detail">
 					<label>Website</label>
 					<input name="website" type="text" value="<?php echo $vendor_website; ?>" class="contact-prefix">
 					<div class="clear"></div>
