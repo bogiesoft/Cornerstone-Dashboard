@@ -39,13 +39,14 @@
 						
 					$firstName1 = strtoupper($firstName);
 					$lastName1 = strtoupper($lastName);
+					$extension = $_POST["extension"];
 						
 					$initial = $firstName1[0] . $lastName1[0]; //new initial
 					
 					if(isset($_POST['depart']) && !(isset($_POST['title']))){
 						$department = $_POST['depart']; //new department
 						
-						$sql = "UPDATE users SET user = '$new_user', password = '$password', initial = '$initial', department = '$department', first_name = '$firstName', last_name = '$lastName', email = '$email' WHERE user = '$user'";
+						$sql = "UPDATE users SET user = '$new_user', password = '$password', initial = '$initial', department = '$department', first_name = '$firstName', last_name = '$lastName', email = '$email', extension = '$extension' WHERE user = '$user'";
 						mysqli_query($conn, $sql) or die("ERROR");
 						header("location: admin.php");
 						exit();
@@ -53,7 +54,7 @@
 					else if(!(isset($_POST['depart'])) && isset($_POST['title'])){
 						$title = $_POST['title']; //new title
 						
-						$sql = "UPDATE users SET user = '$new_user', password = '$password', initial = '$initial', title = '$title', first_name = '$firstName', last_name = '$lastName', email = '$email' WHERE user = '$user'";
+						$sql = "UPDATE users SET user = '$new_user', password = '$password', initial = '$initial', title = '$title', first_name = '$firstName', last_name = '$lastName', email = '$email', extension = '$extension' WHERE user = '$user'";
 						mysqli_query($conn, $sql) or die("ERROR");
 						header("location: admin.php");
 						exit();
@@ -62,13 +63,13 @@
 						$department = $_POST['depart']; //new title and department
 						$title = $_POST['title'];
 						
-						$sql = "UPDATE users SET user = '$new_user', password = '$password', initial = '$initial', title = '$title', department = '$department', first_name = '$firstName', last_name = '$lastName', email = '$email' WHERE user = '$user'";
+						$sql = "UPDATE users SET user = '$new_user', password = '$password', initial = '$initial', title = '$title', department = '$department', first_name = '$firstName', last_name = '$lastName', email = '$email', extension = '$extension' WHERE user = '$user'";
 						mysqli_query($conn, $sql) or die("ERROR");
 						header("location: admin.php");
 						exit();
 					}
 					else{
-						$sql = "UPDATE users SET user = '$new_user', password = '$password', initial = '$initial', first_name = '$firstName', last_name = '$lastName', email = '$email' WHERE user = '$user'";
+						$sql = "UPDATE users SET user = '$new_user', password = '$password', initial = '$initial', first_name = '$firstName', last_name = '$lastName', email = '$email', extension = '$extension' WHERE user = '$user'";
 						mysqli_query($conn, $sql) or die("ERROR");
 						header("location: admin.php");
 						exit();
