@@ -20,46 +20,27 @@ require ("header.php");
 	</div>
 	</div>
 <div class="clear"></div>
-
-<?php
-
-require ("connection.php");
-
-
-$result = mysqli_query($conn,"SELECT * FROM vendors");
-
-
-if ($result->num_rows > 0) {
-    // output data of each row
-
-    while($row = $result->fetch_assoc()) {
-		
-		echo "<div data-role='main' class='ui-content'>";
-			echo "<div class='vendor-left'>";
-				$foo = array();
-				array_push($foo, $row["vendor_name"]);
-				array_push($foo, $row["vendor_add"]);
-				$str = serialize($foo);
-				$stren = urlencode($str);
-				echo "<h3><a href='search_vendor.php?vendor_info=$stren'>".$row["vendor_name"]."</a></h1>";
-				echo "<p>Contact Name: ".$row["vendor_contact"]."</p>";
-				echo "<p>Address: ".$row["vendor_add"]."</p>";
-			echo "</div>";
-			echo "<div class='vendor-right'>";
-				echo "<p>Phone: ".$row["vendor_phone"]."</p>";
-				echo "<p>Email: ".$row["vendor_email"]."</p>";
-				echo "<p>Website: ".$row["vendor_website"]."</p><br>";
-			echo "</div>";
-			echo "</div>";
-    }
-} else {
-    echo "0 results";
-}
-
-$conn->close();
-
-?>
-
+<div class="vendor_block">
+	<div class="vendor_logo">
+		<img src="images/vendor-logos/pro-printers.png">
+	</div>
+	<div class="vendor_info">
+		<div class="vendor_title">
+		<p>Pro-Printers</p>
+		<p style="float:right; padding-right:20px;">Ryan Scott</p>
+		</div>
+		<div class="vendor_icons">
+			<i><img class="profile-icon" src="images/web-icons/smartphone-6.png"/></i>
+			<p class="profile-text">845-123-1234</p>
+			<i><img class="profile-icon" src="images/web-icons/placeholder.png"/></i>
+			<p class="profile-text">45 Hudson St - Hudson, NY 12534</p>
+			<i><img class="profile-icon" src="images/web-icons/paper-plane-1.png"/></i>
+			<p class="profile-text">ryan@pro-printers.com</p>
+			<i><img class="profile-icon" src="images/web-icons/internet.png"/></i>
+			<p class="profile-text">www.pro-printers.com</p>
+		</div>
+	</div>	
+</div>
 </div>
 </div>
 

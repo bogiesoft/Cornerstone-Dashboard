@@ -39,6 +39,23 @@ require ("header.php");
 				</div>
 				<div class="newcontacttab-inner">
 					<div class="tabinner-detail">
+					<label>City</label>
+					<input name="v_city" type="text" class="contact-prefix">
+					<div class="clear"></div>
+					</div>
+					<div class="tabinner-detail">
+					<label>State</label>
+					<input name="v_state" type="text" class="contact-prefix">
+					<div class="clear"></div>
+					</div>
+					<div class="tabinner-detail">
+					<label>ZIP Code</label>
+					<input name="v_zip" type="text" class="contact-prefix">
+					<div class="clear"></div>
+					</div>
+				</div>
+				<div class="newcontacttab-inner">
+					<div class="tabinner-detail">
 					<label>Phone Number</label>
 					<input name="vendor_phone" type="text" class="contact-prefix">
 					<div class="clear"></div>

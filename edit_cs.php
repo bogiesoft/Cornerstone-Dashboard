@@ -88,11 +88,12 @@ require ("connection.php");
 					<input name="reason" type="text" value="<?php echo $reason; ?>" class="contact-prefix">
 					</div>
 				</div>
-				<div class="newcontacttab-inner">
-					<div class="tabinner-detail">
+				<div class="newcontacttab-inner" >
+					<div class="tabinner-detail-notes">
 					<label>Notes</label>
-					<textarea name="notes" class="contact-notes"><?php echo $notes; ?></textarea>
 					<div class="clear"></div>
+					<textarea name="notes"><?php echo $notes; ?></textarea>
+					
 					</div>
 				</div>
 			</div>
