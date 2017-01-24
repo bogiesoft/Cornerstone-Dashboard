@@ -114,8 +114,8 @@
 
       $('#submit').on('click', function(){
         $('#uploadform').submit();
-		$(".drop-zone-table").remove();
-		location.reload();
+		//$(".drop-zone-table").remove();
+		//location.reload();
       });
 
       $(function () {
