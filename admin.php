@@ -73,8 +73,9 @@
 				   $password = $_POST['password']; //password
 				   $department = $_POST['depart']; //department
 				   $title = $_POST['title'];       //title
+				   $extension = $_POST["extension"];
 				   
-				   $sql = "INSERT INTO users (user, first_name, last_name, initial, email, password, department, title) VALUES ('$user', '$firstName', '$lastName', '$initials', '$email', '$password', '$department', '$title')";
+				   $sql = "INSERT INTO users (user, first_name, last_name, initial, email, password, department, title, extension) VALUES ('$user', '$firstName', '$lastName', '$initials', '$email', '$password', '$department', '$title', '$extension')";
 				   mysqli_query($conn, $sql) or die("error");
 				   
 			   }
@@ -110,6 +111,10 @@
 				<div class = "tabinner-detail">
 				<label >Last Name:</label> 
 				<input class = "contact-prefix" type = "text" name = "last" placeholder = "Last Name" value = "<?php if(isset($_POST['last']) && $pass == FALSE){echo $_POST['last'];}?>">
+				</div>
+				<div class = "tabinner-detail">
+				<label >Extension:</label> 
+				<input class = "contact-prefix" type = "text" name = "extension" placeholder = "Extension" value = "<?php if(isset($_POST['extension']) && $pass == FALSE){echo $_POST['extension'];}?>">
 				</div>
 			</div>
 			<div class="newcontacttab-inner">
@@ -157,14 +162,14 @@
 		echo " <div id='table-scroll' class = 'allcontacts-table'><table id='table' border='1' cellspacing='2' cellpadding='2' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
 		echo "<tbody>";
 		echo "<tr valign = 'top'><th class = 'allcontacts-title'>Users<span class = 'allcontacts-subtitle'></span></th></tr>";
-		echo "<tr valign = 'top'><td colspan = '2'><table id = 'client_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='user' data-index='2'> Username </th><th class='maintable-thtwo data-header' data-name='first_name' data-index='0'>First Name</th><th class='maintable-thtwo data-header' data-name='last_name' data-index='1'> Last Name</th><th class='maintable-thtwo data-header' data-name='password' data-index='3'> Password </th><th class='maintable-thtwo data-header' data-name='initial' data-index='4'> Initial </th><th class='maintable-thtwo data-header' data-name='email' data-index='5'> Email </th><th class='maintable-thtwo data-header' data-name='department' data-index='6'> Department </th><th class='maintable-thtwo data-header' data-name='title' data-index='7'> Title </th></tr></thead><tbody>";
+		echo "<tr valign = 'top'><td colspan = '2'><table id = 'client_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='user' data-index='2'> Username </th><th class='maintable-thtwo data-header' data-name='first_name' data-index='0'>First Name</th><th class='maintable-thtwo data-header' data-name='last_name' data-index='1'> Last Name</th><th class='maintable-thtwo data-header' data-name='password' data-index='3'> Password </th><th class='maintable-thtwo data-header' data-name='initial' data-index='4'> Initial </th><th class='maintable-thtwo data-header' data-name='email' data-index='5'> Email </th><th class='maintable-thtwo data-header' data-name='department' data-index='6'> Department </th><th class='maintable-thtwo data-header' data-name='title' data-index='7'> Title </th><th class='maintable-thtwo data-header' data-name='title' data-index='8'> Ext. </th></tr></thead><tbody>";
 
 		$sql = "SELECT * FROM users ORDER BY department ASC";
 		$result = mysqli_query($conn, $sql) or die("ERROR");
 
 		while($row = $result->fetch_assoc()){
 			$user = $row['user'];
-			echo "<tr><th><a href = 'edit_user.php?user=$user'>" . $row['user'] .  "</a></th><th>" . $row['first_name'] . "</th><th>" . $row['last_name'] . "</th><th>" . $row['password'] .  "</th><th>" . $row['initial'] .  "</th><th>" . $row['email'] .  "</th><th>" . $row['department'] . "</th><th>" . $row['title'] . "</th></tr>";
+			echo "<tr><th><a href = 'edit_user.php?user=$user'>" . $row['user'] .  "</a></th><th>" . $row['first_name'] . "</th><th>" . $row['last_name'] . "</th><th>" . $row['password'] .  "</th><th>" . $row['initial'] .  "</th><th>" . $row['email'] .  "</th><th>" . $row['department'] . "</th><th>" . $row['title'] . "</th><th>" . $row['extension'] . "</th></tr>";
 		}
 
 		?>

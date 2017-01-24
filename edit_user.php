@@ -5,8 +5,10 @@
    
    $user = "";
    
-   $error = $_SESSION['error_update_user_account'];
-   $_SESSION['error_update_user_account'] = "";
+   if(isset($_SESSION['error_update_user_account'])){
+	   $error = $_SESSION['error_update_user_account'];
+	   $_SESSION['error_update_user_account'] = "";
+   }
    
    if(isset($_GET['user'])){
 		$user = $_GET['user']; //username
@@ -32,6 +34,7 @@
 	   $email = $row['email']; //email
 	   $department = $row['department']; //department
 	   $title = $row['title'];
+	   $extension = $row["extension"];
    }
 ?>
 
@@ -62,6 +65,10 @@
 				<div class="tabinner-detail">
 				<label>Last Name: </label>
 				<input type = "text" name = "last" placeholder = "Last Name" value = "<?php echo $lastName;?>">
+				</div>
+				<div class="tabinner-detail">
+				<label>Extension:</label>
+				<input type = "text" name = "extension" placeholder = "Extension" value = "<?php echo $extension;?>">
 				</div>
 			</div>
 			<div class="newcontacttab-inner">

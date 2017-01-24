@@ -40,10 +40,7 @@ $_SESSION['title'] = $title;
 				}
 				else{
 					if(file_exists("images/profiles/" . $temp . ".jpg")){
-						echo "<img src='images/profiles/" . $temp . ".JPG'>";
-					}
-					else if(file_exists("images/profiles/" . $temp . ".JPG")){
-						echo "<img src='images/profiles/" . $temp . ".JPG'>";
+						echo "<img src='images/profiles/" . $temp . ".jpg'>";
 					}
 					else{
 						echo "<img src='images/profiles/" . $temp . ".png'>";

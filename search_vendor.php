@@ -2,11 +2,10 @@
 
 
 						require ("connection.php");
-
 							$temp = unserialize($_GET['vendor_info']);
 							$vendor_name = $temp[0];
 							$vendor_add = $temp[1];
-							$sql = "SELECT * FROM vendors WHERE vendor_name = '$vendor_name'"; 
+							$sql = "SELECT * FROM vendors WHERE vendor_name = '$vendor_name' AND vendor_add = '$vendor_add'"; 
 							$result = mysqli_query($conn,$sql); 
 							
 							
@@ -23,14 +22,23 @@
 								$vendor_website = $row["vendor_website"];		
 								$vendor_add = $row["vendor_add"];
 								$display = "yes";
+								$name_squeezed = str_replace(" ", "", $vendor_name);
+								$address_squeezed = str_replace(" ", "", $vendor_add);
+								$name_squeezed = strtolower($name_squeezed);
+								$address_squeezed = strtolower($address_squeezed);
 						}
-						
 						if(isset($_POST['submit_form'])){
+							session_start();
 							$user_name = $_SESSION['user'];
-							$result_previous = mysqli_query($conn, "SELECT vendor_name, vendor_add FROM vendors WHERE vendor_name = '$vendor_name'");
+							$result_previous = mysqli_query($conn, "SELECT vendor_name, vendor_add FROM vendors WHERE vendor_name = '$vendor_name' AND vendor_add = '$vendor_add'");
 							$row_previous = $result_previous->fetch_assoc();
 							$prev_name = $row_previous['vendor_name'];
 							$prev_add = $row_previous['vendor_add'];
+							$name_squeezed_old = str_replace(" ", "", $prev_name);
+							$address_squeezed_old = str_replace(" ", "", $prev_add);
+							$name_squeezed_old = strtolower($name_squeezed_old);
+							$address_squeezed_old = strtolower($address_squeezed_old);
+							$old_name = $name_squeezed_old . $address_squeezed_old;
 							date_default_timezone_set('America/New_York');
 							$today = date("Y-m-d G:i:s");
 							$a_p = date("A");
@@ -43,10 +51,42 @@
 							$vendor_email = $_POST['contact_email'];
 							$vendor_website = $_POST['website'];		
 							$vendor_add = $_POST['client_add'];
+							$name_squeezed_new = str_replace(" ", "", $vendor_name);
+							$address_squeezed_new = str_replace(" ", "", $vendor_add);
+							$name_squeezed_new = strtolower($name_squeezed_new);
+							$address_squeezed_new = strtolower($address_squeezed_new);
+							$new_name = $name_squeezed_new . $address_squeezed_new;
+							$old_location = "images/vendor-logos/" . $old_name;
+							$new_location = "images/vendor-logos/" . $new_name;
+							if(file_exists($old_location . ".jpg")){
+								$old_location = $old_location . ".jpg";
+							}
+							else{
+								$old_location = $old_location . ".png";
+							}
+							
+							if(file_exists($new_location . ".jpg")){
+								$new_location = $new_location . ".jpg";
+							}
+							else{
+								$new_location = $new_location . ".png";
+							}
+							
+							rename($old_location, $new_location);
 					
-							$sql = "UPDATE vendors SET vendor_name='$vendor_name',vendor_phone='$vendor_phone',vendor_add='$vendor_add',vendor_contact='$vendor_contact',vendor_email='$vendor_email',vendor_website='$vendor_website' WHERE vendor_name='$prev_name'";
+							$sql = "UPDATE vendors SET vendor_name='$vendor_name',vendor_phone='$vendor_phone',vendor_add='$vendor_add',vendor_contact='$vendor_contact',vendor_email='$vendor_email',vendor_website='$vendor_website' WHERE vendor_name='$prev_name' AND vendor_add = '$prev_add'";
 
 							$result = $conn->query($sql) or die('Error querying database.');
+							if(isset($_FILES["fileToUpload"])){
+								$info = pathinfo($_FILES['fileToUpload']['name']);
+								$ext = "." . $info["extension"];
+								$newname = $new_location;
+								$target_Path = $newname;
+								//$target_Path = $target_Path.basename( $_FILES['fileToUpload']['name'] );
+								move_uploaded_file($_FILES['fileToUpload']['tmp_name'], $target_Path);
+							}
+							
+							//die($old_location);
 							 
 							$conn->close();
 
@@ -55,6 +95,7 @@
 							exit();
 						}
 						if(isset($_POST['delete_form'])){
+							session_start();
 							$user_name = $_SESSION['user'];
 							date_default_timezone_set('America/New_York');
 							$today = date("Y-m-d G:i:s");
@@ -75,7 +116,7 @@
 					<div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 	<h1 class="pull-left">Edit Vendor</h1>
-	<a class="pull-right" href="vendors.php" style="margin-right:20px; background-color:#d14700;">Back to Vendors</a>
+	<a class="pull-right" href="vendors.php">Back to Vendors</a>
 	<div class="clear"></div>
 	</div>
 <div class="dashboard-detail">
@@ -89,7 +130,7 @@
 		<div class="tab-content">
 			<div role="tabpanel" class="tab-pane active" id="home">
 			<div class="newcontactstab-detail">
-			<form action="" method="post">
+			<form action="" method="post" enctype='multipart/form-data'>
 				<div class="newcontacttab-inner">
 					<div class="tabinner-detail">
 					<label>Vendor Name</label>
@@ -109,23 +150,6 @@
 				</div>
 				<div class="newcontacttab-inner">
 					<div class="tabinner-detail">
-					<label>City</label>
-					<input name="v_city" type="text" value="<?php echo $v_city; ?>" class="contact-prefix">
-					<div class="clear"></div>
-					</div>
-					<div class="tabinner-detail">
-					<label>State</label>
-					<input name="v_state" type="text" value="<?php echo $v_state; ?>" class="contact-prefix">
-					<div class="clear"></div>
-					</div>
-					<div class="tabinner-detail">
-					<label>ZIP Code</label>
-					<input name="v_zip" type="text" value="<?php echo $v_zip; ?>" class="contact-prefix">
-					<div class="clear"></div>
-					</div>
-				</div>
-				<div class="newcontacttab-inner">
-					<div class="tabinner-detail">
 					<label>Website</label>
 					<input name="website" type="text" value="<?php echo $vendor_website; ?>" class="contact-prefix">
 					<div class="clear"></div>
@@ -139,6 +163,25 @@
 					<label>Email</label>
 					<input name="contact_email" type="text" value="<?php echo $vendor_email; ?>" class="contact-prefix">
 					<div class="clear"></div>
+					</div>
+				</div>
+				<div class="newcontacttab-inner">
+					<div class="tabinner-detail">
+					<input type='file' name='fileToUpload' id='fileToUpload'>
+					</div>
+					<div class ="tabinner-detail">
+					<img width = '400' height = '400' src="<?php
+						$temp = $name_squeezed . $address_squeezed;
+						if(file_exists("images/vendor-logos/" . $temp . ".jpg")){
+							echo "images/vendor-logos/" . $temp . ".jpg";
+						}
+						else if(file_exists("images/vendor-logos/" . $temp . ".png")){
+							echo "images/vendor-logos/" . $temp . ".png";
+						}
+						else{
+							echo "images/vendor-logos/default-logo.png";
+						}
+					?>">
 					</div>
 				</div>
 			</div>
