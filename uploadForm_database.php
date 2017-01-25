@@ -180,11 +180,11 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 			$test_count++;
 		}
 }
-die("$test_count");
 if(count($error) == 0){
 	for($i = 0; $i < count($sql_statements); $i++){
 		mysqli_query($conn, $sql_statements[$i]) or die("error querying database");
 	}
+	$update_statements = $test_count;
 	$job = "CSV file uploaded to CRM";
 	$user_name = $_SESSION['user'];
 	date_default_timezone_set('America/New_York');
