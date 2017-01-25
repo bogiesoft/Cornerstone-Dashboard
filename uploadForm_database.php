@@ -7,10 +7,20 @@ $handle = fopen($_FILES['fileUpload']["tmp_name"], 'r');
 while($row = fgetcsv($handle , 100000 , ",")) {
    $data[] = $row;
 }
-if(count($data) > 201){
+if(count($data) > 200001){
 	$_SESSION["max_on_importer"] = "SET";
 	header("location: uploadForm.php");
 	die(count($data));
+}
+
+$all_full_names_array = array();
+$all_addresses_array = array();
+$all_businesses_array = array();
+$result_sales_list = mysqli_query($conn, "SELECT full_name, address_line_1, business FROM sales");
+while($row = $result_sales_list->fetch_assoc()){
+	array_push($all_full_names_array, $row["full_name"]);
+	array_push($all_addresses_array, $row["address_line_1"]);
+	array_push($all_businesses_array, $row["business"]);
 }
 //Get all Column names in array
 $array_names = array();
@@ -45,19 +55,18 @@ for($i = 0; $i < count($array_names); $i++)
 
 $error = array();
 $sql_statements = array();
-$update_statements = array();
+$update_statements = 0;
 $check = 0;
+$test_count = 0;
 for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 {
 		$sql = 'INSERT INTO sales (rep, quickbooks, prefix, full_name, suffix, title, phone, fax, extension, web_address, business, country, address_line_1, address_line_2, address_line_3, city, state, zipcode, status, call_back_date, priority, date_added, 
 				mailing_list, pie_day, second_contact, cell_phone, alt_phone, home_phone, email1, email2, vertical1, vertical2, vertical3, source, notes, _2014_pie_day, Non_Profit_Card_08_2013, 
 				Commercial_Card_08_2013, USPS_Post_Office_Mailing_03_2014, Contractor_Small_Business_Select_Mailing_03_2014, Contractor_SB_Select_Mailing_04_2014, USPS_EDDM_Regs_brochure_Mailing_04_2014,
 				USPS_9Y9_EDDM_Marketing_Card, SEPT_2014_3_5Y11_CRST_Marketing_Card, Contractor_Mailing_2016, type, import_id, import_name, import_status) VALUES (';
-				
-		
-		$sql2 = 'UPDATE sales SET ';
 		$full_name = "";
 		$address_line_1 = "";
+		$business = "";
 		$foreign_country = FALSE;
 		$insert_values = array();
 		
@@ -146,48 +155,32 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 			if($array_names[$j] == "address_line_1" && $array_indexes[$j] != -1){
 				$address_line_1 = $input;
 			}
+			if($array_names[$j] == "business" && $array_indexes[$j] != -1){
+				$business = $input;
+			}
 			
 			//creates UPDATE and INSERT statements similtaneously
 			//For UPDATE string, excludes the full_name and address_line_1 fields because they are keys
 			//Excludes date_added because this field can't be changed once added to the table
 			if($array_indexes[$j] != -1 || $array_names[$j] == "date_added"){
 				$sql = $sql . '"' . $input . '",';
-				if($array_names[$j] != "full_name" && $array_names[$j] != "address_line_1" && $array_names[$j] != "date_added"){
-					$sql2 = $sql2 . $array_names[$j] . ' = "' . $input . '", ';
-				}
 			}
 			else if(($array_indexes[$j] != -1 || $array_names[$j] == "date_added") && $j == count($array_indexes) - 1){
 				$sql = $sql . $input . ',"' . $import_id . '", "' . $import_name . '", "Insert")';
-				if($array_names[$j] != "full_name" && $array_names[$j] != "address_line_1" && $array_names[$j] != "date_added"){
-					$sql2 = $sql2 . $array_names[$j] . ' = "' . $input . ', import_id = ' . $import_id . ', import_date = "' . $import_date . '", import_name = "' . $import_name .  '", import_status = "Update" WHERE full_name = "' . $full_name . '" AND address_line_1 = "' . $address_line_1 . '"';
-				}
 			}
 			else if($array_indexes[$j] == -1 && $j != count($array_indexes) - 1){
 				$sql = $sql . "' ',";
-				if($array_names[$j] != "full_name" && $array_names[$j] != "address_line_1" && $array_names[$j] != "date_added"){
-					$sql2 = $sql2 . $array_names[$j] . " = ' ', ";
-				}
 			}
 			else{
 				$sql = $sql . "'Prospect', " . $import_id . ", '" . $import_name . "', 'Insert')";
-				if($array_names[$j] != "full_name" && $array_names[$j] != "address_line_1" && $array_names[$j] != "date_added"){
-					$sql2 = $sql2 . $array_names[$j] . " = 'Prospect', import_id = " . $import_id . ", import_name = '" . $import_name . "', import_date = '" . $import_date .  "', import_status = 'Update' WHERE full_name = '$full_name' AND address_line_1 = '$address_line_1'";
-				}
 			}
 		}
-		
-		//checks if already in database and will either update or insert
-		//only does import if $error array is empty
-		$result_match = mysqli_query($conn, "SELECT * FROM sales WHERE full_name = '$full_name' AND address_line_1 = '$address_line_1'");
-		$rows = mysqli_num_rows($result_match);
-		if($rows == 0){
+		if(in_array($full_name, $all_full_names_array) && in_array($address_line_1, $all_addresses_array) && in_array($business, $all_businesses_array)){
 			array_push($sql_statements, $sql);
-		}
-		else{
-			array_push($update_statements, $sql2);
+			$test_count++;
 		}
 }
-
+die("$test_count");
 if(count($error) == 0){
 	for($i = 0; $i < count($sql_statements); $i++){
 		mysqli_query($conn, $sql_statements[$i]) or die("error querying database");
@@ -220,38 +213,17 @@ else{
 		if(errors.length > 0){
 			window.location.replace("uploadForm.php");
 		}
-		else if(number_updates > 0){
-			warnBeforeRedirect();
-		}
 		else{
 			showSuccessMessage();
 		}
 		
 		function showSuccessMessage(){
-		swal({   title: "Import Successful!",   text: "Redirecting...",   type: "success",      confirmButtonColor: "#4FD8FC",   closeOnConfirm: false }, 
+		swal({   title: "Import Successful!",   text: number_updates + " duplicates found",   type: "success",      confirmButtonColor: "#4FD8FC",   closeOnConfirm: false }, 
 			function(){ saveNotClicked=false; $( ".store-btn" ).click();});  
 			 window.setTimeout(function () {
 			location.href = "uploadForm.php";
-			}, 2000);
+			}, 5000);
 		};
-		function warnBeforeRedirect() {
-		swal({   title: number_updates + " clients will be updated with inserted clients",   text: "Would you like to update duplicate clients?",   type: "warning",   showCancelButton: true,   confirmButtonColor: "#DD6B55",   confirmButtonText: "Yes, update all!",   closeOnConfirm: false }, 
-			function(isConfirm){ if(isConfirm){ 
-			 $.ajax({
-                    type: "POST",
-                    url: 'storeUpdatesSession.php',
-                    data: {updates_array : update_statements},
-                    success: function(data)
-                    {
-                        location.href = "uploadForm.php";
-                    }
-                });
-			} 
-			else{window.setTimeout(function () {
-				location.href = "uploadForm.php";
-			}, 1000);};  
-		});
-		};  
 	};
 	
 </script>
