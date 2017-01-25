@@ -30,7 +30,7 @@ require ("header.php");
 			<div id = "documentation-detail" class="documentation-detail">
 				<div class='doc-block'>
 					<div class="doc-block-left">
-						<img src="images/profiles/sayre.jpg">
+						<img src="images/profiles/mbroc.jpg">
 						<div class="date-box">
 							<p class="date-month">JAN</p>
 							<p class="date-year">2017</p>
