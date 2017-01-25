@@ -240,7 +240,7 @@ li.current { color: #0033cc !important; background: #ffffff; width: 25px; paddin
 .dataconsulate-detail .dataconsulate-right .go-topage-cont {}
 .dataconsulate-detail .dataconsulate-right .go-topage-cont label { display:inline-block; font-size:16px; line-height:38px; font-weight:400; color:#222; }
 .dataconsulate-detail .dataconsulate-right .go-topage-cont .page-no { display:inline-block; width:60px; height:38px; line-height:38px; text-align:center; color:#222; font-weight:300; background-color:#fff; margin:0 0 0 28px; }
-select {float:right; width:50px; height:36px; border:0; background: url(/images/down-arrow.png) 90% center no-repeat #fff; }
+select {display:inline-block; height:36px; border:1px solid black; background: url(/images/down-arrow.png) 90% center no-repeat #fff; }
 .application-status { float: none;}
 #table-scroll {height:auto;width:100%;overflow:auto;   }
 div.pager span {display: inline-block;width: 1.8em;height: 1.8em;line-height: 1.8;text-align: center;cursor: pointer;margin-right: 0.5em;}
@@ -302,14 +302,14 @@ font-weight:400; }
 .date-box {border:2px solid #356CAC;}
 .date-month {font-size:36px; text-align:center;color:#356CAC; padding:15px 0 15px 0;}
 .date-year {font-size:36px; color:white; background-color:#356CAC; text-align:center; padding:15px 0 15px 0;}
-.doc-block-right {display:inline-block; float:right; width:85%;}
-.doc-title {width:100%; border-bottom:2px solid #356CAC; padding-bottom:10px; margin-bottom:10px;}
-.doc-title img {width:30px; height:30px; float:right; margin:15px 10px 0 0;}
+.doc-block-right {display:inline-block; float:right; width:85%; margin-bottom:10px;}
+.doc-title {width:100%; border-bottom:2px solid #356CAC; margin-bottom:10px;}
+.doc-title img {width:30px; height:30px; float:right; margin:5px 5px 0 0;}
 .doc-title p { font-size:36px; color:#356CAC; display:inline-block;}
-.doc-text{width:100%; clear:both;}
+.doc-text{width:98%; clear:both;}
 .doc-timestamp {font-style:italic;}
-.doc-description {margin-top:20px; font-style:italic;}
-.doc-exerpt {margin-top:20px;}
+.doc-description {margin-top:10px; font-style:italic;}
+.doc-exerpt {margin-top:10px;}
 
 
 /* Reminders */
@@ -326,6 +326,12 @@ font-weight:400; }
 .profile-static {margin:5px 0 5px 0;}
 .profile-static p {font-style:italic; }
 
+/* Project Management & Production Blocks */
+.project_block {box-shadow:1px 2px 3px 0px rgba(50, 50, 50, 0.3); width:100%;}
+.project_block_left {width:75%; display:inline-block;}
+.project_row1 h3 {color:#356CAC; display:inline-block;}
+.project_row2 p {display:inline-block;} 
+.project_block_right {width:20%; margin-left:10px; display:inline-block;}
 
 /*media queries */
 @media screen and (max-width:1640px) {

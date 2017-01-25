@@ -7,38 +7,7 @@ $percent_array = array();
 $id_array = array();
 
 ?>
-<style>
-	#blue_sheet_labels p{
-		margin-right: 380px;
-	}
-	.input_fields{
-		height: 20px;
-	}
-	.label_margin_bottom{
-		margin-bottom: 5px;
-	}
 
-	.tooltiptext {
-	    visibility: hidden;
-	    width: 120px;
-	    background-color: black;
-	    color: #fff;
-	    text-align: center;
-	    border-radius: 6px;
-	    padding: 5px 0;
-
-	    /* Position the tooltip */
-	    position: absolute;
-	    z-index: 11000;
-		position: relative;
-	    display: inline-block;
-	    border-bottom: 1px dotted black;
-	}
-
-	.hover_info:hover .tooltiptext{
-	    visibility: visible;
-	}
-</style>
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 	<h1 class="pull-left">Project Management</h1>

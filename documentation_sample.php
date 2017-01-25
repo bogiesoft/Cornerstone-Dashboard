@@ -18,7 +18,7 @@ require ("header.php");
 										<option value="">Sort by</option>
 			  						<option value="date">Date</option>
 			  						<option value="user">User</option>
-			  						<option value="View Count">View Count</option>
+			  						<option value="View Count">Views</option>
 									</select>
 								</form>
 							</div>
@@ -34,10 +34,11 @@ require ("header.php");
 							<p class="date-month">JAN</p>
 							<p class="date-year">2017</p>
 						</div>
+						<p style="color:#356CAC; font-style:italic; text-align:center; margin-top:5px;">Views: 15</p>
 					</div>
 					<div class="doc-block-right">
 						<div class="doc-title">
-						<p>Title</p>
+						<a href="#"><p>Title</p></a>
 						<a href="#"><img src="images/web-icons/edit_pencil-blue.png"></a>
 						</div>
 						<div class="doc-text">
