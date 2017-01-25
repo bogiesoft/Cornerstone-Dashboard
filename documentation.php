@@ -52,14 +52,11 @@ require ("header.php");
 						$new_format_year = date("Y", $new_date);
 						echo "<div class='doc-block'>";
 						echo "<a class='search-boxright pull-right' href='edit_doc.php?title=$temp'><img style='height:25px; width:25px;' src='images/web-icons/edit_pencil-blue.png'></img></a>";
-						echo "<a href='view_doc.php?title=$temp'><h2>".$row['title']."</h2></a>"."<p>Written by <b>".$row['user']."</b></p><br>";
+						echo "<a href='view_doc.php?title=$temp'><h2>".$row['title']."</h2></a>"."<p class = 'user_search'>Written by <b>".$row['user']."</b></p><br>";
 						echo "<div>";
-						if(file_exists("images/profiles/" . $user . ".jpg") || file_exists("images/profiles/" . $user . ".JPG") || file_exists("images/profiles/" . $user . ".png")){
+						if(file_exists("images/profiles/" . $user . ".jpg") || file_exists("images/profiles/" . $user . ".png")){
 							if(file_exists("images/profiles/" . $user . ".jpg")){
 								echo "<img src = 'images/profiles/" . $user . ".jpg' width = '100' height = '100'>";
-							}
-							else if(file_exists("images/profiles/" . $user . ".JPG")){
-								echo "<img src = 'images/profiles/" . $user . ".JPG' width = '100' height = '100'>";
 							}
 							else{
 								echo "<img src = 'images/profiles/" . $user . ".png' width = '100' height = '100'>";
@@ -71,7 +68,7 @@ require ("header.php");
 						echo "</div>";
 						echo "<p>".$row['description']."</p>";
 						echo "<div class='date'>
-								<p> $new_format_month_to_day <span>$new_format_year</span></p></div>";
+								<p class = 'month_day_search'> $new_format_month_to_day <span class = 'year_search'>$new_format_year</span></p></div>";
 						echo "</div>";
 				    }
 				} else {
@@ -207,7 +204,8 @@ jQuery(function($){
 			//compare the searchbox value with each job id
 			$("div.doc-block").each(function(){
 				//if title.text OR username.text OR paragraphText.text contains the string in searchbox
-				if($(this).children("a").text().toLowerCase().search(search_val)!=-1 || $(':nth-child(2)', this).children().text().toLowerCase().search(search_val)!=-1 || $(':nth-child(4)', this).text().toLowerCase().search(search_val)!=-1){
+				if($(this).children("a").text().toLowerCase().search(search_val)!=-1 || $(this).children(".user_search").text().toLowerCase().search(search_val)!=-1 || $(':nth-child(4)', this).text().toLowerCase().search(search_val)!=-1
+				    || $(this).children("div").text().toLowerCase().search(search_val)!= -1){
 					//show div
 					$(this).show();
 				}
