@@ -12,7 +12,7 @@ require ("header.php");
 					<div class="search-boxleft">
 							<label>Quick Search</label>
 							<input id="searchbox" name="frmSearch" type="text" placeholder="Search documentation by user, title etc.">
-							<div style="text-align:right;">
+							<div style="text-align:right; display:inline-block; float: right; margin:5px 10px 0 0; line-height:24px;">
 								<form name = "formSortBy" id = "formSortBy" action = "documentation.php?sortby=" method = "POST" enctype="multipart/form-data">
 									<select id= "sortby" name = "sortby" style=" width: 150px; border: 1px solid #666; display: inline-block;" >
 										<option value="">Sort by</option>
