@@ -55,7 +55,7 @@
 		<div class="tab-content">
 			<div role="tabpanel" class="tab-pane active" id="home">
 			<div class="newcontactstab-detail">
-			<p style = "color: #ff0000; background: #f8f8f8; margin-left: 25px; margin-bottom: 15px"><?php echo $error; $error = "";?></p>
+			<p style = "color: #ff0000; background: #f8f8f8; margin-left: 25px; margin-bottom: 15px"><?php if(isset($_SESSION["error_update_user_account"]))echo $error; $error = "";?></p>
 			<form action="update_users.php" id="form" method="POST">
 			<div class="newcontacttab-inner">
 				<div class="tabinner-detail">
