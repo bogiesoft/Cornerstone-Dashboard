@@ -23,16 +23,20 @@ $id_array = array();
 	</div>
 	</div>
 <div class="clear"></div>
+<div class="block_area">
 	<div class="project_block">
 		<div class="project_block_left">
 			<div class="project_row1">
 				<h3>Project Name</h3>
-				<h3 style="float:right">Client Name</h3>
+				<h3 style="float:right;">Client Name</h3>
 			</div>
 			<div class="project_row2">
 				<p>Job ID</p>
-				<p style="float:right;">Records Total</p>
-				<p style="float:right;">Due Date</p>
+				<p>Records Total</p>
+				<p>Due Date</p>
+			</div>
+			<div class="graph_block">
+				<img src="images/graph_sample.png">
 			</div>
 			<div class="project_row3">
 				<select>
@@ -46,17 +50,14 @@ $id_array = array();
 					<option value="2">Medium</option>
 					<option value="3">Low</option>
 				</select>
-				<select>
-					<option select="selected" value="0"># of People</option>
-					<option value="1">2</option>
-					<option value="2">3</option>
-				</select>
 			</div>
 		</div>
-		<div class="project_block_right">
-			<p>Insert Yellow Sheet Graph Here</p>
+		<div class="project_row4">
+			<a href="#" style="width:50%; background-color:#356CAC; float:left; text-align:center; color:white;">WORKSHEET</a>
+			<a href="#" style="width:50%; background-color:#d14700; float:right; text-align:center; color:white;">JOB TICKET</a>
 		</div>
 	</div>
+</div>
 </div>
 </div>
 <script src="PMSweetAlert.js"></script>
