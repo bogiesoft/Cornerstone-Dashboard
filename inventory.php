@@ -551,49 +551,14 @@
 		<a class="pull-right" href="add_inventory.php" style="margin-right:20px; background-color:#d14700;">Add Inventory</a>
 	</div>
 <div class="dashboard-detail">
-    <div class ="search-cont">
-      <div class="searchcont-detail">
-      
-			<div id="saved_search_div">
-				<table id="saved_search_table" style = 'display: none'>
-					<tbody>
-						<?php
-            $columnIntable = 0;
-						$result = mysqli_query($conn, "SELECT * FROM saved_search WHERE table_type = 'CRM' ORDER BY search_date DESC LIMIT 10");
-						if (mysqli_num_rows($result) > 0) {
-							// output data of each row
-							while($row = $result->fetch_assoc()) {
-								$search_id = $row["search_id"];
-								$field1=$row["field1"];
-								$value1=$row["value1"];
-								$field2=$row["field2"];
-								$value2=$row["value2"];
-								$field3=$row["field3"];
-								$value3=$row["value3"];
-                $field4=$row["field4"];
-								$value4=$row["value4"];
-                $field5=$row["field5"];
-								$value5=$row["value5"];
-                if($columnIntable == 0){
-                  echo "<tr>";
-                }
-                  echo "<td id = 'cell" . $search_id . "' class='data-cell'><button id = '" . $search_id . "' class = 'saved_search_button' onClick = 'SavedSearch(\"$field1\", \"$value1\",\"$field2\", \"$value2\",\"$field3\", \"$value3\",\"$field4\", \"$value4\",\"$field5\", \"$value5\")'>". $row["search_name"]."</button><button id = '" . $search_id . "' class = 'delete_button'><img src = 'images/x_button.png' width = '25' height = '25'></button></td>";
-                  $columnIntable++;
-                if($columnIntable == 3){
-                  echo "</tr>";
-                  $columnIntable = 0;
-                }
-							}
-						}
-						else {
-							echo "0 Saved Searches";
-						}
-						?>
-					</tbody>
-				</table>
-			</div>
-    </div>
-</div>
+    <div class="search-cont">
+	<div class="searchcont-detail">
+		<div class="search-boxleft">
+				<label>Quick Search</label>
+				<input id="searchbox" name="frmSearch" type="text" placeholder="Search for material">
+		</div>
+	</div>
+	</div>
 <div class="clear"></div>
 
 <div id = 'allcontacts-table' class='allcontacts-table'>

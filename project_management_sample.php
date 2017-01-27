@@ -27,8 +27,8 @@ $id_array = array();
 	<div class="project_block">
 		<div class="project_block_left">
 			<div class="project_row1">
-				<h3>Project Name</h3>
-				<h3 style="float:right;">Client Name</h3>
+				<p>Client Name</p>
+				<p>Project Name</p>
 			</div>
 			<div class="project_row2">
 				<p>Job ID</p>
@@ -57,6 +57,7 @@ $id_array = array();
 			<a href="#" style="width:50%; background-color:#d14700; float:right; text-align:center; color:white;">JOB TICKET</a>
 		</div>
 	</div>
+	
 </div>
 </div>
 </div>

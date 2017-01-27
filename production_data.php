@@ -66,10 +66,10 @@ require ("connection.php");
 $result = mysqli_query($conn,"SELECT * FROM production_data");
 
 
-echo " <div id = 'table-scroll' class='allcontacts-table'><table style = 'width: 900px' id = 'table' border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
+echo " <div id = 'table-scroll' class='allcontacts-table'><table style = 'width: 100%' id = 'table' border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
 echo "<tbody>";
 echo "<tr valign='top'><th class='allcontacts-title'>All Data<span class='allcontacts-subtitle'></span></th></tr>";
-echo "<tr valign='top'><td colspan='2'><table style = 'width: 900px' id = 'production_data_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Tasks</th><th id = 'contact_name' class='maintable-thtwo data-header' data-name='contact_name' data-index='1'>Total Hours</th><th id = 'address' class='maintable-thtwo data-header' data-name='client_add' data-index='2'>Records Based On</th></tr></thead><tbody>";
+echo "<tr valign='top'><td colspan='2'><table style = 'width: 100%' id = 'production_data_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Tasks</th><th id = 'contact_name' class='maintable-thtwo data-header' data-name='contact_name' data-index='1'>Total Hours</th><th id = 'address' class='maintable-thtwo data-header' data-name='client_add' data-index='2'>Records Based On</th></tr></thead><tbody>";
 
 
 if ($result->num_rows > 0) {
@@ -97,7 +97,7 @@ $conn->close();
 	</nav>
 	</div>
 	<div class="items-per-page-cont pull-right">
-		<label>Clients Per Page</label>
+		<label>Tasks Per Page</label>
 		<select class="per-page-val" id = "item_count" onchange = "changeCount()">
 			<option value="10">10</option>
 			<option value="25">25</option>
