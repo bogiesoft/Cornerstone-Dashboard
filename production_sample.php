@@ -55,9 +55,48 @@
 			</div>
 		</div>
 		<div class="project_row4">
-			<a href="#" style="width:50%; background-color:#356CAC; float:left; text-align:center; color:white;">SPECIAL INSTRUCTIONS</a>
-			<a href="#" style="width:50%; background-color:#d14700; float:right; text-align:center; color:white;">JOB TICKET</a>
+			<a href="#" style="width:100%; background-color:#356CAC; float:left; text-align:center; color:white;">SPECIAL INSTRUCTIONS</a>
 		</div>
+		
+	</div>
+	<div class="project_block">
+		<div class="project_block_left">
+			<div class="project_row1">
+				<p></p>
+				<p></p>
+			</div>
+			<div class="project_row2">
+				<p>Job ID</p>
+				<p>Records Total</p>
+				<p>Due Date</p>
+				<p>Tasks</p>
+			</div>
+			<div class="graph_block">
+				<img src="images/graph_sample.png">
+				<select>
+					<option select="selected" value="0"># of People</option>
+					<option value="1">1</option>
+					<option value="2">2</option>
+				</select>
+			</div>
+			<div class="project_row3">
+				<select>
+					<option select="selected" value="0">Assign to</option>
+					<option value="1">2</option>
+					<option value="2">3</option>
+				</select>
+				<select>
+					<option select="selected" value="0">Priority</option>
+					<option value="1">High</option>
+					<option value="2">Medium</option>
+					<option value="3">Low</option>
+				</select>
+			</div>
+		</div>
+		<div class="project_row4">
+			<a href="#" style="width:100%; background-color:#356CAC; float:left; text-align:center; color:white;">SPECIAL INSTRUCTIONS</a>
+		</div>
+		
 	</div>
 	
 </div>

@@ -35,7 +35,6 @@
 	$time_number_id = "time_number";
 	$time_unit_id = "time_unit";
 	$per_rec_id = "per_rec";
-	$people_id = "people";
 	$employee_id = "employee";
 	$job_id = "job";
 	$count = 1;
@@ -43,14 +42,12 @@
 	$records_per_array = array();
 	$time_number_array = array();
 	$time_unit_array = array();
-	$people_array = array();
 	$job_array = array();
 	$hours = 0;
 	
 	$time_number = 0;	
 	$per_rec = 0;
 	$employees = "";
-	$people = "";
 	$time_unit = "";
 	$job = "";
 	
@@ -78,13 +75,6 @@
 		}
 		array_push($time_unit_array, $time_unit);
 		
-		if(!(isset($_POST[$people_id]))){ //people
-			$people = "1";
-		}
-		else{
-			$people = $_POST[$people_id];
-		}
-		array_push($people_array, $people);
 		
 		if(!(isset($_POST[$job_id]))){ //job
 			$job = "Mail Merge";
@@ -96,15 +86,15 @@
 		
 		if($time_number != 0 && $per_rec != 0 && $total_records != 0){
 			if($time_unit == "hr."){     //hours
-				$add_hours = $total_records / $per_rec * $time_number / (int)$people;
+				$add_hours = $total_records / $per_rec * $time_number;
 				$hours = $hours + $add_hours;
 			}
 			else if($time_unit == "min."){
-				$add_hours = $total_records / $per_rec * $time_number / 60 / (int)$people;
+				$add_hours = $total_records / $per_rec * $time_number / 60;
 				$hours = $hours + $add_hours;
 			}
 			else if($time_unit == "sec."){
-				$add_hours = $total_records / $per_rec * $time_number / 3600 / (int)$people;
+				$add_hours = $total_records / $per_rec * $time_number / 3600;
 				$hours = $hours + $add_hours;
 			}
 		}
@@ -112,7 +102,6 @@
 		$time_number_id = "time_number" . $count;
 		$time_unit_id = "time_unit" . $count;
 		$per_rec_id = "per_rec" . $count;
-		$people_id = "people" . $count;
 		$employee_id = "employee" . $count;
 		$job_id = "job" . $count;
 		$count = $count + 1;
@@ -122,7 +111,6 @@
 	$records_per = implode(",", $records_per_array);
 	$time_number = implode(",", $time_number_array);
 	$time_unit = implode(",", $time_unit_array);
-	$people = implode(",", $people_array);
 	
 	$sql = "SELECT * FROM production_data";
 	$result = mysqli_query($conn, $sql);
@@ -152,7 +140,7 @@
 	
 	$job = implode(",", $job_array);
 	
-	mysqli_query($conn, "INSERT INTO production_data (id, total_records, records_per, time_number, time_unit, people, job, hours) VALUES ('$id_1', '$total_records', '$records_per', '$time_number', '$time_unit', '$people', '$job', '$hours')") or die("ERROR");
+	mysqli_query($conn, "INSERT INTO production_data (id, total_records, records_per, time_number, time_unit, job, hours) VALUES ('$id_1', '$total_records', '$records_per', '$time_number', '$time_unit', '$job', '$hours')") or die("ERROR");
 	
 	header("location: production_data.php");
 ?>

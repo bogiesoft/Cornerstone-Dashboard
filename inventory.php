@@ -548,7 +548,7 @@
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 		<h1 class="pull-left">Inventory</h1>
-		<a class="pull-right" href="add_inventory.php" style="margin-right:20px; background-color:#d14700;">Add Inventory</a>
+		<a class="pull-right" href="add_inventory.php">Add Inventory</a>
 	</div>
 <div class="dashboard-detail">
     <div class="search-cont">

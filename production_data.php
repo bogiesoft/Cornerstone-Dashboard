@@ -13,14 +13,6 @@ require('header.php');
 	<h1>Task 1: </h1>
 	<label style = "float: left;">Time/Unit</label> &nbsp; <input name = "time_number" type = "text" id = "time_number" style = "float: left; margin-right: 10px; width: 40px; font-size = 18px;" value = "1"></input><select style = "float:left;" name = "time_unit" id = "time_unit"><option>min.</option><option>sec.</option><option>hr.</option></select>
 	<label style = "float: left;">Records Complete in Time</label> &nbsp; <input style = "float: left; width: 40px" name = "per_rec" type = "text" id = "per_rec" value = "1"></input> &nbsp; &nbsp;
-	<label style = "float: left;">Number of People</label> &nbsp; <select style = "float: left;" name = "people" id = "people">
-	<?php
-		for($i = 1; $i <= 10; $i++)
-		{
-			echo "<option>" . $i . "</option>";
-		}
-	?>
-</select> &nbsp;
 <label style = "float: left;">Job</label> &nbsp; <select style = "float: left; width: 200px" name = "job" id = "job">
 	<option value="Mail Merge">Mail Merge</option>
 					  <option value="Letter Printing">Letter Printing</option>
@@ -47,7 +39,7 @@ require('header.php');
 <h2 id = "eff">Efficiency: </h2><br>
 <input class = "save-btn" type = "submit" value = "Save Data"></input>
 </form>
-<button type = "button" onclick = "changeBar();">Submit Data</button><button type = "button" onclick = "addTask();">Add Task</button><button type = "button" onclick = "removeTask();">Remove Task</button><br><br><br>
+<button type = "button" onclick = "changeBar();">Calculate</button><button type = "button" onclick = "addTask();">Add Task</button><button type = "button" onclick = "removeTask();">Remove Task</button><br><br><br>
 <div class="contacts-title">
 	<h1 class="pull-left">Production Time Data</h1>
 	</div>
@@ -300,14 +292,8 @@ function nextPage(){
 	var Task = 2;
 	
 	function addTask(){
-		$(".prod_info").append("<div class = 'new_task" + count + "'><h1>Task " + Task + ":</h1><label style = 'float: left;'>Time/Unit</label> &nbsp; <input name = 'time_number" + count + "' type = 'text' id = 'time_number" + count + "' style = 'float: left; width: 40px; font-size = 18px;' value = '1'> &nbsp; </input><select style = 'float: left;' name = 'time_unit" + count + "' id = 'time_unit" + count + "'><option>min.</option><option>sec.</option><option>hr.</option></select> <label style = 'float: left;'>Records Complete in Time<label> &nbsp; <input name = 'per_rec" + count + "' type = 'text' id = 'per_rec" + count + "' style = 'float: left; width: 40px' value = '1'></input> &nbsp; &nbsp;&nbsp;<label style = 'float:left'>Number of People</label> &nbsp;<select style = 'float:left;' name = 'people" + count + "' id = 'people" + count + "'></select>&nbsp; <label style = 'float: left;'>Job</label> &nbsp; <select style = 'float: left;width: 200px;' name = 'job" + count + "' id = 'job" + count + "'></select><br><p id = 'error" + count + "' style = 'color:red;'></p></div>");
+		$(".prod_info").append("<div class = 'new_task" + count + "'><h1>Task " + Task + ":</h1><label style = 'float: left;'>Time/Unit</label> &nbsp; <input name = 'time_number" + count + "' type = 'text' id = 'time_number" + count + "' style = 'float: left; width: 40px; font-size = 18px;' value = '1'> &nbsp; </input><select style = 'float: left;' name = 'time_unit" + count + "' id = 'time_unit" + count + "'><option>min.</option><option>sec.</option><option>hr.</option></select> <label style = 'float: left;'>Records Complete in Time<label> &nbsp; <input name = 'per_rec" + count + "' type = 'text' id = 'per_rec" + count + "' style = 'float: left; width: 40px' value = '1'></input> &nbsp; &nbsp; <label style = 'float: left;'>Job</label> &nbsp; <select style = 'float: left;width: 200px;' name = 'job" + count + "' id = 'job" + count + "'></select><br><p id = 'error" + count + "' style = 'color:red;'></p></div>");
 		//$(".prod_info").append("&nbsp;<label style = 'float:left'>Number of People</label> &nbsp;<select style = 'float:left;' name = 'people" + count + "' id = 'people" + count + "'>");
-		for (var i = 1; i <= 10; i++){
-			var opt = document.createElement('option');
-			opt.value = i;
-			opt.innerHTML = i;
-			document.getElementById("people" + count).appendChild(opt);
-		}
 		//$(".prod_info").append("</select>");
 		//$(".prod_info").append("&nbsp; <label style = 'float: left;'>Job</label> &nbsp; <select style = 'float: left;width: 200px;' name = 'job" + count + "' id = 'job" + count + "'>");
 		for(var i = 0; i < jobList.length; i++){
@@ -345,14 +331,10 @@ function nextPage(){
 			var recsPer = document.getElementById(recs_comp[i]).value;
 			var time = document.getElementById(time_number[i]).value;
 			var unit = document.getElementById(time_unit[i]);
-			var people = document.getElementById("people");
 			var errorId = document.getElementById(errors[i]);
 			errorId.innerHTML = "";
 			document.getElementById("recs_error").innerHTML = "";
 			
-			if(i > 0){
-				people = document.getElementById("people" + i);
-			}
 			
 			
 			if(/^[0-9]*$/.test(recordsNum) == false || recordsNum.length == 0){
@@ -395,17 +377,17 @@ function nextPage(){
 			else
 			{
 				if(unit.value == "min."){
-					var calculation = parseInt(recordsNum) / parseInt(recsPer) * parseInt(time) / 60 / parseInt(people.value);
+					var calculation = parseInt(recordsNum) / parseInt(recsPer) * parseInt(time) / 60;
 					totalCalculation = totalCalculation + calculation;
 				}
 				else if(unit.value == "sec.")
 				{
-					var calculation = parseInt(recordsNum) / parseInt(recsPer) * parseInt(time) / 3600 / parseInt(people.value);
+					var calculation = parseInt(recordsNum) / parseInt(recsPer) * parseInt(time) / 3600;
 					totalCalculation = totalCalculation + calculation;
 				}
 				else if(unit.value == "hr.")
 				{
-					var calculation = parseInt(recordsNum) / parseInt(recsPer) * parseInt(time) / parseInt(people.value);
+					var calculation = parseInt(recordsNum) / parseInt(recsPer) * parseInt(time);
 					totalCalculation = totalCalculation + calculation;
 				}
 			}

@@ -77,6 +77,7 @@ $result = mysqli_query($conn,$sql);
 if ($result->num_rows > 0) {
     // output data of each row
 	$job_count = 1;
+	echo "<div class='block_area'>";
     while($row = $result->fetch_assoc()) {
 
 		$job_id = $row["job_id"];
@@ -93,64 +94,43 @@ if ($result->num_rows > 0) {
 			$prow = $result_priority->fetch_assoc();
 			$level = $prow['priority'];
 
-			$color_priority = "#e9eced";
+			$color_priority = "#4da6ff";
 			$value = "None";
 
 			if($level == 1){
-				$color_priority = "#80ff80";
+				$color_priority = "#00b33c";
 				$value = "Low";
 			}
 			else if($level == 2){
 				$value = "Medium";
-				$color_priority = "#ffdb4d";
+				$color_priority = "#e68a00";
 			}
 			else if($level == 3){
-				$color_priority = "#ffb3b3";
+				$color_priority = "#cc2900";
 				$value = "High";
 			}
-			echo "<div data-role='main' class='ui-content'>";
-				echo "<div class='vendor-left' style = 'background: " . $color_priority . "'>";
+			echo "<div class='project_block'>";
+				echo "<div class= 'priority_bar'>";
+					echo "<p style='width:100%; background-color:" . $color_priority . "; text-align:center; color:white;'>$value</p>";
+					echo "</div>";
+				echo "<div class='project_block_left'>";
 					$x = $row["job_id"];
-					echo "<h3><a id = 'jobid' href='edit_job.php?job_id=$x'>".$row["job_id"]."</a></h1>";
-					echo "<p>Client name: ".$row["client_name"]."</p>";
-					echo "<p>Project name: ".$row["project_name"]."</p>";
-					echo "<p style = 'margin-bottom: -80px;'><form action = '' method = 'post'><select style = 'width: 95px' name = 'priority" . $job_count . "' onchange = 'this.form.submit()'>";
-					echo "<option selected = 'selected' value = '" . $level . "'>" . $value . "<option value = '0'>None</option><option value = '1'>Low</option><option value = '2'>Medium</option><option value = '3'>High</option></select></form>";
-				echo "</div>";
-				echo "<div class='vendor-right' style = 'background: " . $color_priority . "'>";
-					echo "<p>Due date: ".$row["due_date"]."</p>";
+					echo "<div class = 'project_row1'>";
+					echo "<p>".$row["client_name"]."</p>";
+					echo "<p>".$row["project_name"]."</p>";
+				   echo "</div>";
+				echo "<div class='project_row2'>";
+					echo "<p><a href = 'edit_job.php?job_id=$x'>" . $x . "</a></p>";
 					echo "<p>Records total: ".$row1["records_total"]."</p>";
-					$name = $row2["first_name"] . " " . $row2["last_name"];
-					echo "<p>Assigned to: ".$name."</p>";
-					echo "<form style = 'margin-left: 650px;' action = '' method = 'post'><select onchange = 'this.form.submit()' name = 'assign_to" . $job_count . "' style = 'width: 150px'><option selected disabled value = 'None'>--Assign To--</option>";
-
-					$result_users = mysqli_query($conn, "SELECT user FROM users");
-					while($row_users = $result_users->fetch_assoc()){
-						$user = $row_users['user'];
-						$get_name = mysqli_query($conn, "SELECT first_name, last_name FROM users WHERE user = '$user'");
-						$row_name = $get_name->fetch_assoc();
-						$name = $row_name['first_name'] . " " . $row_name['last_name'];
-						echo "<option value = '" . $user . "'>" . $name . "</option>";
-					}
-
-					echo "</select></form>";
-				echo "</div>";
-
-
-						echo "<div>";
-
-						//put efficiency code here
-
-						$result3 = mysqli_query($conn, "SELECT tasks FROM production WHERE job_id = '$job_id'");
-						$row3 = $result3->fetch_assoc();
-
-						$sql = "SELECT * FROM production_data";
-						$result4 = mysqli_query($conn, $sql);
-
-						$match = FALSE;
-						$count = 1;
-
-						while($row4 = $result4->fetch_assoc()){
+					echo "<p>Due date: ".$row["due_date"]."</p>";
+					echo "</div>";
+					$sql = "SELECT * FROM production_data";
+					$result4 = mysqli_query($conn, $sql);
+					
+					$result3 = mysqli_query($conn, "SELECT tasks FROM production WHERE job_id = '$job_id'");
+					$row3 = $result3->fetch_assoc();
+					//echo "<p>" . $row3["tasks"] . "</p>";
+					while($row4 = $result4->fetch_assoc()){
 							$production_record = (int)$row4['total_records'];
 							$match = FALSE;
 
@@ -170,7 +150,6 @@ if ($result->num_rows > 0) {
 								$records_per_array = explode(",", $row4['records_per']);
 								$time_unit_array = explode(",", $row4['time_unit']);
 								$time_number_array = explode(",", $row4['time_number']);
-								$people_array = explode(",", $row4['people']);
 								$hours = 0;
 								//$job_count = 1;
 
@@ -178,34 +157,26 @@ if ($result->num_rows > 0) {
 									if((int)$records_per_array[$i] != 0 && (int)$time_number_array[$i] != 0){
 										if($time_unit_array[$i] == "hr."){
 
-												$add_hours = $records_total / (int)$records_per_array[$i] * (int)$time_number_array[$i] / (int)$people_array[$i];
+												$add_hours = $records_total / (int)$records_per_array[$i] * (int)$time_number_array[$i];
 												$hours = $hours + $add_hours;
 
 										}
 										else if($time_unit_array[$i] == "min."){
 
-												$add_hours = $records_total / (int)$records_per_array[$i] * (int)$time_number_array[$i] / 60 / (int)$people_array[$i];
+												$add_hours = $records_total / (int)$records_per_array[$i] * (int)$time_number_array[$i] / 60;
 												$hours = $hours + $add_hours;
 
 										}
 										else if($time_unit_array[$i] == "sec."){
 
 
-												$add_hours = $records_total / (int)$records_per_array[$i] * (int)$time_number_array[$i] / 3600 / (int)$people_array[$i];
+												$add_hours = $records_total / (int)$records_per_array[$i] * (int)$time_number_array[$i] / 3600;
 												$hours = $hours + $add_hours;
 
 										}
 									}
 								}
-
-								echo "<ul style = 'list-style-type: none;'>";
 								//$job_count = 1;
-								for($i = 0; $i < count($records_per_array); $i++){
-									echo "<li style = 'margin-left: 75px'>" . $production_tasks_array[$i] . ": " . $records_per_array[$i] . " record(s) in " . $time_number_array[$i] . " " . $time_unit_array[$i] . " with " . $people_array[$i] . " person/people";
-									//$job_count = $job_count + 1;
-								}
-								echo "<li style = 'margin-left: 75px'><h2 value = '" . $hours . "'>Total Hours: " . $hours . "</h2></li>";
-								echo "<li style = 'margin-left: 75px; margin-top: 30px'><div class='search-boxright'><a href='job_data.php?job_id=$job_id'>Add People</a></div></li>";
 								$efficiency = "High";
 								if($hours <= 12){
 									$efficiency = "High";
@@ -219,25 +190,50 @@ if ($result->num_rows > 0) {
 
 								array_push($hours_array, $hours);
 								array_push($canvas_id_array, "canvas_prod" . $job_count);
-								echo "<li style = 'margin-left: 580px; margin-top: -100px;'><h2 style = 'margin-bottom: 135px;'>Efficiency: " . $efficiency . "</h2></li>";
-
-								echo "<li style = 'margin-left: 500px; margin-top: -125px;'><div id='canvas-holder' style = 'width: 40%; margin-left: 185px; margin-top: -115px'>
-									<canvas id='canvas_prod" . $job_count . "' width='500' height='500'/>
-									</div></li>";
-								echo "</ul>";
+								$people_id = "people" . $job_count;
+								echo "<div class='graph_block'>
+									<canvas height = '200' width = '200' id='canvas_prod" . $job_count . "'></canvas>
+									<select id = '" . $people_id . "' onchange = changePeople('" . $people_id . "')>
+									<option select='selected' value='0'># of People</option>
+									<option value='1'>1</option>
+									<option value='2'>2</option>
+								</select></div>";
 								$count = $count + 1;
-								$job_count = $job_count + 1;
+								//$job_count = $job_count + 1;
 							}
 						}
 
-						if($count == 1){
-							echo "<i>0 results</i>";
-						}
+
+				echo '<div class="project_row3">';
+				echo "<form action = '' method = 'post'>";
+				echo "<select onchange = 'this.form.submit()' name = 'assign_to" . $job_count . "'><option selected disabled value = 'None'>--Assign To--</option>";
+				$result_users = mysqli_query($conn, "SELECT user FROM users");
+				while($row_users = $result_users->fetch_assoc()){
+					$user = $row_users['user'];
+					$get_name = mysqli_query($conn, "SELECT first_name, last_name FROM users WHERE user = '$user'");
+					$row_name = $get_name->fetch_assoc();
+					$name = $row_name['first_name'] . " " . $row_name['last_name'];
+					echo "<option value = '" . $user . "'>" . $name . "</option>";
+				}
+				echo "</select></form>";
+				echo "<form action = '' method = 'post'>";
+				echo '<select onchange = "this.form.submit()" name = "priority' . $job_count . '">
+						<option select="selected" value="0">Priority</option>
+						<option value="3">High</option>
+						<option value="2">Medium</option>
+						<option value="1">Low</option>
+						<option value = "0">None</option>
+					</select>';
+				echo "</form>";
 				echo "</div>";
+				echo "</div>";
+				echo '<div class="project_row4">
+					<a href="#" style="width:100%; background-color:#356CAC; text-align:center; color:white;">SPECIAL INSTRUCTIONS</a>
+				</div>';
 				echo "</div>";
 		}
 
-		//$job_count = $job_count + 1;
+		$job_count = $job_count + 1;
     }
 } else {
     echo "0 results";
@@ -250,6 +246,7 @@ $conn->close();
 </div>
 </div>
 <script>
+	var previous_people = new Array();
 	$(document).ready(function(){
 		$("#searchbox").on("keyup input paste cut", function() {
 			//searchbox value
@@ -325,6 +322,55 @@ $conn->close();
 				}
 			};
 
+function changePeople(id){
+	var number_people = $("#" + id).val();
+	var last_character = id.substr(id.length-1);
+	var index = parseInt(last_character);
+	
+	var efficiency = hours[index-1] / number_people / 40 * 100;
+	var percent = 100 - efficiency;
+			if(percent < 0){
+				percent = 0;
+			}
+			else if(percent > 100){
+				percent = 100;
+			}
+			var leftover = 100 - percent;
 
+			var color = "#FFFFFF";
+			var highlight = "#FFFFFF";
+
+			if(percent >= 70){
+				color = "#80ff80";
+				highlight = "#99ff99";
+			}
+			else if(percent >= 37.5){
+				color = "#ffe066";
+				highlight = "#ffe680";
+			}
+			else{
+				color = "#ff4d4d";
+				highlight = "#ff6666";
+			}
+
+			var doughnutData = [
+					{
+						value: leftover,
+						color:"#d9d9d9",
+						highlight: "#d9d9d9",
+						label: "Leftover"
+					},
+					{
+						value: percent,
+						color: color,
+						highlight: highlight,
+						label: "Efficiency"
+					}
+				];
+				alert(id[0]);
+				//var ctx = document.getElementById(id[index-1]).getContext("2d");
+				//alert(ctx);
+				//window.myDoughnut = new Chart(ctx).Doughnut(doughnutData, {responsive : true});
+}
 
 </script>

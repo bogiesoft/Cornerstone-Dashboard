@@ -6,7 +6,6 @@ $row = $result->fetch_assoc();
 $time_number_array = explode(",", $row['time_number']);
 $time_unit_array = explode(",", $row['time_unit']);
 $records_per_array = explode(",", $row['records_per']);
-$people_array = explode(",", $row['people']);
 $job_array = explode(",", $row['job']);
 $total_records = $row["total_records"];
 
@@ -22,22 +21,18 @@ if(isset($_POST['save_form'])){
 	$time_number_id = "time_number";
 	$time_unit_id = "time_unit";
 	$per_rec_id = "per_rec";
-	$people_id = "people";
-	$employee_id = "employee";
 	$job_id = "job";
 	$count = 1;
 	
 	$records_per_array = array();
 	$time_number_array = array();
 	$time_unit_array = array();
-	$people_array = array();
 	$job_array = array();
 	$hours = 0;
 	
 	$time_number = 0;	
 	$per_rec = 0;
-	$employees = "";
-	$people = "";
+	
 	$time_unit = "";
 	$job = "";
 	
@@ -65,13 +60,6 @@ if(isset($_POST['save_form'])){
 		}
 		array_push($time_unit_array, $time_unit);
 		
-		if(!(isset($_POST[$people_id]))){ //people
-			$people = "1";
-		}
-		else{
-			$people = $_POST[$people_id];
-		}
-		array_push($people_array, $people);
 		
 		if(!(isset($_POST[$job_id]))){ //job
 			$job = "Mail Merge";
@@ -83,15 +71,15 @@ if(isset($_POST['save_form'])){
 		
 		if($time_number != 0 && $per_rec != 0 && $total_records != 0){
 			if($time_unit == "hr."){     //hours
-				$add_hours = $total_records / $per_rec * $time_number / (int)$people;
+				$add_hours = $total_records / $per_rec * $time_number;
 				$hours = $hours + $add_hours;
 			}
 			else if($time_unit == "min."){
-				$add_hours = $total_records / $per_rec * $time_number / 60 / (int)$people;
+				$add_hours = $total_records / $per_rec * $time_number / 60;
 				$hours = $hours + $add_hours;
 			}
 			else if($time_unit == "sec."){
-				$add_hours = $total_records / $per_rec * $time_number / 3600 / (int)$people;
+				$add_hours = $total_records / $per_rec * $time_number / 3600;
 				$hours = $hours + $add_hours;
 			}
 		}
@@ -99,8 +87,7 @@ if(isset($_POST['save_form'])){
 		$time_number_id = "time_number" . $count;
 		$time_unit_id = "time_unit" . $count;
 		$per_rec_id = "per_rec" . $count;
-		$people_id = "people" . $count;
-		$employee_id = "employee" . $count;
+		
 		$job_id = "job" . $count;
 		$count = $count + 1;
 		
@@ -109,7 +96,6 @@ if(isset($_POST['save_form'])){
 	$records_per = implode(",", $records_per_array);
 	$time_number = implode(",", $time_number_array);
 	$time_unit = implode(",", $time_unit_array);
-	$people = implode(",", $people_array);
 	
 	$sql = "SELECT * FROM production_data";
 	$result = mysqli_query($conn, $sql);
@@ -140,10 +126,10 @@ if(isset($_POST['save_form'])){
 	
 	$job = implode(",", $job_array);
 	if($insert == FALSE){
-		mysqli_query($conn, "UPDATE production_data SET total_records = '$total_records', records_per = '$records_per', time_number = '$time_number', time_unit = '$time_unit', people = '$people', job = '$job', hours = '$hours' WHERE id = '$id'") or die("ERROR");
+		mysqli_query($conn, "UPDATE production_data SET total_records = '$total_records', records_per = '$records_per', time_number = '$time_number', time_unit = '$time_unit', job = '$job', hours = '$hours' WHERE id = '$id'") or die("ERROR");
 	}
 	else{
-		mysqli_query($conn, "INSERT INTO production_data (id, total_records, records_per, time_number, time_unit, people, job, hours) VALUES ('$id', '$total_records', '$records_per', '$time_number', '$time_unit', '$people', '$job', '$hours')") or die("ERROR");
+		mysqli_query($conn, "INSERT INTO production_data (id, total_records, records_per, time_number, time_unit, job, hours) VALUES ('$id', '$total_records', '$records_per', '$time_number', '$time_unit', '$job', '$hours')") or die("ERROR");
 	}
 	
 	header("location: production_data.php");
@@ -159,8 +145,7 @@ require('header.php');
 	var time_number = ["time_number"];
 	var time_unit = ["time_unit"];
 	var recs_comp = ["per_rec"];
-	var people = ["people"];
-	var employee = ["employee[]"];
+	
 	var job = ["job"];
 	var errors = ["error"];
 	var jobList = ["Mail Merge", "Letter Printing", "In-House Envelope Printing", "Sealing", "Collating", "Labeling", "Print Permit", "Correct Permit", "Carrier Route", "Endorsement Line", "Address Printing", "Tag as Political", "Inkjet Printing", "Glue Dots", "Inserting", "Printing", "Folding", "Tabbing", "Packaging"];
@@ -168,14 +153,8 @@ require('header.php');
 	var Task = 2;
 	
 	function addTask(){
-		$(".prod_info").append("<div class = 'new_task" + count + "'><h1>Task " + Task + ":</h1><label style = 'float: left;'>Time/Unit</label> &nbsp; <input name = 'time_number" + count + "' type = 'text' id = 'time_number" + count + "' style = 'float: left; width: 40px; font-size = 18px;' value = '1'> &nbsp; </input><select style = 'float: left;' name = 'time_unit" + count + "' id = 'time_unit" + count + "'><option>min.</option><option>sec.</option><option>hr.</option></select> <label style = 'float: left;'>Records Complete in Time<label> &nbsp; <input name = 'per_rec" + count + "' type = 'text' id = 'per_rec" + count + "' style = 'float: left; width: 40px' value = '1'></input> &nbsp; &nbsp;&nbsp;<label style = 'float:left'>Number of People</label> &nbsp;<select style = 'float:left;' name = 'people" + count + "' id = 'people" + count + "'></select>&nbsp; <label style = 'float: left;'>Job</label> &nbsp; <select style = 'float: left;width: 200px;' name = 'job" + count + "' id = 'job" + count + "'></select><br><p id = 'error" + count + "' style = 'color:red;'></p></div>");
+		$(".prod_info").append("<div class = 'new_task" + count + "'><h1>Task " + Task + ":</h1><label style = 'float: left;'>Time/Unit</label> &nbsp; <input name = 'time_number" + count + "' type = 'text' id = 'time_number" + count + "' style = 'float: left; width: 40px; font-size = 18px;' value = '1'> &nbsp; </input><select style = 'float: left;' name = 'time_unit" + count + "' id = 'time_unit" + count + "'><option>min.</option><option>sec.</option><option>hr.</option></select> <label style = 'float: left;'>Records Complete in Time<label> &nbsp; <input name = 'per_rec" + count + "' type = 'text' id = 'per_rec" + count + "' style = 'float: left; width: 40px' value = '1'></input> &nbsp; &nbsp; &nbsp; <label style = 'float: left;'>Job</label> &nbsp; <select style = 'float: left;width: 200px;' name = 'job" + count + "' id = 'job" + count + "'></select><br><p id = 'error" + count + "' style = 'color:red;'></p></div>");
 		//$(".prod_info").append("&nbsp;<label style = 'float:left'>Number of People</label> &nbsp;<select style = 'float:left;' name = 'people" + count + "' id = 'people" + count + "'>");
-		for (var i = 1; i <= 10; i++){
-			var opt = document.createElement('option');
-			opt.value = i;
-			opt.innerHTML = i;
-			document.getElementById("people" + count).appendChild(opt);
-		}
 		//$(".prod_info").append("</select>");
 		//$(".prod_info").append("&nbsp; <label style = 'float: left;'>Job</label> &nbsp; <select style = 'float: left;width: 200px;' name = 'job" + count + "' id = 'job" + count + "'>");
 		for(var i = 0; i < jobList.length; i++){
@@ -189,8 +168,7 @@ require('header.php');
 		time_number.push("time_number" + count);
 		time_unit.push("time_unit" + count);
 		recs_comp.push("per_rec" + count);
-		people.push("people" + count);
-		employee.push("employee" + count);
+		
 		job.push("job" + count);
 		errors.push("error" + count);
 		Task = Task + 1;
@@ -219,16 +197,7 @@ function removeTask(){
   <div class = "prod_info">
 	<h1>Task 1: </h1>
 	<label style = "float: left;">Time/Unit</label> &nbsp; <input name = "time_number" type = "text" id = "time_number" style = "float: left; margin-right: 10px; width: 40px; font-size = 18px;" value = <?php echo $time_number_array[0]; ?>></input><select style = "float:left;" name = "time_unit" id = "time_unit"><option selected = 'selected'><?php echo $time_unit_array[0]; ?></option><option>min.</option><option>sec.</option><option>hr.</option></select>
-	<label style = "float: left;">Records Complete in Time</label> &nbsp; <input style = "float: left; width: 40px" name = "per_rec" type = "text" id = "per_rec" value = <?php echo $records_per_array[0]; ?>></input> &nbsp; &nbsp;
-	<label style = "float: left;">Number of People</label> &nbsp; <select style = "float: left;" name = "people" id = "people">
-	<option selected = 'selected'><?php echo $people_array[0]; ?></option>
-	<?php
-		for($i = 1; $i <= 10; $i++)
-		{
-			echo "<option>" . $i . "</option>";
-		}
-	?>
-</select> &nbsp;
+	<label style = "float: left;">Records Complete in Time</label> &nbsp; <input style = "float: left; width: 40px" name = "per_rec" type = "text" id = "per_rec" value = "<?php echo $records_per_array[0]; ?>"></input> &nbsp; &nbsp;
 <label style = "float: left;">Job</label> &nbsp; <select style = "float: left; width: 200px" name = "job" id = "job">
 	<option selected = 'selected' value = '<?php echo $job_array[0]; ?>'><?php echo $job_array[0]; ?></option>
 	<option value="Mail Merge">Mail Merge</option>
@@ -281,23 +250,35 @@ progress[value]::-webkit-progress-value {
 <script type = "text/javascript">
 $(document).ready(function() 
     { 
-        var people_array = <?php echo json_encode($people_array); ?>;
 		var time_number_array = <?php echo json_encode($time_number_array); ?>;
 		var time_unit_array = <?php echo json_encode($time_unit_array); ?>;
 		var records_per_array = <?php echo json_encode($records_per_array); ?>;
 		var job_array = <?php echo json_encode($job_array); ?>;
-		for(var i = 1; i < people_array.length; i++){
-			addTask();
-			document.getElementById("time_number" + i).value = time_number_array[i];
-			document.getElementById("time_unit" + i).value = time_unit_array[i];
-			document.getElementById("per_rec" + i).value = records_per_array[i];
-			document.getElementById("people" + i).value = people_array[i];
-			document.getElementById("job" + i).value = job_array[i];
+		
+		for(var i = 1; i < time_number_array.length; i++){
+			addEditableTask(time_number_array[i], time_unit_array[i], records_per_array[i], job_array[i]);
 		}
 		
 		changeBar();
     } 
 ); 
+	function addEditableTask(time, unit, records_per, job_single){
+		$(".prod_info").append("<div class = 'new_task" + count + "'><h1>Task " + Task + ":</h1><label style = 'float: left;'>Time/Unit</label> &nbsp; <input name = 'time_number" + count + "' type = 'text' id = 'time_number" + count + "' style = 'float: left; width: 40px; font-size = 18px;' value = '" + time + "'> &nbsp; </input><select style = 'float: left;' name = 'time_unit" + count + "' id = 'time_unit" + count + "'><option select = 'selected'>" + unit + "</option><option>min.</option><option>sec.</option><option>hr.</option></select> <label style = 'float: left;'>Records Complete in Time<label> &nbsp; <input name = 'per_rec" + count + "' type = 'text' id = 'per_rec" + count + "' style = 'float: left; width: 40px' value = '" + records_per + "'></input> &nbsp; &nbsp; &nbsp; <label style = 'float: left;'>Job</label> &nbsp; <select style = 'float: left;width: 200px;' name = 'job" + count + "' id = 'job" + count + "'><option select = 'selected'>" + job_single + "</select><br><p id = 'error" + count + "' style = 'color:red;'></p></div>");
+		for(var i = 0; i < jobList.length; i++){
+			var opt = document.createElement('option');
+			opt.value = jobList[i];
+			opt.innerHTML = jobList[i];
+			document.getElementById("job" + count).appendChild(opt);
+		}
+		time_number.push("time_number" + count);
+		time_unit.push("time_unit" + count);
+		recs_comp.push("per_rec" + count);
+		
+		job.push("job" + count);
+		errors.push("error" + count);
+		Task = Task + 1;
+		count = count + 1;
+	}
 	function changeBar(){
 		var bar = document.getElementById("progress_bar");
 		var recordsNum = document.getElementById("records").value;
@@ -312,14 +293,10 @@ $(document).ready(function()
 			var recsPer = document.getElementById(recs_comp[i]).value;
 			var time = document.getElementById(time_number[i]).value;
 			var unit = document.getElementById(time_unit[i]);
-			var people = document.getElementById("people");
 			var errorId = document.getElementById(errors[i]);
 			errorId.innerHTML = "";
 			document.getElementById("recs_error").innerHTML = "";
 			
-			if(i > 0){
-				people = document.getElementById("people" + i);
-			}
 			
 			
 			if(/^[0-9]*$/.test(recordsNum) == false || recordsNum.length == 0){
@@ -362,17 +339,17 @@ $(document).ready(function()
 			else
 			{
 				if(unit.value == "min."){
-					var calculation = parseInt(recordsNum) / parseInt(recsPer) * parseInt(time) / 60 / parseInt(people.value);
+					var calculation = parseInt(recordsNum) / parseInt(recsPer) * parseInt(time) / 60;
 					totalCalculation = totalCalculation + calculation;
 				}
 				else if(unit.value == "sec.")
 				{
-					var calculation = parseInt(recordsNum) / parseInt(recsPer) * parseInt(time) / 3600 / parseInt(people.value);
+					var calculation = parseInt(recordsNum) / parseInt(recsPer) * parseInt(time) / 3600;
 					totalCalculation = totalCalculation + calculation;
 				}
 				else if(unit.value == "hr.")
 				{
-					var calculation = parseInt(recordsNum) / parseInt(recsPer) * parseInt(time) / parseInt(people.value);
+					var calculation = parseInt(recordsNum) / parseInt(recsPer) * parseInt(time);
 					totalCalculation = totalCalculation + calculation;
 				}
 			}
