@@ -77,6 +77,7 @@ $result = mysqli_query($conn,$sql);
 if ($result->num_rows > 0) {
     // output data of each row
 	$job_count = 1;
+	$graph_count = 0;
 	echo "<div class='block_area'>";
     while($row = $result->fetch_assoc()) {
 
@@ -123,13 +124,64 @@ if ($result->num_rows > 0) {
 					echo "<p><a href = 'edit_job.php?job_id=$x'>" . $x . "</a></p>";
 					echo "<p>Records total: ".$row1["records_total"]."</p>";
 					echo "<p>Due date: ".$row["due_date"]."</p>";
-					echo "</div>";
 					$sql = "SELECT * FROM production_data";
 					$result4 = mysqli_query($conn, $sql);
 					
 					$result3 = mysqli_query($conn, "SELECT tasks FROM production WHERE job_id = '$job_id'");
 					$row3 = $result3->fetch_assoc();
-					//echo "<p>" . $row3["tasks"] . "</p>";
+					$job_tasks_array = explode(",", $row3['tasks']);
+					
+					echo "<p>";
+					for($ii = 0; $ii < count($job_tasks_array); $ii++){
+									if($job_tasks_array[$ii] == "Labeling"){
+										echo "<img src = 'images/task_icons/labeling.png' width = '20' height = '20' onmouseover = showTask('tooltiptext1') onmouseout = hideTask('tooltiptext1')>";
+										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext1'>Labeling</span>";
+									}
+									if($job_tasks_array[$ii] == "Letter Printing"){
+										echo "<img src = 'images/task_icons/letter_printing.png' width = '20' height = '20' onmouseover = showTask('tooltiptext2') onmouseout = hideTask('tooltiptext2')>";
+										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext2'>Letter Printing</span>";
+									}
+									if($job_tasks_array[$ii] == "Tabbing"){
+										echo "<img src = 'images/task_icons/tabbing.jpg' width = '20' height = '20' onmouseover = showTask('tooltiptext3') onmouseout = hideTask('tooltiptext3')>";
+										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext3'>Tabbing</span>";
+									}
+									if($job_tasks_array[$ii] == "Mail Merge"){
+										echo "<img src = 'images/task_icons/mail_merge.png' width = '20' height = '20' onmouseover = showTask('tooltiptext4') onmouseout = hideTask('tooltiptext4')>";
+										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext4'>Mail Merge</span>";
+									}
+									if($job_tasks_array[$ii] == "In-House Envelope Printing"){
+										echo "<img src = 'images/task_icons/in-house_letter_printing.png' width = '20' height = '20' onmouseover = showTask('tooltiptext5') onmouseout = hideTask('tooltiptext5')>";
+										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext5'>In-House Envelope Printing</span>";
+									}
+									if($job_tasks_array[$ii] == "Folding"){
+										echo "<img src = 'images/task_icons/folding.png' width = '20' height = '20' onmouseover = showTask('tooltiptext6') onmouseout = hideTask('tooltiptext6')>";
+										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext6'>Folding</span>";
+									}
+									if($job_tasks_array[$ii] == "Inserting"){
+										echo "<img src = 'images/task_icons/inserting.png' width = '20' height = '20' onmouseover = showTask('tooltiptext7') onmouseout = hideTask('tooltiptext7')>";
+										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext7'>Inserting</span>";
+									}
+									if($job_tasks_array[$ii] == "Sealing"){
+										echo "<img src = 'images/task_icons/sealing.png' width = '20' height = '20' onmouseover = showTask('tooltiptext8') onmouseout = hideTask('tooltiptext8')>";
+										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext8'>Sealing</span>";
+									}
+									if($job_tasks_array[$ii] == "Collating"){
+										echo "<img src = 'images/task_icons/collating.png' width = '20' height = '20' onmouseover = showTask('tooltiptext9') onmouseout = hideTask('tooltiptext9')>";
+										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext9'>Collating</span>";
+									}
+									if($job_tasks_array[$ii] == "Print Permit"){
+										echo "<img src = 'images/task_icons/print_permit.png' width = '20' height = '20' onmouseover = showTask('tooltiptext10') onmouseout = hideTask('tooltiptext10')>";
+										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext10'>Print Permit</span>";
+									}
+									if($job_tasks_array[$ii] == "Correct Permit"){
+										echo "<img src = 'images/task_icons/correct_permit.png' width = '20' height = '20' onmouseover = showTask('tooltiptext11') onmouseout = hideTask('tooltiptext11')>";
+										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext11'>Correct Permit</span>";
+									}
+								}
+					echo "</p>";
+					echo "</div>";
+					
+					$found_tasks = FALSE;
 					while($row4 = $result4->fetch_assoc()){
 							$production_record = (int)$row4['total_records'];
 							$match = FALSE;
@@ -144,12 +196,15 @@ if ($result->num_rows > 0) {
 							sort($job_tasks_array);
 							$production_tasks_array2 = $production_tasks_array;
 							sort($production_tasks_array2);
-
-
+							
+							
+							
 							if($production_tasks_array2 == $job_tasks_array && $sameSize == TRUE){
+								$found_tasks = TRUE;
 								$records_per_array = explode(",", $row4['records_per']);
 								$time_unit_array = explode(",", $row4['time_unit']);
 								$time_number_array = explode(",", $row4['time_number']);
+								
 								$hours = 0;
 								//$job_count = 1;
 
@@ -177,6 +232,7 @@ if ($result->num_rows > 0) {
 									}
 								}
 								//$job_count = 1;
+								
 								$efficiency = "High";
 								if($hours <= 12){
 									$efficiency = "High";
@@ -190,18 +246,30 @@ if ($result->num_rows > 0) {
 
 								array_push($hours_array, $hours);
 								array_push($canvas_id_array, "canvas_prod" . $job_count);
+								
 								$people_id = "people" . $job_count;
 								echo "<div class='graph_block'>
 									<canvas height = '200' width = '200' id='canvas_prod" . $job_count . "'></canvas>
-									<select id = '" . $people_id . "' onchange = changePeople('" . $people_id . "')>
-									<option select='selected' value='0'># of People</option>
-									<option value='1'>1</option>
+									<select id = '" . $people_id . "' onchange = 'changePeople($people_id, $graph_count)'>";
+									echo "<option select='selected' value='0'># of People</option>";
+									echo "<option value='1'>1</option>
 									<option value='2'>2</option>
-								</select></div>";
+									<option value='3'>3</option>
+									<option value='4'>4</option>
+									<option value='5'>5</option>
+									<option value='6'>6</option>
+									<option value='7'>7</option></select></div>";
 								$count = $count + 1;
+								$graph_count = $graph_count + 1;
 								//$job_count = $job_count + 1;
 							}
+							/*else{
+								echo "<div class='graph_block'>
+									<canvas height = '200' width = '200'></canvas>
+									<select id = '" . $people_id . "' onchange = changePeople('" . $people_id . "')>";
+							}*/
 						}
+						
 
 
 				echo '<div class="project_row3">';
@@ -322,12 +390,15 @@ $conn->close();
 				}
 			};
 
-function changePeople(id){
-	var number_people = $("#" + id).val();
-	var last_character = id.substr(id.length-1);
-	var index = parseInt(last_character);
+//function for changing people per job
+function changePeople(id_people, graph_index){
+	var number_people = id_people.options[id_people.selectedIndex].value;
+	if(number_people == 0){
+		number_people = 1;
+	}
+	var index = graph_index;
 	
-	var efficiency = hours[index-1] / number_people / 40 * 100;
+	var efficiency = hours[index] / number_people / 40 * 100;
 	var percent = 100 - efficiency;
 			if(percent < 0){
 				percent = 0;
@@ -367,10 +438,14 @@ function changePeople(id){
 						label: "Efficiency"
 					}
 				];
-				alert(id[0]);
-				//var ctx = document.getElementById(id[index-1]).getContext("2d");
-				//alert(ctx);
-				//window.myDoughnut = new Chart(ctx).Doughnut(doughnutData, {responsive : true});
+				var ctx = document.getElementById(id[index]).getContext("2d");
+				window.myDoughnut = new Chart(ctx).Doughnut(doughnutData, {responsive : true});
+				
 }
-
+function showTask(id){
+	$("." + id).css("visibility", "visible");
+}
+function hideTask(id){
+	$("." + id).css("visibility", "hidden");
+}
 </script>

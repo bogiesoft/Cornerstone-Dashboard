@@ -223,25 +223,24 @@ $conn->close();
 							$records_per_array = explode(",", $data_tasks['records_per']);
 							$time_unit_array = explode(",", $data_tasks['time_unit']);
 							$time_number_array = explode(",", $data_tasks['time_number']);
-							$people_array = explode(",", $data_tasks['people']);
 
 							for($i = 0; $i < count($time_unit_array); $i++){
 								if((int)$records_per_array[$i] != 0 && (int)$time_number_array[$i] != 0){
 									if($time_unit_array[$i] == "hr."){
-										$add_hours = $records_total / (int)$records_per_array[$i] * (int)$time_number_array[$i] / (int)$people_array[$i];
+										$add_hours = $records_total / (int)$records_per_array[$i] * (int)$time_number_array[$i];
 										$hours = $hours + $add_hours;
 
 									}
 									else if($time_unit_array[$i] == "min."){
 
-										$add_hours = $records_total / (int)$records_per_array[$i] * (int)$time_number_array[$i] / 60 / (int)$people_array[$i];
+										$add_hours = $records_total / (int)$records_per_array[$i] * (int)$time_number_array[$i] / 60;
 										$hours = $hours + $add_hours;
 
 									}
 									else if($time_unit_array[$i] == "sec."){
 
 
-										$add_hours = $records_total / (int)$records_per_array[$i] * (int)$time_number_array[$i] / 3600 / (int)$people_array[$i];
+										$add_hours = $records_total / (int)$records_per_array[$i] * (int)$time_number_array[$i] / 3600;
 										$hours = $hours + $add_hours;
 
 									}

@@ -373,7 +373,7 @@ function getTypes(row_id)
 							<ul name = "item" id="items" class="items">
 								<li><input type="checkbox" name = "tasks[]" value = "Mail Merge"/>Mail Merge</li>
 								<li><input type="checkbox" name = "tasks[]" value = "Letter Printing"/>Letter Printing</li>
-								<li><input type="checkbox" name = "tasks[]" value = "Letter Printing"/>In-House Envelope Print</li>
+								<li><input type="checkbox" name = "tasks[]" value = "In-House Envelope Printing"/>In-House Envelope Printing</li>
 								<li><input type="checkbox" name = "tasks[]" value = "Tabbing"/>Tabbing </li>
 								<li><input type="checkbox" name = "tasks[]" value = "Folding"/>Folding </li>
 								<li><input type="checkbox" name = "tasks[]" value = "Inserting"/>Inserting </li>

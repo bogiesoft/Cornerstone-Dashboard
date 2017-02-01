@@ -465,7 +465,7 @@ require ("connection.php");
 				<ul name="tasks[]">
 					  <li selected = "selected" value = ""></li>
 					  <?php 
-					  $entire_task = array("Mail Merge","Letter Printing", "In-House Envelope Print", "Tabbing","Folding","Inserting","Sealing","Collating","Labeling","Print Permit","Correct Permit","Carrier Route","Endorsement line","Address Printing","Tag as Political","Inkjet Printing","Glue Dots");
+					  $entire_task = array("Mail Merge","Letter Printing", "In-House Envelope Printing", "Tabbing","Folding","Inserting","Sealing","Collating","Labeling","Print Permit","Correct Permit","Carrier Route","Endorsement line","Address Printing","Tag as Political","Inkjet Printing","Glue Dots");
 					  $task_array = explode(",", $tasks);
 						for($i = 0;$i<count($entire_task);$i++){
 							//checked only those task which is in the $task_array
