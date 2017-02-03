@@ -5,7 +5,7 @@ require ("header.php");
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 	<h1 class="pull-left">Add Weights and Measures</h1>
-	<a class="pull-right" href="weights_and_measure.php" style="margin-right:20px; background-color:#d14700;">Back to W/M</a>
+	<a class="pull-right" href="weights_and_measure.php">Back to W/M</a>
 	<div class="clear"></div>
 	</div>
 <div class="dashboard-detail">
@@ -25,7 +25,7 @@ require ("header.php");
 						require ("connection.php");
 						$result = $conn->query("select vendor_name from vendors");
 						echo("<div class='tabinner-detail' >");
-						echo "<label>Vendor</label><select id='vendor' name='vendor' style=width:220px;'>";
+						echo "<label>Vendor</label><select id='vendor' name='vendor' style='display:block;'>";
 						while ($row = $result->fetch_assoc()) {
 									  unset($vendor_name);
 									  $vendor_name = $row['vendor_name']; 

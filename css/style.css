@@ -230,7 +230,7 @@ border-right: 1px solid #ddd; font-weight:400; }
 .dataconsulate-detail .dataconsulate-right .allcontacts-breadcrumbsleft {}
 .dataconsulate-detail .dataconsulate-right .allcontacts-breadcrumbsleft .pagination { margin:0; border-radius:0; }
 .dataconsulate-detail .dataconsulate-right .allcontacts-breadcrumbsleft .pagination>li { display:inline-block; margin:0 0 0 5px; cursor:pointer; }
-li.current { color: #0033cc !important; background: #ffffff; width: 25px; padding: 5px 5px 5px 15px; font-size: 20px; text-align: center;}
+li.current { color: #0033cc !important; background: #ffffff; width: 25px; padding: 10px; font-size: 20px; text-align: center;}
 .dataconsulate-detail .dataconsulate-right .allcontacts-breadcrumbsleft .pagination>li:first-child { margin:0; }
 .dataconsulate-detail .dataconsulate-right .allcontacts-breadcrumbsleft .pagination>li:first-child>a, .pagination>li:first-child>span { border-radius:0; }
 .dataconsulate-detail .dataconsulate-right .allcontacts-breadcrumbsleft .pagination>li:last-child>a, .pagination>li:last-child>span { border-radius:0; }
@@ -254,7 +254,7 @@ div.pager span.active {background: #c00;}
 font-weight:400; }
 .dataconsulate-right .contacts-title ul li a:hover { opacity:.7; }
 .dataconsulate-right .newcontactstabs-outer { background-color:#f5f5f5; }
-.dataconsulate-right .newcontacts-tabs .nav-tabs { border:0;margin-bottom:10px;}
+.dataconsulate-right .newcontacts-tabs .nav-tabs { border:0;}
 .dataconsulate-right .newcontacts-tabs .nav-tabs>li { background-color:#e1e3e3; margin-right:5px;}
 .dataconsulate-right .newcontacts-tabs .nav-tabs>li>a{ background-color:#356CAC; color:white; font-size:16px; font-weight:400; border:0; border-radius:0; width:100%; box-sizing:border-box; padding:10px 28px; cursor:pointer; }
 .dataconsulate-right .newcontacts-tabs .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover { background-color:#222; color:#fff; border:0; outline:none; width:100%; box-sizing:border-box; cursor:pointer; }
@@ -263,8 +263,8 @@ font-weight:400; }
 .dataconsulate-right .newcontacts-tabs .newcontacttab-inner { float:left; width:31%; margin:0 0 0 3%; }
 .dataconsulate-right .newcontacts-tabs .newcontacttab-inner:first-child { margin:0; }
 .dataconsulate-right .newcontacts-tabs .tabinner-detail { margin:0 0 10px 0; display:inline-block;}
-.dataconsulate-right .newcontacts-tabs .tabinner-detail label { float:left; width:136px; color:#888; font-size:14px; line-height:36px; font-weight:400; }
-.dataconsulate-right .newcontacts-tabs .tabinner-detail input, .dataconsulate-right .newcontacts-tabs .tabinner-detail select, .value-input { float:left; width:100%; height:38px; background-color:#fff; padding:5px; box-sizing:border-box; display:inline-block;}
+.dataconsulate-right .newcontacts-tabs .tabinner-detail label { float:left; color:#888; font-size:14px; line-height:36px; font-weight:400; display:block; }
+.dataconsulate-right .newcontacts-tabs .tabinner-detail input, .dataconsulate-right .newcontacts-tabs .tabinner-detail select, .value-input { float:left; width:100%; height:38px; background-color:#fff; padding:5px; box-sizing:border-box; display:inline-block; border:1px solid #ccc;  }
 .dataconsulate-right .newcontacts-tabs .tabinner-detail textarea { float:left; width:100%; height:300px; background-color:#fff; padding:5px; box-sizing: border-box; border:1px solid #ccc; resize:none; }
 .dataconsulate-right .newcontacts-tabs .tabinner-detail-notes textarea { float:left; width:100%; height:300px; background-color:#fff; padding:5px; box-sizing: border-box; border:1px solid #ccc; resize:none; }
 .dataconsulate-right .newcontacts-tabs .tabinner-detail2 { margin:44px 0 40px 0; }
@@ -341,6 +341,9 @@ font-weight:400; }
 .project_row3 select {display:block; width:85%; border:1px solid #e9eced; margin-bottom:5px; color:#666;}
 .project_row4 a {display:inline-block;}
 .project_row4 a:hover {text-decoration:none; opacity:.9;}
+
+/* Job Ticket */
+
 
 /*media queries */
 @media screen and (max-width:1640px) {

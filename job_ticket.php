@@ -195,7 +195,7 @@ function getTypes(row_id)
                 <div class="newclienttab-inner">
                     <div class="tabinner-detail">
                     <label>Client</label>
-                    <input name="client_name" type="text" class="contact-prefix">
+                    <input placeholder="Start typing name to bring down list" name="client_name" type="text" class="contact-prefix">
                     </div>
                     <div class="tabinner-detail">
                     <label>Job Name</label>
