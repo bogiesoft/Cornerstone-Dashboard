@@ -210,50 +210,39 @@ $conn->close();
 
 			//calculate hours
 			if($result_tasks != null){
+				$production_data_jobs_array = array();
+				$result_data_tasks = mysqli_query($conn, "SELECT job FROM production_data");
+				while($data_task = $result_data_tasks->fetch_assoc()){
+					array_push($production_data_jobs_array, $data_task["job"]);
+				}				
 				while($row_tasks = $result_tasks->fetch_assoc()){
 					$records_total = $records_total_array[$index];
 					$result_data_tasks = mysqli_query($conn, "SELECT * FROM production_data");
-					while($data_tasks = $result_data_tasks->fetch_assoc()){
-						$job_task_array = explode(",", $row_tasks['tasks']);
-						$data_task_array = explode(",", $data_tasks['job']);
-						$data_array = $data_task_array;
-						sort($job_task_array);
-						sort($data_task_array);
-						if($job_task_array == $data_task_array){
-							$records_per_array = explode(",", $data_tasks['records_per']);
-							$time_unit_array = explode(",", $data_tasks['time_unit']);
-							$time_number_array = explode(",", $data_tasks['time_number']);
-
-							for($i = 0; $i < count($time_unit_array); $i++){
-								if((int)$records_per_array[$i] != 0 && (int)$time_number_array[$i] != 0){
-									if($time_unit_array[$i] == "hr."){
-										$add_hours = $records_total / (int)$records_per_array[$i] * (int)$time_number_array[$i];
-										$hours = $hours + $add_hours;
-
-									}
-									else if($time_unit_array[$i] == "min."){
-
-										$add_hours = $records_total / (int)$records_per_array[$i] * (int)$time_number_array[$i] / 60;
-										$hours = $hours + $add_hours;
-
-									}
-									else if($time_unit_array[$i] == "sec."){
-
-
-										$add_hours = $records_total / (int)$records_per_array[$i] * (int)$time_number_array[$i] / 3600;
-										$hours = $hours + $add_hours;
-
-									}
-								}
+					$job_tasks_array = explode(",", $row_tasks['tasks']);
+					$added_hours = 0;
+					$count_not_in = 0;
+					for($ii = 0; $ii < count($job_tasks_array); $ii++){
+						if(in_array($job_tasks_array[$ii], $production_data_jobs_array)){
+							$job = $job_tasks_array[$ii];
+							$result_data = mysqli_query($conn, "SELECT recs_per_min FROM production_data WHERE job = '$job'");
+							$row_data = $result_data->fetch_assoc();
+							$recs_min = $row_data["recs_per_min"];
+							if((int)$recs_min != 0){
+								$added_hours = $added_hours + ($records_total / (int)$recs_min / 60);
 							}
 						}
+						else{
+							$count_not_in = $count_not_in + 1;
+						}
 					}
-
+					if($count_not_in == 0){
+						$hours = $hours + $added_hours;
+					}
 					$index = $index + 1;
 				}
 			}
 
-			$hours = (int)$hours;
+			$hours = round($hours, 2);
 
 		?>
 		</div>

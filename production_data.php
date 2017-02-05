@@ -4,7 +4,7 @@ require('header.php');
 
 <div class="dashboard-cont" style="padding-top:110px;">
 <div class="contacts-title">
-	<h1 class="pull-left">Production Data Manager</h1>
+	<h1 class="pull-left">Time Tracker</h1>
 	<a class="pull-right" href="production.php" >Back to Production</a>
 	</div><br><br><br><br>
 <form action="add_production_data.php" method="post">
@@ -40,7 +40,7 @@ require('header.php');
 </form>
 <button type = "button" onclick = "changeBar();">Calculate</button><button type = "button" onclick = "addTask();">Add Task</button><button type = "button" onclick = "removeTask();">Remove Task</button><br><br><br>
 <div class="contacts-title">
-	<h1 class="pull-left">Production Time Data</h1>
+	<h1 class="pull-left">Time Tracker Data</h1>
 	</div>
 <div class="dashboard-detail">
 	<div class="search-cont">

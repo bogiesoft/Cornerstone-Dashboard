@@ -9,7 +9,7 @@ $total_records = $row["total_records"];
 
 if(isset($_POST['save_form'])){
 	$hours = 0;
-	$job = "";
+	$job = "Mail Merge";
 	$recs_min = 0;
 	$total_records = 0;				//total_records
 	
@@ -21,10 +21,7 @@ if(isset($_POST['save_form'])){
 		$recs_min = (int)$_POST["recs_per_min"]; 
 	}
 
-	if(!(isset($_POST["job"]))){ //job
-		$job = "Mail Merge";
-	}
-	else{
+	if((isset($_POST["job"]))){ //job
 		$job = $_POST["job"];
 	}
 		
@@ -63,7 +60,7 @@ require('header.php');
 	<h1>Task: </h1>
 	<label style = "float: left;">Records/Minute</label> &nbsp; <input name = "recs_per_min" type = "text" id = "recs_per_min" style = "float: left; margin-right: 10px; width: 40px; font-size = 18px;" value = <?php echo $recs_per_min; ?>></input>
 <label style = "float: left;">Job</label> &nbsp; <select style = "float: left; width: 200px" name = "job" id = "job">
-	<option selected = 'selected' value = '<?php echo $job_array[0]; ?>'><?php echo $job; ?></option>
+	<option selected = 'selected' value = '<?php echo $job; ?>'><?php echo $job; ?></option>
 	<option value="Mail Merge">Mail Merge</option>
 					  <option value="Letter Printing">Letter Printing</option>
 					  <option value="In-House Envelope Printing">In-House Envelope Printing</option>

@@ -14,7 +14,7 @@
 	<div class="searchcont-detail">
 		<div class="search-boxleft">
 				<label>Quick Search</label>
-				<input id="searchbox" name="frmSearch" type="text" placeholder="Search for a job">
+				<input id="searchbox" name="frmSearch" type="text" placeholder="Search by job or priority(use # plus priority)">
 		</div>
 	</div>
 	</div>
@@ -25,6 +25,12 @@
 
 $hours_array = array();
 $canvas_id_array = array();
+$production_data_job_array = array();
+$special_instructions_array = array();
+$result_production_data = mysqli_query($conn, "SELECT job FROM production_data");
+while($row = $result_production_data->fetch_assoc()){
+	array_push($production_data_job_array, $row["job"]);
+}
 
 //change priorities here
 
@@ -110,22 +116,30 @@ if ($result->num_rows > 0) {
 				$color_priority = "#cc2900";
 				$value = "High";
 			}
+			$x = $row["job_id"];
 			echo "<div class='project_block'>";
-				echo "<div class= 'priority_bar'>";
+				echo "<a href = 'edit_job.php?job_id=$x' style = 'text-decoration: none'><div class= 'priority_bar'>";
 					echo "<p style='width:100%; background-color:" . $color_priority . "; text-align:center; color:white;'>$value</p>";
-					echo "</div>";
+					echo "</div></a>";
 				echo "<div class='project_block_left'>";
-					$x = $row["job_id"];
 					echo "<div class = 'project_row1'>";
-					echo "<p>".$row["client_name"]."</p>";
-					echo "<p>".$row["project_name"]."</p>";
+					if($row["client_name"] != ""){
+						echo "<p>".$row["client_name"]."</p>";
+					}
+					else{
+						echo "<p>Client Needed</p>";
+					}
+					if($row["project_name"] != ""){
+						echo "<p>".$row["project_name"]."</p>";
+					}
+					else{
+						echo "<p>Project Name Needed</p>";
+					}
 				   echo "</div>";
 				echo "<div class='project_row2'>";
-					echo "<p><a href = 'edit_job.php?job_id=$x'>" . $x . "</a></p>";
+					echo "<p>" . $x . "</p>";
 					echo "<p>Records total: ".$row1["records_total"]."</p>";
 					echo "<p>Due date: ".$row["due_date"]."</p>";
-					$sql = "SELECT * FROM production_data";
-					$result4 = mysqli_query($conn, $sql);
 					
 					$result3 = mysqli_query($conn, "SELECT tasks FROM production WHERE job_id = '$job_id'");
 					$row3 = $result3->fetch_assoc();
@@ -180,58 +194,19 @@ if ($result->num_rows > 0) {
 								}
 					echo "</p>";
 					echo "</div>";
+					$hours = 0;
 					
-					$found_tasks = FALSE;
-					while($row4 = $result4->fetch_assoc()){
-							$production_record = (int)$row4['total_records'];
-							$match = FALSE;
-
-							$job_tasks_array = explode(",", $row3['tasks']);
-							$production_tasks_array = explode(",", $row4['job']);
-							$sameSize = FALSE;
-
-							if(sizeOf($production_tasks_array) == sizeOf($job_tasks_array)){
-								$sameSize = TRUE;
-							}
-							sort($job_tasks_array);
-							$production_tasks_array2 = $production_tasks_array;
-							sort($production_tasks_array2);
-							
-							
-							
-							if($production_tasks_array2 == $job_tasks_array && $sameSize == TRUE){
-								$found_tasks = TRUE;
-								$records_per_array = explode(",", $row4['records_per']);
-								$time_unit_array = explode(",", $row4['time_unit']);
-								$time_number_array = explode(",", $row4['time_number']);
-								
-								$hours = 0;
-								//$job_count = 1;
-
-								for($i = 0; $i < count($time_unit_array); $i++){
-									if((int)$records_per_array[$i] != 0 && (int)$time_number_array[$i] != 0){
-										if($time_unit_array[$i] == "hr."){
-
-												$add_hours = $records_total / (int)$records_per_array[$i] * (int)$time_number_array[$i];
-												$hours = $hours + $add_hours;
-
-										}
-										else if($time_unit_array[$i] == "min."){
-
-												$add_hours = $records_total / (int)$records_per_array[$i] * (int)$time_number_array[$i] / 60;
-												$hours = $hours + $add_hours;
-
-										}
-										else if($time_unit_array[$i] == "sec."){
-
-
-												$add_hours = $records_total / (int)$records_per_array[$i] * (int)$time_number_array[$i] / 3600;
-												$hours = $hours + $add_hours;
-
-										}
-									}
+					$count_out_table = 0;
+					for($i = 0; $i < count($job_tasks_array); $i++){
+							if(in_array($job_tasks_array[$i], $production_data_job_array)){
+								$job = $job_tasks_array[$i];
+								$result_data_job = mysqli_query($conn, "SELECT recs_per_min FROM production_data WHERE job = '$job'");
+								$row4 = $result_data_job->fetch_assoc();
+								$recs_min = $row4['recs_per_min'];
+								if((int)$recs_min != 0){
+									$add_hours = $records_total / (int)$recs_min / 60;
+									$hours = $hours + $add_hours;
 								}
-								//$job_count = 1;
 								
 								$efficiency = "High";
 								if($hours <= 12){
@@ -243,7 +218,13 @@ if ($result->num_rows > 0) {
 								else{
 									$efficiency = "Low";
 								}
-
+								//$job_count = $job_count + 1;
+							}
+							else{
+								$count_out_table = $count_out_table + 1;
+							}
+						}
+						if($count_out_table == 0){
 								array_push($hours_array, $hours);
 								array_push($canvas_id_array, "canvas_prod" . $job_count);
 								
@@ -258,16 +239,17 @@ if ($result->num_rows > 0) {
 									<option value='4'>4</option>
 									<option value='5'>5</option>
 									<option value='6'>6</option>
-									<option value='7'>7</option></select></div>";
+									<option value='7'>7</option></select>
+									<p class = 'hours_display" . $graph_count . "' style = 'float: right'>Hours: " . round($hours, 2) . "</p></div>";
 								$count = $count + 1;
 								$graph_count = $graph_count + 1;
-								//$job_count = $job_count + 1;
-							}
-							/*else{
-								echo "<div class='graph_block'>
-									<canvas height = '200' width = '200'></canvas>
-									<select id = '" . $people_id . "' onchange = changePeople('" . $people_id . "')>";
-							}*/
+						}
+						else{
+							
+							echo "<div class='graph_block'>
+									<h1>Time Tracking Needed</h1>
+									<p class = 'hours_display" . $graph_count . "' style = 'float: right'>Hours: " . round($hours, 2) . "</p></div>";
+							
 						}
 						
 
@@ -283,6 +265,8 @@ if ($result->num_rows > 0) {
 					$name = $row_name['first_name'] . " " . $row_name['last_name'];
 					echo "<option value = '" . $user . "'>" . $name . "</option>";
 				}
+				$special_instructions = $row['special_instructions'];
+				array_push($special_instructions_array, $special_instructions);
 				echo "</select></form>";
 				echo "<form action = '' method = 'post'>";
 				echo '<select onchange = "this.form.submit()" name = "priority' . $job_count . '">
@@ -295,9 +279,8 @@ if ($result->num_rows > 0) {
 				echo "</form>";
 				echo "</div>";
 				echo "</div>";
-				echo '<div class="project_row4">
-					<a href="#" style="width:100%; background-color:#356CAC; text-align:center; color:white;">SPECIAL INSTRUCTIONS</a>
-				</div>';
+				echo '<div class="project_row4">';
+				echo "<a onclick = displayInstr($job_count) href = '#null' style='width:100%; background-color:#356CAC; text-align:center; color:white;'>SPECIAL INSTRUCTIONS</a></div>";
 				echo "</div>";
 		}
 
@@ -313,6 +296,8 @@ $conn->close();
 
 </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.2.min.js"></script>
 <script>
 	var previous_people = new Array();
 	$(document).ready(function(){
@@ -320,14 +305,33 @@ $conn->close();
 			//searchbox value
 			var search_val = $(this).val();
 			//compare the searchbox value with each job id
-			$("a[id=jobid]").each(function(){
-				if($(this).text().search(search_val)!=-1){
-					//show div
-					$(this).parent().parent().parent().show();
+			$("div.project_block").each(function(){
+				if($(this).text().toLowerCase().search(search_val)!=-1){
+					$(this).show();
+				}
+				else if(search_val == "#low"){
+					if($(this).children("a").text().toLowerCase().search("low") != -1){
+						$(this).show();
+					}
+				}
+				else if(search_val == "#medium"){
+					if($(this).children("a").text().toLowerCase().search("medium") != -1){
+						$(this).show();
+					}
+				}
+				else if(search_val == "#high"){
+					if($(this).children("a").text().toLowerCase().search("high") != -1){
+						$(this).show();
+					}
+				}
+				else if(search_val == "#none"){
+					if($(this).children("a").text().toLowerCase().search("none") != -1){
+						$(this).show();
+					}
 				}
 				else{
 					//hide div
-					$(this).parent().parent().parent().hide();
+					$(this).hide();
 				}
 			});
 		});
@@ -338,7 +342,7 @@ $conn->close();
 		var data = [];
 
 		for(var i = 0; i < hours.length; i++){
-			var efficiency = hours[i] / 40 * 100;
+			var efficiency = (hours[i] / 40 * 100).toFixed(2);
 			var percent = 100 - efficiency;
 			if(percent < 0){
 				percent = 0;
@@ -346,7 +350,7 @@ $conn->close();
 			else if(percent > 100){
 				percent = 100;
 			}
-			var leftover = 100 - percent;
+			var leftover = (100 - percent).toFixed(2);
 
 			var color = "#FFFFFF";
 			var highlight = "#FFFFFF";
@@ -398,7 +402,10 @@ function changePeople(id_people, graph_index){
 	}
 	var index = graph_index;
 	
-	var efficiency = hours[index] / number_people / 40 * 100;
+	var new_hours = (hours[index] / number_people).toFixed(2);
+	$(".hours_display" + graph_index).text("Hours: " + new_hours);
+	
+	var efficiency = (hours[index] / number_people / 40 * 100).toFixed(2);
 	var percent = 100 - efficiency;
 			if(percent < 0){
 				percent = 0;
@@ -406,7 +413,7 @@ function changePeople(id_people, graph_index){
 			else if(percent > 100){
 				percent = 100;
 			}
-			var leftover = 100 - percent;
+			var leftover = (100 - percent).toFixed(2);
 
 			var color = "#FFFFFF";
 			var highlight = "#FFFFFF";
@@ -448,4 +455,15 @@ function showTask(id){
 function hideTask(id){
 	$("." + id).css("visibility", "hidden");
 }
+
+var special_instructions = <?php echo json_encode($special_instructions_array); ?>;
+
+function displayInstr(index){
+	showSaveMessage();
+	function showSaveMessage(){
+		swal({   title: "Special Instructions",   text: special_instructions[index-1],   type: "info",      confirmButtonColor: "#4FD8FC",   confirmButtonText: "OK",   closeOnConfirm: true }, 
+			function(){ saveNotClicked=false; $( ".save-btn" ).click();});  
+	};
+}
+
 </script>
