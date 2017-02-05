@@ -11,8 +11,7 @@ require('header.php');
 <div>Total Records &nbsp; <br><input name = "records" type = "text" id = "records" style = "width: 80px" value = "1"></input></div><p id = "recs_error" style = "color:red;"></p><br><br>
   <div class = "prod_info">
 	<h1>Task 1: </h1>
-	<label style = "float: left;">Time/Unit</label> &nbsp; <input name = "time_number" type = "text" id = "time_number" style = "float: left; margin-right: 10px; width: 40px; font-size = 18px;" value = "1"></input><select style = "float:left;" name = "time_unit" id = "time_unit"><option>min.</option><option>sec.</option><option>hr.</option></select>
-	<label style = "float: left;">Records Complete in Time</label> &nbsp; <input style = "float: left; width: 40px" name = "per_rec" type = "text" id = "per_rec" value = "1"></input> &nbsp; &nbsp;
+	<label style = "float: left;">Records/Minute</label> &nbsp; <input name = "recs_per_min" type = "text" id = "recs_per_min" style = "float: left; margin-right: 10px; width: 40px; font-size = 18px;" value = "1"></input>
 <label style = "float: left;">Job</label> &nbsp; <select style = "float: left; width: 200px" name = "job" id = "job">
 	<option value="Mail Merge">Mail Merge</option>
 					  <option value="Letter Printing">Letter Printing</option>
@@ -61,7 +60,7 @@ $result = mysqli_query($conn,"SELECT * FROM production_data");
 echo " <div id = 'table-scroll' class='allcontacts-table'><table style = 'width: 100%' id = 'table' border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
 echo "<tbody>";
 echo "<tr valign='top'><th class='allcontacts-title'>All Data<span class='allcontacts-subtitle'></span></th></tr>";
-echo "<tr valign='top'><td colspan='2'><table style = 'width: 100%' id = 'production_data_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Tasks</th><th id = 'contact_name' class='maintable-thtwo data-header' data-name='contact_name' data-index='1'>Total Hours</th><th id = 'address' class='maintable-thtwo data-header' data-name='client_add' data-index='2'>Records Based On</th></tr></thead><tbody>";
+echo "<tr valign='top'><td colspan='2'><table style = 'width: 100%' id = 'production_data_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Task</th><th id = 'contact_name' class='maintable-thtwo data-header' data-name='contact_name' data-index='1'>Total Records</th><th id = 'address' class='maintable-thtwo data-header' data-name='client_add' data-index='2'>Records/Minute</th><th id = 'address' class='maintable-thtwo data-header' data-name='client_add' data-index='2'>Hours</th></tr></thead><tbody>";
 
 
 if ($result->num_rows > 0) {
@@ -70,8 +69,8 @@ if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
 		
 
-		$foo=$row['id'];
-		echo "<tr class = 'hoverTab'><td><a href = 'edit_production_data.php?id=$foo'>".$row["job"]."</a></td><td>".  $row["hours"]."</td><td>". $row["total_records"] . "</td></tr>";
+		$foo=$row['job'];
+		echo "<tr class = 'hoverTab'><td><a href = 'edit_production_data.php?id=$foo'>".$row["job"]."</a></td><td>".  $row["total_records"]."</td><td>". $row["recs_per_min"] . "</td><td>" . $row["hours"] . "</td></tr>";
     }
 	echo "</tbody></table></td></tr></tbody></table></div>";
 } else {
@@ -280,11 +279,7 @@ function nextPage(){
 		}
 	}
 }
-	var time_number = ["time_number"];
-	var time_unit = ["time_unit"];
-	var recs_comp = ["per_rec"];
-	var people = ["people"];
-	var employee = ["employee[]"];
+	var recs_min = ["recs_per_min"];
 	var job = ["job"];
 	var errors = ["error"];
 	var jobList = ["Mail Merge", "Letter Printing", "In-House Envelope Printing", "Sealing", "Collating", "Labeling", "Print Permit", "Correct Permit", "Carrier Route", "Endorsement Line", "Address Printing", "Tag as Political", "Inkjet Printing", "Glue Dots", "Inserting", "Printing", "Folding", "Tabbing", "Packaging"];
@@ -292,23 +287,15 @@ function nextPage(){
 	var Task = 2;
 	
 	function addTask(){
-		$(".prod_info").append("<div class = 'new_task" + count + "'><h1>Task " + Task + ":</h1><label style = 'float: left;'>Time/Unit</label> &nbsp; <input name = 'time_number" + count + "' type = 'text' id = 'time_number" + count + "' style = 'float: left; width: 40px; font-size = 18px;' value = '1'> &nbsp; </input><select style = 'float: left;' name = 'time_unit" + count + "' id = 'time_unit" + count + "'><option>min.</option><option>sec.</option><option>hr.</option></select> <label style = 'float: left;'>Records Complete in Time<label> &nbsp; <input name = 'per_rec" + count + "' type = 'text' id = 'per_rec" + count + "' style = 'float: left; width: 40px' value = '1'></input> &nbsp; &nbsp; <label style = 'float: left;'>Job</label> &nbsp; <select style = 'float: left;width: 200px;' name = 'job" + count + "' id = 'job" + count + "'></select><br><p id = 'error" + count + "' style = 'color:red;'></p></div>");
-		//$(".prod_info").append("&nbsp;<label style = 'float:left'>Number of People</label> &nbsp;<select style = 'float:left;' name = 'people" + count + "' id = 'people" + count + "'>");
-		//$(".prod_info").append("</select>");
-		//$(".prod_info").append("&nbsp; <label style = 'float: left;'>Job</label> &nbsp; <select style = 'float: left;width: 200px;' name = 'job" + count + "' id = 'job" + count + "'>");
+		$(".prod_info").append("<div class = 'new_task" + count + "'><h1>Task " + Task + ":</h1><label style = 'float: left;'>Records/Minute</label> &nbsp; <input name = 'recs_per_min" + count + "' type = 'text' id = 'recs_per_min" + count + "' style = 'float: left; width: 40px; font-size = 18px;' value = '1'> &nbsp; </input><label style = 'float: left;'>Job</label> &nbsp; <select style = 'float: left;width: 200px;' name = 'job" + count + "' id = 'job" + count + "'></select><br><p id = 'error" + count + "' style = 'color:red;'></p></div>");
 		for(var i = 0; i < jobList.length; i++){
 			var opt = document.createElement('option');
 			opt.value = jobList[i];
 			opt.innerHTML = jobList[i];
 			document.getElementById("job" + count).appendChild(opt);
 		}
-		//$(".prod_info").append("</select><br>");
-		//$(".prod_info").append("<p id = 'error" + count + "' style = 'color:red;'></p><br>");
-		time_number.push("time_number" + count);
-		time_unit.push("time_unit" + count);
-		recs_comp.push("per_rec" + count);
-		people.push("people" + count);
-		employee.push("employee" + count);
+		
+		recs_min.push("recs_per_min" + count);
 		job.push("job" + count);
 		errors.push("error" + count);
 		Task = Task + 1;
@@ -326,11 +313,9 @@ function nextPage(){
 		var error = false;
 		var errorMessage = "";
 		
-		for(var i = 0; i < time_number.length; i++){
+		for(var i = 0; i < recs_min.length; i++){
 			
-			var recsPer = document.getElementById(recs_comp[i]).value;
-			var time = document.getElementById(time_number[i]).value;
-			var unit = document.getElementById(time_unit[i]);
+			var recs_per_min = document.getElementById(recs_min[i]).value;
 			var errorId = document.getElementById(errors[i]);
 			errorId.innerHTML = "";
 			document.getElementById("recs_error").innerHTML = "";
@@ -346,7 +331,7 @@ function nextPage(){
 				error = true;
 				break;
 			}
-			else if(/^[0-9]*$/.test(recsPer) == false || /^[0-9]*$/.test(time) == false){
+			else if(/^[0-9]*$/.test(recs_per_min) == false){
 				
 				displayTime.innerHTML =  "Hours: -1";
 				displayEff.innerHTML = "Efficiency: ";
@@ -358,7 +343,7 @@ function nextPage(){
 				error = true;
 				break;
 			}
-			else if(recsPer.length == 0 || time.length == 0)
+			else if(recs_per_min.length == 0)
 			{
 				displayTime.innerHTML = "Hours: -1";
 				displayEff.innerHTML = "Efficiency: ";
@@ -370,26 +355,14 @@ function nextPage(){
 				error = true;
 				break;
 			}
-			else if(recordsNum == 0 || recsPer == 0 || time == 0)
+			else if(recs_per_min == 0)
 			{
 				totalCalculation = totalCalculation + 0;
 			}
 			else
 			{
-				if(unit.value == "min."){
-					var calculation = parseInt(recordsNum) / parseInt(recsPer) * parseInt(time) / 60;
-					totalCalculation = totalCalculation + calculation;
-				}
-				else if(unit.value == "sec.")
-				{
-					var calculation = parseInt(recordsNum) / parseInt(recsPer) * parseInt(time) / 3600;
-					totalCalculation = totalCalculation + calculation;
-				}
-				else if(unit.value == "hr.")
-				{
-					var calculation = parseInt(recordsNum) / parseInt(recsPer) * parseInt(time);
-					totalCalculation = totalCalculation + calculation;
-				}
+				var calculation = parseInt(recordsNum) / parseInt(recs_per_min) / 60;
+				totalCalculation = totalCalculation + calculation;
 			}
 			bar.value = 40 - totalCalculation;
 			displayTime.innerHTML = "Hours: " + totalCalculation;

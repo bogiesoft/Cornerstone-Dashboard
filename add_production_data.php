@@ -32,49 +32,19 @@
 	$id_1 = $id_1 + 1;
 	
 	
-	$time_number_id = "time_number";
-	$time_unit_id = "time_unit";
-	$per_rec_id = "per_rec";
-	$employee_id = "employee";
+	$recs_min_id = "recs_per_min";
 	$job_id = "job";
 	$count = 1;
 	
-	$records_per_array = array();
-	$time_number_array = array();
-	$time_unit_array = array();
-	$job_array = array();
-	$hours = 0;
-	
-	$time_number = 0;	
-	$per_rec = 0;
-	$employees = "";
-	$time_unit = "";
-	$job = "";
-	
-	while(isset($_POST[$time_number_id])){
+	while(isset($_POST[$recs_min_id])){
 		
-		$time_number = 0;
-		$per_rec = 0;
+		$recs_min = 0;
+		$job = "";
+		$hours = 0;
 		
-		if($_POST[$time_number_id] != "" && preg_match("/[0-9]/", $_POST[$time_number_id])){ //time_number
-			$time_number = (int)$_POST[$time_number_id]; 
+		if($_POST[$recs_min_id] != "" && preg_match("/[0-9]/", $_POST[$recs_min_id])){ //Records/Minute
+			$recs_min = (int)$_POST[$recs_min_id]; 
 		}
-		array_push($time_number_array, $time_number);
-		
-		
-		if($_POST[$per_rec_id] != "" && preg_match("/[0-9]/", $_POST[$per_rec_id])){ //records_per
-			$per_rec = (int)$_POST[$per_rec_id]; 
-		}
-		array_push($records_per_array, $per_rec);
-		
-		if(!(isset($_POST[$time_unit_id]))){ //time_unit
-			$time_unit = "min.";
-		}
-		else{
-			$time_unit = $_POST[$time_unit_id];
-		}
-		array_push($time_unit_array, $time_unit);
-		
 		
 		if(!(isset($_POST[$job_id]))){ //job
 			$job = "Mail Merge";
@@ -82,65 +52,24 @@
 		else{
 			$job = $_POST[$job_id];
 		}
-		array_push($job_array, $job);
 		
-		if($time_number != 0 && $per_rec != 0 && $total_records != 0){
-			if($time_unit == "hr."){     //hours
-				$add_hours = $total_records / $per_rec * $time_number;
-				$hours = $hours + $add_hours;
-			}
-			else if($time_unit == "min."){
-				$add_hours = $total_records / $per_rec * $time_number / 60;
-				$hours = $hours + $add_hours;
-			}
-			else if($time_unit == "sec."){
-				$add_hours = $total_records / $per_rec * $time_number / 3600;
-				$hours = $hours + $add_hours;
-			}
+		if($recs_min != 0){
+			$hours = $total_records / $recs_min / 60;
 		}
 		
-		$time_number_id = "time_number" . $count;
-		$time_unit_id = "time_unit" . $count;
-		$per_rec_id = "per_rec" . $count;
-		$employee_id = "employee" . $count;
+		$recs_min_id = "recs_per_min" . $count;
 		$job_id = "job" . $count;
 		$count = $count + 1;
 		
-	}
-	
-	$records_per = implode(",", $records_per_array);
-	$time_number = implode(",", $time_number_array);
-	$time_unit = implode(",", $time_unit_array);
-	
-	$sql = "SELECT * FROM production_data";
-	$result = mysqli_query($conn, $sql);
-	
-	while($row = $result->fetch_assoc()){
-		$match = FALSE;
-		$production_array = explode(",", $row['job']);
-		if(count($production_array) == count($job_array)){
-			$contains = TRUE;
-			for($i = 0; $i < count($production_array); $i++){
-				if(!in_array($production_array[$i], $job_array)){
-					$contains = FALSE;
-					break;
-				}
-			}
-			if($contains == TRUE){
-				$match = TRUE;
-			}
+		$result_check = mysqli_query($conn, "SELECT job FROM production_data WHERE job = '$job'");
+		if(mysqli_num_rows($result_check) > 0){
+			mysqli_query($conn, "UPDATE production_data SET total_records = '$total_records', recs_per_min = '$recs_min', hours = '$hours' WHERE job = '$job'");
 		}
-		if($match == TRUE){
-			$job = $row['job'];
-			mysqli_query($conn, "DELETE FROM production_data WHERE job = '$job'");
+		else{
+			mysqli_query($conn, "INSERT INTO production_data (total_records, recs_per_min, hours, job) VALUES ('$total_records', '$recs_min', '$hours', '$job')");
 		}
+		
 	}
-	
-	
-	
-	$job = implode(",", $job_array);
-	
-	mysqli_query($conn, "INSERT INTO production_data (id, total_records, records_per, time_number, time_unit, job, hours) VALUES ('$id_1', '$total_records', '$records_per', '$time_number', '$time_unit', '$job', '$hours')") or die("ERROR");
-	
+
 	header("location: production_data.php");
 ?>
