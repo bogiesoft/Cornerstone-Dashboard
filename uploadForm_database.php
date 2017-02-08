@@ -78,7 +78,7 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 				$input = str_replace("'", "\'", $input); 
 			}
 			//check if input is greater than 45
-			if(strlen($input) > 45){
+			/*if(strlen($input) > 45){
 				array_push($error, "error in row " . ($i + 1) . " column header " . $_POST[$array_names[$j]] . " applied to " . $array_names[$j] . ": <b>input size is greater than 45</b> -> " . strlen($input));
 			}
 			//check for numeric characters in full_name, prefix, suffix
@@ -143,7 +143,7 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 			//checks if type is input Client or Prospect
 			if($array_names[$j] == "type" && $input != "" && $input != "Prospect" && $input != "Client"){
 				array_push($error, "error in row " . ($i + 1) . " column header " . $_POST[$array_names[$j]] . " applied to " . $array_names[$j] . ": <b>Can only be input <i> Prospect </i> or <i> Client </i>. Can also be left blank as default <i> Prospect </i></b>");
-			}
+			}*/
 			//adds current date for date_added field
 			if($array_names[$j] == "date_added" && $input == ""){
 				date_default_timezone_set('America/New_York');
@@ -176,6 +176,9 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 			}
 		}
 		if(in_array($full_name, $all_full_names_array) && in_array($address_line_1, $all_addresses_array) && in_array($business, $all_businesses_array)){
+			$test_count++;
+		}
+		else{
 			array_push($sql_statements, $sql);
 			$test_count++;
 		}
@@ -192,6 +195,7 @@ if(count($error) == 0){
 	$a_p = date("A");
 	$sql_timestamp = "INSERT INTO timestamp (user, time, job, a_p) VALUES ('$user_name', '$today', '$job', '$a_p')";
 	mysqli_query($conn, $sql_timestamp) or die("error");
+	header("location: uploadForm.php");
 }
 else{
 	$_SESSION["import_errors"] = $error;
