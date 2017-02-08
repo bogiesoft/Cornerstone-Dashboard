@@ -18,14 +18,14 @@ require ("header.php");
 										<option value="">Sort by</option>
 			  						<option value="date">Date</option>
 			  						<option value="user">User</option>
-			  						<option value="View Count">View Count</option>
+			  						<option value="view_count">View Count</option>
 									</select>
 								</form>
-						</div>
+							</div>
+					</div>
 				</div>
 			</div>
 		<div class="clear"></div>
-		<div id = "documentation-detail" class="documentation-detail">
 			<?php
 				require ("connection.php");
 				$sql = "SELECT * FROM documentation";
@@ -36,60 +36,84 @@ require ("header.php");
 				}
 				if(isset($_GET["sortby"])){
 					if($_GET['sortby'] == 'user'){
-						$sql = $sql . " ORDER BY user DESC";
+						$sql = $sql . " ORDER BY user ASC";
+					}
+				}
+				if(isset($_GET["sortby"])){
+					if($_GET['sortby'] == 'view_count'){
+						$sql = $sql . " ORDER BY view_count DESC";
 					}
 				}
 				$result = mysqli_query($conn,$sql) or die (mysqli_error($conn));
-
+				echo "<div id = 'paginator'>";
 				if ($result->num_rows > 0) {
 				    // output data of each row
-				    while($row = $result->fetch_assoc()) {
-						$user = $row["user"];
-						$temp = $row['title'];
-						$string_date = $row["timestamp"];
-						$new_date = strtotime($string_date);
-						$new_format_month_to_day = date("M d", $new_date);
-						$new_format_year = date("Y", $new_date);
-						echo "<div class='doc-block'>";
-						echo "<a class='search-boxright pull-right' href='edit_doc.php?title=$temp'><img style='height:25px; width:25px;' src='images/web-icons/edit_pencil-blue.png'></img></a>";
-						echo "<a href='view_doc.php?title=$temp'><h2>".$row['title']."</h2></a>"."<p class = 'user_search'>Written by <b>".$row['user']."</b></p><br>";
-						echo "<div>";
-						if(file_exists("images/profiles/" . $user . ".jpg") || file_exists("images/profiles/" . $user . ".JPG") || file_exists("images/profiles/" . $user . ".png")){
-							if(file_exists("images/profiles/" . $user . ".jpg")){
-								echo "<img src = 'images/profiles/" . $user . ".jpg' width = '100' height = '100'>";
-							}
-							else if(file_exists("images/profiles/" . $user . ".JPG")){
-								echo "<img src = 'images/profiles/" . $user . ".JPG' width = '100' height = '100'>";
+					$doc_count = 1;
+						while($row = $result->fetch_assoc()) {
+							echo '<div id = "documentation-detail" class="doc-block">';
+							echo '<div class="doc-block-left">';
+							$user = $row["user"];
+							$temp = $row['title'];
+							$string_date = $row["timestamp"];
+							$new_date = strtotime($string_date);
+							$new_format_month_to_day = date("M d", $new_date);
+							$new_format_year = date("Y", $new_date);
+							
+							if(file_exists("images/profiles/" . $user . ".jpg") || file_exists("images/profiles/" . $user . ".JPG") || file_exists("images/profiles/" . $user . ".png")){
+								if(file_exists("images/profiles/" . $user . ".jpg")){
+									echo "<img src = 'images/profiles/" . $user . ".jpg' width = '100' height = '100'>";
+								}
+								else if(file_exists("images/profiles/" . $user . ".JPG")){
+									echo "<img src = 'images/profiles/" . $user . ".JPG' width = '100' height = '100'>";
+								}
+								else{
+									echo "<img src = 'images/profiles/" . $user . ".png' width = '100' height = '100'>";
+								}
 							}
 							else{
-								echo "<img src = 'images/profiles/" . $user . ".png' width = '100' height = '100'>";
+								echo "<img src = 'images/web-icons/user.png' width = '100' height = '100'>";
 							}
+							echo '<div class="date-box">';
+								echo '<p class="date-month">' . $new_format_month_to_day . '</p>';
+								echo '<p class="date-year">' . $new_format_year . '</p>';
+							echo "</div>";
+							$view_count = $row["view_count"];
+							echo '<p style="color:#356CAC; font-style:italic; text-align:center; margin-top:5px;">Views: ' . $view_count . '</p>';
+							echo "</div>";
+							echo '<div class="doc-block-right">';
+							echo '<div class="doc-title">';
+							$title = $row["title"];
+							echo "<a href='view_doc.php?title=$title'><p>" . $title .  "</p></a>";
+							echo "<a href='edit_doc.php?title=$title'><img src='images/web-icons/edit_pencil-blue.png'></a>";
+							echo '</div>';
+							echo '<div class="doc-text">';
+							echo "<p><i>by ".$user." on " . $string_date . "</i></p>";
+							echo "<p><i>".$row['description']."</i></p>";
+							echo "<p class = 'text'>" . $row["text"] . "</p>";
+							echo "</div>";
+							echo "</div>";
+							echo "</div>";
+							
+							$doc_count = $doc_count + 1;
 						}
-					    else{
-							echo "<img src = 'images/web-icons/user.png' width = '100' height = '100'>";
-						}
-						echo "</div>";
-						echo "<p>".$row['description']."</p>";
-						echo "<div class='date'>
-								<p> $new_format_month_to_day <span>$new_format_year</span></p></div>";
-						echo "</div>";
-				    }
-				} else {
-				    echo "0 results";
-				}
+					} else {
+						echo "0 results";
+					}
+					echo "</div>";
 				$conn->close();
 			?>
-		</div>
-	</div>
 </div>
-
+</div>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="doc_paginator/lib/jquery.easyPaginate.js"></script>
+<script type="text/javascript" src="micromarkdown/micromarkdown.js"></script>
 <script>
 (function($) {
 
 	$.fn.easyPaginate = function(options){
 
 		var defaults = {
-			step: 4,
+			step: 5,
 			delay: 100,
 			numeric: true,
 			nextprev: true,
@@ -191,12 +215,10 @@ require ("header.php");
 
 })(jQuery);
 
-jQuery(function($){
-
-	$('div#documentation-detail').easyPaginate({
-		step:4
-	});
-
+$('#paginator').easyPaginate({
+    paginateElement: 'div',
+    elementsPerPage: 3,
+    effect: 'climb'
 });
 
 //quick search textbox
@@ -205,10 +227,9 @@ jQuery(function($){
 			//searchbox value
 			var search_val = $(this).val();
 			//compare the searchbox value with each job id
-			$("div.doc-block").each(function(){
+			$(".doc-block").each(function(){
 				//if title.text OR username.text OR paragraphText.text contains the string in searchbox
-				if($(this).children("a").text().toLowerCase().search(search_val)!=-1 || $(this).children('.user_search').text().toLowerCase().search(search_val)!=-1 || $(':nth-child(4)', this).text().toLowerCase().search(search_val)!=-1
-					|| $(this).children(".date").text().toLowerCase().search(search_val)!=-1){
+				if($(this).text().toLowerCase().search(search_val)!=-1){
 					//show div
 					$(this).show();
 				}
@@ -228,40 +249,19 @@ jQuery(function($){
 		});
 
 	});
+
+
+$(document).ready(function(){
+	$('.text').each(function(){
+		var input = $(this).text();
+		$(this).html(micromarkdown.parse(input));
+		$("form").show();
+	});
+});
 </script>
 
 <style>
-.date {
-	width: 130px; height: 100px;
-	background: #fcfcfc; 
-	background: linear-gradient(top, #fcfcfc 0%,#dad8d8 100%); 
-	background: -moz-linear-gradient(top, #fcfcfc 0%, #dad8d8 100%); 
-	background: -webkit-linear-gradient(top, #fcfcfc 0%,#dad8d8 100%);
-	border: 1px solid #d2d2d2;
-	border-radius: 10px;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
-	box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
-	-moz-box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
-	-webkit-box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
-}
-.date p {
-	font-family: Helvetica, sans-serif; 
-	font-size: 30px; text-align: center; color: #9e9e9e; 
-}
-.date p span {
-	background: #d10000; 
-	background: linear-gradient(top, #d10000 0%, #7a0909 100%);
-	background: -moz-linear-gradient(top, #d10000 0%, #7a0909 100%);
-	background: -webkit-linear-gradient(top, #d10000 0%, #7a0909 100%);
-	font-size: 45px; font-weight: bold; color: #fff; text-transform: uppercase; 	
-	display: block;
-	border-top: 3px solid #a13838;
-	border-radius: 0 0 10px 10px;
-	-moz-border-radius: 0 0 10px 10px;
-	-webkit-border-radius: 0 0 10px 10px;
-	padding: 6px 0 6px 0;
-}
+
 	ul#items{
 		margin:1em 0;
 		width:auto;

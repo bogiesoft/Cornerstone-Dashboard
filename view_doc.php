@@ -11,10 +11,13 @@ $result = mysqli_query($conn,$sql);
 	if ($result->num_rows > 0) {
 		$row = $result->fetch_assoc();
 
-		$title = $row['title'];
+	$title = $row['title'];
     $user = $row['user'];
     $timestamp = $row['timestamp'];
     $text = $row['text'];
+	$view_count = $row['view_count'];
+	$view_count = $view_count + 1;
+	mysqli_query($conn, "UPDATE documentation SET view_count = '$view_count' WHERE title = '$title'");
 		$display = "yes";
 
 	}
