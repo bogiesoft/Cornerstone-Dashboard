@@ -1,12 +1,46 @@
 <?php
 require("connection.php");
+$record_id = $_GET["record_id"];
+
+if(isset($_POST["submit_form"])){
+	$job_id = $_POST["job_id"];
+	$sack_number = $_POST["sack_number"];
+	$user = $_POST["employee_name"];
+	
+	$result = mysqli_query($conn, "SELECT * FROM users WHERE user = '$user'");
+	$row = $result->fetch_assoc();
+	$full_name = $row["first_name"] . " " . $row["last_name"];
+	
+	$employee_name = $user . "-" . $full_name;
+	$recs_per_min = $_POST["recs_per_min"];
+	if(!is_numeric($recs_per_min)){
+		$recs_per_min = 1;
+	}
+	$hours = $_POST["hours"];
+	if(!is_numeric($hours)){
+		$hours = 1;
+	}
+	$task = $_POST["task"];
+	
+	mysqli_query($conn, "UPDATE employee_data SET job_id = '$job_id', sack_number = '$sack_number', employee_name = '$employee_name', recs_per_min = '$recs_per_min', hours = '$hours', task = '$task' WHERE record_id = '$record_id'");
+	header("location: employee_data.php");
+	
+}
+
 require("header.php");
 
-$record_id = $_GET["record_id"];
 $result = mysqli_query($conn, "SELECT * FROM employee_data WHERE record_id = '$record_id'");
 $row = $result->fetch_assoc();
 
 $sack_number = $row["sack_number"];
+$employee_name_full = $row["employee_name"];
+$employee_username = explode("-", $employee_name_full);
+$user_name = $employee_username[0];
+$full_name = $employee_username[1];
+$employee_name = $full_name;
+$recs_per_min = $row["recs_per_min"];
+$hours = $row["hours"];
+$task = $row["task"];
 ?>
 
 <div class="dashboard-cont" style="padding-top:110px;">
@@ -64,6 +98,7 @@ $sack_number = $row["sack_number"];
 					<div class="tabinner-detail">
 					<label>Employee Name</label>
 					<select name = "employee_name">
+					<option select = "selected" value = "<?php echo $user_name; ?>"><?php echo $employee_name; ?></option>
 					<?php
 					
 					$result = mysqli_query($conn, "SELECT * FROM users");
@@ -81,18 +116,18 @@ $sack_number = $row["sack_number"];
 				<div class="newcontacttab-inner">
 					<div class="tabinner-detail">
 					<label>Records/Minute</label>
-					<input name="recs_per_min" type="text" class="contact-prefix">
+					<input name="recs_per_min" type="text" class="contact-prefix" value = "<?php echo $recs_per_min; ?>">
 					<div class="clear"></div>
 					</div>
 					<div class="tabinner-detail">
 					<label>Hours</label>
-					<input name="hours" type="text" class="contact-prefix">
+					<input name="hours" type="text" class="contact-prefix" value = "<?php echo $hours; ?>">
 					<div class="clear"></div>
 					</div>
 					<div class="tabinner-detail">
 					<label>Task</label>
 					<select name = "task" id = "task">
-						<option select = "selected" value = "0">--Enter Job Id--</option>
+						<option select = "selected" value = "<?php echo $task; ?>"><?php echo $task; ?></option>
 					</select>
 					<div class="clear"></div>
 					</div>
@@ -109,3 +144,25 @@ $sack_number = $row["sack_number"];
 	</div>
 </div>
 </div>
+<script>
+function loadTaskSelect(){
+	var this_id = $("#job_id").val();
+	$.ajax({
+    type: "POST",
+    url: "create_task_list.php",
+    data: 'id=' + this_id,
+    dataType: "json", // Set the data type so jQuery can parse it for you
+    success: function (data) {
+        $("#task").empty();
+		for(var i = 0; i < data.length; i++){
+			if(i == 0){
+				$('#task').append($('<option>', {select: "selected", value:data[i], text:data[i]}));
+			}
+			else{
+				$('#task').append($('<option>', {value:data[i], text:data[i]}));
+			}
+		}
+    }
+});
+}
+</script>

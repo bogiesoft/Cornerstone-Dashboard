@@ -481,7 +481,7 @@
 	<div class="contacts-title">
 		<h1 class="pull-left">Employee Data</h1>
 		<a class="pull-right" href="add_employee_data.php">Add Record</a>
-		<a style = "background: #0e0926" class="pull-right" href="production.php">Statistics</a>
+		<a style = "background: #0e0926" class="pull-right" href="employee_statistics.php">Statistics</a>
 		<a style = "background: #d14700" class="pull-right" href="production.php">Back To Production</a>
 	</div>
 <div class="dashboard-detail">
