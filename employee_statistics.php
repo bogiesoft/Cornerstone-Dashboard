@@ -7,23 +7,47 @@
 <h1 class="pull-left">Production Statistics</h1>
 </div>
 <div class="dashboard-detail">
-<select id = "employee_name" onchange = "generateTasks()">
-<option select = "selected">--Choose Employee--</option>
+<select id = "job" onchange = "generateEmployees()">
+<option select = "selected" value = "0">--Choose Job--</option>
 <?php
-	$result = mysqli_query($conn, "SELECT DISTINCT employee_name FROM employee_data");
-	while($row = $result->fetch_assoc()){
-		$name = $row["employee_name"];
-		echo "<option value = '$name'>$name</option>";
+$result_prod_users = mysqli_query($conn, "SELECT user FROM users WHERE department = 'Production'");
+$sql = "";
+$count = 1;
+while($prod_row = $result_prod_users->fetch_assoc()){
+	$user = $prod_row['user'];
+	if($count == 1){
+		$sql = $sql . "SELECT * FROM job_ticket WHERE processed_by = '$user'";
 	}
+	else{
+		$sql = $sql . " UNION SELECT * FROM job_ticket WHERE processed_by = '$user'";
+	}
+
+	$count = $count + 1;
+}
+
+$sql = $sql . " ORDER BY priority DESC, due_date ASC";
+
+$job_result =  mysqli_query($conn,$sql) or die("error");
+while($row = $job_result->fetch_assoc()){
+	$job_id = $row["job_id"];
+	$project_name = $row["project_name"];
+	echo "<option value = '$job_id'>$job_id - $project_name</option>";
+}
 ?>
 </select>
+<select id = "employee_name" onchange = "generateTasks()">
+<option value = "0" select = "selected">--Choose Employee--</option>
+</select>
 
-<select id = "task" onchange = "generateGraph()">
+<select id = "task" onchange = "generateGraphOptions()">
 <option select = "selected" value = "0">--Choose Task--</option>
+</select>
+<select id = "graph_options" onchange = "generateGraph()">
+<option select = "selected" value = "0">--Choose Graph--</option>
 </select>
 <div class = 'clear'></div>
 	<div style="width:30%">
-			<div>
+			<div id = "chart_container">
 				<canvas id="canvas" height="450" width="600"></canvas>
 			</div>
 	</div>
@@ -31,70 +55,233 @@
 </div>
 <script>
 
-function generateTasks(){
-	var this_id = $("#employee_name").val();
+var barChartData = {
+		labels : ["N/A"],
+		datasets : [
+			{
+				fillColor : "rgba(220,220,220,0.5)",
+				strokeColor : "rgba(220,220,220,0.8)",
+				highlightFill: "rgba(220,220,220,0.75)",
+				highlightStroke: "rgba(220,220,220,1)",
+				data : [0]
+			},
+			{
+				fillColor : "rgba(151,187,205,0.5)",
+				strokeColor : "rgba(151,187,205,0.8)",
+				highlightFill : "rgba(151,187,205,0.75)",
+				highlightStroke : "rgba(151,187,205,1)",
+				data : [0]
+			}
+		]
+
+	}
+	window.onload = function(){
+		var ctx = document.getElementById("canvas").getContext("2d");
+		window.myBar = new Chart(ctx).Bar(barChartData, {
+			responsive : true
+		});
+	}
+function generateEmployees(){
+	$("#task").empty();
+	$('#task').append($('<option>', {select: "selected", value:0, text:"--Choose Task--"}));
+	$("#graph_options").empty();
+	$('#graph_options').append($('<option>', {select: "selected", value:0, text:"--Choose Graph--"}));
+	var this_id = $("#job").val();
 	$.ajax({
     type: "POST",
     url: "create_task_list.php",
-    data: 'id_name=' + this_id,
+    data: 'id_job=' + this_id,
+    dataType: "json", // Set the data type so jQuery can parse it for you
+    success: function (data) {
+        $("#employee_name").empty();
+		$('#employee_name').append($('<option>', {select: "selected", value:0, text:"--Choose Employee--"}));
+		$('#employee_name').append($('<option>', {value:"123all", text:"All"}));
+		for(var i = 0; i < data.length; i++){
+			$('#employee_name').append($('<option>', {value:data[i], text:data[i]}));
+		}
+    }
+});
+}
+function generateTasks(){
+	var this_id = $("#employee_name").val();
+	var this_job = $("#job").val();
+	var info = [this_id, this_job];
+	$("#graph_options").empty();
+	$('#graph_options').append($('<option>', {select: "selected", value:0, text:"--Choose Graph--"}));
+	$.ajax({
+    type: "POST",
+    url: "create_task_list.php",
+    data: {id_name: info},
     dataType: "json", // Set the data type so jQuery can parse it for you
     success: function (data) {
         $("#task").empty();
 		$('#task').append($('<option>', {select: "selected", value:0, text:"--Choose Task--"}));
-		$('#task').append($('<option>', {value:"all", text:"All"}));
+		if(this_id != "123all"){
+			$('#task').append($('<option>', {value:"123all", text:"All"}));
+		}
 		for(var i = 0; i < data.length; i++){
 			$('#task').append($('<option>', {value:data[i], text:data[i]}));
 		}
     }
 });
 }
-
+function generateGraphOptions(){
+	$("#graph_options").empty();
+	$('#graph_options').append($('<option>', {select: "selected", value:0, text:"--Choose Graph--"}));
+	$('#graph_options').append($('<option>', {value:"line", text:"Line"}));
+	$('#graph_options').append($('<option>', {value:"bar", text:"Bar"}));
+}
 function generateGraph(){
 	var this_task = $("#task").val();
-	if(this_task != "all"){	
-			var this_id = $("#employee_name").val();
-			var info = [this_id, this_task];
+	var this_employee = $("#employee_name").val();
+	var this_job = $("#job").val();
+	var info = [this_employee, this_task, this_job];
+	if(this_task != "123all" && this_employee != "123all"){	
 			$.ajax({
 			type: "POST",
 			url: "create_task_list.php",
 			data: {info: info},
 			dataType: "json", // Set the data type so jQuery can parse it for you
-			success: function (data_table) {
-				var lineChartData = {
-					labels : data_table[0],
-					datasets : [
-						{
-							label: "Employee Data",
-							fillColor : "rgba(244, 191, 66, 0.4)",
-							strokeColor : "rgba(220,220,220,1)",
-							pointColor : "rgba(220,220,220,1)",
-							pointStrokeColor : "#d14700",
-							pointHighlightFill : "#f4b642",
-							pointHighlightStroke : "rgba(220,220,220,1)",
-							data : data_table[1]
-						},
-						{
-							label: "Average Data",
-							fillColor : "rgba(66, 170, 244, 0.1)",
-							strokeColor : "rgba(151,187,205,1)",
-							pointColor : "rgba(151,187,205,1)",
-							pointStrokeColor : "#fff",
-							pointHighlightFill : "#fff",
-							pointHighlightStroke : "rgba(151,187,205,1)",
-							data : data_table[2]
-						}
-					]
-
+			success: function (averages) {
+				var employee_average = averages[0].toFixed(2) / 40 * 100;
+				var data_average = averages[1].toFixed(2) / 40 * 100;
+				var employee_percent = 100 - employee_average;
+				if(employee_percent < 0){
+					employee_percent = 0;
 				}
+				else if(employee_percent > 100){
+					employee_percent = 100;
+				}
+				var data_percent = 100 - data_average;
+				if(data_percent < 0){
+					data_percent = 0;
+				}
+				else if(data_percent > 100){
+					data_percent = 100;
+				}
+				var task = averages[2];
+				
+				data_percent = data_percent.toFixed(2);
+				employee_percent = employee_percent.toFixed(2);
+				var graph_option = $("#graph_options").val();
+				if(graph_option == "bar"){
+					var barChartData = {
+						labels : ["Employee Efficiency Vs. Average"],
+						datasets : [
+							{
+								fillColor : "rgba(66, 161, 244, 0.5)",
+								strokeColor : "rgba(220,220,220,0.8)",
+								highlightFill: "rgba(220,220,220,0.75)",
+								highlightStroke: "rgba(220,220,220,1)",
+								data : [employee_percent]
+							},
+							{
+								fillColor : "rgba(244, 200, 66, 0.5)",
+								strokeColor : "rgba(151,187,205,0.8)",
+								highlightFill : "rgba(151,187,205,0.75)",
+								highlightStroke : "rgba(151,187,205,1)",
+								data : [data_percent]
+							}
+						]
 
-				//$("#canvas").beginPath();
-				var ctx = document.getElementById("canvas").getContext("2d");
-				ctx.clearRect(0,0,600,450);
-				window.myLine = new Chart(ctx).Line(lineChartData, {
-					responsive: false
-				});
+					}
+					$('#chart_container').html('');
+					$('#chart_container').html('<canvas id="canvas" height="450" width="600"></canvas>');
+					var ctx = document.getElementById("canvas").getContext("2d");
+					window.myBar = new Chart(ctx).Bar(barChartData, {
+						responsive : true
+					});
+				}
 			}
 		});
+	}
+	else if(this_employee == "123all"){
+			$.ajax({
+				type: "POST",
+				url: "create_task_list.php",
+				data: {info_all_employees: info},
+				dataType: "json", // Set the data type so jQuery can parse it for you
+				success: function (averages) {
+					
+					var names = averages[2];
+					var employee_percents = [];
+					var data_percents = [];
+					for(var i = 0; i < averages[0].length; i++){
+						employee_efficiency = (averages[0][i] / 40 * 100).toFixed(2);
+						data_efficiency = (averages[1][i] / 40 * 100).toFixed(2);
+						employee_percents[i] = 100 - employee_efficiency;
+						data_percents[i] = 100 - data_efficiency;
+					}
+					var graph_option = $("#graph_options").val();
+					if(graph_option == "bar"){
+						var barChartData = {
+							labels : names,
+							datasets : [
+								{
+									fillColor : "rgba(66, 161, 244, 0.5)",
+									strokeColor : "rgba(220,220,220,0.8)",
+									highlightFill: "rgba(220,220,220,0.75)",
+									highlightStroke: "rgba(220,220,220,1)",
+									data : employee_percents
+								},
+								{
+									fillColor : "rgba(244, 200, 66, 0.5)",
+									strokeColor : "rgba(151,187,205,0.8)",
+									highlightFill : "rgba(151,187,205,0.75)",
+									highlightStroke : "rgba(151,187,205,1)",
+									data : data_percents
+								}
+							]
+
+						}
+						$('#chart_container').html('');
+						$('#chart_container').html('<canvas id="canvas" height="450" width="600"></canvas>');
+						var ctx = document.getElementById("canvas").getContext("2d");
+						window.myBar = new Chart(ctx).Bar(barChartData, {
+							responsive : true
+						});
+					}
+				}
+			});
+	}
+	else if(this_task == "123all"){
+			$.ajax({
+				type: "POST",
+				url: "create_task_list.php",
+				data: {info_all_tasks: info},
+				dataType: "json", // Set the data type so jQuery can parse it for you
+				success: function (averages) {
+					var graph_option = $("#graph_option").val();
+					if(graph_option == "bar"){
+						var barChartData = {
+							labels : ["N/A"],
+							datasets : [
+								{
+									fillColor : "rgba(66, 161, 244, 0.5)",
+									strokeColor : "rgba(220,220,220,0.8)",
+									highlightFill: "rgba(220,220,220,0.75)",
+									highlightStroke: "rgba(220,220,220,1)",
+									data : [1]
+								},
+								{
+									fillColor : "rgba(244, 200, 66, 0.5)",
+									strokeColor : "rgba(151,187,205,0.8)",
+									highlightFill : "rgba(151,187,205,0.75)",
+									highlightStroke : "rgba(151,187,205,1)",
+									data : [1]
+								}
+							]
+
+						}
+						$('#chart_container').html('');
+						$('#chart_container').html('<canvas id="canvas" height="450" width="600"></canvas>');
+						var ctx = document.getElementById("canvas").getContext("2d");
+						window.myBar = new Chart(ctx).Bar(barChartData, {
+							responsive : true
+						});
+					}
+				}
+			});
 	}
 }
 </script>
