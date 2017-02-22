@@ -192,6 +192,40 @@ function generateGraph(){
 						responsive : true
 					});
 				}
+				else if(graph_option == "line"){
+					var lineChartData = {
+						labels : ["Employee Efficiency Vs. Average"],
+						datasets : [
+							{
+								label: "My First dataset",
+								fillColor : "rgba(66, 161, 244, 0.5)",
+								strokeColor : "rgba(66, 161, 244, 0.5)",
+								pointColor : "rgba(66, 161, 244, 0.5)",
+								pointStrokeColor : "#fff",
+								pointHighlightFill : "#fff",
+								pointHighlightStroke : "rgba(220,220,220,1)",
+								data : [employee_percent]
+							},
+							{
+								label: "My Second dataset",
+								fillColor : "rgba(244, 200, 66, 0.5)",
+								strokeColor : "rgba(244, 200, 66, 0.5)",
+								pointColor : "rgba(244, 200, 66, 0.5)",
+								pointStrokeColor : "#fff",
+								pointHighlightFill : "#fff",
+								pointHighlightStroke : "rgba(151,187,205,1)",
+								data : [data_percent]
+							}
+						]
+
+					}
+					$('#chart_container').html('');
+					$('#chart_container').html('<canvas id="canvas" height="450" width="600"></canvas>');
+					var ctx = document.getElementById("canvas").getContext("2d");
+					window.myLine = new Chart(ctx).Line(lineChartData, {
+						responsive: true
+					});
+				}
 			}
 		});
 	}
@@ -219,6 +253,88 @@ function generateGraph(){
 							datasets : [
 								{
 									fillColor : "rgba(66, 161, 244, 0.5)",
+									strokeColor : "rgba(66, 161, 244, 0.5)",
+									highlightFill: "rgba(66, 161, 244, 0.5)",
+									highlightStroke: "rgba(220,220,220,1)",
+									data : employee_percents
+								},
+								{
+									fillColor : "rgba(244, 200, 66, 0.5)",
+									strokeColor : "rgba(244, 200, 66, 0.5)",
+									highlightFill : "rgba(244, 200, 66, 0.5)",
+									highlightStroke : "rgba(151,187,205,1)",
+									data : data_percents
+								}
+							]
+
+						}
+						$('#chart_container').html('');
+						$('#chart_container').html('<canvas id="canvas" height="450" width="600"></canvas>');
+						var ctx = document.getElementById("canvas").getContext("2d");
+						window.myBar = new Chart(ctx).Bar(barChartData, {
+							responsive : true
+						});
+					}
+					else if(graph_option == "line"){
+						var lineChartData = {
+							labels : names,
+							datasets : [
+								{
+									label: "My First dataset",
+									fillColor : "rgba(66, 161, 244, 0.5)",
+									strokeColor : "rgba(66, 161, 244, 0.5)",
+									pointColor : "rgba(66, 161, 244, 0.5)",
+									pointStrokeColor : "#fff",
+									pointHighlightFill : "#fff",
+									pointHighlightStroke : "rgba(220,220,220,1)",
+									data : employee_percents
+								},
+								{
+									label: "My Second dataset",
+									fillColor : "rgba(244, 200, 66, 0.5)",
+									strokeColor : "rgba(244, 200, 66, 0.5)",
+									pointColor : "rgba(244, 200, 66, 0.5)",
+									pointStrokeColor : "#fff",
+									pointHighlightFill : "#fff",
+									pointHighlightStroke : "rgba(151,187,205,1)",
+									data : data_percents
+								}
+							]
+
+						}
+						$('#chart_container').html('');
+						$('#chart_container').html('<canvas id="canvas" height="450" width="600"></canvas>');
+						var ctx = document.getElementById("canvas").getContext("2d");
+						window.myLine = new Chart(ctx).Line(lineChartData, {
+							responsive: true
+						});
+					}
+				}
+			});
+	}
+	else if(this_task == "123all"){
+			$.ajax({
+				type: "POST",
+				url: "create_task_list.php",
+				data: {info_all_tasks: info},
+				dataType: "json", // Set the data type so jQuery can parse it for you
+				success: function (averages) {
+					var tasks = averages[2];
+					var employee_percents = [];
+					var data_percents = [];
+					for(var i = 0; i < averages[0].length; i++){
+						employee_efficiency = (averages[0][i] / 40 * 100).toFixed(2);
+						data_efficiency = (averages[1][i] / 40 * 100).toFixed(2);
+						employee_percents[i] = 100 - employee_efficiency;
+						data_percents[i] = 100 - data_efficiency;
+					}
+					var graph_option = $("#graph_options").val();
+					if(graph_option == "bar"){
+						var barChartData = {
+							labels : tasks,
+							datasets : [
+								{
+									fillColor : "rgba(66, 161, 244, 0.5)",
 									strokeColor : "rgba(220,220,220,0.8)",
 									highlightFill: "rgba(220,220,220,0.75)",
 									highlightStroke: "rgba(220,220,220,1)",
@@ -241,34 +357,29 @@ function generateGraph(){
 							responsive : true
 						});
 					}
-				}
-			});
-	}
-	else if(this_task == "123all"){
-			$.ajax({
-				type: "POST",
-				url: "create_task_list.php",
-				data: {info_all_tasks: info},
-				dataType: "json", // Set the data type so jQuery can parse it for you
-				success: function (averages) {
-					var graph_option = $("#graph_option").val();
-					if(graph_option == "bar"){
-						var barChartData = {
-							labels : ["N/A"],
+					else if(graph_option == "line"){
+						var lineChartData = {
+							labels : tasks,
 							datasets : [
 								{
+									label: "My First dataset",
 									fillColor : "rgba(66, 161, 244, 0.5)",
-									strokeColor : "rgba(220,220,220,0.8)",
-									highlightFill: "rgba(220,220,220,0.75)",
-									highlightStroke: "rgba(220,220,220,1)",
-									data : [1]
+									strokeColor : "rgba(220,220,220,1)",
+									pointColor : "rgba(220,220,220,1)",
+									pointStrokeColor : "#fff",
+									pointHighlightFill : "#fff",
+									pointHighlightStroke : "rgba(220,220,220,1)",
+									data : employee_percents
 								},
 								{
+									label: "My Second dataset",
 									fillColor : "rgba(244, 200, 66, 0.5)",
-									strokeColor : "rgba(151,187,205,0.8)",
-									highlightFill : "rgba(151,187,205,0.75)",
-									highlightStroke : "rgba(151,187,205,1)",
-									data : [1]
+									strokeColor : "rgba(151,187,205,1)",
+									pointColor : "rgba(151,187,205,1)",
+									pointStrokeColor : "#fff",
+									pointHighlightFill : "#fff",
+									pointHighlightStroke : "rgba(151,187,205,1)",
+									data : data_percents
 								}
 							]
 
@@ -276,8 +387,8 @@ function generateGraph(){
 						$('#chart_container').html('');
 						$('#chart_container').html('<canvas id="canvas" height="450" width="600"></canvas>');
 						var ctx = document.getElementById("canvas").getContext("2d");
-						window.myBar = new Chart(ctx).Bar(barChartData, {
-							responsive : true
+						window.myLine = new Chart(ctx).Line(lineChartData, {
+							responsive: true
 						});
 					}
 				}

@@ -115,6 +115,44 @@
 		exit();
 	}
 	else if(isset($_POST["info_all_tasks"])){
-		echo json_encode("sup");
+		$data = $_POST["info_all_tasks"];
+		$employee_name = $data[0];
+		$job_id = $data[2];
+		
+		$result_distinct_task = mysqli_query($conn, "SELECT DISTINCT task FROM employee_data WHERE employee_name = '$employee_name' AND job_id = '$job_id'");
+		//arrays to pass back
+		$array_task = array();
+		$array_averages = array();
+		$array_data_averages = array();
+		//-------------------------------
+		$result_job = mysqli_query($conn, "SELECT records_total FROM job_ticket WHERE job_id = '$job_id'");
+		$row_job = $result_job->fetch_assoc();
+		$records_total = $row_job["records_total"];
+		while($row = $result_distinct_task->fetch_assoc()){
+			$task = $row["task"];
+			$result_employee_data = mysqli_query($conn, "SELECT * FROM employee_data WHERE employee_name = '$employee_name' AND task = '$task' AND job_id = '$job_id'");
+			$total_hours_employee = 0;
+			$total_count = 0;
+			while($row_employee_data = $result_employee_data->fetch_assoc()){
+				$recs_per_min_employee = $row_employee_data["recs_per_min"];
+				
+				$hours_employee = $records_total / $recs_per_min_employee / 60;
+				$total_hours_employee = $total_hours_employee + $hours_employee;
+				$total_count = $total_count + 1;
+			}
+			
+			$result_production_data = mysqli_query($conn, "SELECT recs_per_min FROM production_data WHERE job = '$task'");
+			$row_production_data = $result_production_data->fetch_assoc();
+			$recs_per_min_data = $row_production_data["recs_per_min"];
+			
+			$average_data = $records_total / $recs_per_min_data / 60;
+			$average_employee = $total_hours_employee / $total_count;
+			array_push($array_averages, $average_employee);
+			array_push($array_data_averages, $average_data);
+			array_push($array_task, $task);
+		}
+		$arr = array($array_averages, $array_data_averages, $array_task);
+		echo json_encode($arr);
+		exit();
 	}
 ?>
