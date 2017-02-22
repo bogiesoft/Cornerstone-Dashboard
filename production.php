@@ -119,9 +119,9 @@ if ($result->num_rows > 0) {
 			}
 			$x = $row["job_id"];
 			echo "<div class='project_block'>";
-				echo "<a href = 'edit_job.php?job_id=$x' style = 'text-decoration: none'><div class= 'priority_bar'>";
+				echo "<div class= 'priority_bar'>";
 					echo "<p style='width:100%; background-color:" . $color_priority . "; text-align:center; color:white;'>$value</p>";
-					echo "</div></a>";
+					echo "</div>";
 				echo "<div class='project_block_left'>";
 					echo "<div class = 'project_row1'>";
 					if($row["client_name"] != ""){
@@ -138,7 +138,7 @@ if ($result->num_rows > 0) {
 					}
 				   echo "</div>";
 				echo "<div class='project_row2'>";
-					echo "<p>" . $x . "</p>";
+					echo "<a href = 'edit_job.php?job_id=$x' style = 'text-decoration: none'><p>" . $x . "</p></a>";
 					echo "<p>Records total: ".$row1["records_total"]."</p>";
 					echo "<p>Due date: ".$row["due_date"]."</p>";
 					

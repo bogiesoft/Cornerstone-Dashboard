@@ -53,12 +53,21 @@ $(document).ready(function(){
 				<div class="newcontacttab-inner">
 					<div class="tabinner-detail">
 					<label>Material</label>
-					<input id="material" name="material" type="text" class="contact-prefix">
+					<select id="material" name="material" class="contact-prefix">
+					<option value = "0" select = "selected">--Select Material--</option>
+					<?php
+						$result = mysqli_query($conn, "SELECT DISTINCT material FROM materials");
+						while($row = $result->fetch_assoc()){
+							$material = $row["material"];
+							echo "<option value = '$material'>$material</option>";
+						}
+					?>
+					</select>
 					<div class="clear"></div>
 					</div>
 					<div class="tabinner-detail">
 					<label>Type</label>
-					<input id="type" name="type" type="text" class="contact-prefix">
+					<input id="type" name="type" type="text" class="contact-prefix"></input>
 					<div class="clear"></div>
 					</div>
 					<div class="tabinner-detail">

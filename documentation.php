@@ -88,8 +88,8 @@ require ("header.php");
 							echo '</div>';
 							echo '<div class="doc-text">';
 							echo "<p><i>by ".$user." on " . $string_date . "</i></p>";
-							echo "<p><i>".$row['description']."</i></p>";
-							echo "<p class = 'text'>" . $row["text"] . "</p>";
+							echo "<p><i>".$row['description']."...</i></p>";
+							
 							echo "</div>";
 							echo "</div>";
 							echo "</div>";

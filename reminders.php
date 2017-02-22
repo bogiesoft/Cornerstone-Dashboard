@@ -4,42 +4,8 @@ require('header.php');
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 	<h1 class="pull-left">Reminders</h1>
-	<a id = "add_rem_button" class="pull-right" href="#" class="add_button" onclick = "showAdd()">Add Reminder</a>
-	</div><br>
-<div id = "add_reminder" style = "display: none">
-	<form action = "add_reminder.php" method = "post">
-	<div class="tabinner-detail">
-	<label id = "date_label">Date</label>
-	<input id = "date" name="date" type="date" class="contact-prefix" style="width:95%;">
-	<div class="clear"></div>
-	</div><br>
-	<div class="tabinner-detail">
-	<label id = "occurence_label">Occurence</label><br>
-	<select style = "float: left; width: 150px" id = "occurence_id" name = "occurence" onchange = "showExtraInput()">
-	<option selected = 'selected' value = "Day">Day</option>
-	<option value = "DT">Day and Time</option>
-	<option value = "DUR">Duration</option>
-	</select>
-	<div class="clear"></div>
-	</div><br>
-	<div class="tabinner-detail">
-	<label id = "end_date_label" style = "display: none">End Date</label>
-	<input id = "end_date" name="end_date" type="date" class="contact-prefix" style="width:95%; display: none">
-	<div class="clear"></div>
-	</div><br>
-	<div class="tabinner-detail">
-	<label id = "time_label" style = "display: none">Time</label>
-	<input id = "time" name="time" type="time" class="contact-prefix" style="width:95%; display: none">
-	<div class="clear"></div>
-	</div><br>
-	<div class="tabinner-detail">
-	<label>Text</label><br>
-	<textarea name="text" style="float:right; width:600px; height:300px;"></textarea>
-	<div class="clear"></div>
-	</div><br>
-	<input class = "save-btn" type = "submit" name = "submit_form" value = "Add" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
-	</form>
-</div><br>
+	<a id = "add_rem_button" class="pull-right" href="add_reminder.php" class="add_button">Add Reminder</a>
+	</div>
 <div class="dashboard-detail">
 <?php
 require ("connection.php");

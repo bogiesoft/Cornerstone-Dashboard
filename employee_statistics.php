@@ -364,8 +364,8 @@ function generateGraph(){
 								{
 									label: "My First dataset",
 									fillColor : "rgba(66, 161, 244, 0.5)",
-									strokeColor : "rgba(220,220,220,1)",
-									pointColor : "rgba(220,220,220,1)",
+									strokeColor : "rgba(66, 161, 244, 0.5)",
+									pointColor : "rgba(66, 161, 244, 0.5)",
 									pointStrokeColor : "#fff",
 									pointHighlightFill : "#fff",
 									pointHighlightStroke : "rgba(220,220,220,1)",
@@ -374,8 +374,8 @@ function generateGraph(){
 								{
 									label: "My Second dataset",
 									fillColor : "rgba(244, 200, 66, 0.5)",
-									strokeColor : "rgba(151,187,205,1)",
-									pointColor : "rgba(151,187,205,1)",
+									strokeColor : "rgba(244, 200, 66, 0.5)",
+									pointColor : "rgba(244, 200, 66, 0.5)",
 									pointStrokeColor : "#fff",
 									pointHighlightFill : "#fff",
 									pointHighlightStroke : "rgba(151,187,205,1)",
