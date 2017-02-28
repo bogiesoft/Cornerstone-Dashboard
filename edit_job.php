@@ -73,7 +73,7 @@ function addWeights_Measures(){
 	if(number_of_rows<20){
 		number_of_rows=number_of_rows+1;
 		id_of_row=id_of_row+1;
-		$("#W_M_tbody").append(	"<tr id='"+id_of_row+"'><td >			<input type='checkbox' id='checkbox"+id_of_row+"'checked name='wm[]' value=''>		</td>		<td>			<select class='vendors' id='vendors"+id_of_row+"' name='vendor' style='width:220px;'>				<option value='default'>Select</option>			</select>		</td>		<td>			<select class='materials' id='materials"+id_of_row+"' name='material' style='width:220px;'>				<option value='default'>Select</option>			</select>		</td>		<td>			<select class='types' id='types"+id_of_row+"' name='vendor' style='width:220px;'>				<option value='default'>Select</option>			</select>		</td> <td><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeWeights_Measures('#" + id_of_row + "')></td>	</tr>");
+		$("#W_M_tbody").append(	"<tr id='"+id_of_row+"'><td >			<input type='checkbox' id='checkbox"+id_of_row+"'checked name='wm[]' value=''>		</td>		<td>			<select class='vendors' id='vendors"+id_of_row+"' name='vendor' style='width:220px;'>				<option value='default'>Select</option>			</select>		</td>		<td>			<select class='materials' id='materials"+id_of_row+"' name='material' style='width:220px;'>				<option value='default'>Select</option>			</select>		</td>		<td>			<select class='types' id='types"+id_of_row+"' name='vendor' style='width:220px;'>				<option value='default'>Select</option>			</select>		</td> <td><input type = 'date' name = 'expected_date" + number_of_rows + "'></input> </td><td><input type = 'checkbox' name = 'crst_pickup" + number_of_rows + "'></input></td><td><input type = 'text' name = 'initial" + number_of_rows + "'></input></td><td><input name = 'location" + number_of_rows + "' type = 'text'></td> <td><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeWeights_Measures('#" + id_of_row + "')></td>  </tr>");
 		getVendors(id_of_row);
 
 	}
@@ -549,7 +549,7 @@ require ("connection.php");
 					<table id="W_MTable" border="1" cellpadding="1" cellspacing="1" style='text-align: center; vertical-align: middle;'>
 					<thead>
 						<tr>
-					        <th>Select</th><th>Vendor</th><th>Material</th><th>type</th><th>Delete</th>
+					        <th>Select</th><th>Vendor</th><th>Material</th><th>type</th><th>Expected Date Received</th><th>CRST Pickup</th><th>Initial</th><th>Location</th><th>Delete</th>
 					    </tr>
 					</thead>
 					<tbody id="W_M_tbody">
@@ -568,7 +568,15 @@ require ("connection.php");
 						}
 						for($i = 0; $i < count($materials_array); $i++){
 							$material_id = $materials_array[$i];
+							$result_production_receipt = mysqli_query($conn, "SELECT * FROM production_receipts WHERE job_id = '$temp' AND wm_id = '$material_id'");
+							$row_pr = $result_production_receipt->fetch_assoc();
 							$result_wm = mysqli_query($conn, "SELECT * FROM materials WHERE material_id = '$material_id'");
+							
+							$expected_date = $row_pr["date_expected"];
+							$crst_pickup = $row_pr["crst_pickup"];
+							$initial = $row_pr["initial"];
+							$location = $row_pr["location"];
+							
 							if(mysqli_num_rows($result_wm) > 0){
 								$row = $result_wm->fetch_assoc();
 								echo "<tr id='".($i+1)."'>
@@ -580,6 +588,25 @@ require ("connection.php");
 								       	<td>
 											<select class='types' id='types1' name='vendor' style='width:220px;'><option value='default'>" . $row['type'] . "</option></select>
 										</td>
+										<td>
+											<input type = 'date' name = 'expected_date" . ($i + 1) . "' value = '$expected_date'></input>
+										</td>";
+										if($crst_pickup == 1){
+											echo "<td>
+												<input type = 'checkbox' name = 'crst_pickup" . ($i + 1) . "' checked = '$crst_pickup'></input>
+											</td>";
+										}
+										else{
+											echo "<td>
+												<input type = 'checkbox' name = 'crst_pickup" . ($i + 1) . "'></input>
+											</td>";
+										}
+										echo "<td>
+											<input type = 'text' name = 'initial" . ($i + 1) . "' value = '$initial'></input>
+										</td>
+										<td>
+											<input type = 'text' name = 'location" . ($i + 1) . "' value = '$location'></input>
+										</td>
 										<td><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeWeights_Measures('#" . ($i+1) . "')></td>
 								    </tr>";
 							}
@@ -590,7 +617,7 @@ require ("connection.php");
 				</div>
 				<div class="tabinner-detail">				
 				<label>Special Instructions</label>
-				<textarea name="special_instructions" class="contact-prefix" cols="80" rows="25"><?php echo $special_instructions ; ?></textarea>
+				<textarea name="special_instructions" class="contact-prefix" cols="80" rows="25"><?php echo $special_instructions; ?></textarea>
 				</div>
 				</div>
 				<div class="newcontact-tabbtm">

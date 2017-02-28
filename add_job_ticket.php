@@ -147,6 +147,31 @@ if(isset($_POST['submit_form'])){
 
 	$result7 = $conn->query($sql100) or die('Error querying database 6.');
 	
+	@$wm_array = $_POST['wm'];
+	
+	for($i = 0; $i < count($wm_array); $i++){
+		$material_id = $wm_array[$i];
+		$result_wm = mysqli_query($conn, "SELECT * FROM materials WHERE material_id = '$material_id'");
+		$index = $i + 1;
+		
+		$expected_date = $_POST["expected_date" . $index];
+		$crst_pickup = $_POST["crst_pickup" . $index];
+		if($crst_pickup == "on"){
+			$crst_pickup = 1;
+		}
+		$initial = $_POST["initial" . $index];
+		$location = $_POST["location" . $index];
+		
+		//echo $initial . " " . $index;
+		
+		$result_material = mysqli_query($conn, "SELECT * FROM materials WHERE material_id = '$material_id'");
+		$row_material = $result_material->fetch_assoc();
+		
+		
+		$vendor = $row_material["vendor"];
+		
+		mysqli_query($conn, "INSERT INTO production_receipts (job_id, wm_id, date_expected, crst_pickup, initial, location, vendor) VALUES ('$job_id', '$material_id', '$expected_date', '$crst_pickup', '$initial', '$location', '$vendor')") or die("error");
+	}
 
 	$conn->close();
 

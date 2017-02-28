@@ -89,7 +89,7 @@ function addWeights_Measures(){
     if(number_of_rows<20){
         number_of_rows=number_of_rows+1;
         id_of_row=id_of_row+1;
-        $("#W_M_tbody").append( "<tr id='"+id_of_row+"'><td >           <input type='checkbox' id='checkbox"+id_of_row+"'checked name='wm[]' value=''>        </td>     <td>          <select class='vendors' id='vendors"+id_of_row+"' name='vendor' style='width:220px;'>             <option value=''>Select</option>            </select>     </td>     <td>          <select class='materials' id='materials"+id_of_row+"' name='material' style='width:220px;'>               <option value=''>Select</option>            </select>     </td>     <td>          <select class='types' id='types"+id_of_row+"' name='vendor' style='width:220px;'>             <option value=''>Select</option>            </select>     </td> <td><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeWeights_Measures('#" + id_of_row + "')></td>  </tr>");
+        $("#W_M_tbody").append( "<tr id='"+id_of_row+"'><td >           <input type='checkbox' id='checkbox"+id_of_row+"'checked name='wm[]' value=''>        </td>     <td>          <select class='vendors' id='vendors"+id_of_row+"' name='vendor' style='width:220px;'>             <option value=''>Select</option>            </select>     </td>     <td>          <select class='materials' id='materials"+id_of_row+"' name='material' style='width:220px;'>               <option value=''>Select</option>            </select>     </td>     <td>          <select class='types' id='types"+id_of_row+"' name='vendor' style='width:220px;'>             <option value=''>Select</option>            </select>     </td><td><input type = 'date' name = 'expected_date" + number_of_rows + "'></input> </td><td><input type = 'checkbox' name = 'crst_pickup" + number_of_rows + "'></input></td><td><input type = 'text' name = 'initial" + number_of_rows + "'></input></td><td><input name = 'location" + number_of_rows + "' type = 'text'></td> <td><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeWeights_Measures('#" + id_of_row + "')></td>  </tr>");
         getVendors(id_of_row);
  
     }
@@ -485,7 +485,7 @@ function getTypes(row_id)
                     <table id="W_MTable" border="1" cellpadding="1" cellspacing="1" style='text-align: center; vertical-align: middle;'>
                         <thead>
                         <tr>
-                            <th>Select</th><th>Vendor</th><th>Material</th><th>type</th><th>Delete</th>
+                            <th>Select</th><th>Vendor</th><th>Material</th><th>Type</th><th>Expected Date Received</th><th>CRST Pickup</th><th>Initial</th><th>Location</th><th>Delete</th>
                         </tr>
                         </thead>
                         <tbody id="W_M_tbody">
@@ -511,6 +511,18 @@ function getTypes(row_id)
                                         <td>
                                             <select class='types' id='types1' name='vendor' style='width:220px;'><option value=''>Select</option></select>
                                         </td>
+										<td>
+											<input type = 'date' name = 'expected_date1'></input>
+										</td>
+										<td>
+											<input type = 'checkbox' name = 'crst_pickup1'></input>
+										</td>
+										<td>
+											<input type = 'text' name = 'initial1'></input>
+										</td>
+										<td>
+											<input type = 'text' name = 'location1'></input>
+										</td>
                                         <td><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeWeights_Measures('#1')></td>
                                     </tr>";
                                     }

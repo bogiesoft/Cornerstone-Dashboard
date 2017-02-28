@@ -161,7 +161,28 @@ if(isset($_POST['submit_form'])){
 			$sql5 = "INSERT INTO timestamp (user,time,job, a_p,processed_by,viewed) VALUES ('$user_name', '$today','$job', '$a_p','$processed_by','no')";
 			$result5 = $conn->query($sql5) or die('Error querying database 5.');
 			
-			
+			for($i = 0; $i < count($wm); $i++){
+				$material_id = $wm[$i];
+				$result_wm = mysqli_query($conn, "SELECT * FROM materials WHERE material_id = '$material_id'");
+				$row_wm = $result_wm->fetch_assoc();
+				$vendor = $row_wm["vendor"];
+				$index = $i + 1;
+				$date_expected = $_POST["expected_date" . $index];
+				$crst_pickup = $_POST["crst_pickup" . $index];
+				if($crst_pickup == "on"){
+					$crst_pickup = 1;
+				}
+				$initial = $_POST["initial" . $index];
+				$location = $_POST["location" . $index];
+				
+				$check_dup = mysqli_query($conn, "SELECT * FROM production_receipts WHERE job_id = '$job_id' AND wm_id = '$material_id'");
+				if(mysqli_num_rows($check_dup) > 0){
+					mysqli_query($conn, "UPDATE production_receipts SET date_expected = '$date_expected', crst_pickup = '$crst_pickup', initial = '$initial', location = '$location' WHERE job_id = '$job_id' AND wm_id = '$material_id'");
+				}
+				else{
+					mysqli_query($conn, "INSERT INTO production_receipts (job_id, wm_id, date_expected, crst_pickup, initial, location, vendor) VALUES ('$job_id', '$material_id', '$date_expected', '$crst_pickup', '$initial', '$location', '$vendor')");
+				}
+			}
 	 
 			$conn->close();
 			header("location: dashboard.php");
