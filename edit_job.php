@@ -1,6 +1,11 @@
 <?php
 require ("header.php");
 ?>
+<style>
+li {
+	list-style-type: none;
+}
+</style>
 <script src="JobTicketSweetAlert.js"></script>
 <script type="text/javascript">
 
@@ -463,20 +468,63 @@ require ("connection.php");
 				<div class="tabinner-detail">
 				<label>Tasks</label>
 				<ul name="tasks[]">
-					  <li selected = "selected" value = ""></li>
 					  <?php 
 					  $entire_task = array("Mail Merge","Letter Printing", "In-House Envelope Printing", "Tabbing","Folding","Inserting","Sealing","Collating","Labeling","Print Permit","Correct Permit","Carrier Route","Endorsement line","Address Printing","Tag as Political","Inkjet Printing","Glue Dots");
 					  $task_array = explode(",", $tasks);
 						for($i = 0;$i<count($entire_task);$i++){
+							$found_special_task = FALSE;
+							$found_normal_task = FALSE;
 							//checked only those task which is in the $task_array
-							if(in_array($entire_task[$i], $task_array))
-								echo '<li><input type = "checkbox" name = "tasks[]" value="'.$entire_task[$i].'" checked/>'.$entire_task[$i].'</li>';
-							else
-								echo '<li><input type = "checkbox" name = "tasks[]" value="'.$entire_task[$i].'" />'.$entire_task[$i].'</li>';
+							for($ii = 0; $ii<count($task_array); $ii++){
+								if(strpos($task_array[$ii], "^") !== FALSE){
+									$task_array_2 = explode("^", $task_array[$ii]);
+									if(in_array($entire_task[$i], $task_array_2) && $task_array_2[0] == "Mail Merge"){
+										$found_special_task = TRUE;
+										echo "<li><input type = 'checkbox' name = 'tasks[]' value='".$entire_task[$i]."' checked/><label>".$entire_task[$i]."</label><select name = 'special_mail_merge'><option select = 'selected' value = '" . $task_array_2[1] . "'>" . $task_array_2[1] . "</option><option value = 'Sent to Vendor'>Sent to Vendor</option><option value = 'In-House'>In-House</option></select></li>";
+									}
+									else if(in_array($entire_task[$i], $task_array_2) && $task_array_2[0] == "Letter Printing"){
+										$found_special_task = TRUE;
+										echo "<li><input type = 'checkbox' name = 'tasks[]' value='".$entire_task[$i]."' checked/><label>".$entire_task[$i]."</label><select name = 'special_letter_printing'><option select = 'selected' value = '" . $task_array_2[1] . "'>" . $task_array_2[1] . "</option><option value = 'From PDF'>From PDF</option><option value = 'Inkjet'>Inkjet</option></select></li>";
+									}
+									else if(in_array($entire_task[$i], $task_array_2) && $task_array_2[0] == "Tabbing"){
+										$found_special_task = TRUE;
+										echo "<li><input type = 'checkbox' name = 'tasks[]' value='".$entire_task[$i]."' checked/><label>".$entire_task[$i]."</label><select name = 'special_tabbing'><option select = 'selected' value = '" . $task_array_2[1] . "'>" . $task_array_2[1] . "</option><option value = 'Manual Single'>Manual Single</option><option value = 'Manual Double'>Manual Double</option><option value = 'Auto Single'>Auto Single</option><option value = 'Auto Double'>Auto Double</option></select></li>";
+									}
+									else if(in_array($entire_task[$i], $task_array_2) && $task_array_2[0] == "Folding"){
+										$found_special_task = TRUE;
+										echo "<li><input type = 'checkbox' name = 'tasks[]' value='".$entire_task[$i]."' checked/><label>".$entire_task[$i]."</label><select name = 'special_folding'><option select = 'selected' value = '" . $task_array_2[1] . "'>" . $task_array_2[1] . "</option><option value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option></select></li>";
+									}
+									else if(in_array($entire_task[$i], $task_array_2) && $task_array_2[0] == "Inserting"){
+										$found_special_task = TRUE;
+										echo "<li><input type = 'checkbox' name = 'tasks[]' value='".$entire_task[$i]."' checked/><label>".$entire_task[$i]."</label><select name = 'special_inserting'><option select = 'selected' value = '" . $task_array_2[1] . "'>" . $task_array_2[1] . "</option><option value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option></select></li>";
+									}
+									else if(in_array($entire_task[$i], $task_array_2) && $task_array_2[0] == "Sealing"){
+										$found_special_task = TRUE;
+										echo "<li><input type = 'checkbox' name = 'tasks[]' value='".$entire_task[$i]."' checked/><label>".$entire_task[$i]."</label><select name = 'special_sealing'><option select = 'selected' value = '" . $task_array_2[1] . "'>" . $task_array_2[1] . "</option><option value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option></select></li>";
+									}
+									else if(in_array($entire_task[$i], $task_array_2) && $task_array_2[0] == "Collating"){
+										$found_special_task = TRUE;
+										echo "<li><input type = 'checkbox' name = 'tasks[]' value='".$entire_task[$i]."' checked/><label>".$entire_task[$i]."</label><select name = 'special_collating'><option select = 'selected' value = '" . $task_array_2[1] . "'>" . $task_array_2[1] . "</option><option value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option><option value = 'Man. and Auto'>Man. and Auto</option></select></li>";
+									}
+									else if(in_array($entire_task[$i], $task_array_2) && $task_array_2[0] == "Inkjet Printing"){
+										$found_special_task = TRUE;
+										echo "<li><input type = 'checkbox' name = 'tasks[]' value='".$entire_task[$i]."' checked/><label>".$entire_task[$i]."</label><select name = 'special_inkjet_printing'><option select = 'selected' value = '" . $task_array_2[1] . "'>" . $task_array_2[1] . "</option><option value = '26K'>26K</option><option value = '11K'>11K</option></select></li>";
+									}
+								}
+								else if(in_array($entire_task[$i], $task_array))
+								{
+									echo '<li><input type = "checkbox" name = "tasks[]" value="'.$entire_task[$i].'" checked/>'.$entire_task[$i].'</li>';
+								}
+								
+								/*if(in_array($entire_task[$i], $task_array))
+									echo '<li><input type = "checkbox" name = "tasks[]" value="'.$entire_task[$i].'" checked/>'.$entire_task[$i].'</li>';
+								else
+									echo '<li><input type = "checkbox" name = "tasks[]" value="'.$entire_task[$i].'" />'.$entire_task[$i].'</li>';*/
+							}
 						}
 					  ?>
 					  
-					</select>
+					</ul>
 				</div>
 				
 				<div class="tabinner-detail">

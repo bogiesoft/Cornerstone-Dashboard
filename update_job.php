@@ -83,7 +83,11 @@ if(isset($_POST['submit_form'])){
 								}
 							}
 						}
-					}
+						if(!in_array($array_old[$ii], $wm)){
+							$wm_id = $array_old[$ii];
+							mysqli_query($conn, "DELETE FROM production_receipts WHERE job_id = '$job_id' AND wm_id = '$wm_id'");
+						}
+			}
 			$job = "updated job ticket " . $job_id;
 			
 			$client_name = $_POST['client_name'];			
@@ -229,6 +233,7 @@ else if(isset($_POST['delete_form'])){
 	mysqli_query($conn, $sql1);
 	$sql1 = "DELETE FROM customer_service WHERE job_id = '$job_id'";
 	mysqli_query($conn, $sql1);
+	mysqli_query($conn, "DELETE FROM production_receipts WHERE job_id = '$job_id'");
 	$conn->close();
 	header("location: dashboard.php");
 	exit();

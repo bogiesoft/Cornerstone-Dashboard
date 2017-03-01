@@ -6,13 +6,15 @@ require('header.php');
 <div class="contacts-title">
 	<h1 class="pull-left">Time Tracker</h1>
 	<a class="pull-right" href="production.php" >Back to Production</a>
-	</div><br><br><br><br>
+	</div>
+<div class="dashboard-detail">
 <form action="add_production_data.php" method="post">
-<div>Total Records &nbsp; <br><input name = "records" type = "text" id = "records" style = "width: 80px" value = "1"></input></div><p id = "recs_error" style = "color:red;"></p><br><br>
+<div>Total Records &nbsp; <input name = "records" type = "text" id = "records" style = "width: 80px" value = "1"></input><p id = "recs_error" style = "color:red;"></p></div>
   <div class = "prod_info">
+  <div class = "new_task">
 	<h1>Task 1: </h1>
 	<label style = "float: left;">Records/Minute</label> &nbsp; <input name = "recs_per_min" type = "text" id = "recs_per_min" style = "float: left; margin-right: 10px; width: 40px; font-size = 18px;" value = "1"></input>
-<label style = "float: left;">Job</label> &nbsp; <select style = "float: left; width: 200px" name = "job" id = "job">
+<label style = "float: left;">Job</label> &nbsp; <span class = 'job_info'><select style = "float: left; width: 200px" name = "job" id = "job" onchange = "checkSpecial('special')">
 	<option value="Mail Merge">Mail Merge</option>
 					  <option value="Letter Printing">Letter Printing</option>
 					  <option value="In-House Envelope Printing">In-House Envelope Printing</option>
@@ -30,9 +32,9 @@ require('header.php');
 					  <option value="Tag as Political">Tag as Political</option>
 					  <option value="Inkjet Printing">Inkjet Printing</option>
 					  <option value="Glue Dots">Glue Dots</option>
-</select><br><br>
+</select></span>
 <p id = "error" style = "color: red;"></p>
-</div><br>
+</div></div><br>
 <h1><progress id = "progress_bar" value = "0" max = "40" style = "background-color: red"></progress></h1><br>
 <h2 id = "display_time">Hours: 0</h2><br>
 <h2 id = "eff">Efficiency: </h2><br>
@@ -60,7 +62,7 @@ $result = mysqli_query($conn,"SELECT * FROM production_data");
 echo " <div id = 'table-scroll' class='allcontacts-table'><table style = 'width: 100%' id = 'table' border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
 echo "<tbody>";
 echo "<tr valign='top'><th class='allcontacts-title'>All Data<span class='allcontacts-subtitle'></span></th></tr>";
-echo "<tr valign='top'><td colspan='2'><table style = 'width: 100%' id = 'production_data_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Task</th><th id = 'contact_name' class='maintable-thtwo data-header' data-name='contact_name' data-index='1'>Total Records</th><th id = 'address' class='maintable-thtwo data-header' data-name='client_add' data-index='2'>Records/Minute</th><th id = 'address' class='maintable-thtwo data-header' data-name='client_add' data-index='2'>Hours</th></tr></thead><tbody>";
+echo "<tr valign='top'><td colspan='2'><table style = 'width: 100%' id = 'production_data_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Task</th><th id = 'client_name' class='maintable-thtwo data-header' data-name='client_name' data-index='0'>Special</th><th id = 'contact_name' class='maintable-thtwo data-header' data-name='contact_name' data-index='1'>Total Records</th><th id = 'address' class='maintable-thtwo data-header' data-name='client_add' data-index='2'>Records/Minute</th><th id = 'address' class='maintable-thtwo data-header' data-name='client_add' data-index='2'>Hours</th></tr></thead><tbody>";
 
 
 if ($result->num_rows > 0) {
@@ -69,8 +71,10 @@ if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
 		
 
-		$foo=$row['job'];
-		echo "<tr class = 'hoverTab'><td><a href = 'edit_production_data.php?id=$foo'>".$row["job"]."</a></td><td>".  $row["total_records"]."</td><td>". $row["recs_per_min"] . "</td><td>" . $row["hours"] . "</td></tr>";
+		$foo=array($row['job'], $row['special']);
+		$stren = serialize($foo);
+		$stren_url = urlencode($stren);
+		echo "<tr class = 'hoverTab'><td><a href = 'edit_production_data.php?id=$stren_url'>".$row["job"]."</a></td><td>".$row["special"]."</td><td>".  $row["total_records"]."</td><td>". $row["recs_per_min"] . "</td><td>" . $row["hours"] . "</td></tr>";
     }
 	echo "</tbody></table></td></tr></tbody></table></div>";
 } else {
@@ -287,14 +291,14 @@ function nextPage(){
 	var Task = 2;
 	
 	function addTask(){
-		$(".prod_info").append("<div class = 'new_task" + count + "'><h1>Task " + Task + ":</h1><label style = 'float: left;'>Records/Minute</label> &nbsp; <input name = 'recs_per_min" + count + "' type = 'text' id = 'recs_per_min" + count + "' style = 'float: left; width: 40px; font-size = 18px;' value = '1'> &nbsp; </input><label style = 'float: left;'>Job</label> &nbsp; <select style = 'float: left;width: 200px;' name = 'job" + count + "' id = 'job" + count + "'></select><br><p id = 'error" + count + "' style = 'color:red;'></p></div>");
+		$(".prod_info").append("<div class = 'new_task" + count + "'><h1>Task " + Task + ":</h1><label style = 'float: left;'>Records/Minute</label> &nbsp; <input name = 'recs_per_min" + count + "' type = 'text' id = 'recs_per_min" + count + "' style = 'float: left; width: 40px; font-size = 18px;' value = '1'></input>&nbsp;<label style = 'float: left;'>Job</label> &nbsp; <span class = 'job_info" + count + "'><select style = 'float: left;width: 200px;' name = 'job" + count + "' id = 'job" + count + "' onchange = checkSpecial('special" + count + "')></select>");
 		for(var i = 0; i < jobList.length; i++){
 			var opt = document.createElement('option');
 			opt.value = jobList[i];
 			opt.innerHTML = jobList[i];
 			document.getElementById("job" + count).appendChild(opt);
 		}
-		
+		$(".prod_info").append("</span><br><p id = 'error" + count + "' style = 'color:red;'></p></div>");
 		recs_min.push("recs_per_min" + count);
 		job.push("job" + count);
 		errors.push("error" + count);
@@ -394,6 +398,50 @@ function removeTask(){
 		Task = Task + 1;
 	}
 }
+function checkSpecial(id_name){
+	var number = id_name[id_name.length-1];
+	$("#" + id_name).remove();
+	if(!isNaN(number)){
+		if($("#job" + number).val() == "Mail Merge"){
+			$(".job_info" + number).append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = 'Sent to Vendor'>Sent to Vendor</option><option value = 'In-House'>In-House</option></select>");
+		}
+		else if($("#job" + number).val() == "Letter Printing"){
+			$(".job_info" + number).append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = 'From PDF'>From PDF</option><option value = 'Inkjet'>Inkjet</option></select>");
+		}
+		else if($("#job" + number).val() == "Tabbing"){
+			$(".job_info" + number).append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = 'Manual Single'>Manual Single</option><option value = 'Manual Double'>Manual Double</option><option value = 'Auto Single'>Auto Single</option><option value = 'Auto Double'>Auto Double</option></select>");
+		}
+		else if($("#job" + number).val() == "Folding" || $("#job" + number).val() == "Inserting" || $("#job" + number).val() == "Sealing"){
+			$(".job_info" + number).append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option></select>");
+		}
+		else if($("#job" + number).val() == "Collating"){
+			$(".job_info" + number).append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option><option value = 'Man. and Auto'>Man. and Auto</option></select>");
+		}
+		else if($("#job" + number).val() == "Inkjet Printing"){
+			$(".job_info" + number).append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = '26K'>26K</option><option value = '11K'>11K</option></select>");
+		}
+	}
+	else{
+		if($("#job").val() == "Mail Merge"){
+			$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = 'Sent to Vendor'>Sent to Vendor</option><option value = 'In-House'>In-House</option></select>");
+		}
+		else if($("#job").val() == "Letter Printing"){
+			$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = 'From PDF'>From PDF</option><option value = 'Inkjet'>Inkjet</option></select>");
+		}
+		else if($("#job").val() == "Tabbing"){
+			$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = 'Manual Single'>Manual Single</option><option value = 'Manual Double'>Manual Double</option><option value = 'Auto Single'>Auto Single</option><option value = 'Auto Double'>Auto Double</option></select>");
+		}
+		else if($("#job").val() == "Folding" || $("#job").val() == "Inserting" || $("#job").val() == "Sealing"){
+			$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option></select>");
+		}
+		else if($("#job").val() == "Collating"){
+			$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option><option value = 'Man. and Auto'>Man. and Auto</option></select>");
+		}
+		else if($("#job").val() == "Inkjet Printing"){
+			$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = '26K'>26K</option><option value = '11K'>11K</option></select>");
+		}
+	}
+}
 </script>
-
+</div>
 </div>

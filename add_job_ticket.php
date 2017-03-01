@@ -94,10 +94,38 @@ if(isset($_POST['submit_form'])){
 	//$completed = $_POST['completed']; commented because not needed
 	@$tasks_array= $_POST['tasks']; 
 	$tasks = "";
-	if( is_array($tasks_array)){
-	$tasks = implode(',', $_POST['tasks']);
+	for($i = 0; $i < count($tasks_array); $i++){
+		if($tasks_array[$i] == "Mail Merge"){
+			$tasks.="Mail Merge^" . $_POST["special_mail_merge"] . ",";
+		}
+		else if($tasks_array[$i] == "Letter Printing"){
+			$tasks.="Letter Printing^" . $_POST["special_letter_printing"] . ",";
+		}
+		else if($tasks_array[$i] == "Tabbing"){
+			$tasks.="Tabbing^" . $_POST["special_tabbing"] . ",";
+		}
+		else if($tasks_array[$i] == "Folding"){
+			$tasks.="Folding^" . $_POST["special_folding"] . ",";
+		}
+		else if($tasks_array[$i] == "Inserting"){
+			$tasks.="Inserting^" . $_POST["special_inserting"] . ",";
+		}
+		else if($tasks_array[$i] == "Collating"){
+			$tasks.="Collating^" . $_POST["special_collating"]. ",";
+		}
+		else if($tasks_array[$i] == "Sealing"){
+			$tasks.="Sealing^" . $_POST["special_sealing"] . ",";
+		}
+		else if($tasks_array[$i] == "Inkjet Printing"){
+			$tasks.="Inkjet Printing^" . $_POST["special_inkjet_printing"] . ",";
+		}
+		else{
+			$tasks.=$tasks_array[$i] . ",";
+		}
 	}
-
+	
+	$tasks = substr($tasks, 0, -1);
+	
 	$completed_date = date("Y-m-d", strtotime($_POST['completed_date']));
 	$data_hrs = $_POST['data_hrs'];
 	$gd_hrs = $_POST['gd_hrs'];

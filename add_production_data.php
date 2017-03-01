@@ -1,16 +1,6 @@
 <?php
 	
-	$servername = "localhost";
-	$username = "root";
-	$password = "";
-	$dbname= "crst_dashboard";
-
-	// Create Connection
-	$conn = new mysqli($servername, $username, $password, $dbname);
-
-	if ($conn->connect_error) {
-		die("Connection failed: " . $conn->connect_error);
-	} 
+	require("connection.php");
 	
 	$total_records = 0;				//total_records
 	
@@ -34,6 +24,7 @@
 	
 	$recs_min_id = "recs_per_min";
 	$job_id = "job";
+	$special_id = "special";
 	$count = 1;
 	
 	while(isset($_POST[$recs_min_id])){
@@ -57,16 +48,22 @@
 			$hours = $total_records / $recs_min / 60;
 		}
 		
+		$special = "None";
+		if(isset($_POST[$special_id])){
+			$special = $_POST[$special_id];
+		}
+		
 		$recs_min_id = "recs_per_min" . $count;
 		$job_id = "job" . $count;
+		$special_id = "special" . $count;
 		$count = $count + 1;
 		
-		$result_check = mysqli_query($conn, "SELECT job FROM production_data WHERE job = '$job'");
+		$result_check = mysqli_query($conn, "SELECT job FROM production_data WHERE job = '$job' AND special = '$special'");
 		if(mysqli_num_rows($result_check) > 0){
-			mysqli_query($conn, "UPDATE production_data SET total_records = '$total_records', recs_per_min = '$recs_min', hours = '$hours' WHERE job = '$job'");
+			mysqli_query($conn, "UPDATE production_data SET total_records = '$total_records', recs_per_min = '$recs_min', hours = '$hours' WHERE job = '$job' AND special = '$special'");
 		}
 		else{
-			mysqli_query($conn, "INSERT INTO production_data (total_records, recs_per_min, hours, job) VALUES ('$total_records', '$recs_min', '$hours', '$job')");
+			mysqli_query($conn, "INSERT INTO production_data (total_records, recs_per_min, hours, job, special) VALUES ('$total_records', '$recs_min', '$hours', '$job', '$special')");
 		}
 		
 	}
