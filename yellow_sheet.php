@@ -1,3 +1,4 @@
+
 <?php
 require('connection.php');
 if(isset($_POST['submit_form'])){
@@ -43,8 +44,7 @@ if(isset($_POST['submit_form'])){
 require('header.php');
 $job_id = $_GET['job_id'];
 $_SESSION['yellow_sheet_job_id'] = $job_id;
-$result = mysqli_query($conn, "SELECT * FROM project_management WHERE job_id = '$job_id'");
-$row = $result->fetch_assoc();
+
 ?>
 
 <div class="dashboard-cont" style="padding-top:110px;">
@@ -65,78 +65,47 @@ $row = $result->fetch_assoc();
 			<div role="tabpanel" class="tab-pane active" id="home">
 			<div class="newcontactstab-detail">
 <form action="" method="post">
-<div class="newcontacttab-inner" style="width:700px;">
-	<div class="tabinner-detail">
-	<div class="clear"></div>
-	</div>	
-	<div class="tabinner-detail">
-	<label style="width:30%; float:left">Complete</label><label style = 'width: 27%; float: right'>N/A</label>
-	<div class="clear"></div>
-	</div>
-	<div class="tabinner-detail">
-	<input type="checkbox" name="1" class="contact-prefix" style="width:10%; float:left;"<?php if($row['1'] == 1){echo "checked";}?>><label style="width:30%; float:left">Permit is correct</label><input type="checkbox" name="na_1" class="contact-prefix" style="width:50%; float:right;"<?php if($row['na_1'] == 1){echo "checked";}?>>
-	<div class="clear"></div>
-	</div>
-	<div class="tabinner-detail">
-	<input style="width:10%; float:left" name="2" type="checkbox" class="contact-prefix"<?php if($row['2'] == 1){echo "checked";}?>><label style="width:30%; float:left">Non-profit verified</label><input type="checkbox" name="na_2" class="contact-prefix" style="width:50%; float:right;"<?php if($row['na_2'] == 1){echo "checked";}?>>
-	<div class="clear"></div>
-	</div>
-	<div class="tabinner-detail">
-	<input style="width:10%; float:left" name="3" type="checkbox" class="contact-prefix"<?php if($row['3'] == 1){echo "checked";}?>><label style="width:30%; float:left">Move Update/NCOA</label><input type="checkbox" name="na_3" class="contact-prefix" style="width:50%; float:right;"<?php if($row['na_3'] == 1){echo "checked";}?>>
-	<div class="clear"></div>
-	</div>
-	<div class="tabinner-detail">
-	<input style="width:10%; float:left" name="4" type="checkbox" class="contact-prefix"<?php if($row['4'] == 1){echo "checked";}?>><label style="width:30%; float:left">Manual Duplicate review</label><input type="checkbox" name="na_4" class="contact-prefix" style="width:50%; float:right;"<?php if($row['na_4'] == 1){echo "checked";}?>>
-	<div class="clear"></div>
-	</div>
-	<div class="tabinner-detail">
-	<input style="width:10%; float:left" name="5" type="checkbox" class="contact-prefix"<?php if($row['5'] == 1){echo "checked";}?>><label style="width:30%; float:left">Foreign Address Formatting</label><input type="checkbox" name="na_5" class="contact-prefix" style="width:50%; float:right;"<?php if($row['na_5'] == 1){echo "checked";}?>>
-	<div class="clear"></div>
-	</div>
-	<div class="tabinner-detail">
-	<input style="width:10%; float:left" name="6" type="checkbox" class="contact-prefix"<?php if($row['6'] == 1){echo "checked";}?>><label style="width:30%; float:left">Blue Sheet Completed</label><input type="checkbox" name="na_6" class="contact-prefix" style="width:50%; float:right;"<?php if($row['na_6'] == 1){echo "checked";}?>>
-	<div class="clear"></div>
-	</div>
-	<div class="tabinner-detail">
-	<input style="width:10%; float:left" name="7" type="checkbox" class="contact-prefix"<?php if($row['7'] == 1){echo "checked";}?>><label style="width:30%; float:left">Actual Postage verified against Estimate</label><input type="checkbox" name="na_7" class="contact-prefix" style="width:50%; float:right;"<?php if($row['na_7'] == 1){echo "checked";}?>>
-	<div class="clear"></div>
-	</div>
-	<div class="tabinner-detail">
-	<input style="width:10%; float:left" name="8" type="checkbox" class="contact-prefix"<?php if($row['8'] == 1){echo "checked";}?>><label style="width:30%; float:left">NCOA checked off</label><input type="checkbox" name="na_8" class="contact-prefix" style="width:50%; float:right;"<?php if($row['na_8'] == 1){echo "checked";}?>>
-	<div class="clear"></div>
-	</div>
-	<div class="tabinner-detail">
-	<input style="width:10%; float:left" name="9" type="checkbox" class="contact-prefix"<?php if($row['9'] == 1){echo "checked";}?>><label style="width:30%; float:left">Save mail.dat</label><input type="checkbox" name="na_9" class="contact-prefix" style="width:50%; float:right;"<?php if($row['na_9'] == 1){echo "checked";}?>>
-	<div class="clear"></div>
-	</div>
-	<div class="tabinner-detail">
-	<input style="width:10%; float:left" name="10" type="checkbox" class="contact-prefix"<?php if($row['10'] == 1){echo "checked";}?>><label style="width:30%; float:left">Double checked job</label><input type="checkbox" name="na_10" class="contact-prefix" style="width:50%; float:right;"<?php if($row['na_10'] == 1){echo "checked";}?>>
-	<div class="clear"></div>
-	</div>
-	<div class="tabinner-detail">
-	<input style="width:10%; float:left" name="11" type="checkbox" class="contact-prefix"<?php if($row['11'] == 1){echo "checked";}?>><label style="width:30%; float:left">Update job ticket</label><input type="checkbox" name="na_11" class="contact-prefix" style="width:50%; float:right;"<?php if($row['na_11'] == 1){echo "checked";}?>>
-	<div class="clear"></div>
-	</div>
-	<div class="tabinner-detail">
-	<input style="width:10%; float:left" name="12" type="checkbox" class="contact-prefix"<?php if($row['12'] == 1){echo "checked";}?>><label style="width:30%; float:left">Are examples printed out?</label><input type="checkbox" name="na_12" class="contact-prefix" style="width:50%; float:right;"<?php if($row['na_12'] == 1){echo "checked";}?>>
-	<div class="clear"></div>
-	</div>
-	<div class="tabinner-detail">
-	<input style="width:10%; float:left" name="13" type="checkbox" class="contact-prefix"<?php if($row['13'] == 1){echo "checked";}?>><label style="width:30%; float:left">Sign job ticket</label><input type="checkbox" name="na_13" class="contact-prefix" style="width:50%; float:right;"<?php if($row['na_13'] == 1){echo "checked";}?>>
-	<div class="clear"></div>
-	</div>
-	<div class="tabinner-detail">
-	<input style="width:10%; float:left" name="14" type="checkbox" class="contact-prefix"<?php if($row['14'] == 1){echo "checked";}?>><label style="width:30%; float:left">Manually checked data for errors?</label><input type="checkbox" name="na_14" class="contact-prefix" style="width:50%; float:right;"<?php if($row['na_14'] == 1){echo "checked";}?>>
-	<div class="clear"></div>
-	</div>	
+<?php
+require ("connection.php");
+$result = mysqli_query($conn,"SELECT * FROM project_management WHERE job_id = '$job_id'");
+echo " <div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
+echo "<tbody>";
+echo "<tr valign='top'><th class='allcontacts-title'>Yellow Sheet<span class='allcontacts-subtitle'></span></th></tr>";
+echo "<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='vendor' data-index='4'>Description</th><th class='maintable-thtwo data-header' data-name='material' data-index='6'>Complete</th><th class='maintable-thtwo data-header' data-name='type' data-index='7'>N/A</th></tr></thead><tbody>";
+
+$descriptions = array("Permit is Complete", "Non-Profit Verified", "Move Update/NCOA", "Manual Duplicate Review", "Foreign Address Formatting", "Blue Sheet Completed", "Actual Postage Verified Against Estimate", 
+						"NCOA Checked Off", "Save mail.dat", "Double Checked Job", "Update Job Ticket", "Are Examples Printed Out", "Sign Job Ticket", "Manually Checked Data For Errors");
+if ($result->num_rows > 0) {
+    // output data of each row
+	$row = $result->fetch_assoc();
+	
+    for($i = 0; $i <= 13; $i++) {
+		$index = $i + 1;
+		$complete = $row[$index];
+		$na = $row['na_' . $index];
+		echo "<tr><td>" . $descriptions[$i] . "</td><td><input type='checkbox' name='" . $index . "' class='contact-prefix' ";
+		if($complete == 1){
+			echo "checked";
+		}
+		echo "></td><td><input type='checkbox' name='na_" . $index . "' class='contact-prefix' ";
+		if($na == 1){
+			echo "checked";
+		}
+		echo "></td></tr>";
+    }
+	echo "</tbody></table></td></tr></tbody></table></div>";
+} else {
+    echo "0 results";
+}
+$conn->close();
+?>
+</div>
+<div class="newcontact-tabbtm">
+	<input class="save-btn" type="submit" value="Save" name="submit_form" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
+</div>
+</form>
 </div>
 </div>
-				<div class="newcontact-tabbtm">
-					<input class="save-btn" type="submit" value="Save" name="submit_form" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
-				</div>
-			</form>
-			</div>
-		</div>
-	</div>
+</div>
 </div>
 </div>
