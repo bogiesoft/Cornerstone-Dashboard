@@ -76,7 +76,19 @@ $columns = array(
 		$nestedData[] = $full_name;
 		$nestedData[] = $row["recs_per_min"];
 		$nestedData[] = $row["hours"];
-		$nestedData[] = $row["task"];
+		$job = $row["task"];
+		$special = "None";
+		if(strpos($job, "^") !== FALSE){
+			$split_job = explode("^", $job);
+			$job = $split_job[0];
+			$special = $split_job[1];
+		}
+		if($special == "None"){
+			$nestedData[] = $row["task"];
+		}
+		else{
+			$nestedData[] = $job . "(" . $special . ")";
+		}
 		
 		$data[] = $nestedData;
 	}

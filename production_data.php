@@ -9,12 +9,12 @@ require('header.php');
 	</div>
 <div class="dashboard-detail">
 <form action="add_production_data.php" method="post">
-<div>Total Records &nbsp; <input name = "records" type = "text" id = "records" style = "width: 80px" value = "1"></input><p id = "recs_error" style = "color:red;"></p></div>
+<div><label>Total Records</label><input name = "records" type = "text" id = "records" style = "width: 80px" value = "1"></input><p id = "recs_error" style = "color:red;"></p></div>
   <div class = "prod_info">
   <div class = "new_task">
 	<h1>Task 1: </h1>
-	<label style = "float: left;">Records/Minute</label> &nbsp; <input name = "recs_per_min" type = "text" id = "recs_per_min" style = "float: left; margin-right: 10px; width: 40px; font-size = 18px;" value = "1"></input>
-<label style = "float: left;">Job</label> &nbsp; <span class = 'job_info'><select style = "float: left; width: 200px" name = "job" id = "job" onchange = "checkSpecial('special')">
+	<label style = "float: left;">Records/Minute</label><input name = "recs_per_min" type = "text" id = "recs_per_min" style = "float: left; margin-right: 10px; width: 40px; font-size = 18px;" value = "1"></input>
+<label style = "float: left;">Job</label><span class = 'job_info'><select style = "float: left; width: 200px" name = "job" id = "job" onchange = "checkSpecial('special')">
 	<option value="Mail Merge">Mail Merge</option>
 					  <option value="Letter Printing">Letter Printing</option>
 					  <option value="In-House Envelope Printing">In-House Envelope Printing</option>
@@ -32,18 +32,18 @@ require('header.php');
 					  <option value="Tag as Political">Tag as Political</option>
 					  <option value="Inkjet Printing">Inkjet Printing</option>
 					  <option value="Glue Dots">Glue Dots</option>
-</select></span>
+</select><select id = 'special' name = 'special'><option select = 'selected' value = 'Sent to Vendor'>Sent to Vendor</option><option value = 'In-House'>In-House</option></select></span>
 <p id = "error" style = "color: red;"></p>
-</div></div><br>
-<h1><progress id = "progress_bar" value = "0" max = "40" style = "background-color: red"></progress></h1><br>
-<h2 id = "display_time">Hours: 0</h2><br>
-<h2 id = "eff">Efficiency: </h2><br>
+</div>
+</div>
+<div style = "margin-top: 50px">
+<h1><progress id = "progress_bar" value = "0" max = "40" style = "background-color: red"></progress></h1>
+<h2 id = "display_time">Hours: 0</h2>
+<h2 id = "eff">Efficiency: </h2>
 <input class = "save-btn" type = "submit" value = "Save Data"></input>
 </form>
-<button type = "button" onclick = "changeBar();">Calculate</button><button type = "button" onclick = "addTask();">Add Task</button><button type = "button" onclick = "removeTask();">Remove Task</button><br><br><br>
-<div class="contacts-title">
-	<h1 class="pull-left">Time Tracker Data</h1>
-	</div>
+<button type = "button" onclick = "changeBar();">Calculate</button><button type = "button" onclick = "addTask();">Add Task</button><button type = "button" onclick = "removeTask();">Remove Task</button>
+</div>
 <div class="dashboard-detail">
 	<div class="search-cont">
 	<div class="searchcont-detail">
@@ -291,14 +291,14 @@ function nextPage(){
 	var Task = 2;
 	
 	function addTask(){
-		$(".prod_info").append("<div class = 'new_task" + count + "'><h1>Task " + Task + ":</h1><label style = 'float: left;'>Records/Minute</label> &nbsp; <input name = 'recs_per_min" + count + "' type = 'text' id = 'recs_per_min" + count + "' style = 'float: left; width: 40px; font-size = 18px;' value = '1'></input>&nbsp;<label style = 'float: left;'>Job</label> &nbsp; <span class = 'job_info" + count + "'><select style = 'float: left;width: 200px;' name = 'job" + count + "' id = 'job" + count + "' onchange = checkSpecial('special" + count + "')></select>");
+		$(".prod_info").append("<div class = 'new_task" + count + "'><h1>Task " + Task + ":</h1><label style = 'float: left;'>Records/Minute</label><input name = 'recs_per_min" + count + "' type = 'text' id = 'recs_per_min" + count + "' style = 'float: left; width: 40px; font-size = 18px;' value = '1'></input><label style = 'float: left;'>Job</label><span class = 'job_info" + count + "'><select style = 'float: left;width: 200px;' name = 'job" + count + "' id = 'job" + count + "' onchange = checkSpecial('special" + count + "')></select>");
 		for(var i = 0; i < jobList.length; i++){
 			var opt = document.createElement('option');
 			opt.value = jobList[i];
 			opt.innerHTML = jobList[i];
 			document.getElementById("job" + count).appendChild(opt);
 		}
-		$(".prod_info").append("</span><br><p id = 'error" + count + "' style = 'color:red;'></p></div>");
+		$(".prod_info").append("<select id = 'special" + count +  "' name = 'special" + count + "'><option select = 'selected' value = 'Sent to Vendor'>Sent to Vendor</option><option value = 'In-House'>In-House</option></select></span><p id = 'error" + count + "' style = 'color:red;'></p></div>");
 		recs_min.push("recs_per_min" + count);
 		job.push("job" + count);
 		errors.push("error" + count);
@@ -335,7 +335,7 @@ function nextPage(){
 				error = true;
 				break;
 			}
-			else if(/^[0-9]*$/.test(recs_per_min) == false){
+			else if(isNaN(recs_per_min) == true){
 				
 				displayTime.innerHTML =  "Hours: -1";
 				displayEff.innerHTML = "Efficiency: ";
@@ -369,7 +369,7 @@ function nextPage(){
 				totalCalculation = totalCalculation + calculation;
 			}
 			bar.value = 40 - totalCalculation;
-			displayTime.innerHTML = "Hours: " + totalCalculation;
+			displayTime.innerHTML = "Hours: " + totalCalculation.toFixed(2);
 			if(totalCalculation <= 12)
 			{
 				displayEff.innerHTML = "Efficiency: High";
@@ -402,6 +402,7 @@ function checkSpecial(id_name){
 	var number = id_name[id_name.length-1];
 	$("#" + id_name).remove();
 	if(!isNaN(number)){
+		$("#special0" + number).remove();
 		if($("#job" + number).val() == "Mail Merge"){
 			$(".job_info" + number).append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = 'Sent to Vendor'>Sent to Vendor</option><option value = 'In-House'>In-House</option></select>");
 		}
@@ -420,8 +421,12 @@ function checkSpecial(id_name){
 		else if($("#job" + number).val() == "Inkjet Printing"){
 			$(".job_info" + number).append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = '26K'>26K</option><option value = '11K'>11K</option></select>");
 		}
+		else{
+			$(".job_info" + number).append("<select style = 'visibility: hidden' id = 'special0" + number + "' name = 'special0'><option select = 'selected' value = 'Sent to Vendor'>Sent to Vendor</option><option value = 'In-House'>In-House</option></select>");
+		}
 	}
 	else{
+		$("#special0").remove();
 		if($("#job").val() == "Mail Merge"){
 			$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = 'Sent to Vendor'>Sent to Vendor</option><option value = 'In-House'>In-House</option></select>");
 		}
@@ -439,6 +444,9 @@ function checkSpecial(id_name){
 		}
 		else if($("#job").val() == "Inkjet Printing"){
 			$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = '26K'>26K</option><option value = '11K'>11K</option></select>");
+		}
+		else{
+			$(".job_info").append("<select style = 'visibility: hidden' id = 'special0' name = 'special0'><option select = 'selected' value = 'Sent to Vendor'>Sent to Vendor</option><option value = 'In-House'>In-House</option></select>");
 		}
 	}
 }

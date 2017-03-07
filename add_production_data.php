@@ -33,8 +33,8 @@
 		$job = "";
 		$hours = 0;
 		
-		if($_POST[$recs_min_id] != "" && preg_match("/[0-9]/", $_POST[$recs_min_id])){ //Records/Minute
-			$recs_min = (int)$_POST[$recs_min_id]; 
+		if($_POST[$recs_min_id] != "" && is_numeric($_POST[$recs_min_id])){ //Records/Minute
+			$recs_min = (float)$_POST[$recs_min_id]; 
 		}
 		
 		if(!(isset($_POST[$job_id]))){ //job

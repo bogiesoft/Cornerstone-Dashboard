@@ -3,6 +3,11 @@ $job_id = $_GET['job_id'];
 require ("header.php");
 $_SESSION['deleted_archived_job_id'] = $job_id;
 ?>
+<style>
+li{
+	list-style-type: none;
+}
+</style>
 <script type="text/javascript" src="http://jqueryjs.googlecode.com/files/jquery-1.3.1.min.js" > </script> 
 <script type="text/javascript">
     function PrintElem(elem)
@@ -464,23 +469,23 @@ require ("connection.php");
 							<div id="list1" class="dropdown-check-list" tabindex="100">
 							<span class="anchor">Select Tasks</span>
 							<ul name = "item" id="items" class="items">
-								<li><input type="checkbox" name = "tasks[]" value = "Mail Merge"/>Mail Merge</li>
-								<li><input type="checkbox" name = "tasks[]" value = "Letter Printing"/>Letter Printing</li>
-								<li><input type="checkbox" name = "tasks[]" value = "Letter Printing"/>In-House Envelope Print</li>
-								<li><input type="checkbox" name = "tasks[]" value = "Tabbing"/>Tabbing </li>
-								<li><input type="checkbox" name = "tasks[]" value = "Folding"/>Folding </li>
-								<li><input type="checkbox" name = "tasks[]" value = "Inserting"/>Inserting </li>
-								<li><input type="checkbox" name = "tasks[]" value = "Sealing"/>Sealing</li>
-								<li><input type="checkbox" name = "tasks[]" value = "Collating"/>Collating</li>
-								<li><input type="checkbox" name = "tasks[]" value = "Labeling"/>Labeling</li>
-								<li><input type="checkbox" name = "tasks[]" value = "Print Permit"/>Print Permit</li>
-								<li><input type="checkbox" name = "tasks[]" value = "Correct Permit"/>Correct Permit</li>
-								<li><input type="checkbox" name = "tasks[]" value = "Carrier Route"/>Carrier Route</li>
-								<li><input type="checkbox" name = "tasks[]" value = "Endorsement line"/>Endorsement line</li>
-								<li><input type="checkbox" name = "tasks[]" value = "Address Printing"/>Address Printing</li>
-								<li><input type="checkbox" name = "tasks[]" value = "Tag as Political"/>Tag as Political</li>
-								<li><input type="checkbox" name = "tasks[]" value = "Inkjet Printing"/>Inkjet Printing</li>
-								<li><input type="checkbox" name = "tasks[]" value = "Glue Dots"/>Glue Dots</li>
+								<li><input type="checkbox" name = "tasks[]" value = "Mail Merge"/><label>Mail Merge</label><select name = "special_mail_merge"><option select = 'selected' value = 'Sent to Vendor'>Sent to Vendor</option><option value = 'In-House'>In-House</option></select></li>
+								<li><input type="checkbox" name = "tasks[]" value = "Letter Printing"/><label>Letter Printing</label><select name = "special_letter_printing"><option select = 'selected' value = 'From PDF'>From PDF</option><option value = 'Inkjet'>Inkjet</option></select></li>
+								<li><input type="checkbox" name = "tasks[]" value = "In-House Envelope Printing"/><label>In-House Envelope Printing</label></li>
+								<li><input type="checkbox" name = "tasks[]" value = "Tabbing"/><label>Tabbing</label><select name = "special_tabbing"><option select = 'selected' value = 'Manual Single'>Manual Single</option><option value = 'Manual Double'>Manual Double</option><option value = 'Auto Single'>Auto Single</option><option value = 'Auto Double'>Auto Double</option></select></li>
+								<li><input type="checkbox" name = "tasks[]" value = "Folding"/><label>Folding</label><select name = "special_folding"><option select = 'selected' value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option></select></li>
+								<li><input type="checkbox" name = "tasks[]" value = "Inserting"/><label>Inserting</label><select name = "special_inserting"><option select = 'selected' value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option></select></li>
+								<li><input type="checkbox" name = "tasks[]" value = "Sealing"/><label>Sealing</label><select name = "special_sealing"><option select = 'selected' value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option></select></li>
+								<li><input type="checkbox" name = "tasks[]" value = "Collating"/><label>Collating</label><select name = "special_collating"><option select = 'selected' value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option><option value = 'Man. and Auto'>Man. and Auto</option></select></li>
+								<li><input type="checkbox" name = "tasks[]" value = "Labeling"/><label>Labeling</label></li>
+								<li><input type="checkbox" name = "tasks[]" value = "Print Permit"/><label>Print Permit</label></li>
+								<li><input type="checkbox" name = "tasks[]" value = "Correct Permit"/><label>Correct Permit</label></li>
+								<li><input type="checkbox" name = "tasks[]" value = "Carrier Route"/><label>Carrier Route</label></li>
+								<li><input type="checkbox" name = "tasks[]" value = "Endorsement line"/><label>Endorsement line</label></li>
+								<li><input type="checkbox" name = "tasks[]" value = "Address Printing"/><label>Address Printing</label></li>
+								<li><input type="checkbox" name = "tasks[]" value = "Tag as Political"/><label>Tag as Political</label></li>
+								<li><input type="checkbox" name = "tasks[]" value = "Inkjet Printing"/><label>Inkjet Printing</label><select name = "special_inkjet_printing"><option select = 'selected' value = '26K'>26K</option><option value = '11K'>11K</option></select></li>
+								<li><input type="checkbox" name = "tasks[]" value = "Glue Dots"/><label>Glue Dots</label></li>
 							</ul>
 						</div>
 

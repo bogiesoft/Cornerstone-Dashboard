@@ -103,7 +103,7 @@ if(isset($_POST['submit_form'])){
 			$materials_expected = date("Y-m-d", strtotime($_POST['materials_expected']));
 			$expected_quantity = $_POST['expected_quantity'];
 			$job_status = $_POST['job_status'];
-			{
+			
 			$mail_class = $_POST['mail_class'];
 			$rate = $_POST['rate'];
 			$processing_category = $_POST['processing_category'];
@@ -113,22 +113,54 @@ if(isset($_POST['submit_form'])){
 			$bmeu = $_POST['bmeu'];
 			$based_on = $_POST['based_on'];
 			$non_profit_number = $_POST['non_profit_number'];
-			}
+			
 			$data_source = $_POST['data_source'];
 			$data_received = date("Y-m-d", strtotime($_POST['data_received']));
 			$data_completed = date("Y-m-d", strtotime($_POST['data_completed']));
 			$processed_by = $_POST['processed_by'];
 			$dqr_sent = date("Y-m-d", strtotime($_POST['dqr_sent']));
-			{
+			
 			$hold_postage = $_POST['hold_postage'];
 			$postage_paid = $_POST['postage_paid'];
 			$print_template = $_POST['print_template'];
 			$special_address = $_POST['special_address'];
 			$delivery = $_POST['delivery'];
 			//$completed = $_POST['completed'];
-			$tasks = implode(',', $_POST['tasks']); 
+			$tasks_array = $_POST['tasks']; 
+			$tasks = "";
+			for($i = 0; $i < count($tasks_array); $i++){
+				if($tasks_array[$i] == "Mail Merge"){
+					$tasks.="Mail Merge^" . $_POST["special_mail_merge"] . ",";
+				}
+				else if($tasks_array[$i] == "Letter Printing"){
+					$tasks.="Letter Printing^" . $_POST["special_letter_printing"] . ",";
+				}
+				else if($tasks_array[$i] == "Tabbing"){
+					$tasks.="Tabbing^" . $_POST["special_tabbing"] . ",";
+				}
+				else if($tasks_array[$i] == "Folding"){
+					$tasks.="Folding^" . $_POST["special_folding"] . ",";
+				}
+				else if($tasks_array[$i] == "Inserting"){
+					$tasks.="Inserting^" . $_POST["special_inserting"] . ",";
+				}
+				else if($tasks_array[$i] == "Collating"){
+					$tasks.="Collating^" . $_POST["special_collating"]. ",";
+				}
+				else if($tasks_array[$i] == "Sealing"){
+					$tasks.="Sealing^" . $_POST["special_sealing"] . ",";
+				}
+				else if($tasks_array[$i] == "Inkjet Printing"){
+					$tasks.="Inkjet Printing^" . $_POST["special_inkjet_printing"] . ",";
+				}
+				else{
+					$tasks.=$tasks_array[$i] . ",";
+				}
 			}
-			{$completed_date = date("Y-m-d", strtotime($_POST['completed_date']));
+			
+			$tasks = substr($tasks, 0, -1);
+			
+			$completed_date = date("Y-m-d", strtotime($_POST['completed_date']));
 			$data_hrs = $_POST['data_hrs'];
 			$gd_hrs = $_POST['gd_hrs'];
 			$initialrec_count = $_POST['initialrec_count'];
@@ -144,7 +176,7 @@ if(isset($_POST['submit_form'])){
 			$bs_ncoa = $_POST['bs_ncoa'];
 			$final_count = $_POST['final_count'];
 			$bs_domestic = $_POST['bs_domestic'];
-			}
+			
 			$sql = 'UPDATE job_ticket SET processed_by = "' . $processed_by . '", client_name = "' . $client_name . '", project_name = "' . $project_name . '",ticket_date = "' . $ticket_date . '",due_date = "' . $due_date . '",created_by = "' . $created_by . '",estimate_number = "' . $estimate_number . '",estimate_date = "' . $estimate_date . '",estimate_created_by = "' . $estimate_created_by . '", special_instructions = "' . $special_instructions . '",materials_ordered = "' . $materials_ordered . '",materials_expected = "' . $materials_expected . '",expected_quantity = "' . $expected_quantity . '",records_total = "' . $records_total . '",job_status = "' . $job_status . '", mail_class = "' . $mail_class . '", rate = "' . $rate . '", processing_category = "' . $processing_category . '", mail_dim = "' . $mail_dim . '", weights_measures = "' . $weights_measures . '", permit = "' . $permit . '", bmeu = "' . $bmeu . '", based_on = "' . $based_on . '", non_profit_number = "' . $non_profit_number . '"  WHERE job_id = "' . $job_id . '"';
 			$result = $conn->query($sql) or die(date('Y-m-d', strtotime($ticket_date)));
 			

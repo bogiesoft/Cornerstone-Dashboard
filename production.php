@@ -149,47 +149,54 @@ if ($result->num_rows > 0) {
 					
 					echo "<p>";
 					for($ii = 0; $ii < count($job_tasks_array); $ii++){
-									if($job_tasks_array[$ii] == "Labeling"){
+									$job = $job_tasks_array[$ii];
+									$special = "None";
+									if(strpos($job_tasks_array[$ii], "^") !== FALSE){
+										$split_job = explode("^", $job_tasks_array[$ii]);
+										$job = $split_job[0];
+										$special = $split_job[1];
+									}
+									if($job == "Labeling"){
 										echo "<img src = 'images/task_icons/labeling.png' width = '20' height = '20' onmouseover = showTask('tooltiptext1') onmouseout = hideTask('tooltiptext1')>";
 										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext1'>Labeling</span>";
 									}
-									if($job_tasks_array[$ii] == "Letter Printing"){
+									if($job == "Letter Printing"){
 										echo "<img src = 'images/task_icons/letter_printing.png' width = '20' height = '20' onmouseover = showTask('tooltiptext2') onmouseout = hideTask('tooltiptext2')>";
-										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext2'>Letter Printing</span>";
+										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext2'>Letter Printing(" . $special . ")</span>";
 									}
-									if($job_tasks_array[$ii] == "Tabbing"){
+									if($job == "Tabbing"){
 										echo "<img src = 'images/task_icons/tabbing.jpg' width = '20' height = '20' onmouseover = showTask('tooltiptext3') onmouseout = hideTask('tooltiptext3')>";
-										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext3'>Tabbing</span>";
+										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext3'>Tabbing(" . $special . ")</span>";
 									}
-									if($job_tasks_array[$ii] == "Mail Merge"){
+									if($job == "Mail Merge"){
 										echo "<img src = 'images/task_icons/mail_merge.png' width = '20' height = '20' onmouseover = showTask('tooltiptext4') onmouseout = hideTask('tooltiptext4')>";
-										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext4'>Mail Merge</span>";
+										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext4'>Mail Merge(" . $special . ")</span>";
 									}
-									if($job_tasks_array[$ii] == "In-House Envelope Printing"){
+									if($job == "In-House Envelope Printing"){
 										echo "<img src = 'images/task_icons/in-house_letter_printing.png' width = '20' height = '20' onmouseover = showTask('tooltiptext5') onmouseout = hideTask('tooltiptext5')>";
 										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext5'>In-House Envelope Printing</span>";
 									}
-									if($job_tasks_array[$ii] == "Folding"){
+									if($job == "Folding"){
 										echo "<img src = 'images/task_icons/folding.png' width = '20' height = '20' onmouseover = showTask('tooltiptext6') onmouseout = hideTask('tooltiptext6')>";
-										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext6'>Folding</span>";
+										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext6'>Folding(" . $special . ")</span>";
 									}
-									if($job_tasks_array[$ii] == "Inserting"){
+									if($job == "Inserting"){
 										echo "<img src = 'images/task_icons/inserting.png' width = '20' height = '20' onmouseover = showTask('tooltiptext7') onmouseout = hideTask('tooltiptext7')>";
-										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext7'>Inserting</span>";
+										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext7'>Inserting(" . $special . ")</span>";
 									}
-									if($job_tasks_array[$ii] == "Sealing"){
+									if($job == "Sealing"){
 										echo "<img src = 'images/task_icons/sealing.png' width = '20' height = '20' onmouseover = showTask('tooltiptext8') onmouseout = hideTask('tooltiptext8')>";
-										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext8'>Sealing</span>";
+										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext8'>Sealing(" . $special . ")</span>";
 									}
-									if($job_tasks_array[$ii] == "Collating"){
+									if($job == "Collating"){
 										echo "<img src = 'images/task_icons/collating.png' width = '20' height = '20' onmouseover = showTask('tooltiptext9') onmouseout = hideTask('tooltiptext9')>";
-										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext9'>Collating</span>";
+										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext9'>Collating(" . $special . ")</span>";
 									}
-									if($job_tasks_array[$ii] == "Print Permit"){
+									if($job == "Print Permit"){
 										echo "<img src = 'images/task_icons/print_permit.png' width = '20' height = '20' onmouseover = showTask('tooltiptext10') onmouseout = hideTask('tooltiptext10')>";
 										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext10'>Print Permit</span>";
 									}
-									if($job_tasks_array[$ii] == "Correct Permit"){
+									if($job == "Correct Permit"){
 										echo "<img src = 'images/task_icons/correct_permit.png' width = '20' height = '20' onmouseover = showTask('tooltiptext11') onmouseout = hideTask('tooltiptext11')>";
 										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext11'>Correct Permit</span>";
 									}
@@ -200,13 +207,19 @@ if ($result->num_rows > 0) {
 					
 					$count_out_table = 0;
 					for($i = 0; $i < count($job_tasks_array); $i++){
-							if(in_array($job_tasks_array[$i], $production_data_job_array)){
-								$job = $job_tasks_array[$i];
-								$result_data_job = mysqli_query($conn, "SELECT recs_per_min FROM production_data WHERE job = '$job'");
+							$job = $job_tasks_array[$i];
+							$special = "None";
+							if(strpos($job_tasks_array[$i], "^") !== FALSE){
+								$split_job = explode("^", $job_tasks_array[$i]);
+								$job = $split_job[0];
+								$special = $split_job[1];
+							}
+							$result_data_job = mysqli_query($conn, "SELECT recs_per_min FROM production_data WHERE job = '$job' AND special = '$special'");
+							if($result_data_job->num_rows > 0){
 								$row4 = $result_data_job->fetch_assoc();
 								$recs_min = $row4['recs_per_min'];
 								if((int)$recs_min != 0){
-									$add_hours = $records_total / (int)$recs_min / 60;
+									$add_hours = $records_total / (float)$recs_min / 60;
 									$hours = $hours + $add_hours;
 								}
 								
@@ -250,7 +263,7 @@ if ($result->num_rows > 0) {
 							
 							echo "<div class='graph_block'>
 									<h1>Time Tracking Needed</h1>
-									<p class = 'hours_display" . $graph_count . "' style = 'float: right'>Hours: " . round($hours, 2) . "</p></div>";
+									<p class = 'hours_display" . $graph_count . "' style = 'float: right'>Hours: Unavailable</p></div>";
 							
 						}
 						

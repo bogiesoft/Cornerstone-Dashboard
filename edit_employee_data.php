@@ -32,6 +32,7 @@ require("header.php");
 $result = mysqli_query($conn, "SELECT * FROM employee_data WHERE record_id = '$record_id'");
 $row = $result->fetch_assoc();
 
+$job_id = $row["job_id"];
 $sack_number = $row["sack_number"];
 $employee_name_full = $row["employee_name"];
 $employee_username = explode("-", $employee_name_full);
@@ -41,6 +42,14 @@ $employee_name = $full_name;
 $recs_per_min = $row["recs_per_min"];
 $hours = $row["hours"];
 $task = $row["task"];
+$job = $task;
+$special = "None";
+if(strpos($task, "^") !== FALSE){
+	$split_job = explode("^", $task);
+	$job = $split_job[0];
+	$special = $split_job[1];
+	$job = $job . "(" . $special . ")";
+}
 ?>
 
 <div class="dashboard-cont" style="padding-top:110px;">
@@ -127,7 +136,30 @@ $task = $row["task"];
 					<div class="tabinner-detail">
 					<label>Task</label>
 					<select name = "task" id = "task">
-						<option select = "selected" value = "<?php echo $task; ?>"><?php echo $task; ?></option>
+					<option select = "selected" value = "<?php echo $task; ?>"><?php echo $job; ?></option>
+					<?php
+						$result_select_tasks = mysqli_query($conn, "SELECT tasks FROM production WHERE job_id = '$job_id'");
+						$row_select_tasks = $result_select_tasks->fetch_assoc();
+						$tasks = $row_select_tasks["tasks"];
+						$tasks_array = explode(",", $tasks);
+						
+						for($i = 0; $i < count($tasks_array); $i++){
+							$job = $tasks_array[$i];
+							$special = "None";
+							$task = $job;
+							if(strpos($tasks_array[$i], "^") !== FALSE){
+								$split_job = explode("^", $tasks_array[$i]);
+								$job = $split_job[0];
+								$special = $split_job[1];
+							}
+							if($special != "None"){
+								echo "<option value = '" . $task . "'>" . $job . "(" . $special . ")</option>";
+							}
+							else{
+								echo "<option value = '" . $task . "'>" . $task . "</option>";
+							}
+						}
+					?>
 					</select>
 					<div class="clear"></div>
 					</div>
@@ -155,8 +187,15 @@ function loadTaskSelect(){
     success: function (data) {
         $("#task").empty();
 		for(var i = 0; i < data.length; i++){
+			var job = data[i];
+			var special = "None";
+			if(job.indexOf('^') > -1){
+				var split_job = job.split("^");
+				job = split_job[0];
+				special = split_job[1];
+			}
 			if(i == 0){
-				$('#task').append($('<option>', {select: "selected", value:data[i], text:data[i]}));
+				$('#task').append($('<option>', {select: "selected", value:job + "^" + special, text:job + "(" + special + ")"}));
 			}
 			else{
 				$('#task').append($('<option>', {value:data[i], text:data[i]}));

@@ -222,13 +222,19 @@ $conn->close();
 					$added_hours = 0;
 					$count_not_in = 0;
 					for($ii = 0; $ii < count($job_tasks_array); $ii++){
-						if(in_array($job_tasks_array[$ii], $production_data_jobs_array)){
-							$job = $job_tasks_array[$ii];
-							$result_data = mysqli_query($conn, "SELECT recs_per_min FROM production_data WHERE job = '$job'");
+						$job = $job_tasks_array[$ii];
+						$special = "None";
+						if(strpos($job_tasks_array[$ii], "^") !== FALSE){
+							$split_job = explode("^", $job_tasks_array[$ii]);
+							$job = $split_job[0];
+							$special = $split_job[1];
+						}
+						$result_data = mysqli_query($conn, "SELECT recs_per_min FROM production_data WHERE job = '$job' AND special = '$special'");
+						if($result_data->num_rows > 0){
 							$row_data = $result_data->fetch_assoc();
 							$recs_min = $row_data["recs_per_min"];
-							if((int)$recs_min != 0){
-								$added_hours = $added_hours + ($records_total / (int)$recs_min / 60);
+							if((float)$recs_min != 0){
+								$added_hours = $added_hours + ($records_total / (float)$recs_min / 60);
 							}
 						}
 						else{

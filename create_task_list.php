@@ -40,9 +40,16 @@
 		$data = $_POST["info"];
 		$employee_name = $data[0];
 		$task = $data[1];
+		$job = $task;
+		$special = "None";
+		if(strpos($task, "^") !== FALSE){
+			$split_job = explode("^", $task);
+			$job = $split_job[0];
+			$special = $split_job[1];
+		}
 		$job_id = $data[2];
 		$result = mysqli_query($conn, "SELECT * FROM employee_data WHERE employee_name = '$employee_name' AND task = '$task' AND job_id = '$job_id'");
-		$result_data = mysqli_query($conn, "SELECT recs_per_min FROM production_data WHERE job = '$task'");
+		$result_data = mysqli_query($conn, "SELECT recs_per_min FROM production_data WHERE job = '$job' AND special = '$special'");
 		$result_job = mysqli_query($conn, "SELECT records_total FROM job_ticket WHERE job_id = '$job_id'");
 		$row_job = $result_job->fetch_assoc();
 		$records_total = $row_job["records_total"];
@@ -74,13 +81,20 @@
 		$data = $_POST["info_all_employees"];
 		$task = $data[1];
 		$job_id = $data[2];
+		$job = $task;
+		$special = "None";
+		if(strpos($task, "^") !== FALSE){
+			$split_job = explode("^", $task);
+			$job = $split_job[0];
+			$special = $split_job[1];
+		}
 		$result_unique_employees = mysqli_query($conn, "SELECT DISTINCT employee_name FROM employee_data WHERE task = '$task' AND job_id = '$job_id'");
 		//arrays to pass back
 		$array_name = array();
 		$array_averages = array();
 		$array_data_averages = array();
 		//------------------------------
-		$result_production_data = mysqli_query($conn, "SELECT recs_per_min FROM production_data WHERE job = '$task'");
+		$result_production_data = mysqli_query($conn, "SELECT recs_per_min FROM production_data WHERE job = '$job' AND special = '$special'");
 		$row_production_data = $result_production_data->fetch_assoc();
 		$result_job = mysqli_query($conn, "SELECT records_total FROM job_ticket WHERE job_id = '$job_id'");
 		$row_job = $result_job->fetch_assoc();
@@ -130,6 +144,13 @@
 		$records_total = $row_job["records_total"];
 		while($row = $result_distinct_task->fetch_assoc()){
 			$task = $row["task"];
+			$job = $task;
+			$special = "None";
+			if(strpos($task, "^") !== FALSE){
+				$split_job = explode("^", $task);
+				$job = $split_job[0];
+				$special = $split_job[1];
+			}
 			$result_employee_data = mysqli_query($conn, "SELECT * FROM employee_data WHERE employee_name = '$employee_name' AND task = '$task' AND job_id = '$job_id'");
 			$total_hours_employee = 0;
 			$total_count = 0;
@@ -141,7 +162,7 @@
 				$total_count = $total_count + 1;
 			}
 			
-			$result_production_data = mysqli_query($conn, "SELECT recs_per_min FROM production_data WHERE job = '$task'");
+			$result_production_data = mysqli_query($conn, "SELECT recs_per_min FROM production_data WHERE job = '$job' AND special = '$special'");
 			$row_production_data = $result_production_data->fetch_assoc();
 			$recs_per_min_data = $row_production_data["recs_per_min"];
 			
@@ -149,7 +170,7 @@
 			$average_employee = $total_hours_employee / $total_count;
 			array_push($array_averages, $average_employee);
 			array_push($array_data_averages, $average_data);
-			array_push($array_task, $task);
+			array_push($array_task, $job . "(" . $special . ")");
 		}
 		$arr = array($array_averages, $array_data_averages, $array_task);
 		echo json_encode($arr);

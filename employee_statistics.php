@@ -120,7 +120,21 @@ function generateTasks(){
 			$('#task').append($('<option>', {value:"123all", text:"All"}));
 		}
 		for(var i = 0; i < data.length; i++){
-			$('#task').append($('<option>', {value:data[i], text:data[i]}));
+			var job = data[i];
+			var special = "None";
+			var task = job;
+			if(job.indexOf('^') > -1){
+				var split_job = job.split("^");
+				job = split_job[0];
+				special = split_job[1];
+			}
+			var display = job + "(" + special + ")";
+			if(special != "None"){
+				$('#task').append($('<option>', {value:task, text:display}));
+			}
+			else{
+				$('#task').append($('<option>', {value:task, text:task}));
+			}
 		}
     }
 });

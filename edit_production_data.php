@@ -20,8 +20,8 @@ if(isset($_POST['save_form'])){
 		$total_records = (int)$_POST['records']; 
 	}
 		
-	if($_POST["recs_per_min"] != "" && preg_match("/[0-9]/", $_POST["recs_per_min"])){ //time_number
-		$recs_min = (int)$_POST["recs_per_min"]; 
+	if($_POST["recs_per_min"] != "" && is_numeric($_POST["recs_per_min"])){ //time_number
+		$recs_min = (float)$_POST["recs_per_min"]; 
 	}
 
 	if((isset($_POST["job"]))){ //job
@@ -162,7 +162,7 @@ $(document).ready(function()
 			
 			
 			
-			if(/^[0-9]*$/.test(recs_min) == false || recs_min.length == 0){
+			if(isNaN(recs_min) == true || recs_min.length == 0){
 				displayTime.innerHTML =  "Hours: -1";
 				displayEff.innerHTML = "Efficiency: ";
 				bar.value = "0";
@@ -180,7 +180,7 @@ $(document).ready(function()
 			}
 			
 			bar.value = 40 - totalCalculation;
-			displayTime.innerHTML = "Hours: " + totalCalculation;
+			displayTime.innerHTML = "Hours: " + totalCalculation.toFixed(2);
 			
 			if(totalCalculation <= 12)
 			{

@@ -133,8 +133,15 @@ function loadTaskSelect(){
     success: function (data) {
         $("#task").empty();
 		for(var i = 0; i < data.length; i++){
+			var job = data[i];
+			var special = "None";
+			if(job.indexOf('^') > -1){
+				var split_job = job.split("^");
+				job = split_job[0];
+				special = split_job[1];
+			}
 			if(i == 0){
-				$('#task').append($('<option>', {select: "selected", value:data[i], text:data[i]}));
+				$('#task').append($('<option>', {select: "selected", value:job + "^" + special, text:job + "(" + special + ")"}));
 			}
 			else{
 				$('#task').append($('<option>', {value:data[i], text:data[i]}));
