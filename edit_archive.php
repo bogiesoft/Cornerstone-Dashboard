@@ -270,8 +270,10 @@ require ("connection.php");
 			<form action="add_job_ticket.php" method="post">
 			<div class="newcontactstab-detail">
 			<div class="tabinner-detail">
+			<ul class = "client_search_results">
+					</ul>
 				<label>Client Name</label>
-				<input name="client_name" type="text" value="<?php echo $client_name ; ?>" class="contact-prefix">
+				<input id = "client_name" name="client_name" type="text" value="<?php echo $client_name ; ?>" class="contact-prefix">
 				</div>
 				<div class="tabinner-detail">
 				<label>Job Name</label>
@@ -651,3 +653,27 @@ require ("connection.php");
 </div>
 <script src="ArchiveSweetAlert.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>	
+<script>
+document.getElementById("client_name").onkeyup = function(){
+	var value = document.getElementById("client_name").value;
+	$.ajax({
+    type: "POST",
+    url: "generate_client_search.php",
+    data: {id_name: value},
+    dataType: "json", // Set the data type so jQuery can parse it for you
+    success: function (data) {
+		$(".client_search_results").empty();
+		for(var i = 0; i < data.length; i++){
+			$(".client_search_results").append("<li class = 'client_search_item' onclick = 'fillInput(\"" + data[i] + "\")'>" + data[i] + "</li>");
+			if(value == ""){
+				$(".client_search_results").empty();
+			}
+		}
+    }
+});
+};
+function fillInput(info){
+	$("#client_name").val(info);
+	$(".client_search_results").empty();
+}
+</script>        
