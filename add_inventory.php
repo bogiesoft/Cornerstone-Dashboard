@@ -56,7 +56,7 @@ $(document).ready(function(){
 					<select id="material" name="material" class="contact-prefix">
 					<option value = "0" select = "selected">--Select Material--</option>
 					<?php
-						$result = mysqli_query($conn, "SELECT DISTINCT material FROM materials");
+						$result = mysqli_query($conn, "SELECT DISTINCT material FROM materials WHERE vendor = 'CRST Inventory'");
 						while($row = $result->fetch_assoc()){
 							$material = $row["material"];
 							echo "<option value = '$material'>$material</option>";
@@ -67,7 +67,9 @@ $(document).ready(function(){
 					</div>
 					<div class="tabinner-detail">
 					<label>Type</label>
-					<input id="type" name="type" type="text" class="contact-prefix"></input>
+					<select id = "type" name = "type" class = "contact-prefix">
+					<option selected = "selected" value = "0">--Select Type--</option>
+					</select>
 					<div class="clear"></div>
 					</div>
 					<div class="tabinner-detail">

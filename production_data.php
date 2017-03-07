@@ -392,6 +392,7 @@ function removeTask(){
 	Task = Task - 1;
 	if(count != 0){
 		$(".new_task" + count).remove();
+		$("#special" + count).remove();
 	}
 	else{
 		count = count + 1;
