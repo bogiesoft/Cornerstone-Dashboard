@@ -212,7 +212,7 @@ if ($result->num_rows > 0) {
 					$row_blue_sheet = $result_blue_sheet->fetch_assoc();
 					
 					echo "<h3><i>Blue Sheet</i></h3>";
-					echo "<form style = 'margin-left: 50px' action = 'update_blue_sheet.php' method = 'post'>";
+					echo "<form action = 'update_blue_sheet.php' method = 'post'>";
 						echo "<div class = 'worksheet_div'>";
 							echo "<div class = 'worksheet_column'>";
 								echo "<label>Starting records</label>";
@@ -285,9 +285,10 @@ if ($result->num_rows > 0) {
 							echo "<input type = 'date' class = 'input_fields' name = 'completed_date' value = '" . $row_blue_sheet['completed_date'] . "'>";
 						echo "</div>";
 					echo "</div>";
-					
-					echo "<input type = 'submit' name = 'submit_form" . $job_count . "' value = 'Save'>";
 					echo "</form>";
+					echo '<div class="newcontact-tabbtm">
+					<input class="save-btn store-btn" type="submit" value="Save" name="submit_form' . $job_count . '" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
+					</div>';
 			echo '</div></div>';
 		}
 		
@@ -452,10 +453,6 @@ function closeWorksheet(number){
     border: 1px solid #888;
     width: 50%;
     margin: 0 auto;
-}
-.worksheet_div{
-	float: left; 
-	width 40%;
 }
 .worksheet_column{
 	display: inline-block; 

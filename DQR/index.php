@@ -1,6 +1,3 @@
-<html>
-  <head>
-    <title>Drag drop Images, PDF, Docs and other files Example : PHP + Dropzone.js</title>
     <style type="text/css">
       #container {
         position:relative;
