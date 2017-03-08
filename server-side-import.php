@@ -22,19 +22,6 @@ else if($_POST['function'] == 0){
 	selectMark();
 }
 
-function selectMark(){
-	require("connection.php");
-	// getting total number records without any search
-	global $sql, $totalData, $totalFiltered;
-
-	$sql = "SELECT * FROM sales WHERE mark = 1";
-	$query=mysqli_query($conn, $sql) or die(mysqli_error($conn));
-	$totalData = mysqli_num_rows($query);
-	$totalFiltered = $totalData;  // when there is no search parameter then total number rows = total number filtered rows.
-
-	$sql = "SELECT * FROM sales WHERE 1=1 AND mark = 1";
-}
-
 
 require("connection.php");
 // storing  request (ie, get/post) global array to a variable
@@ -42,26 +29,28 @@ $requestData= $_REQUEST;
 $columns = array(
 // datatable column index  => database column name
 	0=> 'mark',
-	1 =>'full_name',
-	2 => 'business',
-	3=> 'address_line_1',
-	4=> 'city',
-	5=> 'state',
-	6=> 'zipcode',
-	7=> 'call_back_date',
-	8=> 'priority',
-	9=> 'title',
-	10=> 'phone',
-	11=> 'web_address',
-	12=> 'email1',
-	13=> 'vertical1',
-	14=> 'vertical2',
-	15=> 'vertical3',
+	1=> 'import_status',
+	2 =>'full_name',
+	3 => 'business',
+	4=> 'address_line_1',
+	5=> 'city',
+	6=> 'state',
+	7=> 'zipcode',
+	8=> 'call_back_date',
+	9=> 'priority',
+	10=> 'title',
+	11=> 'phone',
+	12=> 'web_address',
+	13=> 'email1',
+	14=> 'vertical1',
+	15=> 'vertical2',
+	16=> 'vertical3',
 
 );
 
 	if( !empty($requestData['search']['value']) ) {   // if there is a search parameter, $requestData['search']['value'] contains search parameter
 		$sql.=" AND ( full_name LIKE '%".$requestData['search']['value']."%' ";
+		$sql.=" OR import_status LIKE '%".$requestData['search']['value']."%' ";
 		$sql.=" OR business LIKE '%".$requestData['search']['value']."%' ";
 		$sql.=" OR address_line_1 LIKE '%".$requestData['search']['value']."%' ";
 		$sql.=" OR city LIKE '%".$requestData['search']['value']."%' ";
@@ -102,6 +91,7 @@ $columns = array(
 	while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 		$nestedData=array();
 		$nestedData[] = $row["mark"];
+		$nestedData[] = $row["import_status"];
 		$nestedData[] = $row["full_name"];
 		$nestedData[] = $row["business"];
 		$nestedData[] = $row["address_line_1"];

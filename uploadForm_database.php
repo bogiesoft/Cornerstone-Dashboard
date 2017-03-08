@@ -13,14 +13,10 @@ if(count($data) > 200001){
 	die(count($data));
 }
 
-$all_full_names_array = array();
-$all_addresses_array = array();
-$all_businesses_array = array();
-$result_sales_list = mysqli_query($conn, "SELECT full_name, address_line_1, business FROM sales");
+$key_search = array();
+$result_sales_list = mysqli_query($conn, "SELECT DISTINCT full_name, address_line_1, business FROM sales");
 while($row = $result_sales_list->fetch_assoc()){
-	array_push($all_full_names_array, $row["full_name"]);
-	array_push($all_addresses_array, $row["address_line_1"]);
-	array_push($all_businesses_array, $row["business"]);
+	array_push($key_search, $row["full_name"] . "," . $row["address_line_1"] . "," . $row["business"]);
 }
 //Get all Column names in array
 $array_names = array();
@@ -52,18 +48,29 @@ for($i = 0; $i < count($array_names); $i++)
 		array_push($array_indexes, -1);
 	}
 }
-
 $error = array();
-$sql_statements = array();
-$update_statements = 0;
+$insert_statements = array();
+$update_statements = array();
 $check = 0;
 $test_count = 0;
-for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
-{
-		$sql = 'INSERT INTO sales (rep, quickbooks, prefix, full_name, suffix, title, phone, fax, extension, web_address, business, country, address_line_1, address_line_2, address_line_3, city, state, zipcode, status, call_back_date, priority, date_added, 
+$sql = 'INSERT INTO sales (rep, quickbooks, prefix, full_name, suffix, title, phone, fax, extension, web_address, business, country, address_line_1, address_line_2, address_line_3, city, state, zipcode, status, call_back_date, priority, date_added, 
 				mailing_list, pie_day, second_contact, cell_phone, alt_phone, home_phone, email1, email2, vertical1, vertical2, vertical3, source, notes, _2014_pie_day, Non_Profit_Card_08_2013, 
 				Commercial_Card_08_2013, USPS_Post_Office_Mailing_03_2014, Contractor_Small_Business_Select_Mailing_03_2014, Contractor_SB_Select_Mailing_04_2014, USPS_EDDM_Regs_brochure_Mailing_04_2014,
-				USPS_9Y9_EDDM_Marketing_Card, SEPT_2014_3_5Y11_CRST_Marketing_Card, Contractor_Mailing_2016, type, import_id, import_name, import_status) VALUES (';
+				USPS_9Y9_EDDM_Marketing_Card, SEPT_2014_3_5Y11_CRST_Marketing_Card, Contractor_Mailing_2016, type, import_id, import_name, import_status) VALUES ';
+for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
+{
+		$sql_add = "";
+		if($test_count > 0){
+			if($test_count == 0){
+				echo "Here";
+			}
+			$sql_add .= "(";
+		}
+		else
+		{
+			$sql_add .= "(";
+		}
+		$sql2 = 'UPDATE sales SET ';
 		$full_name = "";
 		$address_line_1 = "";
 		$business = "";
@@ -163,31 +170,57 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 			//For UPDATE string, excludes the full_name and address_line_1 fields because they are keys
 			//Excludes date_added because this field can't be changed once added to the table
 			if($array_indexes[$j] != -1 || $array_names[$j] == "date_added"){
-				$sql = $sql . '"' . $input . '",';
+				$sql_add = $sql_add . '"' . $input . '",';
+				if($array_names[$j] != "full_name" && $array_names[$j] != "address_line_1" && $array_names[$j] != "date_added"){
+					$sql2 = $sql2 . $array_names[$j] . ' = "' . $input . '", ';
+				}
 			}
 			else if(($array_indexes[$j] != -1 || $array_names[$j] == "date_added") && $j == count($array_indexes) - 1){
-				$sql = $sql . $input . ',"' . $import_id . '", "' . $import_name . '", "Insert")';
+				$sql_add = $sql_add . $input . ',"' . $import_id . '", "' . $import_name . '", "Insert")';
+				if($array_names[$j] != "full_name" && $array_names[$j] != "address_line_1" && $array_names[$j] != "date_added"){
+					$sql2 = $sql2 . $array_names[$j] . ' = "' . $input . ', import_id = ' . $import_id . ', import_date = "' . $import_date . '", import_name = "' . $import_name .  '", import_status = "Update" WHERE full_name = "' . $full_name . '" AND address_line_1 = "' . $address_line_1 . '"';
+				}
 			}
 			else if($array_indexes[$j] == -1 && $j != count($array_indexes) - 1){
-				$sql = $sql . "' ',";
+				$sql_add = $sql_add . "' ',";
+				if($array_names[$j] != "full_name" && $array_names[$j] != "address_line_1" && $array_names[$j] != "date_added"){
+					$sql2 = $sql2 . $array_names[$j] . " = ' ', ";
+				}
 			}
 			else{
-				$sql = $sql . "'Prospect', " . $import_id . ", '" . $import_name . "', 'Insert')";
+				$sql_add = $sql_add . "'Prospect', " . $import_id . ", '" . $import_name . "', 'Insert')";
+				if($array_names[$j] != "full_name" && $array_names[$j] != "address_line_1" && $array_names[$j] != "date_added"){
+					$sql2 = $sql2 . $array_names[$j] . " = 'Prospect', import_id = " . $import_id . ", import_name = '" . $import_name . "', import_date = '" . $import_date .  "', import_status = 'Update' WHERE full_name = '$full_name' AND address_line_1 = '$address_line_1'";
+				}
 			}
 		}
-		if(in_array($full_name, $all_full_names_array) && in_array($address_line_1, $all_addresses_array) && in_array($business, $all_businesses_array)){
-			$test_count++;
+		$value_to_search = $full_name . "," . $address_line_1 . "," . $business;
+		if(array_search($value_to_search, $key_search)){
+			array_push($update_statements, $sql2);
 		}
 		else{
-			array_push($sql_statements, $sql);
-			$test_count++;
+			$sql .= $sql_add;
+			if($test_count >= 830){
+				array_push($insert_statements, $sql);
+				$sql = 'INSERT INTO sales (rep, quickbooks, prefix, full_name, suffix, title, phone, fax, extension, web_address, business, country, address_line_1, address_line_2, address_line_3, city, state, zipcode, status, call_back_date, priority, date_added, 
+				mailing_list, pie_day, second_contact, cell_phone, alt_phone, home_phone, email1, email2, vertical1, vertical2, vertical3, source, notes, _2014_pie_day, Non_Profit_Card_08_2013, 
+				Commercial_Card_08_2013, USPS_Post_Office_Mailing_03_2014, Contractor_Small_Business_Select_Mailing_03_2014, Contractor_SB_Select_Mailing_04_2014, USPS_EDDM_Regs_brochure_Mailing_04_2014,
+				USPS_9Y9_EDDM_Marketing_Card, SEPT_2014_3_5Y11_CRST_Marketing_Card, Contractor_Mailing_2016, type, import_id, import_name, import_status) VALUES ';
+				$test_count = -1;
+			}
 		}
+		$test_count++;
 }
 if(count($error) == 0){
-	for($i = 0; $i < count($sql_statements); $i++){
-		mysqli_query($conn, $sql_statements[$i]) or die("error querying database");
+	
+	for($i = 0; $i < count($insert_statements); $i++){
+		echo $insert_statements[0];
+		mysqli_query($conn, $insert_statements[$i]) or die("error querying database 2");
 	}
-	$update_statements = $test_count;
+	
+	for($i = 0; $i < count($update_statements); $i++){
+		mysqli_query($conn, $update_statements[$i]) or die("error querying database 3");
+	}
 	$job = "CSV file uploaded to CRM";
 	$user_name = $_SESSION['user'];
 	date_default_timezone_set('America/New_York');
@@ -202,32 +235,3 @@ else{
 	header("location: uploadForm.php");
 }
 ?>
-<script>
-//sweetalert error message displayed if more than 1 error or sucess message if 0 errors
-	var error_string = "";
-	var number_errors = 0;
-	var update_statements = <?php echo json_encode($update_statements); ?>;
-	window.onload = function(){
-		var errors = <?php echo json_encode($error); ?>;
-		number_errors = errors.length;
-		number_updates = update_statements.length;
-		for(var i = 0; i < errors.length; i++){
-			error_string = error_string + errors[i] + "\n";
-		}
-		if(errors.length > 0){
-			window.location.replace("uploadForm.php");
-		}
-		else{
-			showSuccessMessage();
-		}
-		
-		function showSuccessMessage(){
-		swal({   title: "Import Successful!",   text: number_updates + " duplicates found",   type: "success",      confirmButtonColor: "#4FD8FC",   closeOnConfirm: false }, 
-			function(){ saveNotClicked=false; $( ".store-btn" ).click();});  
-			 window.setTimeout(function () {
-			location.href = "uploadForm.php";
-			}, 5000);
-		};
-	};
-	
-</script>

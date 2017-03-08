@@ -73,6 +73,7 @@ var CodeVersion = '3.0.8';
 									var selects = document.getElementsByClassName("import_dropdown");
 
 									for(var i = 0; i < selects.length; i++){
+										cells[j] = cells[j].replace(/"/g, "");
 										var option = document.createElement("option");
 										option.text = cells[j];
 										option.value = cells[j];
@@ -194,7 +195,7 @@ var CodeVersion = '3.0.8';
 		<tr>
 			<td align=center><b>Import Name</b></td><td>Date</td><td>Delete</td><td>View</td>";
 		
-		$result_history = mysqli_query($conn, "SELECT DISTINCT import_id, import_date, import_name FROM sales WHERE import_id != 0 ORDER BY import_date DESC");
+		$result_history = mysqli_query($conn, "SELECT import_id, import_date, import_name FROM sales WHERE import_id != 0 GROUP BY import_id ORDER BY import_date DESC");
 		
 		if($result_history->num_rows>0){
 			while($data = $result_history->fetch_assoc()){

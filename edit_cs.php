@@ -65,7 +65,7 @@ require ("connection.php");
 					<input name="invoice_date" type="date" value="<?php echo $invoice_date; ?>" class="contact-prefix">
 					</div>
 					<div class="tabinner-detail">
-					<label>Residual Retured</label>
+					<label>Residual Returned</label>
 					<input name="residual_returned" type="text" value="<?php echo $residual_returned; ?>" class="contact-prefix">
 					</div>
 					<div class="tabinner-detail">
@@ -78,7 +78,6 @@ require ("connection.php");
 					<label>Status</label>
 					<select name='status'>
 					<option disabled selected value> -- select an option -- </option>
-					<option value="Finished">Finished</option>
 					<option value="Cancelled">Cancelled</option>
 					<option value="Closed">Closed</option>
 					</select>
