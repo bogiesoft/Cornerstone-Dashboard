@@ -21,7 +21,7 @@ if(isset($_POST["submit_form"])){
 
 require ("header.php");
 ?>
-<script src="VendorSweetAlert.js"></script>
+<script src="EmployeeDataSweetAlert.js"></script>
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 	<h1 class="pull-left">Add Employee Record</h1>

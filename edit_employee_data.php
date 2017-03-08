@@ -26,7 +26,10 @@ if(isset($_POST["submit_form"])){
 	header("location: employee_data.php");
 	
 }
-
+else if(isset($_POST["delete_form"])){
+	mysqli_query($conn, "DELETE FROM employee_data WHERE record_id = '$record_id'");
+	header("location: employee_data.php");
+}
 require("header.php");
 
 $result = mysqli_query($conn, "SELECT * FROM employee_data WHERE record_id = '$record_id'");
@@ -51,7 +54,7 @@ if(strpos($task, "^") !== FALSE){
 	$job = $job . "(" . $special . ")";
 }
 ?>
-
+<script src="EmployeeDataSweetAlert.js"></script>
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 	<h1 class="pull-left">Edit Employee Record</h1>
@@ -167,6 +170,7 @@ if(strpos($task, "^") !== FALSE){
 				</div>
 				<div class="newcontact-tabbtm">
 					<input class="save-btn store-btn" type="submit" value="Save" name="submit_form" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
+					<input class = "delete-btn" type = "submit" name = "delete_form" value = "Delete" style="width:200px; font-size:16px; background-color:#ff5c33; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
 				</div>
 			</form>
 			

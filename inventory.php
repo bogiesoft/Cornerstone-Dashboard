@@ -549,6 +549,7 @@
 	<div class="contacts-title">
 		<h1 class="pull-left">Inventory</h1>
 		<a class="pull-right" href="add_inventory.php">Add Inventory</a>
+		<a style = "background: #d14700" class="pull-right" href="production.php">Back To Production</a>
 	</div>
 <div class="dashboard-detail">
     <div class="search-cont">

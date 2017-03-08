@@ -69,12 +69,30 @@ $(document).ready(function(){
 				<div class="newcontacttab-inner">
 					<div class="tabinner-detail">
 					<label>Material</label>
-					<input id="material" name="material" type="text" class="contact-prefix" value = "<?php echo $material; ?>">
+					<select id="material" name="material" class="contact-prefix" onchange = "generateTypes()">
+					<option value = "<?php echo $material; ?>" selected = "select"><?php echo $material; ?></option>
+					<?php
+					$result_materials = mysqli_query($conn, "SELECT DISTINCT material FROM materials WHERE vendor = 'CRST Inventory' AND material != '$material'");
+					while($row_materials = $result_materials->fetch_assoc()){
+						$material_id = $row_materials["material"];
+						echo "<option value = '" . $material_id . "'>" . $material_id . "</option>";
+					}
+					?>
+					</select>
 					<div class="clear"></div>
 					</div>
 					<div class="tabinner-detail">
 					<label>Type</label>
-					<input id="type" name="type" type="text" class="contact-prefix" value = "<?php echo $type; ?>">
+					<select id="type" name="type" class="contact-prefix">
+					<option value = "<?php echo $type; ?>" selected = "select"><?php echo $type; ?></option>
+					<?php
+						$result_type = mysqli_query($conn, "SELECT DISTINCT type FROM materials WHERE vendor = 'CRST Inventory' AND material = '$material' AND type != '$type'");
+						while($row_type = $result_type->fetch_assoc()){
+							$type_id = $row_type["type"];
+							echo "<option value = '" . $type_id . "'>" . $type_id . "</option>";
+						}
+					?>
+					</select>
 					<div class="clear"></div>
 					</div>
 					<div class="tabinner-detail">
@@ -127,3 +145,21 @@ $(document).ready(function(){
 	</div>
 </div>
 </div>
+<script>
+function generateTypes(){
+	var material_id = $("#material").val()
+	$.ajax({
+    type: "POST",
+    url: "create_type_list.php",
+    data: 'material=' + material_id,
+    dataType: "json", // Set the data type so jQuery can parse it for you
+    success: function (data) {
+        $("#type").empty();
+		$('#type').append($('<option>', {select: "selected", value:0, text:"--Choose Type--"}));
+		for(var i = 0; i < data.length; i++){
+			$('#type').append($('<option>', {value:data[i], text:data[i]}));
+		}
+    }
+});
+}
+</script>

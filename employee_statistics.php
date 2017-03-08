@@ -4,6 +4,8 @@
 ?>
 <div class="dashboard-cont" style="padding-top:110px;">
 <div class="contacts-title">
+		<a class="pull-right" href="employee_data.php">Back to Employee Data</a>
+<div class="contacts-title">
 <h1 class="pull-left">Production Statistics</h1>
 </div>
 <div class="dashboard-detail">

@@ -53,7 +53,7 @@ $(document).ready(function(){
 				<div class="newcontacttab-inner">
 					<div class="tabinner-detail">
 					<label>Material</label>
-					<select id="material" name="material" class="contact-prefix">
+					<select id="material" name="material" class="contact-prefix" onchange = "generateTypes()">
 					<option value = "0" select = "selected">--Select Material--</option>
 					<?php
 						$result = mysqli_query($conn, "SELECT DISTINCT material FROM materials WHERE vendor = 'CRST Inventory'");
@@ -76,7 +76,7 @@ $(document).ready(function(){
 					<label>Vendor</label>
 					<select name = "vendor">
 					<?php
-						$result2 = mysqli_query($conn, "SELECT * FROM vendors") or die("error");
+						$result2 = mysqli_query($conn, "SELECT * FROM vendors WHERE vendor_name != 'CRST Inventory'") or die("error");
 						while($row2 = $result2->fetch_assoc()){
 							$vendor_name = $row2["vendor_name"];
 							echo "<option value = '" . $vendor_name . "'>" . $vendor_name . "</option>";
@@ -121,3 +121,21 @@ $(document).ready(function(){
 	</div>
 </div>
 </div>
+<script>
+function generateTypes(){
+	var material_id = $("#material").val()
+	$.ajax({
+    type: "POST",
+    url: "create_type_list.php",
+    data: 'material=' + material_id,
+    dataType: "json", // Set the data type so jQuery can parse it for you
+    success: function (data) {
+        $("#type").empty();
+		$('#type').append($('<option>', {select: "selected", value:0, text:"--Choose Type--"}));
+		for(var i = 0; i < data.length; i++){
+			$('#type').append($('<option>', {value:data[i], text:data[i]}));
+		}
+    }
+});
+}
+</script>

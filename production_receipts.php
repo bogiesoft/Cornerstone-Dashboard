@@ -1,7 +1,10 @@
 <?php require ("header.php"); ?>
 <div class="dashboard-cont" style="padding-top:110px;">
+<div class="contacts-title">
+		<a style = "background: #d14700" class="pull-right" href="production.php">Back To Production</a>
+</div>
 	<div class="contacts-title">
-	<h1 class="pull-left">Archived Jobs</h1>
+	<h1 class="pull-left">Production Receipts</h1>
 	</div>
 	<div class="dashboard-detail">
 		<div class="search-cont search-boxleft searchcont-detail">
