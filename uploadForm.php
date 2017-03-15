@@ -106,7 +106,7 @@ var CodeVersion = '3.0.8';
 	<ul style = "border: 2px solid #009966; border-radius: 5px; width: 70%; list-style-type: circle; list-style-position: inside; padding-left: 2%">
 		<li>All input must not exceed max length of 45</li>
 		<li><b>Full Name/Prefix/Suffix Fields:</b> No numerical characters allowed</li>
-		<li><b>Phone/Fax Fields:</b> Must be 10 digit number with no other characters. (e.g 1234567899)</li>
+		<li><b>Phone/Fax Fields:</b> Acceptable inputs ((908) 345-4543, 456-343-3433, +1 483-493-4932, etc.)</li>
 		<li><b>Extension:</b> Can only be numerical(Do not include Ext. within)</li>
 		<li><b>Call Back Date/Date Added:</b> Must be entered in correct date format as shown - month/day/year (e.g 3/31/2016)
 			<ul style = "list-style-type: square; list-style-position: inside; padding-left: 2%">

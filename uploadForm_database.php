@@ -53,6 +53,7 @@ $insert_statements = array();
 $update_statements = array();
 $check = 0;
 $test_count = 0;
+$dups = 0;
 $sql = 'INSERT INTO sales (rep, quickbooks, prefix, full_name, suffix, title, phone, fax, extension, web_address, business, country, address_line_1, address_line_2, address_line_3, city, state, zipcode, status, call_back_date, priority, date_added, 
 				mailing_list, pie_day, second_contact, cell_phone, alt_phone, home_phone, email1, email2, vertical1, vertical2, vertical3, source, notes, _2014_pie_day, Non_Profit_Card_08_2013, 
 				Commercial_Card_08_2013, USPS_Post_Office_Mailing_03_2014, Contractor_Small_Business_Select_Mailing_03_2014, Contractor_SB_Select_Mailing_04_2014, USPS_EDDM_Regs_brochure_Mailing_04_2014,
@@ -61,10 +62,7 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 {
 		$sql_add = "";
 		if($test_count > 0){
-			if($test_count == 0){
-				echo "Here";
-			}
-			$sql_add .= "(";
+			$sql_add .= ", (";
 		}
 		else
 		{
@@ -85,7 +83,7 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 				$input = str_replace("'", "\'", $input); 
 			}
 			//check if input is greater than 45
-			/*if(strlen($input) > 45){
+			if(strlen($input) > 45){
 				array_push($error, "error in row " . ($i + 1) . " column header " . $_POST[$array_names[$j]] . " applied to " . $array_names[$j] . ": <b>input size is greater than 45</b> -> " . strlen($input));
 			}
 			//check for numeric characters in full_name, prefix, suffix
@@ -93,21 +91,21 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 				array_push($error, "error in row " . ($i + 1) . " column header " . $_POST[$array_names[$j]] . " applied to " . $array_names[$j] . ": <b>Numeric character found</b>");
 			}
 			//check if all phone/fax fields are valid inputs
-			if($input != "" && (strlen($input) != 10 || preg_match("/[a-z]/i", $input)) && ($array_names[$j] == "phone" || $array_names[$j] == "fax" || $array_names[$j] == "cell_phone" || $array_names[$j] == "alt_phone" || $array_names[$j] == "home_phone")){
+			if($input != "" && ((!preg_match("/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/", $input))) && ($array_names[$j] == "phone" || $array_names[$j] == "fax" || $array_names[$j] == "cell_phone" || $array_names[$j] == "alt_phone" || $array_names[$j] == "home_phone")){
 				if($array_names[$j] == "phone"){
-					array_push($error, "error in row " . ($i + 1) . " column header " . $_POST[$array_names[$j]] . " applied to " . $array_names[$j] . ": <b>must have 10 digits and no other characters</b>");
+					array_push($error, "error in row " . ($i + 1) . " column header " . $_POST[$array_names[$j]] . " applied to " . $array_names[$j] . ": <b>Improper phone number format</b>");
 				}
 				else if($array_names[$j] == "fax"){
-					array_push($error, "error in row " . ($i + 1) . " column header " . $_POST[$array_names[$j]] . " applied to " . $array_names[$j] . ": <b>must have 10 digits and no other characters</b>");
+					array_push($error, "error in row " . ($i + 1) . " column header " . $_POST[$array_names[$j]] . " applied to " . $array_names[$j] . ": <b>Improper phone number format</b>");
 				}
 				else if($array_names[$j] == "cell_phone"){
-					array_push($error, "error in row " . ($i + 1) . " column header " . $_POST[$array_names[$j]] . " applied to " . $array_names[$j] . ": <b>must have 10 digits and no other characters</b>");
+					array_push($error, "error in row " . ($i + 1) . " column header " . $_POST[$array_names[$j]] . " applied to " . $array_names[$j] . ": <b>Improper phone number format</b>");
 				}
 				else if($array_names[$j] == "alt_phone"){
-					array_push($error, "error in row " . ($i + 1) . " column header " . $_POST[$array_names[$j]] . " applied to " . $array_names[$j] . ": <b>must have 10 digits and no other characters</b>");
+					array_push($error, "error in row " . ($i + 1) . " column header " . $_POST[$array_names[$j]] . " applied to " . $array_names[$j] . ": <b>Improper phone number format</b>");
 				}
 				else if($array_names[$j] == "home_phone"){
-					array_push($error, "error in row " . ($i + 1) . " column header " . $_POST[$array_names[$j]] . " applied to " . $array_names[$j] . ": <b>must have 10 digits and no other characters</b>");
+					array_push($error, "error in row " . ($i + 1) . " column header " . $_POST[$array_names[$j]] . " applied to " . $array_names[$j] . ": <b>Improper phone number format</b>");
 				}	
 			}
 			//check if email input for email1 or email2 is incorrect
@@ -150,7 +148,7 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 			//checks if type is input Client or Prospect
 			if($array_names[$j] == "type" && $input != "" && $input != "Prospect" && $input != "Client"){
 				array_push($error, "error in row " . ($i + 1) . " column header " . $_POST[$array_names[$j]] . " applied to " . $array_names[$j] . ": <b>Can only be input <i> Prospect </i> or <i> Client </i>. Can also be left blank as default <i> Prospect </i></b>");
-			}*/
+			}
 			//adds current date for date_added field
 			if($array_names[$j] == "date_added" && $input == ""){
 				date_default_timezone_set('America/New_York');
@@ -197,6 +195,7 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 		$value_to_search = $full_name . "," . $address_line_1 . "," . $business;
 		if(array_search($value_to_search, $key_search)){
 			array_push($update_statements, $sql2);
+			$dups++;
 		}
 		else{
 			$sql .= $sql_add;
@@ -211,10 +210,9 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 		}
 		$test_count++;
 }
+array_push($insert_statements, $sql);
 if(count($error) == 0){
-	
 	for($i = 0; $i < count($insert_statements); $i++){
-		echo $insert_statements[0];
 		mysqli_query($conn, $insert_statements[$i]) or die("error querying database 2");
 	}
 	
