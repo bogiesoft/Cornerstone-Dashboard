@@ -122,6 +122,16 @@ require ("header.php");
 			localStorage.removeItem("description_val");
 
 		});
-
+	$(".likeaboss_h1").html("");
+    $(".likeaboss_h2").html("");
+    $(".likeaboss_h3").html("");
+	$(".likeaboss_bold").html("");
+	$(".likeaboss_italic").html("");
+	$(".likeaboss_bullet_list").html("");
+	$(".likeaboss_number_list").html("");
+	$(".likeaboss_link").html("");
+	$(".likeaboss_image").html("");
+	$(".likeaboss_code").html("");
+	$(".likeaboss_horizontal").html("");
 	});
 </script>

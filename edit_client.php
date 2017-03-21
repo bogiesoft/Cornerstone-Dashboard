@@ -372,57 +372,30 @@ require ("header.php");
 								<div class="newcontacttab-inner">
 									<div class="tabinner-detail">
 										<label>Note</label>
-										<textarea name="notes" class="contact-notes"><?php echo $notes; ?></textarea>
+										<textarea name="notes" class="contact-notes" style = "width: 500%"><?php echo $notes; ?></textarea>
 										<div class="clear"></div>
 									</div>
 								</div>
 							</div>
 							<div class="newcontactstab-detail" id="mailing_history" style = 'display:none; white-space: nowrap;'>
-								<div class="newcontacttab-inner" style="width:700px;">
-									<div class="tabinner-detail">
-										<div class="clear"></div>
-									</div>	
-									<div class="tabinner-detail">
-										<input type="checkbox" name="_2014_pie_day" class="contact-prefix" value='Y' style="width:10%; float:left;"<?php if($_2014_pie_day == 'Y'){echo "checked";}?>><label style="width:30%; float:left">2014 Pie Day</label>
-										<div class="clear"></div>
-									</div>
-									<div class="tabinner-detail">
-										<input type="checkbox" name="Non_Profit_Card_08_2013" class="contact-prefix" value='Y' style="width:10%; float:left;"<?php if($Non_Profit_Card_08_2013 == 'Y'){echo "checked";}?>><label style="width:30%; float:left">Non-Profit Card 08-2013</label>
-										<div class="clear"></div>
-									</div>
-									<div class="tabinner-detail">
-										<input type="checkbox" name="Commercial_Card_08_2013" class="contact-prefix" value='Y' style="width:10%; float:left;"<?php if($Commercial_Card_08_2013 == 'Y'){echo "checked";}?>><label style="width:30%; float:left">Commercial Card 08-2013</label>
-										<div class="clear"></div>
-									</div>
-									<div class="tabinner-detail">
-										<input type="checkbox" name="USPS_Post_Office_Mailing_03_2014" class="contact-prefix" value='Y' style="width:10%; float:left;"<?php if($USPS_Post_Office_Mailing_03_2014 == 'Y'){echo "checked";}?>><label style="width:30%; float:left">USPS Post Office Mailing 03-2014</label>
-										<div class="clear"></div>
-									</div>
-									<div class="tabinner-detail">
-										<input type="checkbox" name="Contractor_Small_Business_Select_Mailing_03_2014" class="contact-prefix" value='Y' style="width:10%; float:left;"<?php if($Contractor_Small_Business_Select_Mailing_03_2014 == 'Y'){echo "checked";}?>><label style="width:30%; float:left">Contractor/Small Business Select Mailing 03-2014</label>
-										<div class="clear"></div>
-									</div>
-									<div class="tabinner-detail">
-										<input type="checkbox" name="Contractor_SB_Select_Mailing_04_2014" class="contact-prefix" value='Y' style="width:10%; float:left;"<?php if($Contractor_SB_Select_Mailing_04_2014 == 'Y'){echo "checked";}?>><label style="width:30%; float:left">Contractor/SB Select Mailing 04-2014</label>
-										<div class="clear"></div>
-									</div>
-									<div class="tabinner-detail">
-										<input type="checkbox" name="USPS_EDDM_Regs_brochure_Mailing_04_2014" class="contact-prefix" value='Y' style="width:10%; float:left;"<?php if($USPS_EDDM_Regs_brochure_Mailing_04_2014 == 'Y'){echo "checked";}?>><label style="width:30%; float:left">USPS EDDM + Regs brochure Mailing 04-2014</label>
-										<div class="clear"></div>
-									</div>
-									<div class="tabinner-detail">
-										<input type="checkbox" name="USPS_9Y9_EDDM_Marketing_Card" class="contact-prefix" value='Y' style="width:10%; float:left;"<?php if($USPS_9Y9_EDDM_Marketing_Card == 'Y'){echo "checked";}?>><label style="width:30%; float:left">USPS 9Y9 EDDM Marketing Card</label>
-										<div class="clear"></div>
-									</div>
-									<div class="tabinner-detail">
-										<input type="checkbox" name="SEPT_2014_3_5Y11_CRST_Marketing_Card" class="contact-prefix" value='Y' style="width:10%; float:left;"<?php if($SEPT_2014_3_5Y11_CRST_Marketing_Card == 'Y'){echo "checked";}?>><label style="width:30%; float:left">SEPT 2014 3.5Y11 CRST Marketing Card</label>
-										<div class="clear"></div>
-									</div>
-									<div class="tabinner-detail">
-										<input type="checkbox" name="Contractor_Mailing_2016" class="contact-prefix" value='Y' style="width:10%; float:left;"<?php if($Contractor_Mailing_2016 == 'Y'){echo "checked";}?>><label style="width:30%; float:left">Contractor Mailing 2016</label>
-										<div class="clear"></div>
-									</div>
-								</div>
+							<div class="newcontacttab-inner" style="width:700px;">
+								<div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >
+								<tbody>
+								<tr valign='top'><th class='allcontacts-title'>Information<span class='allcontacts-subtitle'></span></th></tr>
+								<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='vendor' data-index='4'>Description</th><th class='maintable-thtwo data-header' data-name='material' data-index='6'>Check</th></tr></thead><tbody>
+								<tr><td>2014 Pie Day</td><td><input type="checkbox" name="_2014_pie_day" class="contact-prefix" value='Y' <?php if($_2014_pie_day == 'Y'){echo "checked";}?>></td></tr>
+								<tr><td>Non Profit Card 08 2013</td><td><input type="checkbox" name="Non_Profit_Card_08_2013" class="contact-prefix" value='Y' <?php if($Non_Profit_Card_08_2013 == 'Y'){echo "checked";}?>></td></tr>
+								<tr><td>Commercial Card 08-2013</td><td><input type="checkbox" name="Commercial_Card_08_2013" class="contact-prefix" value='Y' <?php if($Commercial_Card_08_2013 == 'Y'){echo "checked";}?>></td></tr>
+								<tr><td>USPS Post Office Mailing 03-2014</td><td><input type="checkbox" name="USPS_Post_Office_Mailing_03_2014" class="contact-prefix" value='Y' <?php if($USPS_Post_Office_Mailing_03_2014 == 'Y'){echo "checked";}?>></td></tr>
+								<tr><td>Contractor/Small Business Select Mailing 03-2014</td><td><input type="checkbox" name="Contractor_Small_Business_Select_Mailing_03_2014" class="contact-prefix" value='Y' <?php if($Contractor_Small_Business_Select_Mailing_03_2014 == 'Y'){echo "checked";}?>></td></tr>
+								<tr><td>Contractor/SB Select Mailing 04-2014</td><td><input type="checkbox" name="Contractor_SB_Select_Mailing_04_2014" class="contact-prefix" value='Y' <?php if($Contractor_SB_Select_Mailing_04_2014 == 'Y'){echo "checked";}?>></td></tr>
+								<tr><td>USPS EDDM + Regs brochure Mailing 04-2014</td><td><input type="checkbox" name="USPS_EDDM_Regs_brochure_Mailing_04_2014" class="contact-prefix" value='Y' <?php if($USPS_EDDM_Regs_brochure_Mailing_04_2014 == 'Y'){echo "checked";}?>></td></tr>
+								<tr><td>USPS 9Y9 EDDM Marketing Card</td><td><input type="checkbox" name="USPS_9Y9_EDDM_Marketing_Card" class="contact-prefix" value='Y' <?php if($USPS_9Y9_EDDM_Marketing_Card == 'Y'){echo "checked";}?>></td></tr>
+								<tr><td>SEPT 2014 3.5Y11 CRST Marketing Card</td><td><input type="checkbox" name="SEPT_2014_3_5Y11_CRST_Marketing_Card" class="contact-prefix" value='Y' <?php if($SEPT_2014_3_5Y11_CRST_Marketing_Card == 'Y'){echo "checked";}?>></td></tr>
+								<tr><td>Contractor Mailing 2016</td><td><input type="checkbox" name="Contractor_Mailing_2016" class="contact-prefix" value='Y' <?php if($Contractor_Mailing_2016 == 'Y'){echo "checked";}?>></td></tr>
+								</tbody></table></td></tr></tbody></table></div>
+							</div>
+							
 							</div>
 							<div class="newcontactstab-detail" id="crids" style = 'display:none;'>
 								<div class="newcontacttab-inner">

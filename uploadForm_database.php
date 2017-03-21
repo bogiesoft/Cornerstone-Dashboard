@@ -108,12 +108,22 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 				}
 				else if($array_names[$j] == "home_phone"){
 					array_push($error, "error in row " . ($i + 1) . " column header " . $_POST[$array_names[$j]] . " applied to " . $array_names[$j] . ": <b>Improper phone number format</b>");
-				}	
+				}
+				else if($array_names[$j] == "work_phone"){
+					array_push($error, "error in row " . ($i + 1) . " column header " . $_POST[$array_names[$j]] . " applied to " . $array_names[$j] . ": <b>Improper phone number format</b>");
+				}
+				else if($array_names[$j] == "alt_cell_phone"){
+					array_push($error, "error in row " . ($i + 1) . " column header " . $_POST[$array_names[$j]] . " applied to " . $array_names[$j] . ": <b>Improper phone number format</b>");
+				}
+				else if($array_names[$j] == "alt_fax"){
+					array_push($error, "error in row " . ($i + 1) . " column header " . $_POST[$array_names[$j]] . " applied to " . $array_names[$j] . ": <b>Improper phone number format</b>");
+				}					
 			}
 			//check if email input for email1 or email2 is incorrect
 			if($input != "" && strpos($input, '@') === FALSE && ($array_names[$j] == "email1" || $array_names[$j] == "email2")){
 				array_push($error, "error in row " . ($i + 1) . " column header " . $_POST[$array_names[$j]] . " applied to " . $array_names[$j] . ": <b>email must include @ (e.g. james123@aol)</b>");
 			}
+			
 			//check if call back date input field is readable or date added is readable
 			if(($array_names[$j] == "call_back_date" || $array_names[$j] == "date_added") && $input != ""){
 				$call_back_date = explode("/", $input);
