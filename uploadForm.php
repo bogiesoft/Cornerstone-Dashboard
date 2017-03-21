@@ -238,7 +238,7 @@ window.onload = function(){
 		};
 		
 		function showMaxMessage(){
-		swal({   title: "Oops!",   text: "Cannot have more than 200 clients in one upload",   type: "warning",      confirmButtonColor: "#4FD8FC",   confirmButtonText: "OK",   closeOnConfirm: true }, 
+		swal({   title: "Oops!",   text: "File too big",   type: "warning",      confirmButtonColor: "#4FD8FC",   confirmButtonText: "OK",   closeOnConfirm: true }, 
 			function(){ saveNotClicked=false; $( ".store-btn" ).click();});
 		};
 	}
@@ -261,4 +261,3 @@ function displayHistory()
 function viewErrors(){
 	$(".errors_found").show();
 }
-</script>
