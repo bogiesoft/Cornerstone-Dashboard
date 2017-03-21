@@ -285,10 +285,10 @@ if ($result->num_rows > 0) {
 							echo "<input type = 'date' class = 'input_fields' name = 'completed_date' value = '" . $row_blue_sheet['completed_date'] . "'>";
 						echo "</div>";
 					echo "</div>";
-					echo "</form>";
 					echo '<div class="newcontact-tabbtm">
 					<input class="save-btn store-btn" type="submit" value="Save" name="submit_form' . $job_count . '" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
 					</div>';
+					echo "</form>";
 			echo '</div></div>';
 		}
 		

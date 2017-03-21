@@ -3,16 +3,11 @@ session_start();
 require("connection.php");
 require("head.php");
 $data = array();
-$handle = fopen($_FILES['fileUpload']["tmp_name"], 'r');
+$handle = fopen($_FILES['fileUpload']["tmp_name"], 'r') or $_SESSION["max_on_importer"] = "SET";
 while($row = fgetcsv($handle , 100000 , ",")) {
    $data[] = $row;
 }
-if(count($data) > 200001){
-	$_SESSION["max_on_importer"] = "SET";
-	header("location: uploadForm.php");
-	die(count($data));
-}
-
+fclose($handle);
 $key_search = array();
 $result_sales_list = mysqli_query($conn, "SELECT DISTINCT full_name, address_line_1, business FROM sales");
 while($row = $result_sales_list->fetch_assoc()){
@@ -171,7 +166,6 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 			if($array_names[$j] == "business" && $array_indexes[$j] != -1){
 				$business = $input;
 			}
-			
 			//creates UPDATE and INSERT statements similtaneously
 			//For UPDATE string, excludes the full_name and address_line_1 fields because they are keys
 			//Excludes date_added because this field can't be changed once added to the table
@@ -188,12 +182,14 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 				$sql_add = $sql_add . "'Prospect', " . $import_id . ", '" . $import_name . "', 'Insert')";
 			}
 		}
+
 		$value_to_search = $full_name . "," . $address_line_1 . "," . $business;
+
 		if(array_search($value_to_search, $key_search)){
 			$dups++;
 		}
 		else{
-			$sql .= $sql_add;
+			$sql = $sql . $sql_add;
 			if($test_count >= 830){
 				array_push($insert_statements, $sql);
 				$sql = 'INSERT INTO sales (rep, quickbooks, prefix, full_name, suffix, title, phone, alt_phone, cell_phone, alt_cell_phone, home_phone, work_phone, fax, alt_fax, web_address, business, country, address_line_1, address_line_2, address_line_3, city, state, zipcode, status, call_back_date, priority, date_added, 
@@ -202,13 +198,15 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 				USPS_9Y9_EDDM_Marketing_Card, SEPT_2014_3_5Y11_CRST_Marketing_Card, Contractor_Mailing_2016, type, import_id, import_name, import_status) VALUES ';
 				$test_count = -1;
 			}
+			$test_count++;
 		}
-		$test_count++;
 }
-array_push($insert_statements, $sql);
+if($test_count > 0){
+	array_push($insert_statements, $sql);
+}
 if(count($error) == 0){
 	for($i = 0; $i < count($insert_statements); $i++){
-		mysqli_query($conn, $insert_statements[$i]);
+		mysqli_query($conn, $insert_statements[$i]) or die("error in query");
 	}
 	$job = "CSV file uploaded to CRM";
 	$user_name = $_SESSION['user'];
