@@ -104,10 +104,9 @@ var CodeVersion = '3.0.8';
     <input type="button" id="upload" value="Upload" onclick="this.disabled='disabled'"/>
     <hr />
 	<ul style = "border: 2px solid #009966; border-radius: 5px; width: 70%; list-style-type: circle; list-style-position: inside; padding-left: 2%">
-		<li>All input must not exceed max length of 45</li>
+		<li>All input must not exceed max length of 45 except full_name(100) and web_address(120), </li>
 		<li><b>Full Name/Prefix/Suffix Fields:</b> No numerical characters allowed</li>
-		<li><b>Phone/Fax Fields:</b> Acceptable inputs ((908) 345-4543, 456-343-3433, +1 483-493-4932, etc.). Can also type additional info after number.</li>
-		<li><b>Extension:</b> Can only be numerical(Do not include Ext. within). can also be entered in phone fields with number (ex. 908-232-2321 x987)</li>
+		<li><b>Phone/Fax Fields:</b> Acceptable inputs ((908) 345-4543, 456-343-3433, +1 483-493-4932, etc.). Can also type additional info after number or extensions.</li>
 		<li><b>Call Back Date/Date Added:</b> Must be entered in correct date format as shown - month/day/year (e.g 3/31/2016)
 			<ul style = "list-style-type: square; list-style-position: inside; padding-left: 2%">
 				<li><i>Note - </i> Default for Date Added is current date</li>
@@ -117,7 +116,6 @@ var CodeVersion = '3.0.8';
 		<li><b>Country: </b> Must only be used for a <u>FOREIGN</u> country or left blank. DO NOT enter United States in this field</li>
 		<li><b>Address Line 3: </b> Only used for FOREIGN addresses and a Country field must be included</li>
 		<li><b>Type: </b> Must either be <i> Prospect </i> or <i>Client</i>. Can also be left blank for default <i> Prospect </i></li>
-		<li>200 clients per download maximum</li>
 	</ul>
 	<fieldset>
 		<div class="widget-corner-upper"></div>

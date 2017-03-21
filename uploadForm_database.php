@@ -54,8 +54,8 @@ $update_statements = array();
 $check = 0;
 $test_count = 0;
 $dups = 0;
-$sql = 'INSERT INTO sales (rep, quickbooks, prefix, full_name, suffix, title, phone, fax, extension, web_address, business, country, address_line_1, address_line_2, address_line_3, city, state, zipcode, status, call_back_date, priority, date_added, 
-				mailing_list, pie_day, second_contact, cell_phone, alt_phone, home_phone, email1, email2, vertical1, vertical2, vertical3, source, notes, _2014_pie_day, Non_Profit_Card_08_2013, 
+$sql = 'INSERT INTO sales (rep, quickbooks, prefix, full_name, suffix, title, phone, alt_phone, cell_phone, alt_cell_phone, home_phone, work_phone, fax, alt_fax, web_address, business, country, address_line_1, address_line_2, address_line_3, city, state, zipcode, status, call_back_date, priority, date_added, 
+				mailing_list, pie_day, second_contact, email1, email2, vertical1, vertical2, vertical3, source, notes, _2014_pie_day, Non_Profit_Card_08_2013, 
 				Commercial_Card_08_2013, USPS_Post_Office_Mailing_03_2014, Contractor_Small_Business_Select_Mailing_03_2014, Contractor_SB_Select_Mailing_04_2014, USPS_EDDM_Regs_brochure_Mailing_04_2014,
 				USPS_9Y9_EDDM_Marketing_Card, SEPT_2014_3_5Y11_CRST_Marketing_Card, Contractor_Mailing_2016, type, import_id, import_name, import_status) VALUES ';
 for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
@@ -68,7 +68,6 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 		{
 			$sql_add .= "(";
 		}
-		$sql2 = 'UPDATE sales SET ';
 		$full_name = "";
 		$address_line_1 = "";
 		$business = "";
@@ -83,15 +82,18 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 				$input = str_replace("'", "\'", $input); 
 			}
 			//check if input is greater than 45
-			if(strlen($input) > 45){
-				array_push($error, "error in row " . ($i + 1) . " column header " . $_POST[$array_names[$j]] . " applied to " . $array_names[$j] . ": <b>input size is greater than 45</b> -> " . strlen($input));
+			if(strlen($input) > 100 && $array_names[$j] == "full_name"){
+				array_push($error, "error in row " . ($i + 1) . " column header " . $_POST[$array_names[$j]] . " applied to " . $array_names[$j] . ": <b>input size is greater than 50</b> -> " . strlen($input));
+			}
+			if(strlen($input) > 120 && $array_names[$j] == "web_address"){
+				array_push($error, "error in row " . ($i + 1) . " column header " . $_POST[$array_names[$j]] . " applied to " . $array_names[$j] . ": <b>input size is greater than 120</b> -> " . strlen($input));
 			}
 			//check for numeric characters in full_name, prefix, suffix
-			if(preg_match("/[0-9]+/", $input) && ($array_names[$j] == "full_name" || $array_names[$j] == "prefix" || $array_names[$j] == "suffix")){
+			if(preg_match("/[0-9]+/", $input) && ($array_names[$j] == "prefix" || $array_names[$j] == "suffix")){
 				array_push($error, "error in row " . ($i + 1) . " column header " . $_POST[$array_names[$j]] . " applied to " . $array_names[$j] . ": <b>Numeric character found</b>");
 			}
 			//check if all phone/fax fields are valid inputs
-			if($input != "" && ((!preg_match("/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}( x\d{4})?|x\d{4}$/", $input))) && ($array_names[$j] == "phone" || $array_names[$j] == "fax" || $array_names[$j] == "cell_phone" || $array_names[$j] == "alt_phone" || $array_names[$j] == "home_phone")){
+			if($input != "" && !preg_match("/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}( x\d{4})?|x\d{4}$/", $input) && ($array_names[$j] == "phone" || $array_names[$j] == "fax" || $array_names[$j] == "cell_phone" || $array_names[$j] == "alt_phone" || $array_names[$j] == "home_phone" || $array_names[$j] == "work_phone" || $array_names[$j] == "alt_cell_phone" || $array_names[$j] == "alt_fax")){
 				if($array_names[$j] == "phone"){
 					array_push($error, "error in row " . ($i + 1) . " column header " . $_POST[$array_names[$j]] . " applied to " . $array_names[$j] . ": <b>Improper phone number format</b>");
 				}
@@ -111,10 +113,6 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 			//check if email input for email1 or email2 is incorrect
 			if($input != "" && strpos($input, '@') === FALSE && ($array_names[$j] == "email1" || $array_names[$j] == "email2")){
 				array_push($error, "error in row " . ($i + 1) . " column header " . $_POST[$array_names[$j]] . " applied to " . $array_names[$j] . ": <b>email must include @ (e.g. james123@aol)</b>");
-			}
-			//check if extension is numerical
-			if($input != "" && preg_match("/[a-z]/i", $input) && $array_names[$j] == "extension"){
-				array_push($error, "error in row " . ($i + 1) . " column header " . $_POST[$array_names[$j]] . " applied to " . $array_names[$j] . ": <b>extension must only be numerical (e.g. 123)</b>");
 			}
 			//check if call back date input field is readable or date added is readable
 			if(($array_names[$j] == "call_back_date" || $array_names[$j] == "date_added") && $input != ""){
@@ -169,40 +167,27 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 			//Excludes date_added because this field can't be changed once added to the table
 			if($array_indexes[$j] != -1 || $array_names[$j] == "date_added"){
 				$sql_add = $sql_add . '"' . $input . '",';
-				if($array_names[$j] != "full_name" && $array_names[$j] != "address_line_1" && $array_names[$j] != "date_added"){
-					$sql2 = $sql2 . $array_names[$j] . ' = "' . $input . '", ';
-				}
 			}
 			else if(($array_indexes[$j] != -1 || $array_names[$j] == "date_added") && $j == count($array_indexes) - 1){
 				$sql_add = $sql_add . $input . ',"' . $import_id . '", "' . $import_name . '", "Insert")';
-				if($array_names[$j] != "full_name" && $array_names[$j] != "address_line_1" && $array_names[$j] != "date_added"){
-					$sql2 = $sql2 . $array_names[$j] . ' = "' . $input . ', import_id = ' . $import_id . ', import_date = "' . $import_date . '", import_name = "' . $import_name .  '", import_status = "Update" WHERE full_name = "' . $full_name . '" AND address_line_1 = "' . $address_line_1 . '"';
-				}
 			}
 			else if($array_indexes[$j] == -1 && $j != count($array_indexes) - 1){
 				$sql_add = $sql_add . "' ',";
-				if($array_names[$j] != "full_name" && $array_names[$j] != "address_line_1" && $array_names[$j] != "date_added"){
-					$sql2 = $sql2 . $array_names[$j] . " = ' ', ";
-				}
 			}
 			else{
 				$sql_add = $sql_add . "'Prospect', " . $import_id . ", '" . $import_name . "', 'Insert')";
-				if($array_names[$j] != "full_name" && $array_names[$j] != "address_line_1" && $array_names[$j] != "date_added"){
-					$sql2 = $sql2 . $array_names[$j] . " = 'Prospect', import_id = " . $import_id . ", import_name = '" . $import_name . "', import_date = '" . $import_date .  "', import_status = 'Update' WHERE full_name = '$full_name' AND address_line_1 = '$address_line_1'";
-				}
 			}
 		}
 		$value_to_search = $full_name . "," . $address_line_1 . "," . $business;
 		if(array_search($value_to_search, $key_search)){
-			array_push($update_statements, $sql2);
 			$dups++;
 		}
 		else{
 			$sql .= $sql_add;
 			if($test_count >= 830){
 				array_push($insert_statements, $sql);
-				$sql = 'INSERT INTO sales (rep, quickbooks, prefix, full_name, suffix, title, phone, fax, extension, web_address, business, country, address_line_1, address_line_2, address_line_3, city, state, zipcode, status, call_back_date, priority, date_added, 
-				mailing_list, pie_day, second_contact, cell_phone, alt_phone, home_phone, email1, email2, vertical1, vertical2, vertical3, source, notes, _2014_pie_day, Non_Profit_Card_08_2013, 
+				$sql = 'INSERT INTO sales (rep, quickbooks, prefix, full_name, suffix, title, phone, alt_phone, cell_phone, alt_cell_phone, home_phone, work_phone, fax, alt_fax, web_address, business, country, address_line_1, address_line_2, address_line_3, city, state, zipcode, status, call_back_date, priority, date_added, 
+				mailing_list, pie_day, second_contact, email1, email2, vertical1, vertical2, vertical3, source, notes, _2014_pie_day, Non_Profit_Card_08_2013, 
 				Commercial_Card_08_2013, USPS_Post_Office_Mailing_03_2014, Contractor_Small_Business_Select_Mailing_03_2014, Contractor_SB_Select_Mailing_04_2014, USPS_EDDM_Regs_brochure_Mailing_04_2014,
 				USPS_9Y9_EDDM_Marketing_Card, SEPT_2014_3_5Y11_CRST_Marketing_Card, Contractor_Mailing_2016, type, import_id, import_name, import_status) VALUES ';
 				$test_count = -1;
@@ -213,11 +198,7 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 array_push($insert_statements, $sql);
 if(count($error) == 0){
 	for($i = 0; $i < count($insert_statements); $i++){
-		mysqli_query($conn, $insert_statements[$i]) or die("error querying database 2");
-	}
-	
-	for($i = 0; $i < count($update_statements); $i++){
-		mysqli_query($conn, $update_statements[$i]) or die("error querying database 3");
+		mysqli_query($conn, $insert_statements[$i]);
 	}
 	$job = "CSV file uploaded to CRM";
 	$user_name = $_SESSION['user'];
