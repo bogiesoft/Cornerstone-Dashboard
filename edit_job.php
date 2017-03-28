@@ -18,8 +18,8 @@ li {
     {
         var mywindow = window.open('height=400,width=600');
         mywindow.document.write('<html><head><title>CRST JOB TICKET</title>');
-        /*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
-        mywindow.document.write('</head><body >');
+        //mywindow.document.write('<link rel="stylesheet" href="css/style.css">');
+        mywindow.document.write('</head><body>');
         mywindow.document.write(data);
         mywindow.document.write('</body></html>');
 

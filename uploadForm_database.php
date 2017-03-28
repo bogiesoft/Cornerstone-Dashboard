@@ -49,8 +49,8 @@ $update_statements = array();
 $check = 0;
 $test_count = 0;
 $dups = 0;
-$sql = 'INSERT INTO sales (rep, quickbooks, prefix, full_name, suffix, title, phone, alt_phone, cell_phone, alt_cell_phone, home_phone, work_phone, fax, alt_fax, web_address, business, country, address_line_1, address_line_2, address_line_3, city, state, zipcode, status, call_back_date, priority, date_added, 
-				mailing_list, pie_day, second_contact, email1, email2, vertical1, vertical2, vertical3, source, notes, _2014_pie_day, Non_Profit_Card_08_2013, 
+$sql = 'INSERT INTO sales (rep, quickbooks, prefix, full_name, suffix, title, contact_name, phone, alt_phone, cell_phone, alt_cell_phone, home_phone, work_phone, fax, alt_fax, web_address, alt_website1, alt_website2, linkedin, facebook, twitter, skypeid, business, country, address_line_1, address_line_2, address_line_3, city, state, zipcode, status, call_back_date, priority, date_added, 
+				mailing_list, pie_day, second_contact, email1, email2, cc_email, vertical1, vertical2, vertical3, source, notes, _2014_pie_day, Non_Profit_Card_08_2013, 
 				Commercial_Card_08_2013, USPS_Post_Office_Mailing_03_2014, Contractor_Small_Business_Select_Mailing_03_2014, Contractor_SB_Select_Mailing_04_2014, USPS_EDDM_Regs_brochure_Mailing_04_2014,
 				USPS_9Y9_EDDM_Marketing_Card, SEPT_2014_3_5Y11_CRST_Marketing_Card, Contractor_Mailing_2016, type, import_id, import_name, import_status) VALUES ';
 for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
@@ -192,8 +192,8 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 			$sql = $sql . $sql_add;
 			if($test_count >= 830){
 				array_push($insert_statements, $sql);
-				$sql = 'INSERT INTO sales (rep, quickbooks, prefix, full_name, suffix, title, phone, alt_phone, cell_phone, alt_cell_phone, home_phone, work_phone, fax, alt_fax, web_address, business, country, address_line_1, address_line_2, address_line_3, city, state, zipcode, status, call_back_date, priority, date_added, 
-				mailing_list, pie_day, second_contact, email1, email2, vertical1, vertical2, vertical3, source, notes, _2014_pie_day, Non_Profit_Card_08_2013, 
+				$sql = 'INSERT INTO sales (rep, quickbooks, prefix, full_name, suffix, title, contact_name, phone, alt_phone, cell_phone, alt_cell_phone, home_phone, work_phone, fax, alt_fax, web_address, alt_website1, alt_website2, linkedin, facebook, twitter, skypeid, business, country, address_line_1, address_line_2, address_line_3, city, state, zipcode, status, call_back_date, priority, date_added, 
+				mailing_list, pie_day, second_contact, email1, email2, cc_email, vertical1, vertical2, vertical3, source, notes, _2014_pie_day, Non_Profit_Card_08_2013, 
 				Commercial_Card_08_2013, USPS_Post_Office_Mailing_03_2014, Contractor_Small_Business_Select_Mailing_03_2014, Contractor_SB_Select_Mailing_04_2014, USPS_EDDM_Regs_brochure_Mailing_04_2014,
 				USPS_9Y9_EDDM_Marketing_Card, SEPT_2014_3_5Y11_CRST_Marketing_Card, Contractor_Mailing_2016, type, import_id, import_name, import_status) VALUES ';
 				$test_count = -1;

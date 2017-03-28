@@ -218,7 +218,6 @@ var CodeVersion = '3.0.8';
     </body>
 </html>
 <script>
-
 window.onload = function(){
 		var errors = <?php echo json_encode($errors); ?>;
 		var max = <?php echo json_encode($max); ?>;
@@ -261,3 +260,4 @@ function displayHistory()
 function viewErrors(){
 	$(".errors_found").show();
 }
+</script>
