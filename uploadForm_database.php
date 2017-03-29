@@ -166,15 +166,16 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 			if($array_names[$j] == "business" && $array_indexes[$j] != -1){
 				$business = $input;
 			}
-			//creates UPDATE and INSERT statements similtaneously
+			//creates INSERT statements
 			//For UPDATE string, excludes the full_name and address_line_1 fields because they are keys
 			//Excludes date_added because this field can't be changed once added to the table
-			if($array_indexes[$j] != -1 || $array_names[$j] == "date_added"){
+			if(($array_indexes[$j] != -1 || $array_names[$j] == "date_added") && $j == count($array_indexes) - 1){
+				$sql_add = $sql_add . '"' . $input . '","' . $import_id . '", "' . $import_name . '", "Insert")';
+			}
+			else if($array_indexes[$j] != -1 || $array_names[$j] == "date_added"){
 				$sql_add = $sql_add . '"' . $input . '",';
 			}
-			else if(($array_indexes[$j] != -1 || $array_names[$j] == "date_added") && $j == count($array_indexes) - 1){
-				$sql_add = $sql_add . $input . ',"' . $import_id . '", "' . $import_name . '", "Insert")';
-			}
+
 			else if($array_indexes[$j] == -1 && $j != count($array_indexes) - 1){
 				$sql_add = $sql_add . "' ',";
 			}

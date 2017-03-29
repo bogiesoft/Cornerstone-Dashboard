@@ -3,19 +3,29 @@ require ("connection.php");
 
 $temp=unserialize($_GET['client_info']);
 $full_name = $temp[0];
-$address_line_1 = $temp[1];	
-$sql = "SELECT * FROM sales WHERE full_name = '$full_name' AND address_line_1 = '$address_line_1'"; 
+$address_line_1 = $temp[2];
+$business = $temp[1];	
+$sql = "SELECT * FROM sales WHERE full_name = '$full_name' AND address_line_1 = '$address_line_1' AND business = '$business'"; 
 $result = mysqli_query($conn,$sql) or die("error"); 
 
 if ($result->num_rows > 0) {
 	$row = $result->fetch_assoc();	
 	$rep = $row["rep"];
 	$quickbooks = $row["quickbooks"];
+	$prefix = $row["prefix"];
 	$full_name = $row["full_name"];
-	$business=$row["business"];
+	$suffix = $row["suffix"];
+	$contact_name = $row["contact_name"];
 	$phone=$row["phone"];
 	$email1=$row["email1"];
 	$web_address=$row["web_address"];
+	$alt_website1 = $row["alt_website1"];
+	$alt_website2 = $row["alt_website2"];
+	$linkedin = $row["linkedin"];
+	$facebook = $row["facebook"];
+	$twitter = $row["twitter"];
+	$skypeid = $row["skypeid"];
+	$address_line_3 = $row["address_line_3"];
 	$source=$row["source"];
 	$title=$row["title"];
 	$notes=$row["notes"];
@@ -26,17 +36,21 @@ if ($result->num_rows > 0) {
 	$zipcode = $row["zipcode"];
 	$priority = $row["priority"];
 	$fax = $row["fax"];
+	$alt_fax = $row["alt_fax"];
 	$display = "yes";
 	$call_back_date = $row["call_back_date"];
 	$date_added = $row["date_added"];
 	$status = $row["status"];
 	$mailing_list = $row["mailing_list"];
 	$cell_phone = $row["cell_phone"];
+	$alt_cell_phone = $row["alt_cell_phone"];
 	$second_contact = $row["second_contact"];
 	$pie_day = $row["pie_day"];
 	$alt_phone = $row["alt_phone"];
 	$home_phone = $row["alt_phone"];
+	$work_phone = $row["work_phone"];
 	$email2=$row["email2"];
+	$cc_email = $row["cc_email"];
 	$vertical1=$row["vertical1"];
 	$vertical2=$row["vertical2"];
 	$vertical3=$row["vertical3"];
@@ -148,29 +162,61 @@ require ("header.php");
 </script>
 <script>
 	function showClientInfo(){
+		document.getElementById("alternate_fields").style.display = "none";
 		document.getElementById("notes").style.display = "none";
 		document.getElementById("mailing_history").style.display = "none";
-		document.getElementById("client_info").style.display = "block";
 		document.getElementById("crids").style.display = "none";
+		document.getElementById("social_media").style.display = "none";
+		document.getElementById("client_info").style.display = "block";
+
 	};
 	function showNotes(){
-		document.getElementById("notes").style.display = "block";
+		document.getElementById("alternate_fields").style.display = "none";
 		document.getElementById("mailing_history").style.display = "none";
 		document.getElementById("client_info").style.display = "none";
 		document.getElementById("crids").style.display = "none";
+		document.getElementById("social_media").style.display = "none";
+		document.getElementById("notes").style.display = "block";
+
 	};
 	function showMailingHistory(){
+		document.getElementById("alternate_fields").style.display = "none";
 		document.getElementById("notes").style.display = "none";
-		document.getElementById("mailing_history").style.display = "block";
 		document.getElementById("client_info").style.display = "none";
 		document.getElementById("crids").style.display = "none";
+		document.getElementById("social_media").style.display = "none";
+		document.getElementById("mailing_history").style.display = "block";
+
 	};
 	function showCrid(){
+		document.getElementById("alternate_fields").style.display = "none";
 		document.getElementById("notes").style.display = "none";
 		document.getElementById("mailing_history").style.display = "none";
 		document.getElementById("client_info").style.display = "none";
+		document.getElementById("social_media").style.display = "none";
 		document.getElementById("crids").style.display = "block";
+
 	};
+	function showSocialMedia(){
+		document.getElementById("notes").style.display = "none";
+		document.getElementById("mailing_history").style.display = "none";
+		document.getElementById("client_info").style.display = "none";
+		document.getElementById("crids").style.display = "none";
+		document.getElementById("alternate_fields").style.display = "none";
+		document.getElementById("social_media").style.display = "block";
+
+	};
+	function showAltInfo(){
+		document.getElementById("notes").style.display = "none";
+		document.getElementById("mailing_history").style.display = "none";
+		document.getElementById("client_info").style.display = "none";
+		document.getElementById("crids").style.display = "none";
+		document.getElementById("social_media").style.display = "none";
+		document.getElementById("alternate_fields").style.display = "block";
+
+	};
+
+
 </script>
 <!-- Tab Panes -->
 <div class="dashboard-cont" style="padding-top:110px;">
@@ -191,7 +237,9 @@ require ("header.php");
 			<!-- Nav Tabs -->
 			<ul class="nav nav-tabs" role="tablist">
 				<li role="presentation" class="active"><a  role="tab" data-toggle="tab" aria-expanded="true" onclick = 'showClientInfo()'>Client Info</a></li>
+				<li role="presentation" class="active"><a  role="tab" data-toggle="tab" aria-expanded="true" onclick = 'showAltInfo()'>Alternate Info</a></li>
 				<li role="presentation" class="active"><a  role="tab" data-toggle="tab" aria-expanded="true" onclick = 'showNotes()'>Notes</a></li>
+				<li role="presentation" class="active"><a  role="tab" data-toggle="tab" aria-expanded="true" onclick = 'showSocialMedia()'>Social Media</a></li>
 				<li role="presentation" class="active"><a  role="tab" data-toggle="tab" aria-expanded="true" onclick = 'showMailingHistory()'>Mailing History</a></li>
 				<li role="presentation" class="active"><a  role="tab" data-toggle="tab" aria-expanded="true" onclick = 'showCrid()'>CRIDS</a></li>
 			</ul>
@@ -209,6 +257,17 @@ require ("header.php");
 										<div class="clear"></div>
 									</div>
 									<div class="tabinner-detail">
+										<label>Prefix</label>
+										<input name="prefix" type="text" value="<?php echo $prefix; ?>" class="contact-prefix">
+										<div class="clear"></div>
+									</div>
+									<div class="tabinner-detail">
+										<label>Suffix</label>
+										<input name="suffix" type="text" value="<?php echo $suffix; ?>" class="contact-prefix">
+										<div class="clear"></div>
+									</div>
+
+									<div class="tabinner-detail">
 										<label>Title</label>
 										<input name="title" type="text" value="<?php echo $title; ?>" class="contact-prefix">
 										<div class="clear"></div>
@@ -224,11 +283,6 @@ require ("header.php");
 										<div class="clear"></div>
 									</div>
 									<div class="tabinner-detail">
-										<label>Address Line 2</label>
-										<input name="address_line_2" type="text" value="<?php echo $address_line_2; ?>" class="contact-prefix">
-										<div class="clear"></div>
-									</div>
-									<div class="tabinner-detail">
 										<label>City</label>
 										<input name="city" type="text" value="<?php echo $city; ?>" class="contact-prefix">
 										<div class="clear"></div>
@@ -241,6 +295,11 @@ require ("header.php");
 									<div class="tabinner-detail">
 										<label>Zip</label>
 										<input name="zipcode" type="text" value="<?php echo $zipcode; ?>" class="contact-prefix">
+										<div class="clear"></div>
+									</div>
+									<div class="tabinner-detail">
+										<label>Country</label>
+										<input name="country" type="text" value="<?php echo $country; ?>" class="contact-prefix">
 										<div class="clear"></div>
 									</div>
 									<div class="tabinner-detail">
@@ -264,25 +323,26 @@ require ("header.php");
 										<label>Cell Phone</label>
 										<input name="cell_phone" type="text" value="<?php echo $cell_phone; ?>" class="contact-prefix">
 										<div class="clear"></div>
-									</div>
-									<div class="tabinner-detail">
-										<label>Alternate Phone</label>
-										<input name="alt_phone" type="text" value="<?php echo $alt_phone; ?>" class="contact-prefix">
-										<div class="clear"></div>
-									</div>
+									</div>								
 									<div class="tabinner-detail">
 										<label>Home Phone</label>
 										<input name="home_phone" type="text" value="<?php echo $home_phone; ?>" class="contact-prefix">
 										<div class="clear"></div>
 									</div>
 									<div class="tabinner-detail">
+										<label>Work Phone</label>
+										<input name="work_phone" type="text" value="<?php echo $work_phone; ?>" class="contact-prefix">
+										<div class="clear"></div>
+									</div>
+
+									<div class="tabinner-detail">
 										<label>Email 1</label>
 										<input name="email1" type="text" value="<?php echo $email1; ?>" class="contact-prefix">
 										<div class="clear"></div>
 									</div>
 									<div class="tabinner-detail">
-										<label>Email 2</label>
-										<input name="email2" type="text" value="<?php echo $email2; ?>" class="contact-prefix">
+										<label>CC Email</label>
+										<input name="cc_email" type="text" value="<?php echo $cc_email; ?>" class="contact-prefix">
 										<div class="clear"></div>
 									</div>
 									<div class="tabinner-detail">
@@ -296,8 +356,8 @@ require ("header.php");
 										<div class="clear"></div>
 									</div>
 									<div class="tabinner-detail">
-										<label>Second Contact</label>
-										<input name="second_contact" type="text" value="<?php echo $second_contact; ?>" class="contact-prefix">
+										<label>Contact</label>
+										<input name="contact_name" type="text" value="<?php echo $contact_name; ?>" class="contact-prefix">
 										<div class="clear"></div>
 									</div>
 									<div class="tabinner-detail">
@@ -312,6 +372,12 @@ require ("header.php");
 													echo "<option selected = 'selected' value = ''>Select</option><option value ='Client'>Client</option><option value ='Prospect'>Prospect</option>"; 
 												?>
 											</select>
+										<div class="clear"></div>
+									</div>
+
+									<div class="tabinner-detail">
+										<label>Second Contact</label>
+										<input name="second_contact" type="text" value="<?php echo $second_contact; ?>" class="contact-prefix">
 										<div class="clear"></div>
 									</div>
 								</div>
@@ -368,6 +434,52 @@ require ("header.php");
 									</div>
 								</div>
 							</div>
+							<div class="newcontactstab-detail" id="alternate_fields" style = 'display:none;'>
+								<div class="newcontacttab-inner">
+									<div class="tabinner-detail">
+										<label>Alternate Phone</label>
+										<input name="alt_phone" type="text" value="<?php echo $alt_phone; ?>" class="contact-prefix">
+										<div class="clear"></div>
+									</div>
+									<div class="tabinner-detail">
+										<label>Alternate Mobile</label>
+										<input name="alt_cell_phone" type="text" value="<?php echo $alt_cell_phone; ?>" class="contact-prefix">
+										<div class="clear"></div>
+									</div>
+									<div class="tabinner-detail">
+										<label>Alternate Fax</label>
+										<input name="alt_fax" type="text" value="<?php echo $alt_fax; ?>" class="contact-prefix">
+										<div class="clear"></div>
+									</div>
+									<div class="tabinner-detail">
+										<label>Alternate URL 1</label>
+										<input name="alt_website1" type="text" value="<?php echo $alt_website1; ?>" class="contact-prefix">
+										<div class="clear"></div>
+									</div>
+									<div class="tabinner-detail">
+										<label>Alternate URL 2</label>
+										<input name="alt_website2" type="text" value="<?php echo $alt_website2; ?>" class="contact-prefix">
+										<div class="clear"></div>
+									</div>
+									<div class="tabinner-detail">
+										<label>Email 2</label>
+										<input name="email2" type="text" value="<?php echo $email2; ?>" class="contact-prefix">
+										<div class="clear"></div>
+									</div>
+									<div class="tabinner-detail">
+										<label>Address Line 2</label>
+										<input name="address_line_2" type="text" value="<?php echo $address_line_2; ?>" class="contact-prefix">
+										<div class="clear"></div>
+									</div>
+									<div class="tabinner-detail">
+										<label>Address Line 3</label>
+										<input name="address_line_3" type="text" value="<?php echo $address_line_3; ?>" class="contact-prefix">
+										<div class="clear"></div>
+									</div>
+
+
+								</div>
+							</div>
 							<div class="newcontactstab-detail" id="notes" style = 'display:none;'>
 								<div class="newcontacttab-inner">
 									<div class="tabinner-detail">
@@ -377,6 +489,32 @@ require ("header.php");
 									</div>
 								</div>
 							</div>
+							<div class="newcontactstab-detail" id="social_media" style = 'display:none;'>
+								<div class="newcontacttab-inner">
+									<div class="tabinner-detail">
+										<label>LinkedIn</label>
+										<input name="linkedin" type="text" value="<?php echo $linkedin; ?>" class="contact-prefix">
+										<div class="clear"></div>
+									</div>
+									<div class="tabinner-detail">
+										<label>Facebook</label>
+										<input name="facebook" type="text" value="<?php echo $facebook; ?>" class="contact-prefix">
+										<div class="clear"></div>
+									</div>
+									<div class="tabinner-detail">
+										<label>Twitter</label>
+										<input name="twitter" type="text" value="<?php echo $twitter; ?>" class="contact-prefix">
+										<div class="clear"></div>
+									</div>
+									<div class="tabinner-detail">
+										<label>Skype ID</label>
+										<input name="skypeid" type="text" value="<?php echo $skypeid; ?>" class="contact-prefix">
+										<div class="clear"></div>
+									</div>
+
+								</div>
+							</div>
+
 							<div class="newcontactstab-detail" id="mailing_history" style = 'display:none; white-space: nowrap;'>
 							<div class="newcontacttab-inner" style="width:700px;">
 								<div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >
@@ -421,3 +559,4 @@ require ("header.php");
 			</div>
 		</div>
 	</div>
+

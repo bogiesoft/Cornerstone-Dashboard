@@ -21,10 +21,11 @@ $(document).ready(function(){
 	function checkDup(){
 		var full_name=$("#full_name").val();
 		var address_line_1=$("#address_line_1").val();
+		var business = $("#business").val();
 		$.ajax({
 			type: "POST",
 			url: "checkClientDup.php",
-			data:{full_name:full_name,address_line_1:address_line_1},
+			data:{full_name:full_name,address_line_1:address_line_1, business:business},
 			success:function(data){
 				if(data=='duplicate')
 				{
