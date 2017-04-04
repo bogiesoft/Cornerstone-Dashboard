@@ -40,7 +40,6 @@ require ("header.php");
 .dropdown-check-list ul.items li {
   list-style: none;
 }
-
 </style>
 <script src="JobTicketSweetAlert.js"></script>
 <script>
@@ -212,6 +211,8 @@ function getTypes(row_id)
                     <label>Due Date</label>
                     <input name="due_date" type="date" class="contact-prefix">
                     </div>
+				</div>
+				<div class="newclienttab-inner">
                     <?php
                      
                          
@@ -284,6 +285,8 @@ function getTypes(row_id)
                     <label>Mail Class</label>
                     <input name="mail_class" type="text" class="contact-prefix">
                     </div>
+				</div>
+				<div class="newclienttab-inner">
                     <div class="tabinner-detail">
                     <label>Rate</label>
                     <input name="rate" type="text" class="contact-prefix">
@@ -328,6 +331,8 @@ function getTypes(row_id)
                     <label>Data Completed</label>
                     <input name="data_completed" type="date" class="contact-prefix">
                     </div>
+				</div>
+				<div class="newclienttab-inner">
                     <?php
                      
                          
@@ -369,18 +374,20 @@ function getTypes(row_id)
                     <input name="delivery" type="text" class="contact-prefix">
                     </div>
                     <div class="tabinner-detail">
-							<label>Tasks</label>
-
-							<div id="list1" class="dropdown-check-list" tabindex="100">
-							<span class="anchor">Select Tasks</span>
-							<ul name = "item" id="items" class="items">
-								<li><input type="checkbox" name = "tasks[]" value = "Mail Merge"/><label>Mail Merge</label><select name = "special_mail_merge"><option select = 'selected' value = 'Sent to Vendor'>Sent to Vendor</option><option value = 'In-House'>In-House</option></select></li>
-								<li><input type="checkbox" name = "tasks[]" value = "Letter Printing"/><label>Letter Printing</label><select name = "special_letter_printing"><option select = 'selected' value = 'From PDF'>From PDF</option><option value = 'Inkjet'>Inkjet</option></select></li>
-								<li><input type="checkbox" name = "tasks[]" value = "In-House Envelope Printing"/><label>In-House Envelope Printing</label></li>
-								<li><input type="checkbox" name = "tasks[]" value = "Tabbing"/><label>Tabbing</label><select name = "special_tabbing"><option select = 'selected' value = 'Manual Single'>Manual Single</option><option value = 'Manual Double'>Manual Double</option><option value = 'Auto Single'>Auto Single</option><option value = 'Auto Double'>Auto Double</option></select></li>
-								<li><input type="checkbox" name = "tasks[]" value = "Folding"/><label>Folding</label><select name = "special_folding"><option select = 'selected' value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option></select></li>
-								<li><input type="checkbox" name = "tasks[]" value = "Inserting"/><label>Inserting</label><select name = "special_inserting"><option select = 'selected' value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option></select></li>
-								<li><input type="checkbox" name = "tasks[]" value = "Sealing"/><label>Sealing</label><select name = "special_sealing"><option select = 'selected' value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option></select></li>
+					<table style = "width: 50%" border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
+						<tbody>
+							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='vendor' data-index='4'>Check</th><th class='maintable-thtwo data-header' data-name='material' data-index='6'>Task</th><th class='maintable-thtwo data-header' data-name='type' data-index='7'>Special</th></tr></thead><tbody>
+							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Mail Merge"/></td><td><label>Mail Merge</label></td><td><select name = "special_mail_merge"><option select = 'selected' value = 'Sent to Vendor'>Sent to Vendor</option><option value = 'In-House'>In-House</option></select></td></tr>
+							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Letter Printing"/></td><td><label>Letter Printing</label></td><td><select name = "special_letter_printing"><option select = 'selected' value = 'From PDF'>From PDF</option><option value = 'Inkjet'>Inkjet</option></select></td></tr>
+							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "In-House Envelope Printing"/></td><td><label>In-House Envelope Printing</label></td><td></td></tr>
+							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Tabbing"/></td><td><label>Tabbing</label></td><td><select name = "special_tabbing"><option select = 'selected' value = 'Manual Single'>Manual Single</option><option value = 'Manual Double'>Manual Double</option><option value = 'Auto Single'>Auto Single</option><option value = 'Auto Double'>Auto Double</option></select></td></tr>
+							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Folding"/></td><td><label>Folding</label></td><td><select name = "special_folding"><option select = 'selected' value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option></select></td></tr>
+							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Inserting"/></td><td><label>Inserting</label></td><td><select name = "special_inserting"><option select = 'selected' value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option></select></td></tr>
+							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Sealing"/></td><td><label>Sealing</label></td><td><select name = "special_sealing"><option select = 'selected' value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option></select></td></tr>
+							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Collating"/></td><td><label>Collating</label></td><td><select name = "special_collating"><option select = 'selected' value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option><option value = 'Man. and Auto'>Man. and Auto</option></select></td></tr>
+						</tbody></table></td></tr></tbody></table>
+							<?php
+							/*
 								<li><input type="checkbox" name = "tasks[]" value = "Collating"/><label>Collating</label><select name = "special_collating"><option select = 'selected' value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option><option value = 'Man. and Auto'>Man. and Auto</option></select></li>
 								<li><input type="checkbox" name = "tasks[]" value = "Labeling"/><label>Labeling</label></li>
 								<li><input type="checkbox" name = "tasks[]" value = "Print Permit"/><label>Print Permit</label></li>
@@ -391,7 +398,8 @@ function getTypes(row_id)
 								<li><input type="checkbox" name = "tasks[]" value = "Tag as Political"/><label>Tag as Political</label></li>
 								<li><input type="checkbox" name = "tasks[]" value = "Inkjet Printing"/><label>Inkjet Printing</label><select name = "special_inkjet_printing"><option select = 'selected' value = '26K'>26K</option><option value = '11K'>11K</option></select></li>
 								<li><input type="checkbox" name = "tasks[]" value = "Glue Dots"/><label>Glue Dots</label></li>
-							</ul>
+							*/
+							?>
 						</div>
 
 					    <script type="text/javascript">
@@ -438,6 +446,8 @@ function getTypes(row_id)
                     <label>Manual</label>
                     <input name="manual" type="text" class="contact-prefix">
                     </div>
+				</div>
+				<div class="newclienttab-inner">
                     <div class="tabinner-detail">
                     <label>Uncorrected</label>
                     <input name="uncorrected" type="text" class="contact-prefix">
@@ -470,6 +480,8 @@ function getTypes(row_id)
                     <label>NCOA Errors</label>
                     <input name="ncoa_errors" type="text" class="contact-prefix">
                     </div>
+				</div>
+				<div class="newclienttab-inner">
                     <div class="tabinner-detail">
                     <label>Domestic</label>
                     <input name="bs_domestic" type="text" class="contact-prefix">

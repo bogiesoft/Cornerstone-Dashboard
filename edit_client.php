@@ -86,30 +86,44 @@ if(isset($_POST['delete_form'])){
 else if(isset($_POST['submit_form'])){
 	$rep = $_POST["rep"];
 	$quickbooks = $_POST["quickbooks"];
+	$prefix = $_POST["prefix"];
 	$full_name = $_POST['full_name'];
+	$suffix = $_POST["suffix"];
+	$contact_name = $_POST["contact_name"];
 	$address_line_1 = $_POST['address_line_1'];
 	$address_line_2 = $_POST['address_line_2'];
+	$address_line_3 = $_POST["address_line_3"];
 	$business = $_POST['business'];
 	$phone = $_POST['phone'];
 	$email1 = $_POST['email1'];
+	$cc_email = $_POST["cc_email"];
 	$source = $_POST['source'];
 	$city = $_POST['city'];
 	$web_address = $_POST['web_address'];
+	$alt_website1 = $_POST["alt_website1"];
+	$alt_website2 = $_POST["alt_website2"];
+	$linkedin = $_POST["linkedin"];
+	$facebook = $_POST["facebook"];
+	$twitter = $_POST["twitter"];
+	$skypeid = $_POST["skypeid"];
 	$notes = $_POST['notes'];
 	$title = $_POST['title'];
 	$state = $_POST['state'];
 	$zipcode = $_POST['zipcode'];
 	$fax = $_POST['fax'];
+	$alt_fax = $_POST["alt_fax"];
 	$status = $_POST['status'];
 	$call_back_date = $_POST['call_back_date'];
 	$priority = $_POST['priority'];
 	$date_added = $_POST['date_added'];
 	$second_contact = $_POST['second_contact'];
 	$cell_phone = $_POST['cell_phone'];
+	$alt_cell_phone = $_POST["alt_cell_phone"];
 	$pie_day = isset($_POST['pie_day']) ? $_POST['pie_day'] : '';
 	$mailing_list = isset($_POST['mailing_list']) ? $_POST['mailing_list'] : '';
 	$alt_phone = $_POST['alt_phone'];
 	$home_phone = $_POST['home_phone'];
+	$work_phone = $_POST["work_phone"];
 	$email2 = $_POST['email2'];
 	$vertical1 = $_POST['vertical1'];
 	$vertical2 = $_POST['vertical2'];
@@ -134,13 +148,13 @@ else if(isset($_POST['submit_form'])){
 	$a_p = date("A");
 	$_SESSION['date'] = $today;
 	$job = "updated client info";
-	$sql = 'UPDATE sales SET rep="' . $rep . '", quickbooks="' . $quickbooks . '", full_name="' . $full_name . '", address_line_1="' . $address_line_1 . '", address_line_2="' . $address_line_2 . '", phone="' . $phone . '",email1="' . $email1 . '",source="' . $source . '",web_address="' . $web_address . '",notes="' . $notes . '",business="' . $business . '",title="' . $title . '", cell_phone = "' . $cell_phone . '", city = "' . $city . '", state = "' . $state . '", 
-	zipcode = "' . $zipcode . '", fax = "' . $fax . '", second_contact = "' . $second_contact . '", status = "' . $status . '", call_back_date = "' . $call_back_date . '", priority = "' . $priority . '" , date_added = "' . $date_added . '", mailing_list = "' . $mailing_list . '", pie_day = "' . $pie_day . '", alt_phone = "' . $alt_phone . '", home_phone = "' . $home_phone . '" , email2 = "' . $email2 . '", vertical1 = "' . $vertical1 . '", vertical2 = "' . $vertical2 . '", vertical3 = "' . $vertical3 . '", _2014_pie_day = "' . $_2014_pie_day . '", Non_Profit_Card_08_2013 = "' . $Non_Profit_Card_08_2013 . '", Commercial_Card_08_2013 = "' . $Commercial_Card_08_2013 . '" , USPS_Post_Office_Mailing_03_2014 = "' . $USPS_Post_Office_Mailing_03_2014 . '", Contractor_Small_Business_Select_Mailing_03_2014 = "' . $Contractor_Small_Business_Select_Mailing_03_2014 . '", Contractor_SB_Select_Mailing_04_2014 = "' . $Contractor_SB_Select_Mailing_04_2014 . '", USPS_EDDM_Regs_brochure_Mailing_04_2014 = "' . $USPS_EDDM_Regs_brochure_Mailing_04_2014 . '", USPS_9Y9_EDDM_Marketing_Card = "' . $USPS_9Y9_EDDM_Marketing_Card . '", SEPT_2014_3_5Y11_CRST_Marketing_Card = "' . $SEPT_2014_3_5Y11_CRST_Marketing_Card . '", Contractor_Mailing_2016 = "' . $Contractor_Mailing_2016 . '", crid = "' .$crid . '", non_profit = "'. $non_profit . '", type = "' . $type . '" WHERE full_name= "' . $full_name . '" AND address_line_1 = "' . $address_line_1 . '"';
+	$sql = 'UPDATE sales SET rep="' . $rep . '", quickbooks="' . $quickbooks . '", prefix="' . $prefix . '", full_name="' . $full_name . '", address_line_1="' . $address_line_1 . '", address_line_2="' . $address_line_2 . '", phone="' . $phone . '",email1="' . $email1 . '",source="' . $source . '",web_address="' . $web_address . '",notes="' . $notes . '",business="' . $business . '",title="' . $title . '", cell_phone = "' . $cell_phone . '", city = "' . $city . '", state = "' . $state . '", 
+	zipcode = "' . $zipcode . '", fax = "' . $fax . '", second_contact = "' . $second_contact . '", status = "' . $status . '", call_back_date = "' . $call_back_date . '", priority = "' . $priority . '" , date_added = "' . $date_added . '", mailing_list = "' . $mailing_list . '", pie_day = "' . $pie_day . '", alt_phone = "' . $alt_phone . '", home_phone = "' . $home_phone . '" , email2 = "' . $email2 . '", vertical1 = "' . $vertical1 . '", vertical2 = "' . $vertical2 . '", vertical3 = "' . $vertical3 . '", _2014_pie_day = "' . $_2014_pie_day . '", Non_Profit_Card_08_2013 = "' . $Non_Profit_Card_08_2013 . '", Commercial_Card_08_2013 = "' . $Commercial_Card_08_2013 . '" , USPS_Post_Office_Mailing_03_2014 = "' . $USPS_Post_Office_Mailing_03_2014 . '", Contractor_Small_Business_Select_Mailing_03_2014 = "' . $Contractor_Small_Business_Select_Mailing_03_2014 . '", Contractor_SB_Select_Mailing_04_2014 = "' . $Contractor_SB_Select_Mailing_04_2014 . '", USPS_EDDM_Regs_brochure_Mailing_04_2014 = "' . $USPS_EDDM_Regs_brochure_Mailing_04_2014 . '", USPS_9Y9_EDDM_Marketing_Card = "' . $USPS_9Y9_EDDM_Marketing_Card . '", SEPT_2014_3_5Y11_CRST_Marketing_Card = "' . $SEPT_2014_3_5Y11_CRST_Marketing_Card . '", Contractor_Mailing_2016 = "' . $Contractor_Mailing_2016 . '", crid = "' .$crid . '", non_profit = "'. $non_profit . '", type = "' . $type . '" WHERE full_name= "' . $full_name . '" AND address_line_1 = "' . $address_line_1 . '" AND business = "' . $business . '"';
 	
 	
 	$sql6 = "INSERT INTO timestamp (user,time,job, a_p) VALUES ('$user_name', '$today','$job', '$a_p')";
 	$result7 = $conn->query($sql6) or die('Error querying database 5.');
-	$result = $conn->query($sql) or die('Error querying database.');
+	$result = $conn->query($sql) or die($sql);
 	$conn->close();
 	header("location:clients.php");
 	exit();
@@ -559,4 +573,3 @@ require ("header.php");
 			</div>
 		</div>
 	</div>
-
