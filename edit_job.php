@@ -274,25 +274,51 @@ require ("connection.php");
 	<div class="newcontactstabs-outer">
 		<div class="tab-content">
 			<div role="tabpanel" class="tab-pane active" id="home">
+			<form action="update_job.php" method="post">
+			 <div class="newclienttab-inner">
+				<table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
+						<tbody>
+							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='vendor' data-index='4'>Client</th><th class='maintable-thtwo data-header' data-name='material' data-index='6'>Job Name</th><th class='maintable-thtwo data-header' data-name='type' data-index='7'>Due Date</th></tr></thead><tbody>
+							<tr><td><input style = "width: 75%" id = "client_name" name="client_name" type="text" value="<?php echo $client_name ; ?>" class="contact-prefix"></td><td><input style = "width: 75%" name="project_name" type="text" value="<?php echo $project_name ; ?>" class="contact-prefix"></td><td><input style = "width: 75%" name="due_date" type="date" value="<?php echo $due_date ; ?>" class="contact-prefix"></td></tr>
+						</tbody></table></td></tr></tbody></table>
+                    <div class="tabinner-detail">
+					<ul class = "client_search_results">
+					</ul>
+                    </div>
+			</div>
+			<div class="newclienttab-inner" style = "float: left; width: 31%">
+                    <div class="tabinner-detail">
+                    <label>Contact Name</label>
+                    <input id = "contact_name" name="contact_name" type="text" class="contact-prefix" readonly>
+                    </div>
+					<div class="tabinner-detail">
+                    <label>Phone</label>
+                    <input id = "phone" name="phone" type="text" class="contact-prefix" readonly>
+                    </div>
+					<div class="tabinner-detail">
+                    <label>Email</label>
+                    <input id = "email" name="email" type="text" class="contact-prefix" readonly>
+                    </div>
+					<div class="tabinner-detail">
+                    <label>Address</label>
+                    <input id = "address_line_1" name="address" type="text" class="contact-prefix" readonly>
+                    </div>
+					<div class="tabinner-detail">
+                    <label>City</label><input id = "city" style = "width: 20%" name="city" type="text" class="contact-prefix" readonly><label>State</label><input id = "state" style = "width: 20%" name="state" type="text" class="contact-prefix" readonly><label>Zip</label><input id = "zipcode" style = "width: 20%" name="zip" type="text" class="contact-prefix" readonly>
+                    </div>
+					<div class="tabinner-detail">
+                    <label>Second Contact</label>
+                    <input id = "second_contact" name="second_contact" type="text" class="contact-prefix" readonly>
+                    </div>
+					<div class="tabinner-detail">
+                    <label>Fax</label>
+                    <input id = "fax" name="fax" type="text" class="contact-prefix" readonly>
+                    </div>
+				</div>
 			<div class="newcontactstab-detail">
-				<form action="update_job.php" method="post">
-				<div class="tabinner-detail">
-				<ul class = "client_search_results">
-				</ul>
-				<label>Client</label>
-				<input id = "client_name" name="client_name" type="text" value="<?php echo $client_name ; ?>" class="contact-prefix">
-				</div>
-				<div class="tabinner-detail">
-				<label>Job Name</label>
-				<input name="project_name" type="text" value="<?php echo $project_name ; ?>" class="contact-prefix">
-				</div>
 				<div class="tabinner-detail">
 				<label>Ticket Date</label>
 				<input name="ticket_date" type="date" value="<?php echo $ticket_date ; ?>" class="contact-prefix">
-				</div>
-				<div class="tabinner-detail">
-				<label>Due Date</label>
-				<input name="due_date" type="date" value="<?php echo $due_date ; ?>" class="contact-prefix">
 				</div>
 				<div class="tabinner-detail">
 				<label>Created By</label>

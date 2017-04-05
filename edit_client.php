@@ -34,6 +34,7 @@ if ($result->num_rows > 0) {
 	$city = $row["city"];
 	$state = $row["state"];
 	$zipcode = $row["zipcode"];
+	$country = $row["country"];
 	$priority = $row["priority"];
 	$fax = $row["fax"];
 	$alt_fax = $row["alt_fax"];
@@ -110,6 +111,7 @@ else if(isset($_POST['submit_form'])){
 	$title = $_POST['title'];
 	$state = $_POST['state'];
 	$zipcode = $_POST['zipcode'];
+	$country = $_POST["country"];
 	$fax = $_POST['fax'];
 	$alt_fax = $_POST["alt_fax"];
 	$status = $_POST['status'];

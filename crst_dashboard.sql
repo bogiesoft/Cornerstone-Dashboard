@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 28, 2017 at 10:01 PM
+-- Generation Time: Apr 05, 2017 at 11:18 PM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 7.0.13
 
@@ -222,7 +222,10 @@ INSERT INTO `customer_service` (`job_id`, `postage`, `invoice_number`, `invoice_
 (5721, '', 0, '0000-00-00', '', '', '', '', '', '1969-12-31', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 (5722, '', 0, '0000-00-00', '', '', '', '', '', '1969-12-31', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 (5732, '', 0, '0000-00-00', '', '', '', '', '', '1969-12-31', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5736, '', 0, '0000-00-00', '', '', '', '', '', '1969-12-31', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+(5736, '', 0, '0000-00-00', '', '', '', '', '', '1969-12-31', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5737, '', 0, '0000-00-00', '', '', '', '', '', '1969-12-31', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5739, '', 0, '0000-00-00', '', '', '', '', '', '1969-12-31', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5741, '', 0, '0000-00-00', '', '', '', '', '', '1969-12-31', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -369,7 +372,10 @@ INSERT INTO `job_ticket` (`job_id`, `processed_by`, `client_name`, `project_name
 (5721, '', 'Tali Ma', 'F to M', '1969-12-31', '1969-12-31', '', '', '0000-00-00', 'admin', '', '1969-12-31', '1969-12-31', 0, 0, 'none', 0, '', '', '', '', '19', '', '', '', 0),
 (5722, 'mbroc', '', '', '2017-02-28', '2017-03-28', '', '', '0000-00-00', 'admin', '', '1969-12-31', '1969-12-31', 0, 2000, 'none', 1, '', '', '', '', '11', '', '', '', 0),
 (5732, 'igadge', '', 'Sample Production Receipt', '1969-12-31', '1969-12-31', '', '', '0000-00-00', 'admin', '', '1969-12-31', '1969-12-31', 0, 200, 'none', 0, '', '', '', '', '11,9,19', '', '', '', 0),
-(5736, 'djefferson', 'Simpsons', 'play', '2016-05-16', '2016-05-19', '', '', '0000-00-00', '', '', '1969-12-31', '1969-12-31', 0, 1000, 'on hold', 0, '', '', '', '', '', '', '', '', 0);
+(5736, 'djefferson', 'Simpsons', 'play', '2016-05-16', '2016-05-19', '', '', '0000-00-00', '', '', '1969-12-31', '1969-12-31', 0, 1000, 'on hold', 0, '', '', '', '', '', '', '', '', 0),
+(5737, '', '', '', '1969-12-31', '1969-12-31', '', '', '0000-00-00', 'admin', '', '1969-12-31', '1969-12-31', 0, 0, 'none', 0, '', '', '', '', '20', '', '', '', 0),
+(5739, '', 'Pro Printers(Ryan  Scott)', '', '1969-12-31', '1969-12-31', '', '', '0000-00-00', 'admin', '', '1969-12-31', '1969-12-31', 0, 0, 'none', 0, '', '', '', '', '20', '', '', '', 0),
+(5741, '', 'Pro Printers(Ryan  Scott)', '', '1969-12-31', '1969-12-31', '', '', '0000-00-00', 'admin', '', '1969-12-31', '1969-12-31', 0, 0, 'none', 0, '', '', '', '', '20', '', '', '', 0);
 
 -- --------------------------------------------------------
 
@@ -423,6 +429,7 @@ CREATE TABLE `production` (
 --
 
 INSERT INTO `production` (`job_id`, `hold_postage`, `postage_paid`, `print_template`, `special_address`, `delivery`, `tasks`) VALUES
+(0, 'no', 'no', '', '', '', ''),
 (5681, 'no', 'no', '', '', '', ''),
 (5682, 'no', 'no', '', '', '', ''),
 (5689, 'no', 'no', '', '', '', ''),
@@ -444,7 +451,10 @@ INSERT INTO `production` (`job_id`, `hold_postage`, `postage_paid`, `print_templ
 (5721, 'no', 'no', '', '', '', ''),
 (5722, 'no', 'no', '', '', '', ''),
 (5732, 'no', 'no', '', '', '', 'Inserting^Auto,Labeling'),
-(5736, 'yes', 'yes', '', '', '', 'Sealing^Auto,Carrier Route');
+(5736, 'yes', 'yes', '', '', '', 'Sealing^Auto,Carrier Route'),
+(5737, 'no', 'no', '', '', '', 'Mail Merge^Sent to Vendor,Letter Printing^From PDF,Collating^Man. and Auto,Inkjet Printing^11K'),
+(5739, 'no', 'no', '', '', '', ''),
+(5741, 'no', 'no', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -505,7 +515,11 @@ INSERT INTO `production_receipts` (`job_id`, `wm_id`, `date_expected`, `crst_pic
 (5732, 19, '2017-02-27', 1, 'MA', '34 Dock', 'Joe Mcgee'),
 (5733, 20, '2017-02-25', 0, 'KA', '62 THERE', 'CRST Inventory'),
 (5733, 19, '2017-03-15', 1, 'DFA', '31 Bay', 'Joe Mcgee'),
-(5734, 11, '2017-03-13', 0, 'FDTY', '41 Yo', 'Pro printer');
+(5734, 11, '2017-03-13', 0, 'FDTY', '41 Yo', 'Pro printer'),
+(5737, 20, '0000-00-00', 0, '', '', 'CRST Inventory'),
+(5739, 20, '0000-00-00', 0, '', '', 'CRST Inventory'),
+(0, 20, '0000-00-00', 0, '', '', 'CRST Inventory'),
+(5741, 20, '0000-00-00', 0, '', '', 'CRST Inventory');
 
 -- --------------------------------------------------------
 
@@ -515,6 +529,8 @@ INSERT INTO `production_receipts` (`job_id`, `wm_id`, `date_expected`, `crst_pic
 
 CREATE TABLE `project_management` (
   `data_source` varchar(45) NOT NULL,
+  `data_location` varchar(100) NOT NULL,
+  `data_processed_by` varchar(45) NOT NULL,
   `data_received` date NOT NULL,
   `data_completed` date NOT NULL,
   `dqr_sent` date NOT NULL,
@@ -554,29 +570,32 @@ CREATE TABLE `project_management` (
 -- Dumping data for table `project_management`
 --
 
-INSERT INTO `project_management` (`data_source`, `data_received`, `data_completed`, `dqr_sent`, `job_id`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`, `13`, `14`, `na_1`, `na_2`, `na_3`, `na_4`, `na_5`, `na_6`, `na_7`, `na_8`, `na_9`, `na_10`, `na_11`, `na_12`, `na_13`, `na_14`, `percent`) VALUES
-('', '1969-12-31', '1969-12-31', '1969-12-26', 5681, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 80),
-('', '1969-12-31', '1969-12-31', '1969-12-31', 5682, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-('', '1969-12-31', '1969-12-31', '1969-12-31', 5689, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-('', '1969-12-31', '1969-12-31', '1969-12-31', 5698, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-('', '1969-12-31', '1969-12-31', '1969-12-31', 5699, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-('', '1969-12-31', '1969-12-31', '1969-12-31', 5703, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-('', '1969-12-31', '1969-12-31', '1969-12-31', 5708, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-('fgfgt', '2016-04-07', '2016-04-21', '2016-04-06', 5709, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-('', '1969-12-31', '1969-12-31', '1969-12-31', 5711, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-('', '1969-12-31', '1969-12-31', '1969-12-31', 5712, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-('', '1969-12-31', '1969-12-31', '1969-12-31', 5713, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-('', '1969-12-31', '1969-12-31', '1969-12-31', 5714, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-('', '1969-12-31', '1969-12-31', '1969-12-31', 5715, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 33),
-('', '1969-12-31', '1969-12-31', '1969-12-31', 5716, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-('', '1969-12-31', '1969-12-31', '1969-12-31', 5717, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-('', '1969-12-31', '1969-12-31', '1969-12-31', 5718, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-('', '1969-12-31', '1969-12-31', '1969-12-31', 5719, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 100),
-('', '1969-12-31', '1969-12-31', '1969-12-31', 5720, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-('', '1969-12-31', '1969-12-31', '1969-12-31', 5721, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-('', '1969-12-31', '1969-12-31', '1969-12-31', 5722, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 28),
-('', '1969-12-31', '1969-12-31', '1969-12-31', 5732, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-('', '1969-12-31', '1969-12-31', '1969-12-31', 5736, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+INSERT INTO `project_management` (`data_source`, `data_location`, `data_processed_by`, `data_received`, `data_completed`, `dqr_sent`, `job_id`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`, `13`, `14`, `na_1`, `na_2`, `na_3`, `na_4`, `na_5`, `na_6`, `na_7`, `na_8`, `na_9`, `na_10`, `na_11`, `na_12`, `na_13`, `na_14`, `percent`) VALUES
+('', '', '', '1969-12-31', '1969-12-31', '1969-12-26', 5681, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 80),
+('', '', '', '1969-12-31', '1969-12-31', '1969-12-31', 5682, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', '', '', '1969-12-31', '1969-12-31', '1969-12-31', 5689, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', '', '', '1969-12-31', '1969-12-31', '1969-12-31', 5698, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', '', '', '1969-12-31', '1969-12-31', '1969-12-31', 5699, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', '', '', '1969-12-31', '1969-12-31', '1969-12-31', 5703, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', '', '', '1969-12-31', '1969-12-31', '1969-12-31', 5708, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('fgfgt', '', '', '2016-04-07', '2016-04-21', '2016-04-06', 5709, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', '', '', '1969-12-31', '1969-12-31', '1969-12-31', 5711, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', '', '', '1969-12-31', '1969-12-31', '1969-12-31', 5712, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', '', '', '1969-12-31', '1969-12-31', '1969-12-31', 5713, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', '', '', '1969-12-31', '1969-12-31', '1969-12-31', 5714, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', '', '', '1969-12-31', '1969-12-31', '1969-12-31', 5715, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 33),
+('', '', '', '1969-12-31', '1969-12-31', '1969-12-31', 5716, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', '', '', '1969-12-31', '1969-12-31', '1969-12-31', 5717, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', '', '', '1969-12-31', '1969-12-31', '1969-12-31', 5718, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', '', '', '1969-12-31', '1969-12-31', '1969-12-31', 5719, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 100),
+('', '', '', '1969-12-31', '1969-12-31', '1969-12-31', 5720, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', '', '', '1969-12-31', '1969-12-31', '1969-12-31', 5721, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', '', '', '1969-12-31', '1969-12-31', '1969-12-31', 5722, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 28),
+('', '', '', '1969-12-31', '1969-12-31', '1969-12-31', 5732, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', '', '', '1969-12-31', '1969-12-31', '1969-12-31', 5736, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', '', '', '1969-12-31', '1969-12-31', '1969-12-31', 5737, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'C:\\xampp\\htdocs\\Cornerstone-Dashboard', '', '1969-12-31', '1969-12-31', '1969-12-31', 5739, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('test', 'L:\\_CRST-OPS-PRODUCTION\\Manual Bundle Tag Creation', 'mbroc', '2017-04-03', '2017-04-19', '1969-12-31', 5741, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1291,7 +1310,7 @@ INSERT INTO `sales` (`rep`, `quickbooks`, `prefix`, `full_name`, `suffix`, `titl
 ('CRST', ' ', 'Mr.', 'Ron  Matthews', ' ', '', 'Ron Matthews', '845-338-1247', '', '', '', '', '', '', '', 'www.kingston-ny.gov/content/148/162/default.aspx#Fire', '', '', '', '', '', '', 'Kingston Vol. Fireman''s Hall & Museum', '', 'PO Box 1501', ' ', ' ', 'Kingston', 'NY', '12402', ' ', '0000-00-00', ' ', '2017-03-28', ' ', ' ', '', '', '', '', 'NON-PROFIT', 'Museum', '', ' ', 'Originally Smith P&M Account for Raffle Tickets.    6/26/2012:  Ron - may be interested in doing some fundraising. Said I''d send info/samples. EC     ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '0', '0', 'Prospect', 0, '2017-03-28 19:35:53', 1, 'TestNewImporter', 'Insert'),
 ('CRST', ' ', 'Mr.', 'Bill  Noelles', ' ', 'Board Member', '', '(845) 331-4481', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'Kingston Volunteer Fire Museum', '', '265 Fair St', ' ', ' ', 'Kingston', 'NY', '12401-3807', ' ', '0000-00-00', ' ', '2017-03-28', ' ', ' ', '', 'vfmuseumofkingston@gmail.com', '', '', 'Fire Dept', '', '', ' ', '   ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '0', '0', 'Prospect', 0, '2017-03-28 19:35:53', 1, 'TestNewImporter', 'Insert'),
 ('CRST', ' ', 'Mr.', 'Al  Alberts', ' ', '', 'Al Alberts', '845 331-0175', '', '', '', '', '', '845 340-9209', '', 'www.ci.kingston.ny.us', '', '', '', '', '', '', 'Kingston Water Department', '', 'PO Box 1537', ' ', ' ', 'Kingston', 'NY', '12401-1537', ' ', '0000-00-00', ' ', '2017-03-28', ' ', ' ', 'Jane Perry', 'aalberts@ci.kingston.ny.us', '', '', 'NON-PROFIT', 'Municipal', '', ' ', '   ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '0', '0', 'Prospect', 0, '2017-03-28 19:35:53', 1, 'TestNewImporter', 'Insert'),
-('MIKE', ' ', 'Mr.', 'Louis F. Klass', ' ', 'President & Owner', '', '(845) 623-2593', '', '', '', '', '(201) 344-7760', '', '', '', '', '', '', '', '', '', 'Klass Painting & Power Washing LLC', '', '3 Summit Place', ' ', ' ', 'Nanuet', 'NY', '10954-3713', ' ', '0000-00-00', ' ', '2017-03-28', ' ', ' ', '', 'lfklass@aol.com', '', '', 'Commercial', 'Contractor', '', ' ', '10/21/2014 3:14:23 PM:  called the 845-623-2593 and left message for Lou.  SG   ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '0', '0', 'Prospect', 0, '2017-03-28 19:35:53', 1, 'TestNewImporter', 'Insert'),
+('MIKE', ' ', 'Mr.', 'Louis F. Klass', ' ', 'MEMBER', '', '(845) 623-2593', '', '', '', '', '(201) 344-7760', '', '', '', '', '', '', '', '', '', 'Klass Painting & Power Washing LLC', '', '3 Summit Place', ' ', ' ', 'Nanuet', 'NY', '10954-3713', ' ', '0000-00-00', ' ', '2017-03-28', '', '', '', 'lfklass@aol.com', '', '', 'Commercial', 'Contractor', '', ' ', '10/21/2014 3:14:23 PM:  called the 845-623-2593 and left message for Lou.  SG   ', '', '', '', '', '', '', '', '', '', '', '0', '0', 'Client', 0, '2017-03-28 19:35:53', 1, 'TestNewImporter', 'Insert'),
 ('CRST', ' ', 'Mr', 'Fred  Knapp', ' ', '', 'Fred Knapp', '(845) 702-4963', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'Fred Knapp', '', '63 Apple Tree Lane', ' ', ' ', 'Poughquag', 'NY', '12570', ' ', '0000-00-00', ' ', '2017-03-28', ' ', ' ', '', 'fknappjr@hvc.rr.com', '', '', 'Political', '', '', ' ', '   ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '0', '0', 'Prospect', 0, '2017-03-28 19:35:53', 1, 'TestNewImporter', 'Insert'),
 ('CRST', ' ', 'Ms.', 'Sarah  Strnad', ' ', '', 'Sarah Strnad', '718-395-9950', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'Kolot Chayeinu Synagogue', '', '1012 Eighth Avenue', ' ', ' ', 'Brooklyn', 'NY', '11215-4312', ' ', '0000-00-00', ' ', '2017-03-28', ' ', ' ', 'Ms. Efrat Baler-Moses', 'sarah@kolotchayeinu.org', '', 'www.kolotchayeinu.org', 'NON-PROFIT', 'Religious', '', ' ', 'Long-term contact = Ms. Efrat Baler-Moses, Finance  Checks signed once a month; Effi only in on Wednesdays    Invoices should be sent to Liz and Effi at accountsdatamanager@kolotchayeinu.org  (old email = kolot4u@verizon.net)    08/01/2012:  New Admini... Vanessa  ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '0', '0', 'Prospect', 0, '2017-03-28 19:35:53', 1, 'TestNewImporter', 'Insert'),
 ('CRST', ' ', 'Mr.', 'Michael  Fusco', ' ', 'Board Member', '', '(845) 626-0117', '', '', '', '(845) 626-0117', '845-687-9801', '', '', '', '', '', '', '', '', '', 'Kripplebush-Lyonsville Fire Company', '', 'Justin Van Wagenen, Captain', ' ', ' ', 'Accord', 'NY', '12404-0203', ' ', '0000-00-00', ' ', '2017-03-28', ' ', ' ', '', 'mrsoftee48@hotmail.com', '', '', 'NON-PROFIT', 'Service Org', '', ' ', '9/29/2014 1:15:52 PM:  left message for Michael Fusco - just checking in to see how the mailing went - no reason to call back.  SG www.facebook.com/pages/Kripplebush-Lyonsville-Fire-Company  ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '0', '0', 'Prospect', 0, '2017-03-28 19:35:53', 1, 'TestNewImporter', 'Insert'),
@@ -1453,7 +1472,7 @@ INSERT INTO `sales` (`rep`, `quickbooks`, `prefix`, `full_name`, `suffix`, `titl
 ('CRST', ' ', 'Mrs.', 'Kathleen  Logan', ' ', '', 'Kathleen Logan', '(845) 896-9192', '', '', '', '', '', '', '', 'www.pdcsmilechangeyourlife.com', '', '', '', '', '', '', 'Premier Dental Care of Fishkill, PC', '', 'Mrs. Kathleen Logan', ' ', ' ', 'Fishkill', 'NY', '12524', ' ', '0000-00-00', ' ', '2017-03-28', ' ', ' ', '', 'lvienad@gmail.com', '', '', 'Commercial', 'Medical', '', ' ', '   ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '0', '0', 'Prospect', 0, '2017-03-28 19:35:53', 1, 'TestNewImporter', 'Insert'),
 ('MIKE', ' ', 'Ms.', 'Liz  Pastori', ' ', 'Owner', '', '845-234-8179', '', '', '', '', '845-568-3282', '', '', '', '', '', '', '', '', '', 'Prestige Building Co', '', '19 Carroll Street', ' ', ' ', 'Newburgh', 'NY', '12550-5136', ' ', '0000-00-00', ' ', '2017-03-28', ' ', ' ', '', 'prestigebuildingco@yahoo.com', '', '', 'Commercial', 'Construction', '', ' ', '   ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '0', '0', 'Prospect', 0, '2017-03-28 19:35:53', 1, 'TestNewImporter', 'Insert'),
 ('CRST', ' ', 'Ms.', 'Rachel  Landau', ' ', 'Sales Director', '', '201-410-5330', '', '', '', '', '', '845-388-1140', '', 'www.primebeddingusa.com', '', '', '', '', '', '', 'Prime Bedding USA', '', 'PO Box 126', ' ', ' ', 'Suffern', 'NY', '10901-0126', ' ', '0000-00-00', ' ', '2017-03-28', ' ', ' ', '', 'cs@primebeddingusa.com', '', 'info@primebeddingusa.com', 'Commercial', '', '', ' ', 'Spoke to Rachel  Landau (Oct 15th, 2015)    --She wants a list that would target SCHOOLS specifically; not students or parents or anything.    --She doesn''t know exactly what kind of card she wanted or even had in mind, I told her I''d come up with some...   ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '0', '0', 'Prospect', 0, '2017-03-28 19:35:53', 1, 'TestNewImporter', 'Insert'),
-('CRST', ' ', 'Mr.', 'Ryan  Scott', ' ', '', 'Ryan Scott', '(518) 828-3278', '', '', '', '', '(646) 537-5898', '(518) 828-4375', '', 'www.pro-printers.com', '', '', '', '', '', '', 'Pro Printers', '', 'Kari Scott, General Manager', ' ', ' ', 'Hudson', 'NY', '12534-2334', ' ', '0000-00-00', ' ', '2017-03-28', ' ', ' ', 'David Scott', 'ryan@pro-printers.com', '', '', 'Vendor', 'Printer', '', ' ', '2/2   Ryan Scott  9:56 AM   to Rebecca, me   Thanks. In the future please send invoices to Rebecca@pro-printers.com.     ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '0', '0', 'Prospect', 0, '2017-03-28 19:35:53', 1, 'TestNewImporter', 'Insert'),
+('CRST', ' ', 'Mr.', 'Ryan  Scott', ' ', 'MEMBER', 'Ryan Scott', '(518) 828-3278', '', '', '', '', '(646) 537-5898', '(518) 828-4375', '', 'www.pro-printers.com', '', '', '', '', '', '', 'Pro Printers', '', 'Kari Scott, General Manager', ' ', ' ', 'Hudson', 'NY', '12534-2334', ' ', '0000-00-00', ' ', '2017-03-28', '', '', 'David Scott', 'ryan@pro-printers.com', '', '', 'Vendor', 'Printer', '', ' ', '2/2   Ryan Scott  9:56 AM   to Rebecca, me   Thanks. In the future please send invoices to Rebecca@pro-printers.com.     ', '', '', '', '', '', '', '', '', '', '', '0', '0', 'Client', 0, '2017-03-28 19:35:53', 1, 'TestNewImporter', 'Insert'),
 ('CRST', ' ', 'Mr.', 'Bill  Boesch', ' ', '', 'William Boesch', '845-883-0888', '(914) 388-4766 cell', '', '', '', '', '845-883-0887', '', 'http://www.proforma.com/williamboesch/index.html', '', '', '', '', '', '', 'ProForma Graphics', '', '50 Park Lane Suite 102', ' ', ' ', 'Highland', 'NY', '12528-2824', ' ', '0000-00-00', ' ', '2017-03-28', ' ', ' ', 'Lauretta Sonner', 'bill.boesch@proforma.com', '', '', 'Vendor', '', '', ' ', 'Statement sent per Chris   ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '0', '0', 'Prospect', 0, '2017-03-28 19:35:53', 1, 'TestNewImporter', 'Insert'),
 ('CRST', ' ', 'Ms.', 'Rebecca  Calautti', ' ', 'Consultant', 'Sarah Hinawi, EdM', '(914) 231-9077', '', '', '', '', '', '', '', 'www.purplecrayoncenter.org', '', '', '', '', '', '', 'Purple Crayon Center, The', '', 'c/o Ms. Rebecca Calautti, Consultant', ' ', ' ', 'Hastings On Hudson', 'NY', '10706-1602', ' ', '0000-00-00', ' ', '2017-03-28', ' ', ' ', 'Adel Hinawi', 'info@purplecrayoncenter.org', '', 'rebecca@purpl.org', 'NON-PROFIT', 'Cultural', '', ' ', 'Left VM message for Chamie on her cell at (973) 803-1560 - "following-up... checking in on how the mailing went - left messages for both Sarah and Adel.  SG   ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '0', '0', 'Prospect', 0, '2017-03-28 19:35:53', 1, 'TestNewImporter', 'Insert'),
 ('CRST', ' ', 'Det.', 'Ken  Ross', ' ', '', '', '845-520-6915', '', '(845) 242-2476', '', '', '', '', '', 'www.spcaputnam.org', '', '', '', 'https://www.facebook.com/PutnamCountySPCA', '', '', 'Putnam County SPCA', '', '3 Mount Ebo Road North', ' ', ' ', 'Brewster', 'NY', '10509-0850', ' ', '0000-00-00', ' ', '2017-03-28', ' ', ' ', '', 'KROSS@spcaputnam.org', '', 'detectiveross@spcaputnam.org', 'NON-PROFIT', 'Animal', '', ' ', 'Physical Location addres = 85 Gleneida Street * Carmel, New York 10512   ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '0', '0', 'Prospect', 0, '2017-03-28 19:35:53', 1, 'TestNewImporter', 'Insert'),
@@ -2999,7 +3018,23 @@ INSERT INTO `timestamp` (`id`, `user`, `time`, `job`, `a_p`, `processed_by`, `vi
 (1231, 'sayre', '2017-03-28 14:41:00', 'CSV file uploaded to CRM', 'PM', '', ''),
 (1232, 'sayre', '2017-03-28 14:42:01', 'CSV file uploaded to CRM', 'PM', '', ''),
 (1233, 'sayre', '2017-03-28 15:29:07', 'deleted import from CRM', 'PM', '', ''),
-(1234, 'sayre', '2017-03-28 15:35:53', 'CSV file uploaded to CRM', 'PM', '', '');
+(1234, 'sayre', '2017-03-28 15:35:53', 'CSV file uploaded to CRM', 'PM', '', ''),
+(1235, 'sayre', '2017-03-28 16:15:10', 'updated vendor', 'PM', '', ''),
+(1236, 'sayre', '2017-03-28 16:33:35', 'deleted vendor', 'PM', '', ''),
+(1237, 'sayre', '2017-03-28 16:34:05', 'added new vendor', 'PM', '', ''),
+(1238, 'sayre', '2017-03-28 16:34:12', 'updated vendor', 'PM', '', ''),
+(1239, 'sayre', '2017-03-28 16:49:16', 'updated vendor', 'PM', '', ''),
+(1240, 'sayre', '2017-03-28 16:51:00', 'updated vendor', 'PM', '', ''),
+(1241, 'sayre', '2017-03-29 10:11:59', 'updated client info', 'AM', '', ''),
+(1242, 'sayre', '2017-03-29 10:12:27', 'updated client info', 'AM', '', ''),
+(1243, 'sayre', '2017-04-05 09:26:18', 'assigned job ticket 5737', 'AM', '', 'no'),
+(1244, 'sayre', '2017-04-05 09:52:31', 'updated client info', 'AM', '', ''),
+(1245, 'sayre', '2017-04-05 16:15:00', 'assigned job ticket 5738', 'PM', '', 'no'),
+(1246, 'sayre', '2017-04-05 16:15:51', 'deleted job ticket 5738', 'PM', '', 'no'),
+(1247, 'sayre', '2017-04-05 16:17:17', 'assigned job ticket 5739', 'PM', '', 'no'),
+(1248, 'sayre', '2017-04-05 16:18:34', 'assigned job ticket ', 'PM', '', 'no'),
+(1249, 'sayre', '2017-04-05 16:18:51', 'deleted job ticket 5740', 'PM', '', 'no'),
+(1250, 'sayre', '2017-04-05 16:23:04', 'assigned job ticket 5741', 'PM', '', 'no');
 
 -- --------------------------------------------------------
 
@@ -3059,7 +3094,7 @@ INSERT INTO `vendors` (`vendor_name`, `vendor_contact`, `vendor_add`, `vendor_em
 ('Joe Mcgee', 'Sugar', '103 tit loaf', 'rt@aol.com', '9088843373', 'rte.com'),
 ('CRST Inventory', 'Sean Griffin', '31 S Ohioville road', 'info@crst.net', '845-255-5722 ', 'www.crst.net'),
 ('Lindemyer Company', 'LC', '123 Sally Field', 'this@hdh.com', '908-884-3692', 'rey.com'),
-('Dick', 'Dick', '103 Dick', 'Dick@aol.com', '1-800-Dick', '');
+('Timmy D', 'sdaf', 'asdf', 'fdgdfg@', '343234', 'plpd.com');
 
 --
 -- Indexes for dumped tables
@@ -3147,7 +3182,7 @@ ALTER TABLE `timestamp`
 -- AUTO_INCREMENT for table `customer_service`
 --
 ALTER TABLE `customer_service`
-  MODIFY `job_id` int(45) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5737;
+  MODIFY `job_id` int(45) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5742;
 --
 -- AUTO_INCREMENT for table `employee_data`
 --
@@ -3162,7 +3197,7 @@ ALTER TABLE `inventory`
 -- AUTO_INCREMENT for table `job_ticket`
 --
 ALTER TABLE `job_ticket`
-  MODIFY `job_id` int(45) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5737;
+  MODIFY `job_id` int(45) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5742;
 --
 -- AUTO_INCREMENT for table `materials`
 --
@@ -3172,7 +3207,7 @@ ALTER TABLE `materials`
 -- AUTO_INCREMENT for table `project_management`
 --
 ALTER TABLE `project_management`
-  MODIFY `job_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5737;
+  MODIFY `job_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5742;
 --
 -- AUTO_INCREMENT for table `reminder`
 --
@@ -3187,7 +3222,7 @@ ALTER TABLE `saved_search`
 -- AUTO_INCREMENT for table `timestamp`
 --
 ALTER TABLE `timestamp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1235;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1251;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

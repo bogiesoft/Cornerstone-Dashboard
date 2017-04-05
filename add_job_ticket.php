@@ -33,6 +33,10 @@ if(isset($_POST['submit_form'])){
 	$materials_ordered = date("Y-m-d", strtotime($_POST['materials_ordered']));
 	$materials_expected = date("Y-m-d", strtotime($_POST['materials_expected']));
 	$expected_quantity = $_POST['expected_quantity'];
+	$data_location = str_replace('"', '\"', $_POST["data_location"]);
+	$data_location = str_replace("'", "\'", $data_location);
+	$data_location = str_replace("\\", "\\\\", $data_location);
+	$data_processed_by = $_POST["data_processed_by"];
 	$job_status = "none";
 	if(isset($_POST['job_status'])){
 		$job_status = $_POST['job_status'];
@@ -157,7 +161,7 @@ if(isset($_POST['submit_form'])){
 	$_SESSION["job_id"] = $row1["job_id"];
 	$job_id = $_SESSION["job_id"];
 
-	$sql2 = 'INSERT INTO project_management(job_id,data_source,data_received,data_completed,dqr_sent) VALUES ("' . $job_id . '","' . $data_source . '","' . $data_received . '","' . $data_completed . '","' . $dqr_sent . '")';
+	$sql2 = 'INSERT INTO project_management(job_id, data_location, data_processed_by, data_source,data_received,data_completed,dqr_sent) VALUES ("' . $job_id . '", "' . $data_location . '", "' . $data_processed_by . '", "'  . $data_source . '","' . $data_received . '","' . $data_completed . '","' . $dqr_sent . '")';
 	$result3 = $conn->query($sql2) or die("error");
 
 	$sql3 = 'INSERT INTO production(job_id,hold_postage,postage_paid,print_template,special_address ,delivery,tasks) VALUES ("' . $job_id . '", "' . $hold_postage . '", "' . $postage_paid . '", "' . $print_template . '","' . $special_address . '","' . $delivery . '","' . $tasks . '")';
