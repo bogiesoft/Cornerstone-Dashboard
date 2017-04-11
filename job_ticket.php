@@ -77,9 +77,28 @@ function getMaterialsID(row_id){
         type: 'post',
         data:{vendor:vendor,material:material,type:type},
         success: function(data){
+			var count_result = 1;
             var result=jQuery.parseJSON(data);
             $.each(result,function( index, value ) {
-                $("#checkbox"+row_id).attr("value", value);
+				if(count_result == 1){
+					$("#checkbox"+row_id).attr("value", value);
+				}
+				else if(count_result == 2){
+					$('#based_on').append($('<option>', {value: value, text: value}));
+					$('#based_on' + row_id).val(value);
+				}
+				else if(count_result == 3){
+					if($("#mail_dimensions").val() == ""){
+						$("#mail_dimensions").val(value);
+					}
+				}
+				else if(count_result == 4){
+					$('#weight' + row_id).val(value);
+				}
+				else if(count_result == 5){
+					$('#height' + row_id).val(value);
+				}
+				count_result++
             });
         }
     });
@@ -89,7 +108,7 @@ function addWeights_Measures(){
     if(number_of_rows<20){
         number_of_rows=number_of_rows+1;
         id_of_row=id_of_row+1;
-        $("#W_M_tbody").append( "<tr id='"+id_of_row+"'><td >           <input type='checkbox' id='checkbox"+id_of_row+"'checked name='wm[]' value=''>        </td>     <td>          <select class='vendors' id='vendors"+id_of_row+"' name='vendor' style='width:220px;'>             <option value=''>Select</option>            </select>     </td>     <td>          <select class='materials' id='materials"+id_of_row+"' name='material' style='width:220px;'>               <option value=''>Select</option>            </select>     </td>     <td>          <select class='types' id='types"+id_of_row+"' name='vendor' style='width:220px;'>             <option value=''>Select</option>            </select>     </td><td><input type = 'date' name = 'expected_date" + number_of_rows + "'></input> </td><td><input type = 'checkbox' name = 'crst_pickup" + number_of_rows + "'></input></td><td><input type = 'text' name = 'initial" + number_of_rows + "'></input></td><td><input name = 'location" + number_of_rows + "' type = 'text'></td> <td><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeWeights_Measures('#" + id_of_row + "')></td>  </tr>");
+        $("#W_M_tbody").append( "<tr id='"+id_of_row+"'><td >           <input type='checkbox' id='checkbox"+id_of_row+"'checked name='wm[]' value=''>        </td>     <td>          <select class='vendors' id='vendors"+id_of_row+"' name='vendor' style='width:220px;'>             <option value=''>Select</option>            </select>     </td>     <td>          <select class='materials' id='materials"+id_of_row+"' name='material' style='width:220px;'>               <option value=''>Select</option>            </select>     </td>     <td>          <select class='types' id='types"+id_of_row+"' name='vendor' style='width:220px;'>             <option value=''>Select</option>            </select>     </td><td><input type = 'text' id = 'weight" + id_of_row + "' readonly></td><td><input type = 'text' id = 'height" + id_of_row + "' readonly></td><td><input type = 'text' id = 'based_on" + id_of_row + "' readonly></td><td><input type = 'date' name = 'expected_date" + number_of_rows + "'></input> </td><td><input type = 'checkbox' name = 'crst_pickup" + number_of_rows + "'></input></td><td><input type = 'text' name = 'initial" + number_of_rows + "'></input></td><td><input name = 'location" + number_of_rows + "' type = 'text'></td> <td><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeWeights_Measures('#" + id_of_row + "')></td>  </tr>");
         getVendors(id_of_row);
  
     }
@@ -272,15 +291,17 @@ function getTypes(row_id)
                     </div>
 					<div class="tabinner-detail">
                     <label>Mail Dimensions</label>
-                    <input name="mail_dim" type="text" class="contact-prefix">
+                    <input id = "mail_dimensions" name="mail_dim" type="text" class="contact-prefix" placeholder = "Automatically Generated">
                     </div>
 					<div class="tabinner-detail">
                     <label>Total Weights and Measures</label>
-                    <input name="total_w_m" type="text" class="contact-prefix" readonly>
+                    <input name="total_w_m" type="text" class="contact-prefix">
                     </div>
 					<div class="tabinner-detail">
                     <label>Based On</label>
-                    <input style = "width: 20%" name="based_on" type="text" class="contact-prefix">
+					<select id = "based_on" style = "width: 50%" name="based_on">
+                    <option selected = 'selected' value = '1'>1</option>
+					</select>
                     </div>
 					 <div class="tabinner-detail">
                     <label>Permit</label>
@@ -519,22 +540,6 @@ function getTypes(row_id)
                     <label>Completed Date</label>
                     <input name="completed_date" type="date" class="contact-prefix">
                     </div>
-                    <div class="tabinner-detail">
-                    <label>Data Hours</label>
-                    <input name="data_hrs" type="text" class="contact-prefix">
-                    </div>
-                    <div class="tabinner-detail">
-                    <label>Graphic Design Hours</label>
-                    <input name="gd_hrs" type="text" class="contact-prefix">
-                    </div>
-                    <div class="tabinner-detail">
-                    <label>Initial Record Count</label>
-                    <input name="initialrec_count" type="text" class="contact-prefix">
-                    </div>
-                    <div class="tabinner-detail">
-                    <label>Manual</label>
-                    <input name="manual" type="text" class="contact-prefix">
-                    </div>
 				</div>
 				<div class="newclienttab-inner" style = "float: left; width: 33%;">
                     <div class="tabinner-detail">
@@ -563,7 +568,7 @@ function getTypes(row_id)
                     <table id="W_MTable" border="1" cellpadding="1" cellspacing="1" style='text-align: center; vertical-align: middle;'>
                         <thead>
                         <tr>
-                            <th>Select</th><th>Vendor</th><th>Material</th><th>Type</th><th>Expected Date Received</th><th>CRST Pickup</th><th>Initial</th><th>Location</th><th>Delete</th>
+                            <th>Select</th><th>Vendor</th><th>Material</th><th>Type</th><th>Weight</th><th>Height</th><th>Based On</th><th>Expected Date Received</th><th>CRST Pickup</th><th>Initial</th><th>Location</th><th>Delete</th>
                         </tr>
                         </thead>
                         <tbody id="W_M_tbody">
@@ -589,6 +594,9 @@ function getTypes(row_id)
                                         <td>
                                             <select class='types' id='types1' name='vendor' style='width:220px;'><option value=''>Select</option></select>
                                         </td>
+										<td><input type = 'text' id = 'weight1' readonly></td>
+										<td><input type = 'text' id = 'height1' readonly></td>
+										<td><input type = 'text' id = 'based_on1' readonly></td>
 										<td>
 											<input type = 'date' name = 'expected_date1'></input>
 										</td>

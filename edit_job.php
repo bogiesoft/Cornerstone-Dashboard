@@ -58,30 +58,49 @@ li {
 
 });
 function getMaterialsID(row_id){
-		var vendor=$("#vendors"+row_id).val();
-	    var material = $("#materials"+row_id).val(); 
-	    var type=$("#types"+row_id).val(); 
-	    $.ajax({
+        var vendor=$("#vendors"+row_id).val();
+        var material = $("#materials"+row_id).val(); 
+        var type=$("#types"+row_id).val(); 
+        $.ajax({
         url: 'getMaterialsID.php',
         type: 'post',
         data:{vendor:vendor,material:material,type:type},
         success: function(data){
-        	var result=jQuery.parseJSON(data);
-        	$.each(result,function( index, value ) {
-				$("#checkbox"+row_id).attr("value", value);
-			});
-    	}
+			var count_result = 1;
+            var result=jQuery.parseJSON(data);
+            $.each(result,function( index, value ) {
+				if(count_result == 1){
+					$("#checkbox"+row_id).attr("value", value);
+				}
+				else if(count_result == 2){
+					$('#based_on').append($('<option>', {value: value, text: value}));
+					$('#based_on' + row_id).val(value);
+				}
+				else if(count_result == 3){
+					if($("#mail_dimensions").val() == ""){
+						$("#mail_dimensions").val(value);
+					}
+				}
+				else if(count_result == 4){
+					$('#weight' + row_id).val(value);
+				}
+				else if(count_result == 5){
+					$('#height' + row_id).val(value);
+				}
+				count_result++
+            });
+        }
     });
-
+ 
 };
 function addWeights_Measures(){
-	if(number_of_rows<20){
-		number_of_rows=number_of_rows+1;
-		id_of_row=id_of_row+1;
-		$("#W_M_tbody").append(	"<tr id='"+id_of_row+"'><td >			<input type='checkbox' id='checkbox"+id_of_row+"'checked name='wm[]' value=''>		</td>		<td>			<select class='vendors' id='vendors"+id_of_row+"' name='vendor' style='width:220px;'>				<option value='default'>Select</option>			</select>		</td>		<td>			<select class='materials' id='materials"+id_of_row+"' name='material' style='width:220px;'>				<option value='default'>Select</option>			</select>		</td>		<td>			<select class='types' id='types"+id_of_row+"' name='vendor' style='width:220px;'>				<option value='default'>Select</option>			</select>		</td> <td><input type = 'date' name = 'expected_date" + number_of_rows + "'></input> </td><td><input type = 'checkbox' name = 'crst_pickup" + number_of_rows + "'></input></td><td><input type = 'text' name = 'initial" + number_of_rows + "'></input></td><td><input name = 'location" + number_of_rows + "' type = 'text'></td> <td><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeWeights_Measures('#" + id_of_row + "')></td>  </tr>");
-		getVendors(id_of_row);
-
-	}
+    if(number_of_rows<20){
+        number_of_rows=number_of_rows+1;
+        id_of_row=id_of_row+1;
+        $("#W_M_tbody").append( "<tr id='"+id_of_row+"'><td >           <input type='checkbox' id='checkbox"+id_of_row+"'checked name='wm[]' value=''>        </td>     <td>          <select class='vendors' id='vendors"+id_of_row+"' name='vendor' style='width:220px;'>             <option value=''>Select</option>            </select>     </td>     <td>          <select class='materials' id='materials"+id_of_row+"' name='material' style='width:220px;'>               <option value=''>Select</option>            </select>     </td>     <td>          <select class='types' id='types"+id_of_row+"' name='vendor' style='width:220px;'>             <option value=''>Select</option>            </select>     </td><td><input type = 'text' id = 'weight" + id_of_row + "' readonly></td><td><input type = 'text' id = 'height" + id_of_row + "' readonly></td><td><input type = 'text' id = 'based_on" + id_of_row + "' readonly></td><td><input type = 'date' name = 'expected_date" + number_of_rows + "'></input> </td><td><input type = 'checkbox' name = 'crst_pickup" + number_of_rows + "'></input></td><td><input type = 'text' name = 'initial" + number_of_rows + "'></input></td><td><input name = 'location" + number_of_rows + "' type = 'text'></td> <td><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeWeights_Measures('#" + id_of_row + "')></td>  </tr>");
+        getVendors(id_of_row);
+ 
+    }
 };
 function removeWeights_Measures(row_id){
 	$(row_id).remove();
@@ -179,6 +198,7 @@ require ("connection.php");
 		$materials_expected = $row['materials_expected'];
 		$expected_quantity = $row['expected_quantity'];
 		$job_status = $row['job_status'];
+		$non_profit_number = $row["non_profit_number"];
 		$display = "yes";
 		$mail_class = $row['mail_class'];
 		$rate = $row['rate'];
@@ -202,6 +222,8 @@ require ("connection.php");
 				$data_received = $row2['data_received'];
 				$data_completed = $row2['data_completed'];
 				$dqr_sent = $row2['dqr_sent'];
+				$data_location = $row2["data_location"];
+				$data_processed_by = $row2["data_processed_by"];
 
 		}
 		
@@ -315,89 +337,11 @@ require ("connection.php");
                     <input id = "fax" name="fax" type="text" class="contact-prefix" readonly>
                     </div>
 				</div>
-			<div class="newcontactstab-detail">
+			<div class="newclienttab-inner" style = "float: left; width: 31%">
 				<div class="tabinner-detail">
-				<label>Ticket Date</label>
-				<input name="ticket_date" type="date" value="<?php echo $ticket_date ; ?>" class="contact-prefix">
-				</div>
-				<div class="tabinner-detail">
-				<label>Created By</label>
-				<?php
-					echo "<select name = 'created_by'>";
-					$sql = "SELECT first_name, last_name, user FROM users WHERE user = '$created_by'";
-					$result = mysqli_query($conn, $sql);
-					 if($result->num_rows > 0){
-						 $row = $result->fetch_assoc();
-						 echo "<option selected = 'selected' value = '" . $row['user'] . "'>" . $row['first_name'] . ' ' . $row['last_name'] . "</option>";
-					 }
-					 else{
-						 echo "<option selected = 'selected'></option>";
-					 }
-					 
-					 $sql = "SELECT first_name, last_name, user FROM users";
-					$result = mysqli_query($conn, $sql);
-				
-					while($row = $result->fetch_assoc()){
-						echo "<option value = '" . $row['user'] . "'>" . $row['first_name'] . ' ' . $row['last_name'] . "</option>";
-					}
-				
-					echo "</select>";
-				?>
-				</div>
-				<div class="tabinner-detail">
-				<label>Estimate Number</label>
-				<input name="estimate_number" type="text" value="<?php echo $estimate_number ; ?>" class="contact-prefix">
-				</div>
-				<div class="tabinner-detail">
-				<label>Estimate date</label>
-				<input name="estimate_date" type="date" value="<?php echo $estimate_date ; ?>" class="contact-prefix">
-				</div>
-				<div class="tabinner-detail">
-				<label>Estimate created by</label>
-				<select name="estimate_created_by">
-					<?php
-						$result = mysqli_query($conn, "SELECT * FROM users");
-						$result_selected = mysqli_query($conn, "SELECT * FROM users WHERE user = '$estimate_created_by'");
-						if(mysqli_num_rows($result_selected) > 0){
-							$row_selected = $result_selected->fetch_assoc();
-							$name = $row_selected["first_name"] . " " . $row["last_name"];
-							echo "<option selected = 'selected' value = '" . $estimate_created_by . "'>" . $name . "</option>";
-						}
-						else{
-							echo "<option selected = 'selected' value = ''></option>";
-						}
-						while($row = $result->fetch_assoc()){
-							echo "<option value = '" . $row['user'] . "'>" . $row['first_name'] . " " . $row['last_name'] . "</option>"; 
-						}
-					?>
-					</select>
-				</div>
-				<div class="tabinner-detail">
-				<label>Materials Ordered</label>
-				<input name="materials_ordered" type="date" value="<?php echo $materials_ordered ; ?>"  class="contact-prefix">
-				</div>
-				<div class="tabinner-detail">
-				<label>Materials Expected</label>
-				<input name="materials_expected" type="date" value="<?php echo $materials_expected ; ?>" class="contact-prefix">
-				</div>
-				<div class="tabinner-detail">
-				<label>Expected Quantity</label>
-				<input name="expected_quantity" type="text"value="<?php echo $expected_quantity ; ?>" class="contact-prefix">
-				</div>
-				<div class="tabinner-detail">
-				<label>Job Status</label>
-				<select name='job_status'>
-					<option selected  = "selected"><?php echo $job_status;?></option>
-					<option value="in P.M.">in P.M.</option>
-					<option value="in Production">in Production</option>
-					<option value="on hold">on hold</option>
-					<option value="waiting for materials">waiting for materials</option>
-					<option value="waiting for data">waiting for data</option>
-					<option value="waiting for postage">waiting for postage</option>
-				</select>
-				</div>
-				
-				
+                <label>Non Profit Number</label>
+                <input name="non_profit_number" type="text" class="contact-prefix" value="<?php echo $non_profit_number ; ?>">
+                </div>
 				<div class="tabinner-detail">
 				<label>Mail Class</label>
 				<input name="mail_class" type="text" value="<?php echo $mail_class ; ?>" class="contact-prefix">
@@ -412,28 +356,32 @@ require ("connection.php");
 				</div>
 				<div class="tabinner-detail">
 				<label>Mail Dimensions</label>
-				<input name="mail_dim" type="text" value="<?php echo $mail_dim ; ?>" class="contact-prefix">
+				<input id = "mail_dimensions" name="mail_dim" type="text" value="<?php echo $mail_dim ; ?>" class="contact-prefix">
+				</div>
+				<div class="tabinner-detail">
+                <label>Total Weights and Measures</label>
+                <input name="total_w_m" type="text" class="contact-prefix" readonly>
+                </div>
+				<div class="tabinner-detail">
+				<label>Based On</label>
+				<select id = "based_on" name = "based_on">
+				<option selected = "selected" value = "<?php echo $based_on ; ?>"><?php echo $based_on ; ?></option>
+				</select>
 				</div>
 				<div class="tabinner-detail">
 				<label>Permit</label>
 				<input name="permit" type="text" value="<?php echo $permit ; ?>" class="contact-prefix">
 				</div>
-				<div class="tabinner-detail">
-				<label>Bmeu</label>
-				<input name="bmeu" type="text" value="<?php echo $bmeu ; ?>" class="contact-prefix">
-				</div>
-				<div class="tabinner-detail">
-				<label>Based On</label>
-				<input name="based_on" type="text" value="<?php echo $based_on ; ?>" class="contact-prefix">
-				</div>
-				<div class="tabinner-detail">
-				<label>Non Profit Number</label>
-				<input name="non_profit_number" type="text" value="<?php echo $non_profit_number ; ?>" class="contact-prefix">
-				</div>
+			</div>
+			<div class="newclienttab-inner" style = "float: left; width: 31%">
 				<div class="tabinner-detail">
 				<label>Records Total</label>
 				<input name="records_total" type="text" value="<?php echo $records_total ; ?>" class="contact-prefix">
 				</div>
+				<div class="tabinner-detail">
+                <label>Data Location</label>
+                <textarea style = "height: 10%" name="data_location" type="text" class="contact-prefix"><?php echo $data_location ; ?></textarea>
+                </div>
 				<div class="tabinner-detail">
 				<label>Data Source</label>
 				<input name="data_source" type="text" value="<?php echo $data_source ; ?>" class="contact-prefix">
@@ -447,139 +395,107 @@ require ("connection.php");
 				<input name="data_completed" type="date" value="<?php echo $data_completed ; ?>" class="contact-prefix">
 				</div>
 				<div class="tabinner-detail">
-				<label>Assigned to</label>
-				<?php
-				echo "<select name='processed_by'>";
-				$sql1 = "SELECT first_name, last_name, user FROM users WHERE user = '$processed_by'";
-				$result = mysqli_query($conn, $sql1);
-				if($result->num_rows > 0){
-					$row = $result->fetch_assoc();
-					echo "<option selected = 'selected' value = '" . $row['user'] . "'>" . $row['first_name'] . " " . $row['last_name'] . "</option>";
-				}
-				else{
-					echo "<option selected = 'selected'></option>";
-				}
-				
-				$sql = "SELECT first_name, last_name, user FROM users";
-				$result = mysqli_query($conn, $sql);
-				while($row = $result->fetch_assoc()){
-						echo "<option value = '" . $row['user'] . "'>" . $row['first_name'] . ' ' .  $row['last_name'] . "</option>";
-					
-				}
-				echo "</select>"
-				?>
-				<div class="tabinner-detail">
-				<label>DQR Sent</label>
-				<input name="dqr_sent" type="date" value="<?php echo $dqr_sent ; ?>" class="contact-prefix">
-				</div>
-				<div class="tabinner-detail">
-				<label>Hold Postage</label>
-				<input type="text" name="hold_postage" value="<?php echo $hold_postage ; ?>" class="contact-prefix" >
-				</div>
-				<div class="tabinner-detail">
-				<label>Postage Paid</label>
-				<input name="postage_paid" type="text" value="<?php echo $postage_paid ; ?>"  class="contact-prefix">
-				</div>
-				<div class="tabinner-detail">
-				<label>Print Template</label>
-				<input name="print_template" type="text" value="<?php echo $print_template ; ?>" class="contact-prefix">
-				</div>
-				<div class="tabinner-detail">
-				<label>Special Address Formatting</label>
-				<input name="special_address" type="text" value="<?php echo $special_address ; ?>" class="contact-prefix">
-				</div>
-				<div class="tabinner-detail">
-				<label>Method of Delivery</label>
-				<input name="delivery" type="text" value="<?php echo $delivery ; ?>" class="contact-prefix">
-				</div>
-				
-				<div class="tabinner-detail">
-				<label>Tasks</label>
-				<ul name="tasks[]">
-					  <?php 
-					  $entire_task = array("Mail Merge","Letter Printing", "In-House Envelope Printing", "Tabbing","Folding","Inserting","Sealing","Collating","Labeling","Print Permit","Correct Permit","Carrier Route","Endorsement line","Address Printing","Tag as Political","Inkjet Printing","Glue Dots");
-					  $task_array = explode(",", $tasks);
-						for($i = 0;$i<count($entire_task);$i++){
-							$found_task = FALSE;
-							//checks for special tasks checked off and then tasks with no special instructions
-							for($ii = 0; $ii<count($task_array); $ii++){
-								if(strpos($task_array[$ii], "^") !== FALSE){
-									$task_array_2 = explode("^", $task_array[$ii]);
-									if(in_array($entire_task[$i], $task_array_2) && $task_array_2[0] == "Mail Merge"){
-										$found_task = TRUE;
-										echo "<li><input type = 'checkbox' name = 'tasks[]' value='".$entire_task[$i]."' checked/><label>".$entire_task[$i]."</label><select name = 'special_mail_merge'><option select = 'selected' value = '" . $task_array_2[1] . "'>" . $task_array_2[1] . "</option><option value = 'Sent to Vendor'>Sent to Vendor</option><option value = 'In-House'>In-House</option></select></li>";
-									}
-									else if(in_array($entire_task[$i], $task_array_2) && $task_array_2[0] == "Letter Printing"){
-										$found_task = TRUE;
-										echo "<li><input type = 'checkbox' name = 'tasks[]' value='".$entire_task[$i]."' checked/><label>".$entire_task[$i]."</label><select name = 'special_letter_printing'><option select = 'selected' value = '" . $task_array_2[1] . "'>" . $task_array_2[1] . "</option><option value = 'From PDF'>From PDF</option><option value = 'Inkjet'>Inkjet</option></select></li>";
-									}
-									else if(in_array($entire_task[$i], $task_array_2) && $task_array_2[0] == "Tabbing"){
-										$found_task = TRUE;
-										echo "<li><input type = 'checkbox' name = 'tasks[]' value='".$entire_task[$i]."' checked/><label>".$entire_task[$i]."</label><select name = 'special_tabbing'><option select = 'selected' value = '" . $task_array_2[1] . "'>" . $task_array_2[1] . "</option><option value = 'Manual Single'>Manual Single</option><option value = 'Manual Double'>Manual Double</option><option value = 'Auto Single'>Auto Single</option><option value = 'Auto Double'>Auto Double</option></select></li>";
-									}
-									else if(in_array($entire_task[$i], $task_array_2) && $task_array_2[0] == "Folding"){
-										$found_task = TRUE;
-										echo "<li><input type = 'checkbox' name = 'tasks[]' value='".$entire_task[$i]."' checked/><label>".$entire_task[$i]."</label><select name = 'special_folding'><option select = 'selected' value = '" . $task_array_2[1] . "'>" . $task_array_2[1] . "</option><option value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option></select></li>";
-									}
-									else if(in_array($entire_task[$i], $task_array_2) && $task_array_2[0] == "Inserting"){
-										$found_task = TRUE;
-										echo "<li><input type = 'checkbox' name = 'tasks[]' value='".$entire_task[$i]."' checked/><label>".$entire_task[$i]."</label><select name = 'special_inserting'><option select = 'selected' value = '" . $task_array_2[1] . "'>" . $task_array_2[1] . "</option><option value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option></select></li>";
-									}
-									else if(in_array($entire_task[$i], $task_array_2) && $task_array_2[0] == "Sealing"){
-										$found_task = TRUE;
-										echo "<li><input type = 'checkbox' name = 'tasks[]' value='".$entire_task[$i]."' checked/><label>".$entire_task[$i]."</label><select name = 'special_sealing'><option select = 'selected' value = '" . $task_array_2[1] . "'>" . $task_array_2[1] . "</option><option value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option></select></li>";
-									}
-									else if(in_array($entire_task[$i], $task_array_2) && $task_array_2[0] == "Collating"){
-										$found_task = TRUE;
-										echo "<li><input type = 'checkbox' name = 'tasks[]' value='".$entire_task[$i]."' checked/><label>".$entire_task[$i]."</label><select name = 'special_collating'><option select = 'selected' value = '" . $task_array_2[1] . "'>" . $task_array_2[1] . "</option><option value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option><option value = 'Man. and Auto'>Man. and Auto</option></select></li>";
-									}
-									else if(in_array($entire_task[$i], $task_array_2) && $task_array_2[0] == "Inkjet Printing"){
-										$found_task = TRUE;
-										echo "<li><input type = 'checkbox' name = 'tasks[]' value='".$entire_task[$i]."' checked/><label>".$entire_task[$i]."</label><select name = 'special_inkjet_printing'><option select = 'selected' value = '" . $task_array_2[1] . "'>" . $task_array_2[1] . "</option><option value = '26K'>26K</option><option value = '11K'>11K</option></select></li>";
-									}
-								}
-								else if(in_array($entire_task[$i], $task_array) && $found_task == FALSE)
-								{
-									$found_task = TRUE;
-									echo '<li><input type = "checkbox" name = "tasks[]" value="'.$entire_task[$i].'" checked/><label>'.$entire_task[$i].'</label></li>';
-								}
-							}
-							
-							if($found_task == FALSE){
-								$job = $entire_task[$i];
-								if($i == 0){
-									echo '<li><input type="checkbox" name = "tasks[]" value = "Mail Merge"/><label>Mail Merge</label><select name = "special_mail_merge"><option select = "selected" value = "Sent to Vendor">Sent to Vendor</option><option value = "In-House">In-House</option></select></li>';
-								}
-								else if($i == 1){
-									echo '<li><input type="checkbox" name = "tasks[]" value = "Letter Printing"/><label>Letter Printing</label><select name = "special_letter_printing"><option select = "selected" value = "From PDF">From PDF</option><option value = "Inkjet">Inkjet</option></select></li>';
-								}
-								else if($i == 3){
-									echo '<li><input type="checkbox" name = "tasks[]" value = "Tabbing"/><label>Tabbing</label><select name = "special_tabbing"><option select = "selected" value = "Manual Single">Manual Single</option><option value = "Manual Double">Manual Double</option><option value = "Auto Single">Auto Single</option><option value = "Auto Double">Auto Double</option></select></li>';
-								}
-								else if($i == 4 || $i == 5 || $i == 6){
-									$job_lowercase = strtolower($job);
-									echo '<li><input type="checkbox" name = "tasks[]" value = "' . $job . '"/><label>' . $job . '</label><select name = "special_' . $job_lowercase . '"><option select = "selected" value = "Manual">Manual</option><option value = "Auto">Auto</option></select></li>';
-								}
-								else if($i == 7){
-									echo '<li><input type="checkbox" name = "tasks[]" value = "Collating"/><label>Collating</label><select name = "special_collating"><option select = "selected" value = "Manual">Manual</option><option value = "Auto">Auto</option><option value = "Man. and Auto">Man. and Auto</option></select></li>';
-								}
-								else if($i == 15){
-									echo '<li><input type="checkbox" name = "tasks[]" value = "Inkjet Printing"/><label>Inkjet Printing</label><select name = "special_inkjet_printing"><option select = "selected" value = "26K">26K</option><option value = "11K">11K</option></select></li>';
-								}
-								else{
-									echo '<li><input type="checkbox" name = "tasks[]" value = "' . $job . '"/><label>' . $job . '</label></li>';
-								}
-							}
+                    <label>Processed By</label>
+                     <select name="data_processed_by">
+                    <?php
+						$result_current_name = mysqli_query($conn, "SELECT * FROM users WHERE user = '$data_processed_by'");
+						$row_name = $result_current_name->fetch_assoc();
+						echo "<option selected = 'selected' value = '" . $data_processed_by . "'>" . $row_name['first_name'] . " " . $row_name['last_name'] . "</option>"; 
+                        $result = mysqli_query($conn, "SELECT * FROM users");
+                        $count = 1;
+                        while($row = $result->fetch_assoc()){
+                                echo "<option value = '" . $row['user'] . "'>" . $row['first_name'] . " " . $row['last_name'] . "</option>"; 
 						}
-					  ?>
-					  
-					</ul>
-				</div>
-				
-				<div class="tabinner-detail">
-				<label>Completed Date</label>
-				<input name="completed_date" type="date" value="<?php echo $completed_date ; ?>" class="contact-prefix">
-				</div>
+                        
+                    ?>
+                    </select>
+                    </div>
+			</div>
+			<div class="newclienttab-inner" style = "float: left; width: 40%">
+			<div class="tabinner-detail">
+					<table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
+						<tbody>
+							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='vendor' data-index='4'>Check</th><th class='maintable-thtwo data-header' data-name='material' data-index='6'>Task</th><th class='maintable-thtwo data-header' data-name='type' data-index='7'>Special</th></tr></thead><tbody>
+							<?php
+							$entire_task = array("Mail Merge","Letter Printing", "In-House Envelope Printing", "Tabbing","Folding","Inserting","Sealing","Collating","Labeling","Print Permit","Correct Permit","Carrier Route","Endorsement line","Address Printing","Tag as Political","Inkjet Printing","Glue Dots");
+							$task_array = explode(",", $tasks);
+							for($i = 0;$i<count($entire_task);$i++){
+								$found_task = FALSE;
+								//checks for special tasks checked off and then tasks with no special instructions
+								for($ii = 0; $ii<count($task_array); $ii++){
+									if(strpos($task_array[$ii], "^") !== FALSE){
+										$task_array_2 = explode("^", $task_array[$ii]);
+										if(in_array($entire_task[$i], $task_array_2) && $task_array_2[0] == "Mail Merge"){
+											$found_task = TRUE;
+											echo "<tr><td><input type = 'checkbox' name = 'tasks[]' value='".$entire_task[$i]."' checked/></td><td><label>".$entire_task[$i]."</label></td><td><select name = 'special_mail_merge'><option select = 'selected' value = '" . $task_array_2[1] . "'>" . $task_array_2[1] . "</option><option value = 'Sent to Vendor'>Sent to Vendor</option><option value = 'In-House'>In-House</option></select></td></tr>";
+										}
+										else if(in_array($entire_task[$i], $task_array_2) && $task_array_2[0] == "Letter Printing"){
+											$found_task = TRUE;
+											echo "<tr><td><input type = 'checkbox' name = 'tasks[]' value='".$entire_task[$i]."' checked/></td><td><label>".$entire_task[$i]."</label></td><td><select name = 'special_letter_printing'><option select = 'selected' value = '" . $task_array_2[1] . "'>" . $task_array_2[1] . "</option><option value = 'From PDF'>From PDF</option><option value = 'Inkjet'>Inkjet</option></select></td></tr>";
+										}
+										else if(in_array($entire_task[$i], $task_array_2) && $task_array_2[0] == "Tabbing"){
+											$found_task = TRUE;
+											echo "<tr><td><input type = 'checkbox' name = 'tasks[]' value='".$entire_task[$i]."' checked/></td><td><label>".$entire_task[$i]."</label></td><td><select name = 'special_tabbing'><option select = 'selected' value = '" . $task_array_2[1] . "'>" . $task_array_2[1] . "</option><option value = 'Manual Single'>Manual Single</option><option value = 'Manual Double'>Manual Double</option><option value = 'Auto Single'>Auto Single</option><option value = 'Auto Double'>Auto Double</option></select></td></tr>";
+										}
+										else if(in_array($entire_task[$i], $task_array_2) && $task_array_2[0] == "Folding"){
+											$found_task = TRUE;
+											echo "<tr><td><input type = 'checkbox' name = 'tasks[]' value='".$entire_task[$i]."' checked/></td><td><label>".$entire_task[$i]."</label></td><td><select name = 'special_folding'><option select = 'selected' value = '" . $task_array_2[1] . "'>" . $task_array_2[1] . "</option><option value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option></select></td></tr>";
+										}
+										else if(in_array($entire_task[$i], $task_array_2) && $task_array_2[0] == "Inserting"){
+											$found_task = TRUE;
+											echo "<tr><td><input type = 'checkbox' name = 'tasks[]' value='".$entire_task[$i]."' checked/></td><td><label>".$entire_task[$i]."</label></td><td><select name = 'special_inserting'><option select = 'selected' value = '" . $task_array_2[1] . "'>" . $task_array_2[1] . "</option><option value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option></select></td></tr>";
+										}
+										else if(in_array($entire_task[$i], $task_array_2) && $task_array_2[0] == "Sealing"){
+											$found_task = TRUE;
+											echo "<tr><td><input type = 'checkbox' name = 'tasks[]' value='".$entire_task[$i]."' checked/></td><td><label>".$entire_task[$i]."</label></td><td><select name = 'special_sealing'><option select = 'selected' value = '" . $task_array_2[1] . "'>" . $task_array_2[1] . "</option><option value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option></select></td></tr>";
+										}
+										else if(in_array($entire_task[$i], $task_array_2) && $task_array_2[0] == "Collating"){
+											$found_task = TRUE;
+											echo "<tr><td><input type = 'checkbox' name = 'tasks[]' value='".$entire_task[$i]."' checked/></td><td><label>".$entire_task[$i]."</label></td><td><select name = 'special_collating'><option select = 'selected' value = '" . $task_array_2[1] . "'>" . $task_array_2[1] . "</option><option value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option><option value = 'Man. and Auto'>Man. and Auto</option></select></td></tr>";
+										}
+										else if(in_array($entire_task[$i], $task_array_2) && $task_array_2[0] == "Inkjet Printing"){
+											$found_task = TRUE;
+											echo "<tr><td><input type = 'checkbox' name = 'tasks[]' value='".$entire_task[$i]."' checked/></td><td><label>".$entire_task[$i]."</label></td><td><select name = 'special_inkjet_printing'><option select = 'selected' value = '" . $task_array_2[1] . "'>" . $task_array_2[1] . "</option><option value = '26K'>26K</option><option value = '11K'>11K</option></select></td></tr>";
+										}
+									}
+									else if(in_array($entire_task[$i], $task_array) && $found_task == FALSE)
+									{
+										$found_task = TRUE;
+										echo '<tr><td><input type = "checkbox" name = "tasks[]" value="'.$entire_task[$i].'" checked/></td><td><label>'.$entire_task[$i].'</label></td><td></td></tr>';
+									}
+								}
+								
+								if($found_task == FALSE){
+									$job = $entire_task[$i];
+									if($i == 0){
+										echo '<tr><td><input type="checkbox" name = "tasks[]" value = "Mail Merge"/></td><td><label>Mail Merge</label></td><td><select name = "special_mail_merge"><option select = "selected" value = "Sent to Vendor">Sent to Vendor</option><option value = "In-House">In-House</option></select></td></tr>';
+									}
+									else if($i == 1){
+										echo '<tr><td><input type="checkbox" name = "tasks[]" value = "Letter Printing"/></td><td><label>Letter Printing</label></td><td><select name = "special_letter_printing"><option select = "selected" value = "From PDF">From PDF</option><option value = "Inkjet">Inkjet</option></select></td></tr>';
+									}
+									else if($i == 3){
+										echo '<tr><td><input type="checkbox" name = "tasks[]" value = "Tabbing"/></td><td><label>Tabbing</label></td><td><select name = "special_tabbing"><option select = "selected" value = "Manual Single">Manual Single</option><option value = "Manual Double">Manual Double</option><option value = "Auto Single">Auto Single</option><option value = "Auto Double">Auto Double</option></select></td></tr>';
+									}
+									else if($i == 4 || $i == 5 || $i == 6){
+										$job_lowercase = strtolower($job);
+										echo '<tr><td><input type="checkbox" name = "tasks[]" value = "' . $job . '"/></td><td><label>' . $job . '</label></td><td><select name = "special_' . $job_lowercase . '"><option select = "selected" value = "Manual">Manual</option><option value = "Auto">Auto</option></select></td></tr>';
+									}
+									else if($i == 7){
+										echo '<tr><td><input type="checkbox" name = "tasks[]" value = "Collating"/></td><td><label>Collating</label></td><td><select name = "special_collating"><option select = "selected" value = "Manual">Manual</option><option value = "Auto">Auto</option><option value = "Man. and Auto">Man. and Auto</option></select></td></tr>';
+									}
+									else if($i == 15){
+										echo '<tr><td><input type="checkbox" name = "tasks[]" value = "Inkjet Printing"/></td><td><label>Inkjet Printing</label></td><td><select name = "special_inkjet_printing"><option select = "selected" value = "26K">26K</option><option value = "11K">11K</option></select></td></tr>';
+									}
+									else{
+										echo '<tr><td><input type="checkbox" name = "tasks[]" value = "' . $job . '"/></td><td><label>' . $job . '</label></td><td></td></tr>';
+									}
+								}
+							}
+							?>
+						</tbody></table></td></tr></tbody></table>
+					</div>
+			</div>
+			<div class="newclienttab-inner" style = "float: right; width: 55%">
 				<div class="tabinner-detail">
 				<label>Data Hours</label>
 				<input name="data_hrs" type="text" value="<?php echo $data_hrs ; ?>"  class="contact-prefix">
@@ -625,6 +541,14 @@ require ("connection.php");
 				<input name="basic" type="text" value="<?php echo $basic ; ?>"  class="contact-prefix">
 				</div>
 				<div class="tabinner-detail">
+				<label>DQR Sent</label>
+				<input name="dqr_sent" type="date" value="<?php echo $dqr_sent ; ?>" class="contact-prefix">
+				</div>
+				<div class="tabinner-detail">
+				<label>Bmeu</label>
+				<input name="bmeu" type="text" value="<?php echo $bmeu ; ?>" class="contact-prefix">
+				</div>
+				<div class="tabinner-detail">
 				<label>NCOA Errors</label>
 				<input name="ncoa_errors" type="text" value="<?php echo $ncoa_errors ; ?>"  class="contact-prefix">
 				</div>
@@ -640,13 +564,164 @@ require ("connection.php");
 				<label>Final Count</label>
 				<input name="final_count" type="text" value="<?php echo $final_count ; ?>"  class="contact-prefix">
 				</div>
+			</div>
+			<div class="newclienttab-inner" style = "float: right; width: 33%; clear: left">
+				<div class="tabinner-detail">
+				<label>Estimate Number</label>
+				<input name="estimate_number" type="text" value="<?php echo $estimate_number ; ?>" class="contact-prefix">
+				</div>
+				<div class="tabinner-detail">
+				<label>Estimate date</label>
+				<input name="estimate_date" type="date" value="<?php echo $estimate_date ; ?>" class="contact-prefix">
+				</div>
+				<div class="tabinner-detail">
+				<label>Estimate created by</label>
+				<select name="estimate_created_by">
+					<?php
+						$result = mysqli_query($conn, "SELECT * FROM users");
+						$result_selected = mysqli_query($conn, "SELECT * FROM users WHERE user = '$estimate_created_by'");
+						if(mysqli_num_rows($result_selected) > 0){
+							$row_selected = $result_selected->fetch_assoc();
+							$name = $row_selected["first_name"] . " " . $row["last_name"];
+							echo "<option selected = 'selected' value = '" . $estimate_created_by . "'>" . $name . "</option>";
+						}
+						else{
+							echo "<option selected = 'selected' value = ''></option>";
+						}
+						while($row = $result->fetch_assoc()){
+							echo "<option value = '" . $row['user'] . "'>" . $row['first_name'] . " " . $row['last_name'] . "</option>"; 
+						}
+					?>
+					</select>
+				</div>
+			</div>
+			<div class="newclienttab-inner" style = "float: left; width: 33%">
+				<div class="tabinner-detail">
+				<label>Materials Ordered</label>
+				<input name="materials_ordered" type="date" value="<?php echo $materials_ordered ; ?>"  class="contact-prefix">
+				</div>
+				<div class="tabinner-detail">
+				<label>Materials Expected</label>
+				<input name="materials_expected" type="date" value="<?php echo $materials_expected ; ?>" class="contact-prefix">
+				</div>
+				<div class="tabinner-detail">
+				<label>Expected Quantity</label>
+				<input name="expected_quantity" type="text"value="<?php echo $expected_quantity ; ?>" class="contact-prefix">
+				</div>
+				<div class="tabinner-detail">
+				<label>Job Status</label>
+				<select name='job_status'>
+					<option selected  = "selected"><?php echo $job_status;?></option>
+					<option value="in P.M.">in P.M.</option>
+					<option value="in Production">in Production</option>
+					<option value="on hold">on hold</option>
+					<option value="waiting for materials">waiting for materials</option>
+					<option value="waiting for data">waiting for data</option>
+					<option value="waiting for postage">waiting for postage</option>
+				</select>
+				</div>
+				<div class="tabinner-detail">
+				<label>Ticket Date</label>
+				<input name="ticket_date" type="date" value="<?php echo $ticket_date ; ?>" class="contact-prefix">
+				</div>
+				<div class="tabinner-detail">
+				<label>Assigned to</label>
+				<?php
+				echo "<select name='processed_by'>";
+				$sql1 = "SELECT first_name, last_name, user FROM users WHERE user = '$processed_by'";
+				$result = mysqli_query($conn, $sql1);
+				if($result->num_rows > 0){
+					$row = $result->fetch_assoc();
+					echo "<option selected = 'selected' value = '" . $row['user'] . "'>" . $row['first_name'] . " " . $row['last_name'] . "</option>";
+				}
+				else{
+					echo "<option selected = 'selected'></option>";
+				}
+				
+				$sql = "SELECT first_name, last_name, user FROM users";
+				$result = mysqli_query($conn, $sql);
+				while($row = $result->fetch_assoc()){
+						echo "<option value = '" . $row['user'] . "'>" . $row['first_name'] . ' ' .  $row['last_name'] . "</option>";
+					
+				}
+				echo "</select>"
+				?>
+				</div>
+				<div class="tabinner-detail">
+				<label>Created By</label>
+				<?php
+					echo "<select name = 'created_by'>";
+					$sql = "SELECT first_name, last_name, user FROM users WHERE user = '$created_by'";
+					$result = mysqli_query($conn, $sql);
+					 if($result->num_rows > 0){
+						 $row = $result->fetch_assoc();
+						 echo "<option selected = 'selected' value = '" . $row['user'] . "'>" . $row['first_name'] . ' ' . $row['last_name'] . "</option>";
+					 }
+					 else{
+						 echo "<option selected = 'selected'></option>";
+					 }
+					 
+					 $sql = "SELECT first_name, last_name, user FROM users";
+					$result = mysqli_query($conn, $sql);
+				
+					while($row = $result->fetch_assoc()){
+						echo "<option value = '" . $row['user'] . "'>" . $row['first_name'] . ' ' . $row['last_name'] . "</option>";
+					}
+				
+					echo "</select>";
+				?>
+				</div>
+			</div>
+			<div class="newclienttab-inner" style = "float: left; width: 33%">
+				<div class="tabinner-detail">
+				<label>Completed Date</label>
+				<input name="completed_date" type="date" value="<?php echo $completed_date ; ?>" class="contact-prefix">
+				</div>
+			</div>
+			<div class="newclienttab-inner" style = "float: left; width: 33%">
+				<div class="tabinner-detail">
+				<label>Hold Postage</label>
+				<?php
+				if($hold_postage == "yes"){
+					echo '<input type="checkbox" name="hold_postage" class="contact-prefix" checked>';
+				}
+				else{
+					echo '<input type="checkbox" name="hold_postage" class="contact-prefix" checked>';
+				}
+				?>
+				</div>
+				<div class="tabinner-detail">
+				<label>Postage Paid</label>
+				<?php
+				if($postage_paid == "yes"){
+					echo '<input type="checkbox" name="postage_paid" class="contact-prefix" checked>';
+				}
+				else{
+					echo '<input type="checkbox" name="postage_paid" class="contact-prefix">';
+				}
+				?>
+				</div>
+				<div class="tabinner-detail">
+				<label>Print Template</label>
+				<input name="print_template" type="text" value="<?php echo $print_template ; ?>" class="contact-prefix">
+				</div>
+				<div class="tabinner-detail">
+				<label>Special Address Formatting</label>
+				<input name="special_address" type="text" value="<?php echo $special_address ; ?>" class="contact-prefix">
+				</div>
+				<div class="tabinner-detail">
+				<label>Method of Delivery</label>
+				<input name="delivery" type="text" value="<?php echo $delivery ; ?>" class="contact-prefix">
+				</div>
+			</div>
+			<div class="newclienttab-inner" style = "width: 100%">
 				<div class="tabinner-detail">
 				<label>Weights and Measures</label>
 				<a class="pull-right" onclick = 'addWeights_Measures()'>Add Weights and Measures</a>
 					<table id="W_MTable" border="1" cellpadding="1" cellspacing="1" style='text-align: center; vertical-align: middle;'>
 					<thead>
 						<tr>
-					        <th>Select</th><th>Vendor</th><th>Material</th><th>type</th><th>Expected Date Received</th><th>CRST Pickup</th><th>Initial</th><th>Location</th><th>Delete</th>
+					        <th>Select</th><th>Vendor</th><th>Material</th><th>type</th><th>Weight</th><th>Height</th><th>Based On</th><th>Expected Date Received</th><th>CRST Pickup</th><th>Initial</th><th>Location</th><th>Delete</th>
 					    </tr>
 					</thead>
 					<tbody id="W_M_tbody">
@@ -684,6 +759,15 @@ require ("connection.php");
 										</td>
 								       	<td>
 											<select class='types' id='types1' name='vendor' style='width:220px;'><option value='default'>" . $row['type'] . "</option></select>
+										</td>
+										<td>
+											<input type = 'text' id = 'weight" . ($i + 1) . "' value = '" . $row['weight'] . "' readonly></input>
+										</td>
+										<td>
+											<input type = 'text' id = 'height" . ($i + 1) . "' value = '" . $row['height'] . "' readonly></input>
+										</td>
+										<td>
+											<input type = 'text' id = 'based_on" . ($i + 1) . "' value = '" . $row['based_on'] . "' readonly></input>
 										</td>
 										<td>
 											<input type = 'date' name = 'expected_date" . ($i + 1) . "' value = '$expected_date'></input>

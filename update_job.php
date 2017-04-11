@@ -117,6 +117,9 @@ if(isset($_POST['submit_form'])){
 			$data_source = $_POST['data_source'];
 			$data_received = date("Y-m-d", strtotime($_POST['data_received']));
 			$data_completed = date("Y-m-d", strtotime($_POST['data_completed']));
+			$data_location = $_POST["data_location"];
+			$data_processed_by = $_POST["data_processed_by"];
+			
 			$processed_by = $_POST['processed_by'];
 			$dqr_sent = date("Y-m-d", strtotime($_POST['dqr_sent']));
 			
@@ -180,7 +183,7 @@ if(isset($_POST['submit_form'])){
 			$sql = 'UPDATE job_ticket SET processed_by = "' . $processed_by . '", client_name = "' . $client_name . '", project_name = "' . $project_name . '",ticket_date = "' . $ticket_date . '",due_date = "' . $due_date . '",created_by = "' . $created_by . '",estimate_number = "' . $estimate_number . '",estimate_date = "' . $estimate_date . '",estimate_created_by = "' . $estimate_created_by . '", special_instructions = "' . $special_instructions . '",materials_ordered = "' . $materials_ordered . '",materials_expected = "' . $materials_expected . '",expected_quantity = "' . $expected_quantity . '",records_total = "' . $records_total . '",job_status = "' . $job_status . '", mail_class = "' . $mail_class . '", rate = "' . $rate . '", processing_category = "' . $processing_category . '", mail_dim = "' . $mail_dim . '", weights_measures = "' . $weights_measures . '", permit = "' . $permit . '", bmeu = "' . $bmeu . '", based_on = "' . $based_on . '", non_profit_number = "' . $non_profit_number . '"  WHERE job_id = "' . $job_id . '"';
 			$result = $conn->query($sql) or die(date('Y-m-d', strtotime($ticket_date)));
 			
-			$sql2 = 'UPDATE project_management SET data_source = "' . $data_source . '",data_received = "' . $data_received . '",data_completed = "' . $data_completed . '", dqr_sent = "' . $dqr_sent . '" WHERE job_id = "' . $job_id . '"';
+			$sql2 = 'UPDATE project_management SET data_source = "' . $data_source . '",data_received = "' . $data_received . '",data_completed = "' . $data_completed . '", data_location = "' . $data_location . '", data_processed_by = "' . $data_processed_by . '", dqr_sent = "' . $dqr_sent . '" WHERE job_id = "' . $job_id . '"';
 			$result2 = $conn->query($sql2) or die('Error querying database 2.');
 			
 			
