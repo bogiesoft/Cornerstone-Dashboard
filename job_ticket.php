@@ -47,6 +47,7 @@ require ("header.php");
     var id_of_task;
     var number_of_rows;
     var number_of_tasks;
+	var based_on_ids = [];
     $(function() {
         id_of_row=parseInt($( "tr:last" ).attr('id'));
         number_of_rows=id_of_row;
@@ -71,7 +72,8 @@ require ("header.php");
 function getMaterialsID(row_id){
         var vendor=$("#vendors"+row_id).val();
         var material = $("#materials"+row_id).val(); 
-        var type=$("#types"+row_id).val(); 
+        var type=$("#types"+row_id).val();
+		based_on_ids.push(row_id);
         $.ajax({
         url: 'getMaterialsID.php',
         type: 'post',
@@ -124,8 +126,20 @@ function addTasks(){
 };
  
 function removeWeights_Measures(row_id){
-    $(row_id).remove();
+	 $(row_id).remove()
+	var based_on = parseFloat($("#based_on").val());
+	var index = based_on_ids.indexOf(row_id);
+	based_on_ids.splice(index, 1);
+	var weight = 0;
+	var height = 0;
+	for(var i = 0; i < based_on_ids.length; i++){
+		weight += parseFloat($("#weight" + based_on_ids[i]).val()) / parseFloat($("#based_on" + based_on_ids[i]).val()) * based_on;
+		height += parseFloat($("#height" + based_on_ids[i]).val()) / parseFloat($("#based_on" + based_on_ids[i]).val()) * based_on;
+	}
     number_of_rows--;
+	weight = weight.toFixed(2);
+	height = height.toFixed(2);
+	$("#total_w_m").val(weight + " x " + height);
 };
 function removeTasks(row_id){
     $(row_id).remove();
@@ -192,6 +206,19 @@ function getTypes(row_id)
         }
     });
 };
+function addTotalWM()
+{
+	var based_on = parseFloat($("#based_on").val());
+	var weight = 0;
+	var height = 0;
+	for(var i = 0; i < based_on_ids.length; i++){
+		weight += parseFloat($("#weight" + based_on_ids[i]).val()) / parseFloat($("#based_on" + based_on_ids[i]).val()) * based_on;
+		height += parseFloat($("#height" + based_on_ids[i]).val()) / parseFloat($("#based_on" + based_on_ids[i]).val()) * based_on;
+	}
+	weight = weight.toFixed(2);
+	height = height.toFixed(2);
+	$("#total_w_m").val(weight + " x " + height);
+}
 </script>
 <script type="text/javascript">
 
@@ -291,16 +318,16 @@ function getTypes(row_id)
                     </div>
 					<div class="tabinner-detail">
                     <label>Mail Dimensions</label>
-                    <input id = "mail_dimensions" name="mail_dim" type="text" class="contact-prefix" placeholder = "Automatically Generated">
+                    <input id = "mail_dimensions" name="mail_dim" type="text" class="contact-prefix">
                     </div>
 					<div class="tabinner-detail">
                     <label>Total Weights and Measures</label>
-                    <input name="total_w_m" type="text" class="contact-prefix">
+                    <input id = "total_w_m" name="total_w_m" type="text" class="contact-prefix" placeholder = "Auto Generated" readonly>
                     </div>
 					<div class="tabinner-detail">
                     <label>Based On</label>
-					<select id = "based_on" style = "width: 50%" name="based_on">
-                    <option selected = 'selected' value = '1'>1</option>
+					<select id = "based_on" style = "width: 100%" name="based_on" onchange = "addTotalWM()">
+                    <option selected = 'selected' value = '0'>--Choose Weights and Measures First--</option>
 					</select>
                     </div>
 					 <div class="tabinner-detail">
@@ -444,35 +471,6 @@ function getTypes(row_id)
                     <input name="final_count" type="text" class="contact-prefix">
                     </div>
 				</div>
-				<div class="newclienttab-inner" style = "float: right; width: 33%; clear: left">
-                    <div class="tabinner-detail">
-                    <label>Estimate Number</label>
-                    <input name="estimate_number" type="text" class="contact-prefix">
-                    </div>
-                    <div class="tabinner-detail">
-                    <label>Estimate date</label>
-                    <input name="estimate_date" type="date" class="contact-prefix">
-                    </div>
-                    <div class="tabinner-detail">
-                    <label>Estimate created by</label>
-                    <select name="estimate_created_by">
-                    <?php
-                        $result = mysqli_query($conn, "SELECT * FROM users");
-                        $count = 1;
-                        while($row = $result->fetch_assoc()){
-                            if($count == 1){
-                                echo "<option selected = 'selected' value = '" . $row['user'] . "'>" . $row['first_name'] . " " . $row['last_name'] . "</option>"; 
-                            }
-                            else{
-                                echo "<option value = '" . $row['user'] . "'>" . $row['first_name'] . " " . $row['last_name'] . "</option>"; 
-                            }
-                             
-                            $count = $count + 1;
-                        }
-                    ?>
-                    </select>
-                    </div>
-				</div>
 				<div class="newclienttab-inner" style = "float: left; width: 33%">
                     <div class="tabinner-detail">
                     <label>Materials Ordered</label>
@@ -518,6 +516,39 @@ function getTypes(row_id)
                         echo "</select>";
                         echo "</div>";
                         ?>
+				</div>
+				<div class="newclienttab-inner" style = "float: left; width: 33%;">     
+                    <div class="tabinner-detail">
+                    <label>Completed Date</label>
+                    <input name="completed_date" type="date" class="contact-prefix">
+                    </div>
+					<div class="tabinner-detail">
+                    <label>Estimate Number</label>
+                    <input name="estimate_number" type="text" class="contact-prefix">
+                    </div>
+                    <div class="tabinner-detail">
+                    <label>Estimate date</label>
+                    <input name="estimate_date" type="date" class="contact-prefix">
+                    </div>
+                    <div class="tabinner-detail">
+                    <label>Estimate created by</label>
+                    <select name="estimate_created_by">
+                    <?php
+                        $result = mysqli_query($conn, "SELECT * FROM users");
+                        $count = 1;
+                        while($row = $result->fetch_assoc()){
+                            if($count == 1){
+                                echo "<option selected = 'selected' value = '" . $row['user'] . "'>" . $row['first_name'] . " " . $row['last_name'] . "</option>"; 
+                            }
+                            else{
+                                echo "<option value = '" . $row['user'] . "'>" . $row['first_name'] . " " . $row['last_name'] . "</option>"; 
+                            }
+                             
+                            $count = $count + 1;
+                        }
+                    ?>
+                    </select>
+                    </div>
 					<?php
                      
                          
@@ -534,12 +565,6 @@ function getTypes(row_id)
                         echo "</select>";
                         echo "</div>";
                         ?>
-				</div>
-				<div class="newclienttab-inner" style = "float: left; width: 33%;">     
-                    <div class="tabinner-detail">
-                    <label>Completed Date</label>
-                    <input name="completed_date" type="date" class="contact-prefix">
-                    </div>
 				</div>
 				<div class="newclienttab-inner" style = "float: left; width: 33%;">
                     <div class="tabinner-detail">
@@ -615,14 +640,13 @@ function getTypes(row_id)
                         ?>
                         </tbody>
                     </table>
-                    </div>
-                    <div class="tabinner-detail">
+					</div>
+                </div>
+					<div class="tabinner-detail">
                     <label>Special Instructions</label>
                     <textarea name="special_instructions" class="contact-prefix"></textarea>
                     </div>
- 
-                </div>    
-                </div>
+            </div>
                 <div class="newcontact-tabbtm">
                     <input class="save-btn store-btn" type="submit" value="Save" name="submit_form" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
                 </div>

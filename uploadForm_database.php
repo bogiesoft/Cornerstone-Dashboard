@@ -180,7 +180,7 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 				$sql_add = $sql_add . "' ',";
 			}
 			else{
-				$sql_add = $sql_add . "'Prospect', " . $import_id . ", '" . $import_name . "', 'Insert')";
+				$sql_add = $sql_add . "'Client', " . $import_id . ", '" . $import_name . "', 'Insert')";
 			}
 		}
 
