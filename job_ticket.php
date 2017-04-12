@@ -376,7 +376,7 @@ function addTotalWM()
                     </select>
                     </div>
 				</div>
-				<div class="newclienttab-inner" style = "float: left; width: 40%;">
+				<div class="newclienttab-inner" style = "float: left; width: 45%;">
                     <div class="tabinner-detail">
 					<table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
 						<tbody>
@@ -471,7 +471,7 @@ function addTotalWM()
                     <input name="final_count" type="text" class="contact-prefix">
                     </div>
 				</div>
-				<div class="newclienttab-inner" style = "float: left; width: 33%">
+				<div class="newclienttab-inner" style = "float: left; width: 50%">
                     <div class="tabinner-detail">
                     <label>Materials Ordered</label>
                     <input name="materials_ordered" type="date" class="contact-prefix">

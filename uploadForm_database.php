@@ -185,7 +185,6 @@ for($i = 1; $i < count($data); $i++) //goes through all rows in csv file
 		}
 
 		$value_to_search = $full_name . "," . $address_line_1 . "," . $business;
-
 		if(array_search($value_to_search, $key_search)){
 			$dups++;
 		}
