@@ -4,29 +4,61 @@ require ("header.php");
 <script src="ClientSweetAlert.js"></script>
 <script>
 	function showClientInfo(){
+		document.getElementById("alternate_fields").style.display = "none";
 		document.getElementById("notes").style.display = "none";
 		document.getElementById("mailing_history").style.display = "none";
-		document.getElementById("client_info").style.display = "block";
 		document.getElementById("crids").style.display = "none";
+		document.getElementById("social_media").style.display = "none";
+		document.getElementById("client_info").style.display = "block";
+
 	};
 	function showNotes(){
-		document.getElementById("notes").style.display = "block";
+		document.getElementById("alternate_fields").style.display = "none";
 		document.getElementById("mailing_history").style.display = "none";
 		document.getElementById("client_info").style.display = "none";
 		document.getElementById("crids").style.display = "none";
+		document.getElementById("social_media").style.display = "none";
+		document.getElementById("notes").style.display = "block";
+
 	};
 	function showMailingHistory(){
+		document.getElementById("alternate_fields").style.display = "none";
 		document.getElementById("notes").style.display = "none";
-		document.getElementById("mailing_history").style.display = "block";
 		document.getElementById("client_info").style.display = "none";
 		document.getElementById("crids").style.display = "none";
+		document.getElementById("social_media").style.display = "none";
+		document.getElementById("mailing_history").style.display = "block";
+
 	};
-	function showCrids(){
-		document.getElementById("client_info").style.display = "none";
+	function showCrid(){
+		document.getElementById("alternate_fields").style.display = "none";
 		document.getElementById("notes").style.display = "none";
 		document.getElementById("mailing_history").style.display = "none";
+		document.getElementById("client_info").style.display = "none";
+		document.getElementById("social_media").style.display = "none";
 		document.getElementById("crids").style.display = "block";
+
 	};
+	function showSocialMedia(){
+		document.getElementById("notes").style.display = "none";
+		document.getElementById("mailing_history").style.display = "none";
+		document.getElementById("client_info").style.display = "none";
+		document.getElementById("crids").style.display = "none";
+		document.getElementById("alternate_fields").style.display = "none";
+		document.getElementById("social_media").style.display = "block";
+
+	};
+	function showAltInfo(){
+		document.getElementById("notes").style.display = "none";
+		document.getElementById("mailing_history").style.display = "none";
+		document.getElementById("client_info").style.display = "none";
+		document.getElementById("crids").style.display = "none";
+		document.getElementById("social_media").style.display = "none";
+		$("#alternate_fields").show();
+
+	};
+
+
 </script>
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
@@ -39,9 +71,11 @@ require ("header.php");
 			<!-- Nav Tabs -->
 			<ul class="nav nav-tabs" role="tablist">
 				<li role="presentation" class="active"><a  role="tab" data-toggle="tab" aria-expanded="true" onclick = 'showClientInfo()'>Client Info</a></li>
+				<li role="presentation" class="active"><a  role="tab" data-toggle="tab" aria-expanded="true" onclick = 'showAltInfo()'>Alternate Info</a></li>
 				<li role="presentation" class="active"><a  role="tab" data-toggle="tab" aria-expanded="true" onclick = 'showNotes()'>Notes</a></li>
+				<li role="presentation" class="active"><a  role="tab" data-toggle="tab" aria-expanded="true" onclick = 'showSocialMedia()'>Social Media</a></li>
 				<li role="presentation" class="active"><a  role="tab" data-toggle="tab" aria-expanded="true" onclick = 'showMailingHistory()'>Mailing History</a></li>
-				<li role="presentation" class="active"><a  role="tab" data-toggle="tab" aria-expanded="true" onclick = 'showCrids()'>CRIDS</a></li>
+				<li role="presentation" class="active"><a  role="tab" data-toggle="tab" aria-expanded="true" onclick = 'showCrid()'>CRIDS</a></li>
 			</ul>
 
 			<div class="newcontactstabs-outer">
@@ -54,6 +88,16 @@ require ("header.php");
 									<div class="tabinner-detail">
 										<label>Client Name</label>
 										<input name="full_name" type="text"  class="contact-prefix">
+										<div class="clear"></div>
+									</div>
+									<div class="tabinner-detail">
+										<label>Prefix</label>
+										<input name="prefix" type="text" class="contact-prefix">
+										<div class="clear"></div>
+									</div>
+									<div class="tabinner-detail">
+										<label>Suffix</label>
+										<input name="suffix" type="text" class="contact-prefix">
 										<div class="clear"></div>
 									</div>
 									<div class="tabinner-detail">
@@ -72,11 +116,6 @@ require ("header.php");
 										<div class="clear"></div>
 									</div>
 									<div class="tabinner-detail">
-										<label>Address Line 2</label>
-										<input name="address_line_2" type="text"  class="contact-prefix">
-										<div class="clear"></div>
-									</div>
-									<div class="tabinner-detail">
 										<label>City</label>
 										<input name="city" type="text"  class="contact-prefix">
 										<div class="clear"></div>
@@ -89,6 +128,11 @@ require ("header.php");
 									<div class="tabinner-detail">
 										<label>Zip</label>
 										<input name="zipcode" type="text"  class="contact-prefix">
+										<div class="clear"></div>
+									</div>
+									<div class="tabinner-detail">
+										<label>Country</label>
+										<input name="country" type="text" class="contact-prefix">
 										<div class="clear"></div>
 									</div>
 									<div class="tabinner-detail">
@@ -114,13 +158,13 @@ require ("header.php");
 										<div class="clear"></div>
 									</div>
 									<div class="tabinner-detail">
-										<label>Alternate Phone</label>
-										<input name="alt_phone" type="text"  class="contact-prefix">
+										<label>Home Phone</label>
+										<input name="home_phone" type="text"  class="contact-prefix">
 										<div class="clear"></div>
 									</div>
 									<div class="tabinner-detail">
-										<label>Home Phone</label>
-										<input name="home_phone" type="text"  class="contact-prefix">
+										<label>Work Phone</label>
+										<input name="work_phone" type="text" class="contact-prefix">
 										<div class="clear"></div>
 									</div>
 									<div class="tabinner-detail">
@@ -129,8 +173,8 @@ require ("header.php");
 										<div class="clear"></div>
 									</div>
 									<div class="tabinner-detail">
-										<label>Email 2</label>
-										<input name="email2" type="text"  class="contact-prefix">
+										<label>CC Email</label>
+										<input name="cc_email" type="text" class="contact-prefix">
 										<div class="clear"></div>
 									</div>
 									<div class="tabinner-detail">
@@ -144,8 +188,8 @@ require ("header.php");
 										<div class="clear"></div>
 									</div>
 									<div class="tabinner-detail">
-										<label>Second Contact</label>
-										<input name="second_contact" type="text"  class="contact-prefix">
+										<label>Contact</label>
+										<input name="contact_name" type="text" class="contact-prefix">
 										<div class="clear"></div>
 									</div>
 									<div class="tabinner-detail">
@@ -155,6 +199,11 @@ require ("header.php");
 												<option value ='Client'>Client</option>
 												<option value ='Prospect'>Prospect</option>
 											</select>
+										<div class="clear"></div>
+									</div>
+									<div class="tabinner-detail">
+										<label>Second Contact</label>
+										<input name="second_contact" type="text"  class="contact-prefix">
 										<div class="clear"></div>
 									</div>
 								</div>
@@ -211,6 +260,50 @@ require ("header.php");
 									</div>
 								</div>
 							</div>
+							<div class="newcontactstab-detail" id="alternate_fields" style = 'display:none;'>
+								<div class="newcontacttab-inner">
+									<div class="tabinner-detail">
+										<label>Alternate Phone</label>
+										<input name="alt_phone" type="text" class="contact-prefix">
+										<div class="clear"></div>
+									</div>
+									<div class="tabinner-detail">
+										<label>Alternate Mobile</label>
+										<input name="alt_cell_phone" type="text" class="contact-prefix">
+										<div class="clear"></div>
+									</div>
+									<div class="tabinner-detail">
+										<label>Alternate Fax</label>
+										<input name="alt_fax" type="text" class="contact-prefix">
+										<div class="clear"></div>
+									</div>
+									<div class="tabinner-detail">
+										<label>Alternate URL 1</label>
+										<input name="alt_website1" type="text" class="contact-prefix">
+										<div class="clear"></div>
+									</div>
+									<div class="tabinner-detail">
+										<label>Alternate URL 2</label>
+										<input name="alt_website2" type="text" class="contact-prefix">
+										<div class="clear"></div>
+									</div>
+									<div class="tabinner-detail">
+										<label>Email 2</label>
+										<input name="email2" type="text" class="contact-prefix">
+										<div class="clear"></div>
+									</div>
+									<div class="tabinner-detail">
+										<label>Address Line 2</label>
+										<input name="address_line_2" type="text" class="contact-prefix">
+										<div class="clear"></div>
+									</div>
+									<div class="tabinner-detail">
+										<label>Address Line 3</label>
+										<input name="address_line_3" type="text" class="contact-prefix">
+										<div class="clear"></div>
+									</div>
+								</div>
+							</div>
 							<div class="newcontactstab-detail" id="notes" style = 'display:none;'>
 								<div class="newcontacttab-inner">
 									<div class="tabinner-detail">
@@ -218,6 +311,31 @@ require ("header.php");
 										<textarea name="notes" class="contact-notes" style = "width: 800%"></textarea>
 										<div class="clear"></div>
 									</div>
+								</div>
+							</div>
+							<div class="newcontactstab-detail" id="social_media" style = 'display:none;'>
+								<div class="newcontacttab-inner">
+									<div class="tabinner-detail">
+										<label>LinkedIn</label>
+										<input name="linkedin" type="text" class="contact-prefix">
+										<div class="clear"></div>
+									</div>
+									<div class="tabinner-detail">
+										<label>Facebook</label>
+										<input name="facebook" type="text" class="contact-prefix">
+										<div class="clear"></div>
+									</div>
+									<div class="tabinner-detail">
+										<label>Twitter</label>
+										<input name="twitter" type="text" class="contact-prefix">
+										<div class="clear"></div>
+									</div>
+									<div class="tabinner-detail">
+										<label>Skype ID</label>
+										<input name="skypeid" type="text" class="contact-prefix">
+										<div class="clear"></div>
+									</div>
+
 								</div>
 							</div>
 							<div class="newcontactstab-detail" id="mailing_history" style = 'display:none; white-space: nowrap;'>

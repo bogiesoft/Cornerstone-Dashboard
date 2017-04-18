@@ -36,6 +36,7 @@ li {
 <script>
 	var id_of_row;
 	var number_of_rows;
+	var based_on_ids = [];
 
 	$(function() {
 		id_of_row=parseInt($( "tr:last" ).attr('id'));
@@ -59,7 +60,8 @@ li {
 });
 function getMaterialsID(row_id){
         var vendor=$("#vendors"+row_id).val();
-        var material = $("#materials"+row_id).val(); 
+        var material = $("#materials"+row_id).val();
+		based_on_ids.push(row_id);		
         var type=$("#types"+row_id).val(); 
         $.ajax({
         url: 'getMaterialsID.php',
@@ -75,11 +77,6 @@ function getMaterialsID(row_id){
 				else if(count_result == 2){
 					$('#based_on').append($('<option>', {value: value, text: value}));
 					$('#based_on' + row_id).val(value);
-				}
-				else if(count_result == 3){
-					if($("#mail_dimensions").val() == ""){
-						$("#mail_dimensions").val(value);
-					}
 				}
 				else if(count_result == 4){
 					$('#weight' + row_id).val(value);
@@ -103,8 +100,20 @@ function addWeights_Measures(){
     }
 };
 function removeWeights_Measures(row_id){
-	$(row_id).remove();
-	number_of_rows--;
+	 $(row_id).remove()
+	var based_on = parseFloat($("#based_on").val());
+	var index = based_on_ids.indexOf(row_id);
+	based_on_ids.splice(index, 1);
+	var weight = 0;
+	var height = 0;
+	for(var i = 0; i < based_on_ids.length; i++){
+		weight += parseFloat($("#weight" + based_on_ids[i]).val()) / parseFloat($("#based_on" + based_on_ids[i]).val()) * based_on;
+		height += parseFloat($("#height" + based_on_ids[i]).val()) / parseFloat($("#based_on" + based_on_ids[i]).val()) * based_on;
+	}
+    number_of_rows--;
+	weight = weight.toFixed(2);
+	height = height.toFixed(2);
+	$("#total_w_m").val(weight + " x " + height);
 };
 function getVendors(row_id)
 {
@@ -167,6 +176,19 @@ function getTypes(row_id)
     	}
     });
 };
+function addTotalWM()
+{
+	var based_on = parseFloat($("#based_on").val());
+	var weight = 0;
+	var height = 0;
+	for(var i = 0; i < based_on_ids.length; i++){
+		weight += parseFloat($("#weight" + based_on_ids[i]).val()) / parseFloat($("#based_on" + based_on_ids[i]).val()) * based_on;
+		height += parseFloat($("#height" + based_on_ids[i]).val()) / parseFloat($("#based_on" + based_on_ids[i]).val()) * based_on;
+	}
+	weight = weight.toFixed(2);
+	height = height.toFixed(2);
+	$("#total_w_m").val(weight + " x " + height);
+}
 </script>
 
 <?php
@@ -360,12 +382,19 @@ require ("connection.php");
 				</div>
 				<div class="tabinner-detail">
                 <label>Total Weights and Measures</label>
-                <input name="total_w_m" type="text" class="contact-prefix" readonly>
+                <input id="total_w_m" name="total_w_m" type="text" class="contact-prefix" readonly>
                 </div>
 				<div class="tabinner-detail">
 				<label>Based On</label>
-				<select id = "based_on" name = "based_on">
-				<option selected = "selected" value = "<?php echo $based_on ; ?>"><?php echo $based_on ; ?></option>
+				<select id = "based_on" name = "based_on" onchange = "addTotalWM()">
+				<?php
+				if($based_on == 0){
+					echo '<option selected = "selected" value = "1"><?php echo $based_on ; ?></option>';
+				}
+				else{
+					echo "<option selected = 'selected' value = '$based_on'>$based_on</option>";
+				}
+				?>
 				</select>
 				</div>
 				<div class="tabinner-detail">
@@ -814,6 +843,45 @@ require ("connection.php");
 </div>
 </div>
 <script>
+$( document ).ready(function() {
+	var count = 1;
+	var id = "";
+	while(document.getElementById("checkbox" + (count - 1))){ 
+		based_on_ids.push(count);
+		count++;
+	}
+    var value = document.getElementById("client_name").value;
+	$.ajax({
+    type: "POST",
+    url: "generate_client_search.php",
+    data: {id_name_info: value},
+    dataType: "json", // Set the data type so jQuery can parse it for you
+    success: function (data_info) {
+			$(".client_search_results").empty();
+			$("#contact_name").val(data_info[0]);
+			$("#phone").val(data_info[1]);
+			$("#email").val(data_info[2]);
+			$("#address_line_1").val(data_info[3]);
+			$("#city").val(data_info[4]);
+			$("#state").val(data_info[5]);
+			$("#zipcode").val(data_info[6]);
+			$("#second_contact").val(data_info[7]);
+			$("#fax").val(data_info[8]);
+    }
+});
+	var based_on = parseFloat($("#based_on").val());
+	var weight = 0;
+	var height = 0;
+	for(var i = 0; i < based_on_ids.length; i++){
+		weight += parseFloat($("#weight" + based_on_ids[i]).val()) / parseFloat($("#based_on" + based_on_ids[i]).val()) * based_on;
+		height += parseFloat($("#height" + based_on_ids[i]).val()) / parseFloat($("#based_on" + based_on_ids[i]).val()) * based_on;
+		$('#based_on').append($('<option>', {value: $("#based_on" + based_on_ids[i]).val(), text: $("#based_on" + based_on_ids[i]).val()}));
+		
+	}
+	weight = weight.toFixed(2);
+	height = height.toFixed(2);
+	$("#total_w_m").val(weight + " x " + height);
+});
 document.getElementById("client_name").onkeyup = function(){
 	var value = document.getElementById("client_name").value;
 	$.ajax({
@@ -834,7 +902,25 @@ document.getElementById("client_name").onkeyup = function(){
 };
 function fillInput(info){
 	$("#client_name").val(info);
-	$(".client_search_results").empty();
+	$.ajax({
+    type: "POST",
+    url: "generate_client_search.php",
+    data: {id_name_info: info},
+    dataType: "json", // Set the data type so jQuery can parse it for you
+    success: function (data_info) {
+			$(".client_search_results").empty();
+			$("#contact_name").val(data_info[0]);
+			$("#phone").val(data_info[1]);
+			$("#email").val(data_info[2]);
+			$("#address_line_1").val(data_info[3]);
+			$("#city").val(data_info[4]);
+			$("#state").val(data_info[5]);
+			$("#zipcode").val(data_info[6]);
+			$("#second_contact").val(data_info[7]);
+			$("#fax").val(data_info[8]);
+		}
+});
+$(".client_search_results").empty();
 }
 </script>        
 	

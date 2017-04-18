@@ -89,11 +89,6 @@ function getMaterialsID(row_id){
 					$('#based_on').append($('<option>', {value: value, text: value}));
 					$('#based_on' + row_id).val(value);
 				}
-				else if(count_result == 3){
-					if($("#mail_dimensions").val() == ""){
-						$("#mail_dimensions").val(value);
-					}
-				}
 				else if(count_result == 4){
 					$('#weight' + row_id).val(value);
 				}

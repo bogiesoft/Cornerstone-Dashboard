@@ -5,9 +5,12 @@
 		$full_name = explode(")", $business_and_full_name[1]);
 		$business = $business_and_full_name[0];
 		$full_name = $full_name[0];
+		$arr_info = array("", "", "", "", "", "", "", "", "");
 		$result = mysqli_query($conn, "SELECT * FROM sales WHERE business = '$business' AND full_name = '$full_name'");
-		$row = $result->fetch_assoc();
-		$arr_info = array($row["contact_name"], $row["phone"], $row["email1"], $row["address_line_1"], $row["city"], $row["state"], $row["zipcode"], $row["second_contact"], $row["fax"]);
+		if($result->num_rows > 0){
+			$row = $result->fetch_assoc();
+			$arr_info = array($row["contact_name"], $row["phone"], $row["email1"], $row["address_line_1"], $row["city"], $row["state"], $row["zipcode"], $row["second_contact"], $row["fax"]);
+		}
 		echo json_encode($arr_info);
 	}
 	else{
