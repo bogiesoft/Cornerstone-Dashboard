@@ -9,23 +9,35 @@ li {
 <script src="JobTicketSweetAlert.js"></script>
 <script type="text/javascript">
 
-    function PrintElem(elem)
+    function PrintElem()
     {
-        Popup($(elem).html());
-    }
-
-    function Popup(data) 
-    {
-        var mywindow = window.open('height=400,width=600');
+	    var mywindow = window.open('height=400,width=600');
         mywindow.document.write('<html><head><title>CRST JOB TICKET</title>');
-        //mywindow.document.write('<link rel="stylesheet" href="css/style.css">');
         mywindow.document.write('</head><body>');
-        mywindow.document.write(data);
+		mywindow.document.write($(".main_headers").html());
+		//All needed Values
+		mywindow.document.write('<div style = "float: left; width: 25%">');
+		var panel= $("#client_info_div");
+		var inputs = panel.find("input");
+		var labels_client = ["Contact Name", "Phone", "Email", "Address", "City", "State", "Zipcode", "Second Contact", "Fax"];
+		for(var i = 0; i < inputs.length; i++){
+			mywindow.document.write('<div style = "padding-bottom: 5px"><label><b>' + labels_client[i] + '</b></label><input value = "' + inputs[i].value + '"></div>');
+		}
+		mywindow.document.write('</div>');
+		mywindow.document.write('<div style = "float: left; width: 25%">');
+		var labels_wm = ["Non Profit Number", "Mail Class", "Rate", "Processing Category", "Mail Dimensions", "Total W & M"];
+		var panel= $("#wm_info_div");
+		var inputs = panel.find("input");
+		for(var i = 0; i < inputs.length - 1; i++){
+			mywindow.document.write('<div style = "padding-bottom: 5px"><label><b>' + labels_wm[i] + '</b></label><input value = "' + inputs[i].value + '"></div>');
+		}
+		mywindow.document.write("<div style = 'padding-bottom: 5px'><label><b>Based On</b></label><input value = '" + $("#based_on").val() + "'></div>");
+		mywindow.document.write("<div style = 'padding-bottom: 5px'><label><b>Permit</b></label><input value = '" + $("#permit").val() + "'></div>");
+		mywindow.document.write('</div>');
+		mywindow.document.write($(".data_info").html());
         mywindow.document.write('</body></html>');
-
         mywindow.document.close(); // necessary for IE >= 10
         mywindow.focus(); // necessary for IE >= 10
-
         mywindow.print();
         mywindow.close();
 
@@ -189,6 +201,14 @@ function addTotalWM()
 	height = height.toFixed(2);
 	$("#total_w_m").val(weight + " x " + height);
 }
+function showJobInfo(){
+		document.getElementById("job_info").style.display = "block";
+		document.getElementById("special_instructions").style.display = "none";
+};
+	function showSP(){
+		document.getElementById("job_info").style.display = "none";
+		document.getElementById("special_instructions").style.display = "block";
+};
 </script>
 
 <?php
@@ -312,12 +332,14 @@ require ("connection.php");
 	<div class="newcontacts-tabs">
 		<!---- Nav Tabs ---->
 		<ul class="nav nav-tabs" role="tablist">
-			<li role="presentation" class="active"><a  role="tab" data-toggle="tab" aria-expanded="true">Edit Current Job</a></li>
+			<li role="presentation" class="active"><a  role="tab" data-toggle="tab" aria-expanded="true" onclick = 'showJobInfo()'>Edit Current Job</a></li>
+			<li role="presentation" class="active"><a  role="tab" data-toggle="tab" aria-expanded="true" onclick = 'showSP()'>Special Instructions</a></li>
 		</ul>
 		<!--- Tab Panes --->
 	<div class="newcontactstabs-outer">
 		<div class="tab-content">
 			<div role="tabpanel" class="tab-pane active" id="home">
+			<div class="newcontactstab-detail" id="job_info" style = 'display:block;'>
 			<form action="update_job.php" method="post">
 			 <div class="newclienttab-inner">
 				<table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
@@ -330,7 +352,7 @@ require ("connection.php");
 					</ul>
                     </div>
 			</div>
-			<div class="newclienttab-inner" style = "float: left; width: 31%">
+			<div class="newclienttab-inner" id = "client_info_div" style = "float: left; width: 31%">
                     <div class="tabinner-detail">
                     <label>Contact Name</label>
                     <input id = "contact_name" name="contact_name" type="text" class="contact-prefix" readonly>
@@ -358,8 +380,8 @@ require ("connection.php");
                     <label>Fax</label>
                     <input id = "fax" name="fax" type="text" class="contact-prefix" readonly>
                     </div>
-				</div>
-			<div class="newclienttab-inner" style = "float: left; width: 31%">
+			</div>
+			<div id = "wm_info_div" class="newclienttab-inner" style = "float: left; width: 31%">
 				<div class="tabinner-detail">
                 <label>Non Profit Number</label>
                 <input name="non_profit_number" type="text" class="contact-prefix" value="<?php echo $non_profit_number ; ?>">
@@ -399,7 +421,7 @@ require ("connection.php");
 				</div>
 				<div class="tabinner-detail">
 				<label>Permit</label>
-				<input name="permit" type="text" value="<?php echo $permit ; ?>" class="contact-prefix">
+				<input id = "permit" name="permit" type="text" value="<?php echo $permit ; ?>" class="contact-prefix">
 				</div>
 			</div>
 			<div class="newclienttab-inner" style = "float: left; width: 31%">
@@ -825,15 +847,18 @@ require ("connection.php");
 					</tbody>
 					</table>
 				</div>
+			</div>
+		</div>
+			<div class="newcontactstab-detail" id="special_instructions" style = 'display:none;'>
 				<div class="tabinner-detail">				
 				<label>Special Instructions</label>
 				<textarea name="special_instructions" class="contact-prefix" cols="80" rows="25"><?php echo $special_instructions; ?></textarea>
 				</div>
-				</div>
+			</div>
 				<div class="newcontact-tabbtm">
 					<input class="save-btn store-btn" type="submit" value="Save" name="submit_form" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
 					<input class="save-btn delete-btn" type = "submit" value = "Delete" name = "delete_form" style="width:200px; font-size:16px; background-color:#d14700; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px; float:left">
-					<input type="button" class="save-btn" value="Print" onclick="PrintElem('.dashboard-cont')" style="width:200px; font-size:16px; background-color:black; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px; float:right"/>
+					<input type="button" class="save-btn" value="Print" onclick="PrintElem()" style="width:200px; font-size:16px; background-color:black; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px; float:right"/>
 				</div>
 			</form>
 			</div>
@@ -859,6 +884,7 @@ $( document ).ready(function() {
     success: function (data_info) {
 			$(".client_search_results").empty();
 			$("#contact_name").val(data_info[0]);
+			$("#contact_name2").val(data_info[0]);
 			$("#phone").val(data_info[1]);
 			$("#email").val(data_info[2]);
 			$("#address_line_1").val(data_info[3]);
@@ -922,5 +948,58 @@ function fillInput(info){
 });
 $(".client_search_results").empty();
 }
-</script>        
-	
+</script>
+<!--These are extra divs for the printing portion of the job ticket-->
+<canvas class = "main_headers" style = "display: none">
+ <div class="newclienttab-inner">
+				<table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
+						<tbody>
+							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='vendor' data-index='4'><h2>Client</h2></th><th class='maintable-thtwo data-header' data-name='material' data-index='6'><h2>Job Name</h2></th><th class='maintable-thtwo data-header' data-name='type' data-index='7'><h2>Due Date</h2></th></tr></thead><tbody>
+							<tr><td><input style = "width: 100%" id = "client_name" name="client_name" type="text" value="<?php echo $client_name ; ?>" class="contact-prefix"></td><td><input style = "width: 100%" name="project_name" type="text" value="<?php echo $project_name ; ?>" class="contact-prefix"></td><td><input style = "width: 100%" name="due_date" type="date" value="<?php echo $due_date ; ?>" class="contact-prefix"></td></tr>
+						</tbody></table></td></tr></tbody></table>
+                    <div class="tabinner-detail">
+					<ul class = "client_search_results">
+					</ul>
+                    </div>
+			</div>
+</canvas>
+<canvas class = "data_info" style = "display: none">
+<div class="newclienttab-inner" style = "float: left; width: 25%">
+				<div style = 'padding-bottom: 5px'>
+				<label><b>Records Total</b></label>
+				<input name="records_total" type="text" value="<?php echo $records_total ; ?>" class="contact-prefix">
+				</div>
+				<div style = 'padding-bottom: 5px'>
+                <label><b>Data Location</b></label>
+                <textarea style = "height: 10%" name="data_location" type="text" class="contact-prefix"><?php echo $data_location ; ?></textarea>
+                </div>
+				<div style = 'padding-bottom: 5px'>
+				<label><b>Data Source</b></label>
+				<input name="data_source" type="text" value="<?php echo $data_source ; ?>" class="contact-prefix">
+				</div>
+				<div style = 'padding-bottom: 5px'>
+				<label><b>Data Received</b></label>
+				<input name="data_received" type="date" value="<?php echo $data_received ; ?>" class="contact-prefix">
+				</div>
+				<div style = 'padding-bottom: 5px'>
+				<label><b>Data Completed</b></label>
+				<input name="data_completed" type="date" value="<?php echo $data_completed ; ?>" class="contact-prefix">
+				</div>
+				<div style = 'padding-bottom: 5px'>
+                    <label><b>Processed By</b></label>
+                     <select name="data_processed_by">
+                    <?php
+						$result_current_name = mysqli_query($conn, "SELECT * FROM users WHERE user = '$data_processed_by'");
+						$row_name = $result_current_name->fetch_assoc();
+						echo "<option selected = 'selected' value = '" . $data_processed_by . "'>" . $row_name['first_name'] . " " . $row_name['last_name'] . "</option>"; 
+                        $result = mysqli_query($conn, "SELECT * FROM users");
+                        $count = 1;
+                        while($row = $result->fetch_assoc()){
+                                echo "<option value = '" . $row['user'] . "'>" . $row['first_name'] . " " . $row['last_name'] . "</option>"; 
+						}
+                        
+                    ?>
+                    </select>
+                    </div>
+			</div>
+</canvas>

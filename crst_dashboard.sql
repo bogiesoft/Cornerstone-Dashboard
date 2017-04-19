@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 18, 2017 at 10:33 PM
+-- Generation Time: Apr 19, 2017 at 11:01 PM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 7.0.13
 
@@ -323,7 +323,7 @@ INSERT INTO `inventory` (`material_id`, `material`, `type`, `vendor`, `location`
 CREATE TABLE `job_ticket` (
   `job_id` int(45) NOT NULL,
   `processed_by` varchar(45) NOT NULL,
-  `client_name` varchar(45) NOT NULL,
+  `client_name` varchar(120) NOT NULL,
   `project_name` varchar(45) NOT NULL,
   `ticket_date` date DEFAULT NULL,
   `due_date` date DEFAULT NULL,
@@ -459,7 +459,7 @@ INSERT INTO `production` (`job_id`, `hold_postage`, `postage_paid`, `print_templ
 (5737, 'no', 'no', '', '', '', 'Mail Merge^Sent to Vendor,Letter Printing^From PDF,Collating^Man. and Auto,Inkjet Printing^11K'),
 (5739, 'no', 'no', '', '', '', 'Mail Merge^In-House'),
 (5745, 'no', 'no', '', '', '', ''),
-(5746, 'on', '', '', '', '', '');
+(5746, 'on', 'on', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -3068,7 +3068,8 @@ INSERT INTO `timestamp` (`id`, `user`, `time`, `job`, `a_p`, `processed_by`, `vi
 (1273, 'sayre', '2017-04-18 15:22:38', 'updated job ticket 5732', 'PM', 'jshwat', 'no'),
 (1274, 'sayre', '2017-04-18 15:22:55', 'updated job ticket 5732', 'PM', 'mbroc', 'no'),
 (1275, 'sayre', '2017-04-18 15:37:50', 'assigned job ticket 5746', 'PM', '', 'no'),
-(1276, 'sayre', '2017-04-18 15:41:47', 'updated job ticket 5746', 'PM', '', 'no');
+(1276, 'sayre', '2017-04-18 15:41:47', 'updated job ticket 5746', 'PM', '', 'no'),
+(1277, 'sayre', '2017-04-19 14:04:04', 'updated job ticket 5746', 'PM', '', 'no');
 
 -- --------------------------------------------------------
 
@@ -3256,7 +3257,7 @@ ALTER TABLE `saved_search`
 -- AUTO_INCREMENT for table `timestamp`
 --
 ALTER TABLE `timestamp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1277;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1278;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
