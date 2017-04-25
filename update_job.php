@@ -125,8 +125,18 @@ if(isset($_POST['submit_form'])){
 			$processed_by = $_POST['processed_by'];
 			$dqr_sent = date("Y-m-d", strtotime($_POST['dqr_sent']));
 			
-			$hold_postage = $_POST['hold_postage'];
-			$postage_paid = $_POST['postage_paid'];
+			if(isset($_POST['hold_postage'])){
+				$hold_postage = "yes";
+			}
+			else{
+				$hold_postage = "no";
+			}
+			if(isset($_POST['postage_paid'])){
+				$postage_paid = "yes";
+			}
+			else{
+				$postage_paid = "no";
+			}
 			$print_template = $_POST['print_template'];
 			$special_address = $_POST['special_address'];
 			$delivery = $_POST['delivery'];

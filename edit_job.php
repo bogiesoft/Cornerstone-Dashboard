@@ -752,7 +752,7 @@ require ("connection.php");
 					echo '<input type="checkbox" name="hold_postage" class="contact-prefix" checked>';
 				}
 				else{
-					echo '<input type="checkbox" name="hold_postage" class="contact-prefix" checked>';
+					echo '<input type="checkbox" name="hold_postage" class="contact-prefix">';
 				}
 				?>
 				</div>
