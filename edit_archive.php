@@ -10,29 +10,55 @@ li{
 </style>
 <script type="text/javascript" src="http://jqueryjs.googlecode.com/files/jquery-1.3.1.min.js" > </script> 
 <script type="text/javascript">
-    function PrintElem(elem)
+    function PrintElem()
     {
-        Popup($(elem).html());
-    }
-
-    function Popup(data) 
-    {
-        var mywindow = window.open('height=400,width=600');
+	    var mywindow = window.open('height=400,width=600');
         mywindow.document.write('<html><head><title>CRST JOB TICKET</title>');
-        /*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
-        mywindow.document.write('</head><body >');
-        mywindow.document.write(data);
+        mywindow.document.write('</head><body>');
+		mywindow.document.write($(".main_headers").html());
+		//All needed Values
+		mywindow.document.write('<div style = "float: left; width: 21%; padding-right: 5px">');
+		var panel= $("#client_info_div");
+		var inputs = panel.find("input");
+		var labels_client = ["Contact Name", "Phone", "Email", "Address", "City", "State", "Zipcode", "Second Contact", "Fax"];
+		for(var i = 0; i < inputs.length; i++){
+			mywindow.document.write('<div style = "padding-bottom: 2px"><label><b>' + labels_client[i] + '</b></label><input value = "' + inputs[i].value + '"></div>');
+		}
+		mywindow.document.write('</div>');
+		mywindow.document.write('<div style = "float: left; width: 21%; padding-right: 5px">');
+		var labels_wm = ["Non Profit Number", "Mail Class", "Rate", "Processing Category", "Mail Dimensions", "Total W & M"];
+		var panel= $("#wm_info_div");
+		var inputs = panel.find("input");
+		for(var i = 0; i < inputs.length - 1; i++){
+			mywindow.document.write('<div style = "padding-bottom: 5px"><label><b>' + labels_wm[i] + '</b></label><input value = "' + inputs[i].value + '"></div>');
+		}
+		if($("#based_on").val() == 1){
+			mywindow.document.write("<div style = 'padding-bottom: 5px'><label><b>Based On</b></label><input value = '" + 0 + "'></div>");
+		}
+		else{
+			mywindow.document.write("<div style = 'padding-bottom: 5px'><label><b>Based On</b></label><input value = '" + $("#based_on").val() + "'></div>");
+		}
+		mywindow.document.write("<div style = 'padding-bottom: 5px'><label><b>Permit</b></label><input value = '" + $("#permit").val() + "'></div>");
+		mywindow.document.write('</div>');
+		mywindow.document.write($(".data_info").html());
+		mywindow.document.write($(".task_table").html());
+		mywindow.document.write($(".blue_sheet_info").html());
+		if($("#W_MTable_display tbody").children().length == 0){
+			mywindow.document.write('<div class="newclienttab-inner" style = "width: 100%"><div class="tabinner-detail"><table id="W_MTable_display" border="1" cellpadding="1" cellspacing="1" style="text-align: center; vertical-align: middle; table-layout: auto"><thead><tr><th>Vendor</th><th>Material</th><th>type</th><th>Expected Date Received</th></tr></thead><tbody id="W_M_tbody">');
+			mywindow.document.write("<tr><td><select style = 'width: 220px'><option>None</option></select></td><td><select style = 'width: 220px'><option>None</option></select></td><td><select style = 'width: 220px'><option>None</option></select></td><td><select style = 'width: 220px'><option>None</option></select></td></tr>");
+			mywindow.document.write("</tbody></table></div></div>");
+		}
+		else{
+			mywindow.document.write($(".w_m_table").html());
+		}
         mywindow.document.write('</body></html>');
-
         mywindow.document.close(); // necessary for IE >= 10
         mywindow.focus(); // necessary for IE >= 10
-
         mywindow.print();
         mywindow.close();
 
         return true;
     }
-
 </script>
 <script>
     var id_of_row;
@@ -243,7 +269,6 @@ require ("connection.php");
 		$based_on = $row['based_on'];
 		$non_profit_number = $row['non_profit_number'];
 		
-		$data_loc = $row['data_loc'];
 		$records_total = $row['records_total'];
 		$domestic = $row['domestic'];
 		$foreigns = $row['foreigns'];
@@ -322,7 +347,7 @@ require ("connection.php");
 					</ul>
                     </div>
 			</div>
-			<div class="newclienttab-inner" style = "float: left; width: 31%">
+			<div id = "client_info_div"class="newclienttab-inner" style = "float: left; width: 31%">
                     <div class="tabinner-detail">
                     <label>Contact Name</label>
                     <input id = "contact_name" name="contact_name" type="text" class="contact-prefix" readonly>
@@ -351,7 +376,7 @@ require ("connection.php");
                     <input id = "fax" name="fax" type="text" class="contact-prefix" readonly>
                     </div>
 			</div>
-			<div class="newclienttab-inner" style = "float: left; width: 31%">
+			<div id = "wm_info_div"class="newclienttab-inner" style = "float: left; width: 31%">
 				<div class="tabinner-detail">
                 <label>Non Profit Number</label>
                 <input name="non_profit_number" type="text" class="contact-prefix" value="<?php echo $non_profit_number ; ?>">
@@ -384,7 +409,7 @@ require ("connection.php");
 				</div>
 				<div class="tabinner-detail">
 				<label>Permit</label>
-				<input name="permit" type="text" value="<?php echo $permit ; ?>" class="contact-prefix">
+				<input id = "permit" name="permit" type="text" value="<?php echo $permit ; ?>" class="contact-prefix">
 				</div>
 			</div>
 			<div class="newclienttab-inner" style = "float: left; width: 31%">
@@ -732,7 +757,7 @@ require ("connection.php");
             </div>
 				<div class="newcontact-tabbtm">
 					<input class="save-btn" type="submit" value="Save" name="submit_form" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;"/>
-					<input class="save2-btn" type="button" value="Print Div" onclick="PrintElem('.dashboard-cont')" style="width:200px; font-size:16px; background-color:#d14700; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px; float:left" />
+					<input class="save2-btn" type="button" value="Print Div" onclick="PrintElem()" style="width:200px; font-size:16px; background-color:#d14700; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px; float:left" />
 					</form>
 					<form action = "delete_archive.php" method = "post">
 					<input class="delete-btn" type="submit" value="Delete" name="submit_form" style="width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;"/>
@@ -816,4 +841,274 @@ function fillInput(info){
 });
 $(".client_search_results").empty();
 }
-</script>        
+</script>
+<canvas class = "main_headers" style = "display: none">
+ <div class="newclienttab-inner">
+				<table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
+						<tbody>
+							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='vendor' data-index='4'><h2>Client</h2></th><th class='maintable-thtwo data-header' data-name='material' data-index='6'><h2>Job Name</h2></th><th class='maintable-thtwo data-header' data-name='type' data-index='7'><h2>Due Date</h2></th></tr></thead><tbody>
+							<tr><td><input style = "width: 100%" id = "client_name" name="client_name" type="text" value="<?php echo $client_name ; ?>" class="contact-prefix"></td><td><input style = "width: 100%" name="project_name" type="text" value="<?php echo $project_name ; ?>" class="contact-prefix"></td><td><input style = "width: 100%" name="due_date" type="date" value="<?php echo $due_date ; ?>" class="contact-prefix"></td></tr>
+						</tbody></table></td></tr></tbody></table>
+                    <div class="tabinner-detail">
+					<ul class = "client_search_results">
+					</ul>
+                    </div>
+			</div>
+</canvas>
+<canvas class = "data_info" style = "display: none">
+<div class="newclienttab-inner" style = "float: left; width: 25%; padding-right: 5px">
+				<div style = 'padding-bottom: 5px'>
+				<label><b>Records Total</b></label>
+				<input name="records_total" type="text" value="<?php echo $records_total ; ?>" class="contact-prefix">
+				</div>
+				<div style = 'padding-bottom: 5px'>
+                <label><b>Data Location</b></label>
+                <textarea style = "height: 10%" name="data_location" type="text" class="contact-prefix"><?php echo $data_location ; ?></textarea>
+                </div>
+				<div style = 'padding-bottom: 5px'>
+				<label><b>Data Source</b></label>
+				<input name="data_source" type="text" value="<?php echo $data_source ; ?>" class="contact-prefix">
+				</div>
+				<div style = 'padding-bottom: 5px'>
+				<label><b>Data Received</b></label>
+				<input name="data_received" type="date" value="<?php echo $data_received ; ?>" class="contact-prefix">
+				</div>
+				<div style = 'padding-bottom: 5px'>
+				<label><b>Data Completed</b></label>
+				<input name="data_completed" type="date" value="<?php echo $data_completed ; ?>" class="contact-prefix">
+				</div>
+				<div style = 'padding-bottom: 5px'>
+                    <label><b>Processed By</b></label>
+                     <select name="data_processed_by">
+                    <?php
+						$result_current_name = mysqli_query($conn, "SELECT * FROM users WHERE user = '$data_processed_by'");
+						$row_name = $result_current_name->fetch_assoc();
+						echo "<option selected = 'selected' value = '" . $data_processed_by . "'>" . $row_name['first_name'] . " " . $row_name['last_name'] . "</option>"; 
+                        $result = mysqli_query($conn, "SELECT * FROM users");
+                        $count = 1;
+                        while($row = $result->fetch_assoc()){
+                                echo "<option value = '" . $row['user'] . "'>" . $row['first_name'] . " " . $row['last_name'] . "</option>"; 
+						}
+                        
+                    ?>
+                    </select>
+                    </div>
+			</div>
+</canvas>
+<canvas class = "task_table" style = "display: none">
+<div id = "task_table" class="newclienttab-inner" style = "float: left; width: 40%; clear: left; padding-right: 15px">
+			<div class="tabinner-detail">
+					<table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' style = "border: 1px solid black;">
+						<tbody>
+							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='vendor' data-index='4'>Check</th><th class='maintable-thtwo data-header' data-name='material' data-index='6'>Task</th><th class='maintable-thtwo data-header' data-name='type' data-index='7'>Special</th></tr></thead><tbody>
+							<?php
+							$entire_task = array("Mail Merge","Letter Printing", "In-House Envelope Printing", "Tabbing","Folding","Inserting","Sealing","Collating","Labeling","Print Permit","Correct Permit","Carrier Route","Endorsement line","Address Printing","Tag as Political","Inkjet Printing","Glue Dots");
+							$task_array = explode(",", $tasks);
+							for($i = 0;$i<count($entire_task);$i++){
+								$found_task = FALSE;
+								//checks for special tasks checked off and then tasks with no special instructions
+								for($ii = 0; $ii<count($task_array); $ii++){
+									if(strpos($task_array[$ii], "^") !== FALSE){
+										$task_array_2 = explode("^", $task_array[$ii]);
+										if(in_array($entire_task[$i], $task_array_2) && $task_array_2[0] == "Mail Merge"){
+											$found_task = TRUE;
+											echo "<tr><td><input type = 'checkbox' name = 'tasks[]' value='".$entire_task[$i]."' checked/></td><td><label>".$entire_task[$i]."</label></td><td><select name = 'special_mail_merge'><option select = 'selected' value = '" . $task_array_2[1] . "'>" . $task_array_2[1] . "</option><option value = 'Sent to Vendor'>Sent to Vendor</option><option value = 'In-House'>In-House</option></select></td></tr>";
+										}
+										else if(in_array($entire_task[$i], $task_array_2) && $task_array_2[0] == "Letter Printing"){
+											$found_task = TRUE;
+											echo "<tr><td><input type = 'checkbox' name = 'tasks[]' value='".$entire_task[$i]."' checked/></td><td><label>".$entire_task[$i]."</label></td><td><select name = 'special_letter_printing'><option select = 'selected' value = '" . $task_array_2[1] . "'>" . $task_array_2[1] . "</option><option value = 'From PDF'>From PDF</option><option value = 'Inkjet'>Inkjet</option></select></td></tr>";
+										}
+										else if(in_array($entire_task[$i], $task_array_2) && $task_array_2[0] == "Tabbing"){
+											$found_task = TRUE;
+											echo "<tr><td><input type = 'checkbox' name = 'tasks[]' value='".$entire_task[$i]."' checked/></td><td><label>".$entire_task[$i]."</label></td><td><select name = 'special_tabbing'><option select = 'selected' value = '" . $task_array_2[1] . "'>" . $task_array_2[1] . "</option><option value = 'Manual Single'>Manual Single</option><option value = 'Manual Double'>Manual Double</option><option value = 'Auto Single'>Auto Single</option><option value = 'Auto Double'>Auto Double</option></select></td></tr>";
+										}
+										else if(in_array($entire_task[$i], $task_array_2) && $task_array_2[0] == "Folding"){
+											$found_task = TRUE;
+											echo "<tr><td><input type = 'checkbox' name = 'tasks[]' value='".$entire_task[$i]."' checked/></td><td><label>".$entire_task[$i]."</label></td><td><select name = 'special_folding'><option select = 'selected' value = '" . $task_array_2[1] . "'>" . $task_array_2[1] . "</option><option value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option></select></td></tr>";
+										}
+										else if(in_array($entire_task[$i], $task_array_2) && $task_array_2[0] == "Inserting"){
+											$found_task = TRUE;
+											echo "<tr><td><input type = 'checkbox' name = 'tasks[]' value='".$entire_task[$i]."' checked/></td><td><label>".$entire_task[$i]."</label></td><td><select name = 'special_inserting'><option select = 'selected' value = '" . $task_array_2[1] . "'>" . $task_array_2[1] . "</option><option value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option></select></td></tr>";
+										}
+										else if(in_array($entire_task[$i], $task_array_2) && $task_array_2[0] == "Sealing"){
+											$found_task = TRUE;
+											echo "<tr><td><input type = 'checkbox' name = 'tasks[]' value='".$entire_task[$i]."' checked/></td><td><label>".$entire_task[$i]."</label></td><td><select name = 'special_sealing'><option select = 'selected' value = '" . $task_array_2[1] . "'>" . $task_array_2[1] . "</option><option value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option></select></td></tr>";
+										}
+										else if(in_array($entire_task[$i], $task_array_2) && $task_array_2[0] == "Collating"){
+											$found_task = TRUE;
+											echo "<tr><td><input type = 'checkbox' name = 'tasks[]' value='".$entire_task[$i]."' checked/></td><td><label>".$entire_task[$i]."</label></td><td><select name = 'special_collating'><option select = 'selected' value = '" . $task_array_2[1] . "'>" . $task_array_2[1] . "</option><option value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option><option value = 'Man. and Auto'>Man. and Auto</option></select></td></tr>";
+										}
+										else if(in_array($entire_task[$i], $task_array_2) && $task_array_2[0] == "Inkjet Printing"){
+											$found_task = TRUE;
+											echo "<tr><td><input type = 'checkbox' name = 'tasks[]' value='".$entire_task[$i]."' checked/></td><td><label>".$entire_task[$i]."</label></td><td><select name = 'special_inkjet_printing'><option select = 'selected' value = '" . $task_array_2[1] . "'>" . $task_array_2[1] . "</option><option value = '26K'>26K</option><option value = '11K'>11K</option></select></td></tr>";
+										}
+									}
+									else if(in_array($entire_task[$i], $task_array) && $found_task == FALSE)
+									{
+										$found_task = TRUE;
+										echo '<tr><td><input type = "checkbox" name = "tasks[]" value="'.$entire_task[$i].'" checked/></td><td><label>'.$entire_task[$i].'</label></td><td></td></tr>';
+									}
+								}
+								
+								if($found_task == FALSE){
+									$job = $entire_task[$i];
+									if($i == 0){
+										echo '<tr><td><input type="checkbox" name = "tasks[]" value = "Mail Merge"/></td><td><label>Mail Merge</label></td><td><select name = "special_mail_merge"><option select = "selected" value = "Sent to Vendor">Sent to Vendor</option><option value = "In-House">In-House</option></select></td></tr>';
+									}
+									else if($i == 1){
+										echo '<tr><td><input type="checkbox" name = "tasks[]" value = "Letter Printing"/></td><td><label>Letter Printing</label></td><td><select name = "special_letter_printing"><option select = "selected" value = "From PDF">From PDF</option><option value = "Inkjet">Inkjet</option></select></td></tr>';
+									}
+									else if($i == 3){
+										echo '<tr><td><input type="checkbox" name = "tasks[]" value = "Tabbing"/></td><td><label>Tabbing</label></td><td><select name = "special_tabbing"><option select = "selected" value = "Manual Single">Manual Single</option><option value = "Manual Double">Manual Double</option><option value = "Auto Single">Auto Single</option><option value = "Auto Double">Auto Double</option></select></td></tr>';
+									}
+									else if($i == 4 || $i == 5 || $i == 6){
+										$job_lowercase = strtolower($job);
+										echo '<tr><td><input type="checkbox" name = "tasks[]" value = "' . $job . '"/></td><td><label>' . $job . '</label></td><td><select name = "special_' . $job_lowercase . '"><option select = "selected" value = "Manual">Manual</option><option value = "Auto">Auto</option></select></td></tr>';
+									}
+									else if($i == 7){
+										echo '<tr><td><input type="checkbox" name = "tasks[]" value = "Collating"/></td><td><label>Collating</label></td><td><select name = "special_collating"><option select = "selected" value = "Manual">Manual</option><option value = "Auto">Auto</option><option value = "Man. and Auto">Man. and Auto</option></select></td></tr>';
+									}
+									else if($i == 15){
+										echo '<tr><td><input type="checkbox" name = "tasks[]" value = "Inkjet Printing"/></td><td><label>Inkjet Printing</label></td><td><select name = "special_inkjet_printing"><option select = "selected" value = "26K">26K</option><option value = "11K">11K</option></select></td></tr>';
+									}
+									else{
+										echo '<tr><td><input type="checkbox" name = "tasks[]" value = "' . $job . '"/></td><td><label>' . $job . '</label></td><td></td></tr>';
+									}
+								}
+							}
+							?>
+						</tbody></table></td></tr></tbody></table>
+					</div>
+			</div>
+</canvas>
+<canvas class = "blue_sheet_info" style = "display: none">
+<div class="newclienttab-inner" style = "width: 23%; float: left">
+				<div class="tabinner-detail">
+				<label><b>Data Hours</b></label>
+				<input name="data_hrs" type="text" value="<?php echo $data_hrs ; ?>"  class="contact-prefix">
+				</div>
+				<div class="tabinner-detail">
+				<label><b>Graphic Design Hours</b></label>
+				<input name="gd_hrs" type="text" value="<?php echo $gd_hrs ; ?>"  class="contact-prefix">
+				</div>
+				<div class="tabinner-detail">
+				<label><b>Initial Record Count</b></label>
+				<input name="initialrec_count" type="text" value="<?php echo $initialrec_count ; ?>"  class="contact-prefix">
+				</div>
+				<div class="tabinner-detail">
+				<label><b>Manual</b></label>
+				<input name="manual" type="text" value="<?php echo $manual ; ?>"  class="contact-prefix">
+				</div>
+				<div class="tabinner-detail">
+				<label><b>Uncorrected</b></label>
+				<input name="uncorrected" type="text" value="<?php echo $uncorrected ; ?>"  class="contact-prefix">
+				</div>
+				<div class="tabinner-detail">
+				<label><b>Unverifiable</b></label>
+				<input name="unverifiable" type="text" value="<?php echo $unverifiable ; ?>"  class="contact-prefix">
+				</div>
+				<div class="tabinner-detail">
+				<label><b>Foreigns</b></label>
+				<input name="bs_foreigns" type="text" value="<?php echo $bs_foreigns ; ?>"  class="contact-prefix">
+				</div>
+				<div class="tabinner-detail">
+				<label><b>Exact</b></label>
+				<input name="bs_exact" type="text" value="<?php echo $bs_exact ; ?>"  class="contact-prefix">
+				</div>
+				<div class="tabinner-detail">
+				<label><b>Loose</b></label>
+				<input name="loose" type="text" value="<?php echo $loose ; ?>"  class="contact-prefix">
+				</div>
+</div>
+<div class="newclienttab-inner" style = "width: 23%; float: left">
+				<div class="tabinner-detail">
+				<label><b>Householded</b></label>
+				<input name="householded" type="text" value="<?php echo $householded ; ?>"  class="contact-prefix">
+				</div>
+				<div class="tabinner-detail">
+				<label><b>Basic</b></label>
+				<input name="basic" type="text" value="<?php echo $basic ; ?>"  class="contact-prefix">
+				</div>
+				<div class="tabinner-detail">
+				<label><b>DQR Sent</b></label>
+				<input name="dqr_sent" type="date" value="<?php echo $dqr_sent ; ?>" class="contact-prefix">
+				</div>
+				<div class="tabinner-detail">
+				<label><b>Bmeu</b></label>
+				<input name="bmeu" type="text" value="<?php echo $bmeu ; ?>" class="contact-prefix">
+				</div>
+				<div class="tabinner-detail">
+				<label><b>NCOA Errors</b></label>
+				<input name="ncoa_errors" type="text" value="<?php echo $ncoa_errors ; ?>"  class="contact-prefix">
+				</div>
+				<div class="tabinner-detail">
+				<label><b>Domestic</b></label>
+				<input name="bs_domestic" type="text" value="<?php echo $bs_domestic ; ?>"  class="contact-prefix">
+				</div>
+				<div class="tabinner-detail">
+				<label><b>NCOA</b></label>
+				<input name="bs_ncoa" type="text" value="<?php echo $bs_ncoa ; ?>"  class="contact-prefix">
+				</div>
+				<div class="tabinner-detail">
+				<label><b>Final Count</b></label>
+				<input name="final_count" type="text" value="<?php echo $final_count ; ?>"  class="contact-prefix">
+				</div>
+			</div>
+</canvas>
+<canvas class = "w_m_table" style = "display: none">
+<div class="newclienttab-inner" style = "width: 100px">
+				<div class="tabinner-detail">
+				<label><b>Weights and Measures</b></label>
+					<table id="W_MTable_display" border="1" cellpadding="1" cellspacing="1" style='text-align: center; vertical-align: middle; table-layout: auto'>
+					<thead>
+						<tr>
+					        <th>Vendor</th><th>Material</th><th>type</th><th>Expected Date Received</th>
+					    </tr>
+					</thead>
+					<tbody id="W_M_tbody">
+					<?php
+						$result_wm = mysqli_query($conn, "SELECT weights_measures FROM job_ticket WHERE job_id = '$job_id'");
+						$row_wm = "";
+						$num_rows = mysqli_num_rows($result_wm);
+						if($num_rows > 0){
+							$row_wm = $result_wm->fetch_assoc();
+						}
+						
+						$materials_array = array();
+						
+						if($row_wm != ""){
+							$materials_array = explode(",", $row_wm['weights_measures']);
+						}
+						for($i = 0; $i < count($materials_array); $i++){
+							$material_id = $materials_array[$i];
+							$result_production_receipt = mysqli_query($conn, "SELECT * FROM production_receipts WHERE job_id = '$temp' AND wm_id = '$material_id'");
+							$row_pr = $result_production_receipt->fetch_assoc();
+							$result_wm = mysqli_query($conn, "SELECT * FROM materials WHERE material_id = '$material_id'");
+							
+							$expected_date = $row_pr["date_expected"];
+							$crst_pickup = $row_pr["crst_pickup"];
+							$initial = $row_pr["initial"];
+							$location = $row_pr["location"];
+							
+							if(mysqli_num_rows($result_wm) > 0){
+								$row = $result_wm->fetch_assoc();
+								echo "<tr id='".($i+1)."'>
+								        <td><select class='vendors' id='vendors1' name='vendor' style='width:220px;'><option value='default'>" . $row['vendor'] . "</option></select>
+										</td>
+								        <td><select class='materials' id='materials1' name='vendor' style='width:220px;'><option value='default'>" . $row['material'] . "</option></select>
+										</td>
+								       	<td>
+											<select class='types' id='types1' name='vendor' style='width:220px;'><option value='default'>" . $row['type'] . "</option></select>
+										</td>
+										<td>
+											<input type = 'date' name = 'expected_date" . ($i + 1) . "' value = '$expected_date'></input>
+										</td></tr>";
+							}
+					}
+					?>
+					</tbody>
+					</table>
+				</div>
+		</div>
+</canvas>
+        

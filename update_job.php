@@ -117,7 +117,9 @@ if(isset($_POST['submit_form'])){
 			$data_source = $_POST['data_source'];
 			$data_received = date("Y-m-d", strtotime($_POST['data_received']));
 			$data_completed = date("Y-m-d", strtotime($_POST['data_completed']));
-			$data_location = $_POST["data_location"];
+			$data_location = str_replace('"', '\"', $_POST["data_location"]);
+			$data_location = str_replace("'", "\'", $data_location);
+			$data_location = str_replace("\\", "\\\\", $data_location);
 			$data_processed_by = $_POST["data_processed_by"];
 			
 			$processed_by = $_POST['processed_by'];

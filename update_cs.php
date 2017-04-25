@@ -70,23 +70,7 @@ if(isset($_POST['submit_form'])){
 		$weight = implode(",", $weight_array);
 		$size = implode(",", $size_array);
 	}
-	
-	$sql3 = "SELECT job_id FROM archive_jobs";
-	$result3 = mysqli_query($conn, $sql3);
-	$count = 0;
-	while($row3 = $result3->fetch_assoc()){
-		if((int)$row3['job_id'] > $count){
-			$count = (int)$row3['job_id'];
-		}
-	}
 
-	if($count == 0){
-		$temp = 5001;
-	}
-	else{
-		$temp = $count + 1;
-	}
-	
 	$sql1 = "INSERT INTO archive_jobs ( job_id,processed_by,client_name,project_name,ticket_date,due_date,created_by,estimate_number,estimate_date,estimate_created_by,special_instructions,materials_ordered,materials_expected,expected_quantity,records_total,job_status, mail_class, rate, processing_category, mail_dim, weights_measures, permit, bmeu, based_on, non_profit_number)  SELECT job_id,processed_by,client_name,project_name,ticket_date,due_date,created_by,estimate_number,estimate_date,estimate_created_by,special_instructions,materials_ordered,materials_expected,expected_quantity,records_total,job_status, mail_class, rate, processing_category, mail_dim, weights_measures, permit, bmeu, based_on, non_profit_number FROM job_ticket WHERE job_id = '$job_id'";
 	$result = $conn->query($sql1) or die('Error querying database 100.') ;
 	
@@ -96,8 +80,10 @@ if(isset($_POST['submit_form'])){
 
 	$sql = 'UPDATE archive_jobs SET material = "' . $material . '", type = "' . $type . '", vendor = "' . $vendor . '", height = "' . $height . '", weight = "' . $weight . '", size = "' . $size . '" WHERE job_id = "' . $job_id . '"';
 	mysqli_query($conn, $sql) or die("materials error");
+
 	
-	$sql2 = "UPDATE archive_jobs, project_management SET archive_jobs.data_source = project_management.data_source ,archive_jobs.data_received = project_management.data_received ,archive_jobs.data_completed = project_management.data_completed,archive_jobs.dqr_sent = project_management.dqr_sent WHERE archive_jobs.job_id = project_management.job_id AND project_management.job_id = '$temp'";	
+	
+	$sql2 = "UPDATE archive_jobs, project_management SET archive_jobs.data_source = project_management.data_source ,archive_jobs.data_received = project_management.data_received , archive_jobs.data_location = project_management.data_location, archive_jobs.data_processed_by = project_management.data_processed_by, archive_jobs.data_completed = project_management.data_completed,archive_jobs.dqr_sent = project_management.dqr_sent WHERE archive_jobs.job_id = project_management.job_id AND project_management.job_id = '$job_id'";	
 	$result2 = $conn->query($sql2) or die('Error querying database 1.') ;
 	$result3 = mysqli_query($conn,"DELETE FROM project_management WHERE job_id = '$job_id'");
 
@@ -119,7 +105,7 @@ if(isset($_POST['submit_form'])){
 	archive_jobs.bs_exact = customer_service.bs_exact,
 	archive_jobs.bs_ncoa = customer_service.bs_ncoa,
 	archive_jobs.bs_domestic = customer_service.bs_domestic
-	 WHERE archive_jobs.job_id = customer_service.job_id AND customer_service.job_id = '$temp'";
+	 WHERE archive_jobs.job_id = customer_service.job_id AND customer_service.job_id = '$job_id'";
 	 $result8 = $conn->query($sql4) or die('Error querying database 3.');
 	$result10 = mysqli_query($conn,"UPDATE archive_jobs, customer_service SET 
 	archive_jobs.postage = customer_service.postage,
@@ -141,7 +127,7 @@ if(isset($_POST['submit_form'])){
 	archive_jobs.delivery = production.delivery,
 	archive_jobs.completed = production.completed,
 	archive_jobs.tasks = production.tasks
-	 WHERE archive_jobs.job_id = production.job_id AND production.job_id = '$temp'");
+	 WHERE archive_jobs.job_id = production.job_id AND production.job_id = '$job_id'");
 	$result13 = mysqli_query($conn,"DELETE FROM production WHERE job_id = '$job_id'");
 	$today = date("Y-m-d");
 	$result14 = mysqli_query($conn,"UPDATE archive_jobs SET archive_date = '$today' WHERE job_id = '$job_id'");
