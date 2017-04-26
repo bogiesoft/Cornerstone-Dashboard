@@ -43,34 +43,35 @@ while($prod_row = $result_prod_users->fetch_assoc()){
 }
 
 $sql = $sql . " ORDER BY priority DESC, due_date ASC";
-
-$job_result =  mysqli_query($conn,$sql) or die("error");
-$job_count = 1;
-while($row = $job_result->fetch_assoc()){
-	$job_id = $row['job_id'];
-	if(isset($_POST['priority' . $job_count])){
-		$priority = $_POST['priority' . $job_count];
-		mysqli_query($conn, "UPDATE job_ticket SET priority = '$priority' WHERE job_id = '$job_id'");
-	}
-	if(isset($_POST['assign_to' . $job_count])){
-		$result_percent = mysqli_query($conn, "SELECT percent FROM project_management WHERE job_id = '$job_id'");
-		$row_percent = $result_percent->fetch_assoc();
-		if($row_percent['percent'] == 100){
-			$user_name = $_SESSION['user'];
-			date_default_timezone_set('America/New_York');
-			$today = date("Y-m-d G:i:s");
-			$a_p = date("A");
-			$job = "assigned job ticket " . $job_id;
-			$user = $_POST['assign_to' . $job_count];
-			mysqli_query($conn, "UPDATE job_ticket SET processed_by = '$user' WHERE job_id = '$job_id'") or die("error");
-			$result_processed_by = mysqli_query($conn, "SELECT processed_by FROM job_ticket WHERE job_id = '$job_id'");
-			$row_processed_by = $result_processed_by->fetch_assoc();
-			$processed_by = $row_processed_by['processed_by'];
-			$sql100 = "INSERT INTO timestamp (user,time,job, a_p,processed_by,viewed) VALUES ('$user_name', '$today','$job', '$a_p','$processed_by','no')";
-			$result100 = $conn->query($sql100) or die('Error querying database 101.');
+if($count > 1){
+	$job_result =  mysqli_query($conn,$sql) or die("error");
+	$job_count = 1;
+	while($row = $job_result->fetch_assoc()){
+		$job_id = $row['job_id'];
+		if(isset($_POST['priority' . $job_count])){
+			$priority = $_POST['priority' . $job_count];
+			mysqli_query($conn, "UPDATE job_ticket SET priority = '$priority' WHERE job_id = '$job_id'");
 		}
+		if(isset($_POST['assign_to' . $job_count])){
+			$result_percent = mysqli_query($conn, "SELECT percent FROM project_management WHERE job_id = '$job_id'");
+			$row_percent = $result_percent->fetch_assoc();
+			if($row_percent['percent'] == 100){
+				$user_name = $_SESSION['user'];
+				date_default_timezone_set('America/New_York');
+				$today = date("Y-m-d G:i:s");
+				$a_p = date("A");
+				$job = "assigned job ticket " . $job_id;
+				$user = $_POST['assign_to' . $job_count];
+				mysqli_query($conn, "UPDATE job_ticket SET processed_by = '$user' WHERE job_id = '$job_id'") or die("error");
+				$result_processed_by = mysqli_query($conn, "SELECT processed_by FROM job_ticket WHERE job_id = '$job_id'");
+				$row_processed_by = $result_processed_by->fetch_assoc();
+				$processed_by = $row_processed_by['processed_by'];
+				$sql100 = "INSERT INTO timestamp (user,time,job, a_p,processed_by,viewed) VALUES ('$user_name', '$today','$job', '$a_p','$processed_by','no')";
+				$result100 = $conn->query($sql100) or die('Error querying database 101.');
+			}
+		}
+		$job_count = $job_count + 1;
 	}
-	$job_count = $job_count + 1;
 }
 
 //----------------------------------------------------------
