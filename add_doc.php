@@ -38,7 +38,6 @@ require ("header.php");
 							<li role="presentation" class="active"><a  id = "preview_label" role="tab" data-toggle="tab" aria-expanded="true">Preview</a></li>
 						</ul>
 							<input name = "file" id="fileInput" type="file" style="display:none;" form = "uploadImage"/>
-							<input type="button" value="Choose Files!" onclick="document.getElementById('fileInput').click();" />
 						<textarea id = "text" name="text" style="float:left; width:600px; height:300px;"></textarea>
 						<div id='fake_textarea' name = 'fake_textarea' contenteditable = "true" style="display: none;"></div>
 						<div class="clear"></div>

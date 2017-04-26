@@ -10,7 +10,7 @@ $id_array = array();
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 	<h1 class="pull-left">Project Management</h1>
-	<a class="pull-right" href="DQR/index.php">DQR Generator</a>
+	<a class="pull-right" href="dqr_index.php">DQR Generator</a>
 	</div>
 <div class="dashboard-detail">
 	<div class="search-cont">
@@ -22,6 +22,7 @@ $id_array = array();
 	</div>
 	</div>
 <div class="clear"></div>
+<a href="production_list_view.php" style="margin-right:20px; background-color:#0e0926; color: #ffffff; text-decoration: none">List All Jobs</a>
 <div class = "block_area">
 <?php
 require ("connection.php");

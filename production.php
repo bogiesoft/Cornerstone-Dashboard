@@ -21,7 +21,7 @@
 	</div>
 	</div>
 <div class="clear"></div>
-
+<a href="production_list_view.php" style="margin-right:20px; background-color:#0e0926; color: #ffffff; text-decoration: none">List All Jobs</a>
 <?php
 //global data arrays
 

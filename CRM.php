@@ -1,4 +1,6 @@
-<?php require("header.php"); ?>
+<?php require("header.php"); 
+$_SESSION["table_type_save_search"] = "CRM"; 
+?>
 
 <style>
 
@@ -511,11 +513,11 @@
 
   function showSavedSearch(){
     if(document.getElementById('show_saved_search').innerHTML == "Show Saved Search"){
-      document.getElementById('saved_search_table').style.display = "block";
+	  $("#saved_search_table").show(600);
       document.getElementById('show_saved_search').innerHTML = "Hide Saved Search";
     }
     else{
-      document.getElementById('saved_search_table').style.display = "none";
+      $("#saved_search_table").hide(600);
       document.getElementById('show_saved_search').innerHTML = "Show Saved Search";
     }
   }
@@ -575,27 +577,25 @@
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 		<h1 class="pull-left">CRM</h1>
-    <a class="pull-right" href="DQR/index.php" class="add_button">DQR Generator</a>
-		<a class="pull-right" href="uploadForm.php" class="add_button">Upload</a>
+		<a style = "margin-right: 2px"class="pull-right" href="uploadForm.php" class="add_button">Upload</a>
 	</div>
 <div class="dashboard-detail">
     <div class ="search-cont">
       <div class="searchcont-detail">
         <div class="search-boxleft">
-          <label>Quick Search</label>
-					<input id="searchbox" name="frmSearch" type="text" placeholder="Search for a specific client">
-
     			<div class="contacts-title">
-            <a title="Filter Category" id="general" class=""><i>Record selected <small class="counter"></small></i></a>
-            <a id = 'save_button' class="pull-right" href="#" class="add_button">Save search</a>
+				<label>Quick Search</label>
+					<input id="searchbox" name="frmSearch" type="text" placeholder="Search for a specific client">
+					<a id = 'save_button' class="pull-right" href="#" class="add_button" style = "vertical-align: middle">Save search</a>
     				<a id = 'show_saved_search' class="pull-right" class="add_button" onclick = 'showSavedSearch()' href = "#" style = "background: #ff5c33">Show Saved Search</a>
     			</div>
         </div>
 			<div id="saved_search_div">
-				<table id="saved_search_table" style = 'display: none'>
-					<tbody>
+				<table id="saved_search_table" style = 'display: none; border: 1px solid; width: 50%'>
+					<tbody style = 'border: 1px solid; width: 100%'>
+			        <tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list' style = "width: 100%"><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='vendor' data-index='4'>Saved Search</th><th class='maintable-thtwo data-header' data-name='material' data-index='6'>Delete</th></tr></thead><tbody>
 						<?php
-            $columnIntable = 0;
+						$columnIntable = 0;
 						$result = mysqli_query($conn, "SELECT * FROM saved_search WHERE table_type = 'CRM' ORDER BY search_date DESC LIMIT 10");
 						if (mysqli_num_rows($result) > 0) {
 							// output data of each row
@@ -607,27 +607,18 @@
 								$value2=$row["value2"];
 								$field3=$row["field3"];
 								$value3=$row["value3"];
-                $field4=$row["field4"];
+								$field4=$row["field4"];
 								$value4=$row["value4"];
-                $field5=$row["field5"];
+								$field5=$row["field5"];
 								$value5=$row["value5"];
-                if($columnIntable == 0){
-                  echo "<tr>";
-                }
-                  echo "<td id = 'cell" . $search_id . "' class='data-cell'><button id = '" . $search_id . "' class = 'saved_search_button' onClick = 'SavedSearch(\"$field1\", \"$value1\",\"$field2\", \"$value2\",\"$field3\", \"$value3\",\"$field4\", \"$value4\",\"$field5\", \"$value5\")'>". $row["search_name"]."</button><button id = '" . $search_id . "' class = 'delete_button'><img src = 'images/x_button.png' width = '25' height = '25'></button></td>";
-                  $columnIntable++;
-                if($columnIntable == 3){
-                  echo "</tr>";
-                  $columnIntable = 0;
-                }
+								echo "<tr><td id = 'cell" . $search_id . "' class='data-cell'><a id = '" . $search_id . "' class = 'saved_search_button' onClick = 'SavedSearch(\"$field1\", \"$value1\",\"$field2\", \"$value2\",\"$field3\", \"$value3\",\"$field4\", \"$value4\",\"$field5\", \"$value5\")'>". $row["search_name"]."</a></td><td><img id = '" . $search_id . "' class = 'delete_button' src = 'images/x_button.png' width = '25' height = '25' style = 'background: #989b9a'></td></tr>";
 							}
 						}
 						else {
 							echo "0 Saved Searches";
 						}
 						?>
-					</tbody>
-				</table>
+					</tbody></table></td></tr></tbody></table>
 			</div>
     </div>
 </div>

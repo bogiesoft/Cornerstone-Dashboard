@@ -1,3 +1,6 @@
+<?php
+require('header.php');
+?>
     <style type="text/css">
       #container {
         position:relative;
@@ -75,27 +78,24 @@
 
         }
     </style>
-    <link href="table.css" rel='stylesheet' />
-  </head>
-  <body>
+	<div class="dashboard-cont" style="padding-top:110px;">
+	<div style = "margin-top: 1%">
     <label style="display: block; font-size: 1.65em; text-align: center;">Welcome to DQR generator. Drop some excel files into the box below and press merge button<br> to get DQR file with seperate color coded values.</label>
-    <div id="container">
-      <form action="upload.php" method="post" name="uploadform" id = "uploadform" enctype="multipart/form-data">
+    <div id="container" style = "margin-top: 1%">
+      <form action="DQR/upload.php" method="post" name="uploadform" id = "uploadform" enctype="multipart/form-data">
 	  <input name = "upload_name" placeholder = "Enter file name">
         <div id="drop-zone">
+		<input type="file" name="file[]" id="file" multiple="multiple" webkitdirectory  style='opacity:0; position: absolute;cursor: pointer;'/>
             Drop files here...
-            <div id="clickHere">
-                or click here..
-                <input type="file" name="file[]" id="file" multiple="multiple" webkitdirectory  style='opacity:0; position: absolute;cursor: pointer;'/>
-            </div>
         </div>
       </form>
-      <div id="modal-content">
+      <div id="modal-content" style = "margin-top: 40%">
         <input id= "submit"type="submit" value="Generate"/>
       </div>
 	   <button onclick = "removeTable()">Delete</button>
     </div>
-
+	</div>
+</div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript">
@@ -169,5 +169,3 @@
 		 location.reload();
 	  }
     </script>
-  </body>
-</html>

@@ -1,5 +1,6 @@
 <?php
 require("connection.php");
+session_start();
 $sql = '';
 
 function onPageLoad(){
@@ -41,7 +42,8 @@ function save_search(){
       $col_name[$i] = "$$$";
     }
   }
-  $sql = "INSERT into saved_search (search_name, search_date,field1,value1, field2, value2, field3, value3, table_type, field4, value4, field5, value5) VALUES ('$search_name', '$today','$col_name[1]','$val[1]', '$col_name[2]','$val[2]', '$col_name[3]','$val[3]', 'CRM','$col_name[4]','$val[4]','$col_name[5]','$val[5]')";
+  $table_type = $_SESSION["table_type_save_search"];
+  $sql = "INSERT into saved_search (search_name, search_date,field1,value1, field2, value2, field3, value3, table_type, field4, value4, field5, value5) VALUES ('$search_name', '$today','$col_name[1]','$val[1]', '$col_name[2]','$val[2]', '$col_name[3]','$val[3]', '$table_type','$col_name[4]','$val[4]','$col_name[5]','$val[5]')";
   return $sql;
 }
 
