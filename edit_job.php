@@ -648,7 +648,7 @@ require ("connection.php");
 						$result_selected = mysqli_query($conn, "SELECT * FROM users WHERE user = '$estimate_created_by'");
 						if(mysqli_num_rows($result_selected) > 0){
 							$row_selected = $result_selected->fetch_assoc();
-							$name = $row_selected["first_name"] . " " . $row["last_name"];
+							$name = $row_selected["first_name"] . " " . $row_selected["last_name"];
 							echo "<option selected = 'selected' value = '" . $estimate_created_by . "'>" . $name . "</option>";
 						}
 						else{

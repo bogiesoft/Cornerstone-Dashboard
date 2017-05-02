@@ -17,6 +17,19 @@
 		<div class="search-boxleft">
 				<label>Quick Search</label>
 				<input id="searchbox" name="frmSearch" type="text" placeholder="Search by job or priority(use # plus priority)">
+				<select style = "float: right; margin-top: 0.5%;" onchange = "jobFilter()">
+				<option value = "prodJobs">Production Jobs</option>
+				<?php
+				$result_prod_users = mysqli_query($conn, "SELECT * FROM users WHERE department = 'Production'");
+				while($row = $result_prod_users->fetch_assoc()){
+					echo "<option value = '" . $row["user"] . "'>" . $row["first_name"] . " " . $row["last_name"] . "</option>";
+				}
+				?>
+				</select>
+				<select class = "current_view" style = "float: right; margin-top: 0.5%;" onchange = "changeView()">
+				<option value = "block">Block View</option>
+				<option value = "list">List View</option>
+				</select>
 		</div>
 	</div>
 	</div>
@@ -87,7 +100,7 @@ if ($result->num_rows > 0) {
     // output data of each row
 	$job_count = 1;
 	$graph_count = 0;
-	echo "<div class='block_area'>";
+	echo "<div id = 'block_area' class='block_area'>";
     while($row = $result->fetch_assoc()) {
 
 		$job_id = $row["job_id"];
@@ -148,61 +161,7 @@ if ($result->num_rows > 0) {
 					$row3 = $result3->fetch_assoc();
 					$job_tasks_array = explode(",", $row3['tasks']);
 					
-					echo "<p>";
-					for($ii = 0; $ii < count($job_tasks_array); $ii++){
-									$job = $job_tasks_array[$ii];
-									$special = "None";
-									if(strpos($job_tasks_array[$ii], "^") !== FALSE){
-										$split_job = explode("^", $job_tasks_array[$ii]);
-										$job = $split_job[0];
-										$special = $split_job[1];
-									}
-									if($job == "Labeling"){
-										echo "<img src = 'images/task_icons/labeling.png' width = '20' height = '20' onmouseover = showTask('tooltiptext1') onmouseout = hideTask('tooltiptext1')>";
-										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext1'>Labeling</span>";
-									}
-									if($job == "Letter Printing"){
-										echo "<img src = 'images/task_icons/letter_printing.png' width = '20' height = '20' onmouseover = showTask('tooltiptext2') onmouseout = hideTask('tooltiptext2')>";
-										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext2'>Letter Printing(" . $special . ")</span>";
-									}
-									if($job == "Tabbing"){
-										echo "<img src = 'images/task_icons/tabbing.jpg' width = '20' height = '20' onmouseover = showTask('tooltiptext3') onmouseout = hideTask('tooltiptext3')>";
-										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext3'>Tabbing(" . $special . ")</span>";
-									}
-									if($job == "Mail Merge"){
-										echo "<img src = 'images/task_icons/mail_merge.png' width = '20' height = '20' onmouseover = showTask('tooltiptext4') onmouseout = hideTask('tooltiptext4')>";
-										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext4'>Mail Merge(" . $special . ")</span>";
-									}
-									if($job == "In-House Envelope Printing"){
-										echo "<img src = 'images/task_icons/in-house_letter_printing.png' width = '20' height = '20' onmouseover = showTask('tooltiptext5') onmouseout = hideTask('tooltiptext5')>";
-										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext5'>In-House Envelope Printing</span>";
-									}
-									if($job == "Folding"){
-										echo "<img src = 'images/task_icons/folding.png' width = '20' height = '20' onmouseover = showTask('tooltiptext6') onmouseout = hideTask('tooltiptext6')>";
-										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext6'>Folding(" . $special . ")</span>";
-									}
-									if($job == "Inserting"){
-										echo "<img src = 'images/task_icons/inserting.png' width = '20' height = '20' onmouseover = showTask('tooltiptext7') onmouseout = hideTask('tooltiptext7')>";
-										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext7'>Inserting(" . $special . ")</span>";
-									}
-									if($job == "Sealing"){
-										echo "<img src = 'images/task_icons/sealing.png' width = '20' height = '20' onmouseover = showTask('tooltiptext8') onmouseout = hideTask('tooltiptext8')>";
-										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext8'>Sealing(" . $special . ")</span>";
-									}
-									if($job == "Collating"){
-										echo "<img src = 'images/task_icons/collating.png' width = '20' height = '20' onmouseover = showTask('tooltiptext9') onmouseout = hideTask('tooltiptext9')>";
-										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext9'>Collating(" . $special . ")</span>";
-									}
-									if($job == "Print Permit"){
-										echo "<img src = 'images/task_icons/print_permit.png' width = '20' height = '20' onmouseover = showTask('tooltiptext10') onmouseout = hideTask('tooltiptext10')>";
-										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext10'>Print Permit</span>";
-									}
-									if($job == "Correct Permit"){
-										echo "<img src = 'images/task_icons/correct_permit.png' width = '20' height = '20' onmouseover = showTask('tooltiptext11') onmouseout = hideTask('tooltiptext11')>";
-										echo "<span style = 'background-color: black; color: #fff; text-align: center; border-radius: 6px; visibility: hidden; z-index: 1; position: absolute' class = 'tooltiptext11'>Correct Permit</span>";
-									}
-								}
-					echo "</p>";
+					
 					echo "</div>";
 					$hours = 0;
 					
@@ -272,7 +231,10 @@ if ($result->num_rows > 0) {
 
 				echo '<div class="project_row3">';
 				echo "<form action = '' method = 'post'>";
-				echo "<select onchange = 'this.form.submit()' name = 'assign_to" . $job_count . "'><option selected disabled value = 'None'>--Assign To--</option>";
+				$current_user = $row["processed_by"];
+				$result_current_assign = mysqli_query($conn, "SELECT * FROM users WHERE user = '$current_user'");
+				$row_current_assign = $result_current_assign->fetch_assoc();
+				echo "<select onchange = 'this.form.submit()' name = 'assign_to" . $job_count . "' style = 'width: 200px'><option selected disabled value = '" . $row["processed_by"] . "'>" . $row_current_assign["first_name"] . " " . $row_current_assign["last_name"] . "</option>";
 				$result_users = mysqli_query($conn, "SELECT user FROM users");
 				while($row_users = $result_users->fetch_assoc()){
 					$user = $row_users['user'];
@@ -313,6 +275,7 @@ $conn->close();
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.2.min.js"></script>
 <script>
+var div_block_object = document.getElementById("block_area").innerHTML;
 	var previous_people = new Array();
 	$(document).ready(function(){
 		$("#searchbox").on("keyup input paste cut", function() {
@@ -324,22 +287,22 @@ $conn->close();
 					$(this).show();
 				}
 				else if(search_val == "#low"){
-					if($(this).children("a").text().toLowerCase().search("low") != -1){
+					if($(this).children(".priority_bar").text().toLowerCase().search("low") != -1){
 						$(this).show();
 					}
 				}
 				else if(search_val == "#medium"){
-					if($(this).children("a").text().toLowerCase().search("medium") != -1){
+					if($(this).children(".priority_bar").text().toLowerCase().search("medium") != -1){
 						$(this).show();
 					}
 				}
 				else if(search_val == "#high"){
-					if($(this).children("a").text().toLowerCase().search("high") != -1){
+					if($(this).children(".priority_bar").text().toLowerCase().search("high") != -1){
 						$(this).show();
 					}
 				}
 				else if(search_val == "#none"){
-					if($(this).children("a").text().toLowerCase().search("none") != -1){
+					if($(this).children(".priority_bar").text().toLowerCase().search("none") != -1){
 						$(this).show();
 					}
 				}
@@ -479,5 +442,16 @@ function displayInstr(index){
 			function(){ saveNotClicked=false; $( ".save-btn" ).click();});  
 	};
 }
-
+//switches view from blocks to table
+function changeView(){
+	var view = $(".current_view").val();
+	if(view == "list"){
+		$(".block_area").html("<table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' ><tbody><tr valign='top'><th class='allcontacts-title'>All Active Jobs<span class='allcontacts-subtitle'></span></th></tr>");
+		$(".block_area").append("<tr valign='top'><td colspan='2'><table id = 'customer_s_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='job_id' data-index='0'>Job ID</th><th class='maintable-thtwo data-header' data-name='client_name' data-index='1'>Client Name</th><th class='maintable-thtwo data-header' data-name='client_name' data-index='2'>Assign To</th><th class='maintable-thtwo data-header' data-name='project_name' data-index='2'>Job Name</th><th class='maintable-thtwo data-header' data-name='postage' data-index='3'>Postage</th><th class='maintable-thtwo data-header' data-name='invoice_number' data-index='4'>Invoice #</th><th class='maintable-thtwo data-header' data-name='residual_returned' data-index='5'>Residuals Returned</th><th class='maintable-thtwo data-header' data-name='2week_followup' data-index='6'>Follow Up</th><th class='maintable-thtwo data-header' data-name='notes' data-index='7'>Notes</th><th class='maintable-thtwo data-header' data-name='status' data-index='8'>Status</th><th class='maintable-thtwo data-header' data-name='reason' data-index='9'>Reason</th></tr></thead>");
+		$(".block_area").append("</tbody></table></td></tr></tbody></table>");
+	}
+	else{
+		location.reload();
+	}
+}
 </script>

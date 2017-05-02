@@ -40,7 +40,7 @@ require ("connection.php");
 					<p style = "color: #ff0000;"><?php echo $error; $error = "";?> </p>
                 	<input name="user" type="text" placeholder="User Name" class="email-input" />
                     <input name="password" type="password" placeholder="Password" class="password-input" />
-                    <input name="" type="submit" value="LOGIN" class="login-button" onsubmit = "return login_check()"/>
+                    <input name="" type="submit" value="LOGIN" class="login-button"/>
                     <div class="loginform-row">
                     	<div class="formrow-left">
                         	<input name="" type="checkbox" value="" class="remember-input">
