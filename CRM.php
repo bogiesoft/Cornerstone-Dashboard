@@ -578,6 +578,7 @@ $_SESSION["table_type_save_search"] = "CRM";
 	<div class="contacts-title">
 		<h1 class="pull-left">CRM</h1>
 		<a style = "margin-right: 2px"class="pull-right" href="uploadForm.php" class="add_button">Upload</a>
+		<a style = "margin-right: 2px"class="pull-right" href="add_client.php" class="add_button">Add Client</a>
 	</div>
 <div class="dashboard-detail">
     <div class ="search-cont">

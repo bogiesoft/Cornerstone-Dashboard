@@ -17,7 +17,7 @@
 		<div class="search-boxleft">
 				<label>Quick Search</label>
 				<input id="searchbox" name="frmSearch" type="text" placeholder="Search by job or priority(use # plus priority)">
-				<select style = "float: right; margin-top: 0.5%;" onchange = "jobFilter()">
+				<select class = "job_selector" style = "float: right; margin-top: 0.5%;" onchange = "jobFilter()">
 				<option value = "prodJobs">Production Jobs</option>
 				<?php
 				$result_prod_users = mysqli_query($conn, "SELECT * FROM users WHERE department = 'Production'");
@@ -34,7 +34,6 @@
 	</div>
 	</div>
 <div class="clear"></div>
-<a href="production_list_view.php" style="margin-right:20px; background-color:#0e0926; color: #ffffff; text-decoration: none">List All Jobs</a>
 <?php
 //global data arrays
 
@@ -275,42 +274,61 @@ $conn->close();
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.2.min.js"></script>
 <script>
+var subtractValue = 3;
+var prevSubValue = 4;
 var div_block_object = document.getElementById("block_area").innerHTML;
 	var previous_people = new Array();
 	$(document).ready(function(){
-		$("#searchbox").on("keyup input paste cut", function() {
+		$("#searchbox").on("keyup input paste cut submit", function() {
 			//searchbox value
 			var search_val = $(this).val();
 			//compare the searchbox value with each job id
-			$("div.project_block").each(function(){
-				if($(this).text().toLowerCase().search(search_val)!=-1){
-					$(this).show();
-				}
-				else if(search_val == "#low"){
-					if($(this).children(".priority_bar").text().toLowerCase().search("low") != -1){
+			if(view == "block"){
+				$("div.project_block").each(function(){
+					if($(this).text().toLowerCase().search(search_val)!=-1){
 						$(this).show();
 					}
-				}
-				else if(search_val == "#medium"){
-					if($(this).children(".priority_bar").text().toLowerCase().search("medium") != -1){
+					else if(search_val == "#low"){
+						if($(this).children(".priority_bar").text().toLowerCase().search("low") != -1){
+							$(this).show();
+						}
+					}
+					else if(search_val == "#medium"){
+						if($(this).children(".priority_bar").text().toLowerCase().search("medium") != -1){
+							$(this).show();
+						}
+					}
+					else if(search_val == "#high"){
+						if($(this).children(".priority_bar").text().toLowerCase().search("high") != -1){
+							$(this).show();
+						}
+					}
+					else if(search_val == "#none"){
+						if($(this).children(".priority_bar").text().toLowerCase().search("none") != -1){
+							$(this).show();
+						}
+					}
+					else{
+						//hide div
+						$(this).hide();
+					}
+				});
+			}
+			else{
+				var count = 1;
+				$("#job_table tr").each(function(){
+					if($(this).text().search(search_val)!=-1 || $(this).text().toLowerCase().search(search_val)!=-1){
 						$(this).show();
 					}
-				}
-				else if(search_val == "#high"){
-					if($(this).children(".priority_bar").text().toLowerCase().search("high") != -1){
-						$(this).show();
+					else{
+						//hide div
+						if(count != 1){
+							$(this).hide();
+						}
 					}
-				}
-				else if(search_val == "#none"){
-					if($(this).children(".priority_bar").text().toLowerCase().search("none") != -1){
-						$(this).show();
-					}
-				}
-				else{
-					//hide div
-					$(this).hide();
-				}
-			});
+					count++;
+				});
+			}
 		});
 	});
 		var hours = <?php echo json_encode($hours_array); ?>;
@@ -443,15 +461,101 @@ function displayInstr(index){
 	};
 }
 //switches view from blocks to table
+var view = $(".current_view").val();
 function changeView(){
-	var view = $(".current_view").val();
+	view = $(".current_view").val();
+	var job_id = "";
+	var project_name = "";
+	var client_name = "";
+	var due_date = "";
+	var job_status = "";
 	if(view == "list"){
-		$(".block_area").html("<table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' ><tbody><tr valign='top'><th class='allcontacts-title'>All Active Jobs<span class='allcontacts-subtitle'></span></th></tr>");
-		$(".block_area").append("<tr valign='top'><td colspan='2'><table id = 'customer_s_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='job_id' data-index='0'>Job ID</th><th class='maintable-thtwo data-header' data-name='client_name' data-index='1'>Client Name</th><th class='maintable-thtwo data-header' data-name='client_name' data-index='2'>Assign To</th><th class='maintable-thtwo data-header' data-name='project_name' data-index='2'>Job Name</th><th class='maintable-thtwo data-header' data-name='postage' data-index='3'>Postage</th><th class='maintable-thtwo data-header' data-name='invoice_number' data-index='4'>Invoice #</th><th class='maintable-thtwo data-header' data-name='residual_returned' data-index='5'>Residuals Returned</th><th class='maintable-thtwo data-header' data-name='2week_followup' data-index='6'>Follow Up</th><th class='maintable-thtwo data-header' data-name='notes' data-index='7'>Notes</th><th class='maintable-thtwo data-header' data-name='status' data-index='8'>Status</th><th class='maintable-thtwo data-header' data-name='reason' data-index='9'>Reason</th></tr></thead>");
-		$(".block_area").append("</tbody></table></td></tr></tbody></table>");
+		$.ajax({
+        url: 'production_list_view.php',
+        type: 'post',
+		data: {id: "production_jobs"},
+		dataType: "json",
+        success: function(data){
+			$(".block_area").html("<div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'><tbody><tr valign='top'><th class='allcontacts-title'>Job Tickets<span class='allcontacts-subtitle'></span></th></tr><tr valign='top'><td colspan='2'><table id = 'job_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='vendor' data-index='4'>Job ID</th><th class='maintable-thtwo data-header' data-name='material' data-index='6'>Client Name</th><th class='maintable-thtwo data-header' data-name='type' data-index='7'>Project Name</th><th class='maintable-thtwo data-header' data-name='based_on' data-index='12'>Due Date</th><th class='maintable-thtwo data-header' data-name='height' data-index='9'>Job Status</th></tr></thead><tbody class = 'job_data'></tbody></table></td></tr></tbody></table></div>");
+			for(var i = 0; i < data[0].length; i++){
+				var job_id = data[0][i];
+				var project_name = data[1][i];
+				var client_name = data[2][i];
+				var due_date = data[3][i];
+				var job_status = data[4][i];
+				$("#job_table tr:last").after("<tr><td><a href = 'edit_job.php?job_id=" + job_id + "'>"+ job_id + "</a></td><td>"+ client_name + "</td><td>"+ project_name + "</td><td>"+ due_date +  "</td><td>"+ job_status + "</td></tr>");
+			}
+			$(".job_selector").append($('<option>', {value: 'allJobs', text: "All Jobs"}));
+    	}
+    });
 	}
 	else{
 		location.reload();
+	}
+}
+function jobFilter(){
+	var jobFilterVal = $(".job_selector").val();
+	if(jobFilterVal == "prodJobs" && view == "list"){
+		$.ajax({
+        url: 'production_list_view.php',
+        type: 'post',
+		data: {id: "production_jobs"},
+		dataType: "json",
+        success: function(data){
+			$(".block_area").html("<div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'><tbody><tr valign='top'><th class='allcontacts-title'>Job Tickets<span class='allcontacts-subtitle'></span></th></tr><tr valign='top'><td colspan='2'><table id = 'job_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='vendor' data-index='4'>Job ID</th><th class='maintable-thtwo data-header' data-name='material' data-index='6'>Client Name</th><th class='maintable-thtwo data-header' data-name='type' data-index='7'>Project Name</th><th class='maintable-thtwo data-header' data-name='based_on' data-index='12'>Due Date</th><th class='maintable-thtwo data-header' data-name='height' data-index='9'>Job Status</th></tr></thead><tbody></tbody></table></td></tr></tbody></table></div>");
+			for(var i = 0; i < data[0].length; i++){
+				var job_id = data[0][i];
+				var project_name = data[1][i];
+				var client_name = data[2][i];
+				var due_date = data[3][i];
+				var job_status = data[4][i];
+				$("#job_table tr:last").after("<tr><td><a href = 'edit_job.php?job_id=" + job_id + "'>"+ job_id + "</a></td><td>"+ client_name + "</td><td>"+ project_name + "</td><td>"+ due_date +  "</td><td>"+ job_status + "</td></tr>");
+			}
+    	}
+    });
+	}
+	else if(jobFilterVal == "allJobs" && view == "list"){
+		$.ajax({
+        url: 'production_list_view.php',
+        type: 'post',
+		data: {id: "all_jobs"},
+		dataType: "json",
+        success: function(data){
+			$(".block_area").html("<div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'><tbody><tr valign='top'><th class='allcontacts-title'>Job Tickets<span class='allcontacts-subtitle'></span></th></tr><tr valign='top'><td colspan='2'><table id = 'job_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='vendor' data-index='4'>Job ID</th><th class='maintable-thtwo data-header' data-name='material' data-index='6'>Client Name</th><th class='maintable-thtwo data-header' data-name='type' data-index='7'>Project Name</th><th class='maintable-thtwo data-header' data-name='based_on' data-index='12'>Due Date</th><th class='maintable-thtwo data-header' data-name='height' data-index='9'>Job Status</th></tr></thead><tbody></tbody></table></td></tr></tbody></table></div>");
+			for(var i = 0; i < data[0].length; i++){
+				var job_id = data[0][i];
+				var project_name = data[1][i];
+				var client_name = data[2][i];
+				var due_date = data[3][i];
+				var job_status = data[4][i];
+				$("#job_table tr:last").after("<tr><td><a href = 'edit_job.php?job_id=" + job_id + "'>"+ job_id + "</a></td><td>"+ client_name + "</td><td>"+ project_name + "</td><td>"+ due_date +  "</td><td>"+ job_status + "</td></tr>");
+			}
+    	}
+    });
+	}
+	else if(jobFilterVal != "allJobs" && jobFilterVal != "prodJobs" && view == "list"){
+		$.ajax({
+        url: 'production_list_view.php',
+        type: 'post',
+		data: {id: jobFilterVal},
+		dataType: "json",
+        success: function(data){
+			$(".block_area").html("<div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'><tbody><tr valign='top'><th class='allcontacts-title'>Job Tickets<span class='allcontacts-subtitle'></span></th></tr><tr valign='top'><td colspan='2'><table id = 'job_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='vendor' data-index='4'>Job ID</th><th class='maintable-thtwo data-header' data-name='material' data-index='6'>Client Name</th><th class='maintable-thtwo data-header' data-name='type' data-index='7'>Project Name</th><th class='maintable-thtwo data-header' data-name='based_on' data-index='12'>Due Date</th><th class='maintable-thtwo data-header' data-name='height' data-index='9'>Job Status</th></tr></thead><tbody class = 'job_data'></tbody></table></td></tr></tbody></table></div>");
+			for(var i = 0; i < data[0].length; i++){
+				var job_id = data[0][i];
+				var project_name = data[1][i];
+				var client_name = data[2][i];
+				var due_date = data[3][i];
+				var job_status = data[4][i];
+				$("#job_table tr:last").after("<tr class = 'job_data'><td><a href = 'edit_job.php?job_id=" + job_id + "'>"+ job_id + "</a></td><td>"+ client_name + "</td><td>"+ project_name + "</td><td>"+ due_date +  "</td><td>"+ job_status + "</td></tr>");
+			}
+    	}
+    });
+	}
+	else if(jobFilterVal != "prodJobs" && view == "block"){
+		var job_selector = $(".job_selector").val();
+		$("#searchbox").val("assign:" + job_selector);
+		$("#searchbox").submit();
 	}
 }
 </script>

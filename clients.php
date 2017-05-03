@@ -577,6 +577,7 @@ $_SESSION["table_type_save_search"] = "CLIENT";
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 		<h1 class="pull-left">Clients</h1>
+		<a class="pull-right" href="add_client.php" class="add_button" style = "vertical-align: middle">Add Client</a>
 	</div>
 <div class="dashboard-detail">
     <div class ="search-cont">

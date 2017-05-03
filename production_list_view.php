@@ -1,70 +1,71 @@
-<?php require ("header.php"); ?>
-<div class="dashboard-cont" style="padding-top:110px;">
-	<div class="contacts-title">
-	<h1 class="pull-left">All Job Tickets</h1>
-	</div>
-	<div class="dashboard-detail">
-		<div class="search-cont search-boxleft searchcont-detail">
-				<label>Quick Search</label>
-				<input id="searchbox" name="frmSearch" type="text" placeholder="Search for a specific job">
-		</div>
-		<div class="clear"></div>
+<?php
+require("connection.php");
+if($_POST["id"] == "production_jobs"){
+	$result_prod_users = mysqli_query($conn, "SELECT user FROM users WHERE department = 'Production'");
+	$sql = "";
+	$count = 1;
+	while($prod_row = $result_prod_users->fetch_assoc()){
+		$user = $prod_row['user'];
+		if($count == 1){
+			$sql = $sql . "SELECT * FROM job_ticket WHERE processed_by = '$user'";
+		}
+		else{
+			$sql = $sql . " UNION SELECT * FROM job_ticket WHERE processed_by = '$user'";
+		}
 
-		<div id = 'allcontacts-table' class='allcontacts-table'>
-			<table id="production-table"  cellpadding="0" cellspacing="0" border="0" class="display" width="100%">
-					<thead>
-						<tr>
-							<th>Job ID</th>
-							<th>Assigned To</th>
-							<th>Client Name</th>
-							<th>Project Name</th>
-							<th>Due Date</th>
-							<th>Records Total</th>
-							<th>Job Status</th>
-						</tr>
-					</thead>
-				<tbody>
-				</tbody>
-			</table>
-		</div>
-	</div>
-</div>
-<style>
-.dataTables_filter {
-   display: none;
+		$count = $count + 1;
+	}
+
+	$sql = $sql . " ORDER BY priority DESC, due_date ASC";
+	$result = mysqli_query($conn, $sql);
+	$job_id = array();
+	$project_name = array();
+	$client_name = array();
+	$due_date = array();
+	$job_status = array();
+	while($row = $result->fetch_assoc()){
+		array_push($job_id, $row["job_id"]);
+		array_push($project_name, $row["project_name"]);
+		array_push($client_name, $row["client_name"]);
+		array_push($due_date, $row["due_date"]);
+		array_push($job_status, $row["job_status"]);
+	}
+	$info = array($job_id, $project_name, $client_name, $due_date, $job_status);
+	echo json_encode($info);
 }
-select[name="archived-table_length"] { border: 1px solid black; }
-</style>
-<script>
-	$(document).ready(function() {
-	//====================create datatable==========================================
-	var dataTable = $('#production-table').DataTable( {
-			dom: '<"toolbar">lfrtip',
-			"order": [[ 0, "asc" ]],
-			"processing": true,
-			"serverSide": true,
-			"deferRender": false,
-			"scrollX": true,
-			"ajax":{
-				url :"server-side-list-view.php", // json datasource
-				type: "POST",  // method  , by default get
-				error: function(){  // error handling
-					$(".production-table-error").html("");
-					$("#production-table").append('<tbody class="production-table-error"><tr><th colspan="3">No data found in the server</th></tr></tbody>');
-					$("#production-table_processing").css("display","none");
-				}
-			},
-			"columnDefs": [ {
-					"targets": 0,
-					"render": function ( data, type, row) {
-						return '<a href="edit_job.php?job_id='+row[0]+'">'+row[0]+'</a>'; //link for each client name
-					},
-			}
-		]
-	});
-//==============================================================================
-	$("#searchbox").on("keyup search input paste cut", function() {
-		dataTable.search(this.value).draw();
-	});
-});
-</script>
+else if($_POST["id"] == "all_jobs"){
+	$result = mysqli_query($conn, "SELECT * FROM job_ticket");
+	$job_id = array();
+	$project_name = array();
+	$client_name = array();
+	$due_date = array();
+	$job_status = array();
+	while($row = $result->fetch_assoc()){
+		array_push($job_id, $row["job_id"]);
+		array_push($project_name, $row["project_name"]);
+		array_push($client_name, $row["client_name"]);
+		array_push($due_date, $row["due_date"]);
+		array_push($job_status, $row["job_status"]);
+	}
+	$info = array($job_id, $project_name, $client_name, $due_date, $job_status);
+	echo json_encode($info);
+}
+else{
+	$processed_by = $_POST["id"];
+	$result = mysqli_query($conn, "SELECT * FROM job_ticket WHERE processed_by = '$processed_by'");
+	$job_id = array();
+	$project_name = array();
+	$client_name = array();
+	$due_date = array();
+	$job_status = array();
+	while($row = $result->fetch_assoc()){
+		array_push($job_id, $row["job_id"]);
+		array_push($project_name, $row["project_name"]);
+		array_push($client_name, $row["client_name"]);
+		array_push($due_date, $row["due_date"]);
+		array_push($job_status, $row["job_status"]);
+	}
+	$info = array($job_id, $project_name, $client_name, $due_date, $job_status);
+	echo json_encode($info);
+}
+?>
