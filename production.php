@@ -233,7 +233,7 @@ if ($result->num_rows > 0) {
 				$current_user = $row["processed_by"];
 				$result_current_assign = mysqli_query($conn, "SELECT * FROM users WHERE user = '$current_user'");
 				$row_current_assign = $result_current_assign->fetch_assoc();
-				echo "<select onchange = 'this.form.submit()' name = 'assign_to" . $job_count . "' style = 'width: 200px'><option selected disabled value = '" . $row["processed_by"] . "'>" . $row_current_assign["first_name"] . " " . $row_current_assign["last_name"] . "</option>";
+				echo "<select class = 'assign_to' onchange = 'this.form.submit()' name = 'assign_to" . $job_count . "' style = 'width: 200px'><option selected disabled value = '" . $row["processed_by"] . "'>" . $row_current_assign["first_name"] . " " . $row_current_assign["last_name"] . "</option>";
 				$result_users = mysqli_query($conn, "SELECT user FROM users");
 				while($row_users = $result_users->fetch_assoc()){
 					$user = $row_users['user'];
@@ -306,6 +306,15 @@ var div_block_object = document.getElementById("block_area").innerHTML;
 					else if(search_val == "#none"){
 						if($(this).children(".priority_bar").text().toLowerCase().search("none") != -1){
 							$(this).show();
+						}
+					}
+					else if(search_val.indexOf(":") > -1){
+						var username = search_val.split(":");
+						if($(this).find(".assign_to option:first-child").val() == username[1]){
+							$(this).show();
+						}
+						else{
+							$(this).hide();
 						}
 					}
 					else{
@@ -555,6 +564,10 @@ function jobFilter(){
 	else if(jobFilterVal != "prodJobs" && view == "block"){
 		var job_selector = $(".job_selector").val();
 		$("#searchbox").val("assign:" + job_selector);
+		$("#searchbox").submit();
+	}
+	else if(jobFilterVal == "prodJobs" && view == "block"){
+		$("#searchbox").val("");
 		$("#searchbox").submit();
 	}
 }
