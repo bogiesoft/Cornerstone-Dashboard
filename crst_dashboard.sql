@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 25, 2017 at 09:07 PM
+-- Generation Time: May 10, 2017 at 10:51 PM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 7.0.13
 
@@ -227,7 +227,8 @@ INSERT INTO `customer_service` (`job_id`, `postage`, `invoice_number`, `invoice_
 (5736, '', 0, '0000-00-00', '', '', '', '', '', '1969-12-31', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 (5737, '', 0, '0000-00-00', '', '', '', '', '', '1969-12-31', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 (5745, '', 0, '0000-00-00', '', '', '', '', '', '1969-12-31', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5746, '', 0, '0000-00-00', '', '', '', '', '', '1969-12-31', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+(5746, '', 0, '0000-00-00', '', '', '', '', '', '1969-12-31', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5747, '', 0, '0000-00-00', '', '', '', '', '', '1969-12-31', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -249,7 +250,7 @@ CREATE TABLE `documentation` (
 --
 
 INSERT INTO `documentation` (`title`, `text`, `description`, `user`, `timestamp`, `view_count`) VALUES
-('Brother Earth', '```if(something){\r\n        do something\r\n}```\r\n---\r\n![An Image](https://picturethismaths.files.wordpress.com/2016/03/fig6bigforblog.png?w=419&h=364)', 'Poopie Diapers', 'sayre', '2017-02-22', 13),
+('Brother Earth', '```if(something){\r\n        do something\r\n}```\r\n---\r\n![An Image](https://picturethismaths.files.wordpress.com/2016/03/fig6bigforblog.png?w=419&h=364)', 'Poopie Diapers', 'sayre', '2017-02-22', 15),
 ('Brother Saturn', '**HELLO EVERYONE**', 'Something goes here', 'sayre', '2017-02-28', 4),
 ('Child', 'Brother child', '', 'sayre', '2016-10-10', 0),
 ('Child 2', 'My Child', '', 'sayre', '2016-10-10', 0),
@@ -311,7 +312,7 @@ CREATE TABLE `inventory` (
 
 INSERT INTO `inventory` (`material_id`, `material`, `type`, `vendor`, `location`, `material_color`, `quantity`, `per_box`) VALUES
 (7, 'envelope', '#3', 'Joe Mcgee', 'Jimbo', 'Purple', 34000, 2300),
-(8, 'envelope', '#10', 'Lindemyer Company', '13B', 'White', 25000, 10);
+(8, 'envelope', '#10', 'Lindemyer Company', '13B', 'White', 23600, 10);
 
 -- --------------------------------------------------------
 
@@ -353,7 +354,7 @@ CREATE TABLE `job_ticket` (
 --
 
 INSERT INTO `job_ticket` (`job_id`, `processed_by`, `client_name`, `project_name`, `ticket_date`, `due_date`, `created_by`, `estimate_number`, `estimate_date`, `estimate_created_by`, `special_instructions`, `materials_ordered`, `materials_expected`, `expected_quantity`, `records_total`, `job_status`, `priority`, `mail_class`, `rate`, `processing_category`, `mail_dim`, `weights_measures`, `permit`, `bmeu`, `based_on`, `non_profit_number`) VALUES
-(5681, 'sayre', 'Gary', 'jkl', '1969-12-19', '1969-12-31', '', '', '0000-00-00', '', '', '1969-12-31', '1969-12-31', 0, 0, 'none', 0, '', '', '', '', '11', '', '', '', 0),
+(5681, 'sayre', 'Pro Printers(Ryan  Scott)', 'jkl', '1969-12-19', '1969-12-31', '', '', '0000-00-00', '', '', '1969-12-31', '1969-12-31', 0, 0, 'none', 0, '', '', '', '', '11', '', '', '9', 0),
 (5682, 'sayre', '', '', '1969-12-31', '1969-12-31', '', '', '0000-00-00', '', '', '1969-12-31', '1969-12-31', 0, 0, 'none', 0, '', '', '', '', '8', '', '', '', 0),
 (5689, 'sayre', '', '', '1969-12-31', '1969-12-31', '', '', '0000-00-00', '', '', '1969-12-31', '1969-12-31', 0, 0, 'none', 0, '', '', '', '', '', '', '', '', 0),
 (5698, 'mbroc', 'Jim Jones', 'The Deed', '1969-12-31', '2017-02-15', '', '', '0000-00-00', 'admin', '', '1969-12-31', '1969-12-31', 0, 600, 'none', 1, '', '', '', '', '', '', '', '', 0),
@@ -373,8 +374,9 @@ INSERT INTO `job_ticket` (`job_id`, `processed_by`, `client_name`, `project_name
 (5732, 'mbroc', '', 'Sample Production Receipt', '1969-12-31', '1969-12-31', '', '', '0000-00-00', 'admin', '', '1969-12-31', '1969-12-31', 0, 200, 'none', 0, '', '', '', '', '11,9,19', '', '', '', 0),
 (5736, 'jshwat', 'Simpsons', 'play', '2016-05-16', '2016-05-19', '', '', '0000-00-00', '', '', '1969-12-31', '1969-12-31', 0, 1000, 'on hold', 0, '', '', '', '', '', '', '', '', 0),
 (5737, '', '', '', '1969-12-31', '1969-12-31', '', '', '0000-00-00', 'admin', '', '1969-12-31', '1969-12-31', 0, 0, 'none', 0, '', '', '', '', '20', '', '', '', 0),
-(5745, '', 'Pro Printers(Ryan  Scott)', '', '1969-12-31', '1969-12-31', '', '', '0000-00-00', 'admin', '', '1969-12-31', '1969-12-31', 0, 0, 'none', 0, '', '', '', '', '19', '', '', '12', 0),
-(5746, 'jshwat', 'Pro Printers(Ryan  Scott)', 'is a ghost', '2016-05-17', '2016-05-28', '', '789', '0000-00-00', '', '', '2016-05-04', '1969-12-31', 0, 0, '', 0, '', '', '', '', '19', '', '', '12', 0);
+(5745, 'igadge', 'Pro Printers(Ryan  Scott)', '', '1969-12-31', '1969-12-31', '', '', '0000-00-00', 'admin', '', '1969-12-31', '1969-12-31', 0, 500, 'none', 0, '', '', '', '', '19', '', '', '12', 0),
+(5746, 'jshwat', 'Pro Printers(Ryan  Scott)', 'is a ghost', '2016-05-17', '2016-05-28', '', '789', '0000-00-00', '', '', '2016-05-04', '1969-12-31', 0, 0, '', 0, '', '', '', '', '19', '', '', '12', 0),
+(5747, 'djefferson', '', '', '1969-12-31', '1969-12-31', '', '', '0000-00-00', 'admin', '', '1969-12-31', '1969-12-31', 0, 1400, 'none', 3, '', '', '', '', '20', '', '', '1', 0);
 
 -- --------------------------------------------------------
 
@@ -428,7 +430,6 @@ CREATE TABLE `production` (
 --
 
 INSERT INTO `production` (`job_id`, `hold_postage`, `postage_paid`, `print_template`, `special_address`, `delivery`, `tasks`) VALUES
-(0, 'no', 'no', '', '', '', ''),
 (5681, 'no', 'no', '', '', '', ''),
 (5682, 'no', 'no', '', '', '', ''),
 (5689, 'no', 'no', '', '', '', ''),
@@ -449,8 +450,9 @@ INSERT INTO `production` (`job_id`, `hold_postage`, `postage_paid`, `print_templ
 (5732, 'no', 'no', '', '', '', 'Inserting^Auto,Labeling'),
 (5736, 'yes', 'yes', '', '', '', 'Sealing^Auto,Carrier Route'),
 (5737, 'no', 'no', '', '', '', 'Mail Merge^Sent to Vendor,Letter Printing^From PDF,Collating^Man. and Auto,Inkjet Printing^11K'),
-(5745, 'no', 'no', '', '', '', ''),
-(5746, 'on', '', '', '', '', '');
+(5745, 'no', 'no', '', '', '', 'Inserting^Manual'),
+(5746, 'on', '', '', '', '', ''),
+(5747, 'no', 'yes', '', '', '', 'Mail Merge^Sent to Vendor,Inserting^Manual,Sealing^Manual,Address Printing');
 
 -- --------------------------------------------------------
 
@@ -481,7 +483,9 @@ INSERT INTO `production_data` (`total_records`, `recs_per_min`, `job`, `special`
 (1000, 7.8, 'Folding', 'Auto', 2.13675),
 (1000, 9.8, 'Labeling', 'None', 1.70068),
 (200, 9.3, 'Inserting', 'Auto', 0.358423),
-(100, 6.5, 'Carrier Route', 'None', 0.25641);
+(100, 6.5, 'Carrier Route', 'None', 0.25641),
+(1, 10, 'Sealing', 'Manual', 0.00166667),
+(1, 8, 'Address Printing', 'None', 0.00208333);
 
 -- --------------------------------------------------------
 
@@ -518,7 +522,9 @@ INSERT INTO `production_receipts` (`job_id`, `wm_id`, `date_expected`, `crst_pic
 (5745, 19, '0000-00-00', 0, '', '', 'Joe Mcgee'),
 (5746, 19, '0000-00-00', 1, '', '', 'Joe Mcgee'),
 (5719, 11, '0000-00-00', 0, '', '', 'Pro printer'),
-(5719, 20, '0000-00-00', 0, '', '', 'CRST Inventory');
+(5719, 20, '0000-00-00', 0, '', '', 'CRST Inventory'),
+(5747, 20, '0000-00-00', 0, '', '', 'CRST Inventory'),
+(5681, 11, '0000-00-00', 0, '', '', 'Pro printer');
 
 -- --------------------------------------------------------
 
@@ -591,7 +597,8 @@ INSERT INTO `project_management` (`data_source`, `data_location`, `data_processe
 ('', '', '', '1969-12-31', '1969-12-31', '1969-12-31', 5736, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 ('', '', '', '1969-12-31', '1969-12-31', '1969-12-31', 5737, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 ('', '', 'admin', '1969-12-31', '1969-12-31', '1969-12-31', 5745, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-('', 'C:\\xampp\\htdocs\\Cornerstone-Dashboard', 'mbroc', '1969-12-31', '1969-12-31', '1969-12-31', 5746, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+('', 'C:\\xampp\\htdocs\\Cornerstone-Dashboard', 'mbroc', '1969-12-31', '1969-12-31', '1969-12-31', 5746, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', '', 'admin', '1969-12-31', '1969-12-31', '1969-12-31', 5747, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1758,7 +1765,23 @@ INSERT INTO `saved_search` (`search_id`, `search_name`, `search_date`, `field1`,
 (14, 'dsnln', '2016-11-17', 'full_name', 's', 'business', 'd', 'address_line_1', 'f', 'CRM', 'city', 'g', 'zipcode', 'g'),
 (15, 'xcc', '2016-11-17', 'business', 'xcx', 'address_line_1', 'cxc', '$$$', '$$$', 'CRM', '$$$', '$$$', '$$$', '$$$'),
 (16, 'Discount', '2016-11-23', 'business', 'Discount', '$$$', '$$$', '$$$', '$$$', 'CLIENT', '$$$', '$$$', '$$$', '$$$'),
-(17, 'a Search', '2016-11-24', 'full_name', 'a', 'business', 'a', '$$$', '$$$', 'CLIENT', '$$$', '$$$', '$$$', '$$$');
+(17, 'a Search', '2016-11-24', 'full_name', 'a', 'business', 'a', '$$$', '$$$', 'CLIENT', '$$$', '$$$', '$$$', '$$$'),
+(18, 'Pro Printers Search', '2017-04-26', 'business', 'pro printers', '$$$', '$$$', '$$$', '$$$', 'CRM', '$$$', '$$$', '$$$', '$$$'),
+(19, 'Klass Painting', '2017-04-26', 'business', 'Klass Painting', '$$$', '$$$', '$$$', '$$$', 'CLIENT', '$$$', '$$$', '$$$', '$$$'),
+(22, 'address 3', '2017-04-26', 'address_line_1', '3', '$$$', '$$$', '$$$', '$$$', 'CLIENT', '$$$', '$$$', '$$$', '$$$');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `secondary_contacts`
+--
+
+CREATE TABLE `secondary_contacts` (
+  `client_id` int(11) NOT NULL,
+  `contact_name` varchar(120) NOT NULL,
+  `phone_number` varchar(120) NOT NULL,
+  `email` varchar(120) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -3080,7 +3103,26 @@ INSERT INTO `timestamp` (`id`, `user`, `time`, `job`, `a_p`, `processed_by`, `vi
 (1295, 'admin', '2017-04-25 14:18:41', 'Closed job ticket5714', 'PM', 'jshwat', 'no'),
 (1296, 'admin', '2017-04-25 14:21:23', 'updated job ticket 5719', 'PM', 'jshwat', 'no'),
 (1297, 'admin', '2017-04-25 14:22:01', 'updated job ticket 5746', 'PM', 'jshwat', 'no'),
-(1298, 'admin', '2017-04-25 14:22:11', 'Closed job ticket5719', 'PM', 'jshwat', 'no');
+(1298, 'admin', '2017-04-25 14:22:11', 'Closed job ticket5719', 'PM', 'jshwat', 'no'),
+(1299, 'sayre', '2017-04-25 15:23:09', 'assigned job ticket 5747', 'PM', '', 'no'),
+(1300, 'sayre', '2017-04-25 15:42:46', 'updated job ticket 5747', 'PM', '', 'no'),
+(1301, 'sayre', '2017-04-25 15:42:56', 'updated job ticket 5747', 'PM', '', 'no'),
+(1302, 'sayre', '2017-04-25 15:43:04', 'updated job ticket 5747', 'PM', '', 'no'),
+(1303, 'sayre', '2017-04-25 16:29:05', 'updated job ticket 5747', 'PM', 'djefferson', 'no'),
+(1304, 'sayre', '2017-04-25 16:29:20', 'updated job ticket 5745', 'PM', 'igadge', 'no'),
+(1305, 'sayre', '2017-04-26 10:48:44', 'updated job ticket 5681', 'AM', 'sayre', 'yes'),
+(1306, 'sayre', '2017-04-26 15:54:12', 'added documentation', 'PM', '', ''),
+(1307, 'sayre', '2017-04-26 15:54:37', 'updated documentation', 'PM', '', ''),
+(1308, 'sayre', '2017-04-26 15:54:52', 'updated documentation', 'PM', '', ''),
+(1309, 'sayre', '2017-04-26 15:54:58', 'deleted documentation', 'PM', '', ''),
+(1310, 'sayre', '2017-04-26 15:55:11', 'added documentation', 'PM', '', ''),
+(1311, 'sayre', '2017-04-26 15:55:27', 'deleted documentation', 'PM', '', ''),
+(1312, 'sayre', '2017-04-26 16:01:35', 'updated job ticket 5681', 'PM', 'sayre', 'yes'),
+(1313, 'sayre', '2017-05-02 09:37:54', 'updated job ticket 5747', 'AM', 'djefferson', 'no'),
+(1314, 'sayre', '2017-05-02 09:40:31', 'updated job ticket 5747', 'AM', 'djefferson', 'no'),
+(1315, 'sayre', '2017-05-02 09:40:51', 'updated job ticket 5747', 'AM', 'djefferson', 'no'),
+(1316, 'sayre', '2017-05-02 09:41:07', 'updated job ticket 5745', 'AM', 'igadge', 'no'),
+(1317, 'sayre', '2017-05-02 09:41:17', 'updated job ticket 5745', 'AM', 'igadge', 'no');
 
 -- --------------------------------------------------------
 
@@ -3228,7 +3270,7 @@ ALTER TABLE `timestamp`
 -- AUTO_INCREMENT for table `customer_service`
 --
 ALTER TABLE `customer_service`
-  MODIFY `job_id` int(45) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5747;
+  MODIFY `job_id` int(45) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5748;
 --
 -- AUTO_INCREMENT for table `employee_data`
 --
@@ -3243,7 +3285,7 @@ ALTER TABLE `inventory`
 -- AUTO_INCREMENT for table `job_ticket`
 --
 ALTER TABLE `job_ticket`
-  MODIFY `job_id` int(45) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5747;
+  MODIFY `job_id` int(45) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5748;
 --
 -- AUTO_INCREMENT for table `materials`
 --
@@ -3253,7 +3295,7 @@ ALTER TABLE `materials`
 -- AUTO_INCREMENT for table `project_management`
 --
 ALTER TABLE `project_management`
-  MODIFY `job_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5747;
+  MODIFY `job_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5748;
 --
 -- AUTO_INCREMENT for table `reminder`
 --
@@ -3263,12 +3305,12 @@ ALTER TABLE `reminder`
 -- AUTO_INCREMENT for table `saved_search`
 --
 ALTER TABLE `saved_search`
-  MODIFY `search_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `search_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 --
 -- AUTO_INCREMENT for table `timestamp`
 --
 ALTER TABLE `timestamp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1299;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1318;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

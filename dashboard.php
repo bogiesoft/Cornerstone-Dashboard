@@ -300,7 +300,7 @@ $result9 = mysqli_query($conn,"SELECT * FROM job_ticket WHERE processed_by != ''
 echo " <div style = 'padding-bottom: 20px'class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' >"; // start a table tag in the HTML
 echo "<tbody>";
 echo "<tr valign='top'><th class='allcontacts-title'>Active Jobs<span class='allcontacts-subtitle'></span></th></tr>";
-echo "<tr valign='top'><td colspan='2'><table border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='job_id' data-index='0'>Job ID</th><th class='maintable-thtwo data-header' data-name='client' data-index='1'>Client Name</th><th class='maintable-thtwo data-header' data-name='project_name' data-index='2'>Project Name</th><th class='maintable-thtwo data-header' data-name='due_date' data-index='3'>Due Date</th><th class='maintable-thtwo data-header' data-name='job_status' data-index='4'>Job Status</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='5'>Records Total</th><th class='maintable-thtwo data-header' data-name='processed_by' data-index='6'>User</th></tr>";
+echo "<tr valign='top'><td colspan='2'><table border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='job_id' data-index='0'>Job ID</th><th class='maintable-thtwo data-header' data-name='client' data-index='1'>Client Name</th><th class='maintable-thtwo data-header' data-name='project_name' data-index='2'>Job Name</th><th class='maintable-thtwo data-header' data-name='due_date' data-index='3'>Due Date</th><th class='maintable-thtwo data-header' data-name='job_status' data-index='4'>Job Status</th><th class='maintable-thtwo data-header' data-name='records_total' data-index='5'>Records Total</th><th class='maintable-thtwo data-header' data-name='processed_by' data-index='6'>User</th></tr>";
 
 
 if ($result9->num_rows > 0) {
@@ -324,7 +324,7 @@ if ($result9->num_rows > 0) {
 			$name = $row10['first_name'] . ' ' . $row10['last_name'];
 		}
 
-		echo "<tr><td><a href='edit_job.php?job_id=$foo'>".$row8["job_id"]."</a></td><td>".  $row8["client_name"]."</td><td>". $row8["project_name"]. "</td><td>". $row8["due_date"]. "</td><td>". $row8["job_status"]."</td><td>". $row9["records_total"]."</td><td>". $name."</td></tr>";
+		echo "<tr class = 'clickable_job' id = '" . $row8["job_id"] . "'><td>".$row8["job_id"]."</td><td>".  $row8["client_name"]."</td><td>". $row8["project_name"]. "</td><td>". $row8["due_date"]. "</td><td>". $row8["job_status"]."</td><td>". $row9["records_total"]."</td><td>". $name."</td></tr>";
     }
 	echo "</tbody></table></td></tr></tbody></table></div>";
 } else {
@@ -555,5 +555,12 @@ var jobs_invoiced_monthly = <?php echo json_encode($jobs_invoiced_monthly); ?>;
 					responsive : true
 				});
 			};
-
+//make entire job row clickable
+$(".clickable_job").click(function(){
+	var job_id = $(".clickable_job").attr("id");
+	window.location.href = "edit_job.php?job_id=" + job_id;
+});
+$(".clickable_job").hover(function(){
+	$(this).css("cursor", "pointer");
+});
 </script>
