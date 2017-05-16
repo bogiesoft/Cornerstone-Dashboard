@@ -17,6 +17,7 @@ if(isset($_POST['submit_form'])){
 		$records_total = 0;
 	}
 	$client_name = $_POST['client_name'];
+	
 	$project_name = $_POST['project_name'];
 	$_SESSION["client_name"] = $client_name;
 	$_SESSION["project_name"] = $project_name;

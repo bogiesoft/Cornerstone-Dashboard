@@ -293,6 +293,9 @@ function addTotalWM()
                     <label>Fax</label>
                     <input id = "fax" name="fax" type="text" class="contact-prefix">
                     </div>
+					<div class="newcontact-tabbtm" style = "background-color: #f4f5f7">
+                    <input class="save_client_info" type="submit" value="Save" name="submit_form" style="display: none; float: left; width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
+                </div>
 				</div>
 				<div class="newclienttab-inner" style = "float: left; width: 33%">
 					<div class="tabinner-detail">
@@ -688,6 +691,7 @@ function fillInput(info){
 			$("#zipcode").val(data_info[6]);
 			$("#second_contact").val(data_info[7]);
 			$("#fax").val(data_info[8]);
+			alert(data_info[9]);
 		}
 });
 $(".client_search_results").empty();
