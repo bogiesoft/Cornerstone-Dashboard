@@ -268,22 +268,22 @@ function addTotalWM()
 				 <div class="newclienttab-inner" style = "float: left; width: 33%">
                     <div class="tabinner-detail">
                     <label>Contact Name</label>
-                    <input id = "contact_name" name="contact_name" type="text" class="contact-prefix" readonly>
+                    <input id = "contact_name" name="contact_name" type="text" class="contact-prefix">
                     </div>
 					<div class="tabinner-detail">
                     <label>Phone</label>
-                    <input id = "phone" name="phone" type="text" class="contact-prefix" readonly>
+                    <input id = "phone" name="phone" type="text" class="contact-prefix">
                     </div>
 					<div class="tabinner-detail">
                     <label>Email</label>
-                    <input id = "email" name="email" type="text" class="contact-prefix" readonly>
+                    <input id = "email" name="email" type="text" class="contact-prefix">
                     </div>
 					<div class="tabinner-detail">
                     <label>Address</label>
-                    <input id = "address_line_1" name="address" type="text" class="contact-prefix" readonly>
+                    <input id = "address_line_1" name="address" type="text" class="contact-prefix">
                     </div>
 					<div class="tabinner-detail">
-                    <label>City</label><input id = "city" style = "width: 20%" name="city" type="text" class="contact-prefix" readonly><label>State</label><input id = "state" style = "width: 20%" name="state" type="text" class="contact-prefix" readonly><label>Zip</label><input id = "zipcode" style = "width: 20%" name="zip" type="text" class="contact-prefix" readonly>
+                    <label>City</label><input id = "city" style = "width: 20%" name="city" type="text" class="contact-prefix"><label>State</label><input id = "state" style = "width: 20%" name="state" type="text" class="contact-prefix"><label>Zip</label><input id = "zipcode" style = "width: 20%" name="zip" type="text" class="contact-prefix">
                     </div>
 					<div class="tabinner-detail">
                     <label>Second Contact</label>
@@ -291,7 +291,7 @@ function addTotalWM()
                     </div>
 					<div class="tabinner-detail">
                     <label>Fax</label>
-                    <input id = "fax" name="fax" type="text" class="contact-prefix" readonly>
+                    <input id = "fax" name="fax" type="text" class="contact-prefix">
                     </div>
 				</div>
 				<div class="newclienttab-inner" style = "float: left; width: 33%">
