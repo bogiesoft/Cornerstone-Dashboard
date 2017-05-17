@@ -258,7 +258,7 @@ function addTotalWM()
 				<table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
 						<tbody>
 							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='vendor' data-index='4'>Client</th><th class='maintable-thtwo data-header' data-name='material' data-index='6'>Job Name</th><th class='maintable-thtwo data-header' data-name='type' data-index='7'>Due Date</th></tr></thead><tbody>
-							<tr><td><input style = "width: 75%" id = "client_name" placeholder="Start typing" name="client_name" type="text" class="contact-prefix"></td><td><input style = "width: 75%" name="project_name" type="text" class="contact-prefix"></td><td><input style = "width: 75%" name="due_date" type="date" class="contact-prefix"></td></tr>
+							<tr><td><input style = "width: 75%" id = "client_name" placeholder="Start typing" name="client_name" type="text" class="contact-prefix" autocomplete = "off"><a class = "delete_client_af" href = "#" style = "display: none">delete</a></td><td><input style = "width: 75%" name="project_name" type="text" class="contact-prefix"></td><td><input id = "due_date" style = "width: 75%" name="due_date" type="date" class="contact-prefix"></td></tr>
 						</tbody></table></td></tr></tbody></table>
                     <div class="tabinner-detail">
 					<ul class = "client_search_results">
@@ -267,23 +267,23 @@ function addTotalWM()
 				</div>
 				 <div class="newclienttab-inner" style = "float: left; width: 33%">
                     <div class="tabinner-detail">
-                    <label>Contact Name</label>
-                    <input id = "contact_name" name="contact_name" type="text" class="contact-prefix">
+                    <label>Primary Contact</label>
+                    <input id = "contact_name" name="contact_name" type="text" class="contact-prefix" readonly>
                     </div>
 					<div class="tabinner-detail">
                     <label>Phone</label>
-                    <input id = "phone" name="phone" type="text" class="contact-prefix">
+                    <input id = "phone" name="phone" type="text" class="contact-prefix" readonly>
                     </div>
 					<div class="tabinner-detail">
                     <label>Email</label>
-                    <input id = "email" name="email" type="text" class="contact-prefix">
+                    <input id = "email" name="email" type="text" class="contact-prefix" readonly>
                     </div>
 					<div class="tabinner-detail">
                     <label>Address</label>
-                    <input id = "address_line_1" name="address" type="text" class="contact-prefix">
+                    <input id = "address_line_1" name="address" type="text" class="contact-prefix" readonly>
                     </div>
 					<div class="tabinner-detail">
-                    <label>City</label><input id = "city" style = "width: 20%" name="city" type="text" class="contact-prefix"><label>State</label><input id = "state" style = "width: 20%" name="state" type="text" class="contact-prefix"><label>Zip</label><input id = "zipcode" style = "width: 20%" name="zip" type="text" class="contact-prefix">
+                    <label>City</label><input id = "city" style = "width: 20%" name="city" type="text" class="contact-prefix" readonly><label>State</label><input id = "state" style = "width: 20%" name="state" type="text" class="contact-prefix" readonly><label>Zip</label><input id = "zipcode" style = "width: 20%" name="zip" type="text" class="contact-prefix" readonly>
                     </div>
 					<div class="tabinner-detail">
                     <label>Second Contact</label>
@@ -291,28 +291,52 @@ function addTotalWM()
                     </div>
 					<div class="tabinner-detail">
                     <label>Fax</label>
-                    <input id = "fax" name="fax" type="text" class="contact-prefix">
+                    <input id = "fax" name="fax" type="text" class="contact-prefix" readonly>
                     </div>
 					<div class="newcontact-tabbtm" style = "background-color: #f4f5f7">
-                    <input class="save_client_info" type="submit" value="Save" name="submit_form" style="display: none; float: left; width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px;">
+                    <input onclick = "showSaveMessage()" class="save_client_info" value="Save Client Changes" name="submit_form" style="display: none; float: left; width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px; cursor: pointer" readonly>
                 </div>
 				</div>
 				<div class="newclienttab-inner" style = "float: left; width: 33%">
 					<div class="tabinner-detail">
                     <label>Non Profit Number</label>
-                    <input name="non_profit_number" type="text" class="contact-prefix">
+                    <input id = "non_profit_number" name="non_profit_number" type="text" class="contact-prefix" readonly>
+                    </div>
+					<div class="tabinner-detail">
+                    <label>CRID</label>
+                    <input id = "crid" name="crid" type="text" class="contact-prefix" readonly>
                     </div>
 					<div class="tabinner-detail">
                     <label>Mail Class</label>
-                    <input name="mail_class" type="text" class="contact-prefix">
+					<select name = "mail_class" style = "width: 200px; margin-right: 200px">
+					<option selected = "selected" value = "FCM">FCM</option>
+					<option value = "Bulk Standard">Bulk Standard</option>
+					<option value = "Non-Profit BLK">Non-Profit BLK</option>
+					<option value = "BPM">BPM</option>
+					<option value = "Non-profit BPM">Non-profit BPM</option>
+					<option value = "Parcel">Parcel</option>
+					<option value = "Non-profit Parcel">Non-profit Parcel</option>
+					<option value = "Hand Stamp FCM">Hand Stamp FCM</option>
+					<option value = "Hand Stamp Bulk">Hand Stamp Bulk</option>
+					</select>
                     </div>
 					<div class="tabinner-detail">
                     <label>Rate</label>
-                    <input name="rate" type="text" class="contact-prefix">
+					<select name = "rate">
+					<option selected = "selected" value = "Auto">Auto</option>
+					<option value = "Auto-CRRT">Auto CRRT</option>
+					<option value = "Auto-WSS">Auto-WSS</option>
+					<option value = "Non-auto">Non-auto</option>
+					<option value = "Simplified">Simplified</option>
+					</select>
                     </div>
 					<div class="tabinner-detail">
                     <label>Processing Category</label>
-                    <input name="processing_category" type="text" class="contact-prefix">
+					<select name = "processing_category" style = "width: 200px; margin-right: 200px">
+					<option selected = "selected" value = "Flat">Flat</option>
+					<option value = "Letter">Letter</option>
+					<option value = "Postcard - FCM Only">Postcard - FCM Only</option>
+					</select>
                     </div>
 					<div class="tabinner-detail">
                     <label>Mail Dimensions</label>
@@ -340,19 +364,31 @@ function addTotalWM()
                     </div>
 					<div class="tabinner-detail">
                     <label>Data Location</label>
-                    <textarea style = "height: 10%" name="data_location" type="text" class="contact-prefix"></textarea>
+					<input id="file_location" type="file">
+                    <textarea id = "data_location" style = "height: 10%" name="data_location" type="text" class="contact-prefix"></textarea>
                     </div>
 					 <div class="tabinner-detail">
                     <label>Data Source</label>
-                    <input name="data_source" type="text" class="contact-prefix">
+					<select name = "data_source">
+					<option selected = "selected" value = "Client">Client</option>
+					<option value = "BOE">BOE</option>
+					<option value = "Recycled">Recycled</option>
+					<option value = "Occupants Residency">Occupants Residency</option>
+					<option value = "Melissa">Melissa</option>
+					<option value = "Master">Master</option>
+					<option value = "DataConsulate">DataConsulate</option>
+					<option value = "Multiple">Multiple</option>
+					<option value = "Real Property">Real Property</option>
+					<option value = "Other">Other</option>
+					</select>
                     </div>
 					<div class="tabinner-detail">
                     <label>Data Received</label>
-                    <input name="data_received" type="date" class="contact-prefix">
+                    <input id = "data_received" name="data_received" type="date" class="contact-prefix">
                     </div>
                     <div class="tabinner-detail">
                     <label>Data Completed</label>
-                    <input name="data_completed" type="date" class="contact-prefix">
+                    <input id = "data_completed" name="data_completed" type="date" class="contact-prefix">
                     </div>
 					<div class="tabinner-detail">
                     <label>Processed By</label>
@@ -472,11 +508,11 @@ function addTotalWM()
 				<div class="newclienttab-inner" style = "float: left; width: 50%">
                     <div class="tabinner-detail">
                     <label>Materials Ordered</label>
-                    <input name="materials_ordered" type="date" class="contact-prefix">
+                    <input id = "materials_ordered" name="materials_ordered" type="date" class="contact-prefix">
                     </div>
                     <div class="tabinner-detail">
                     <label>Materials Expected</label>
-                    <input name="materials_expected" type="date" class="contact-prefix">
+                    <input id = "materials_expected" name="materials_expected" type="date" class="contact-prefix">
                     </div>
                     <div class="tabinner-detail">
                     <label>Expected Quantity</label>
@@ -496,7 +532,7 @@ function addTotalWM()
                     </div>
 					 <div class="tabinner-detail">
                     <label>Ticket Date</label>
-                    <input name="ticket_date" type="date" class="contact-prefix">
+                    <input id = "ticket_date" name="ticket_date" type="date" class="contact-prefix">
                     </div>
 					<?php
                      
@@ -518,7 +554,7 @@ function addTotalWM()
 				<div class="newclienttab-inner" style = "float: left; width: 33%;">     
                     <div class="tabinner-detail">
                     <label>Completed Date</label>
-                    <input name="completed_date" type="date" class="contact-prefix">
+                    <input id = "completed_date" name="completed_date" type="date" class="contact-prefix">
                     </div>
 					<div class="tabinner-detail">
                     <label>Estimate Number</label>
@@ -526,7 +562,7 @@ function addTotalWM()
                     </div>
                     <div class="tabinner-detail">
                     <label>Estimate date</label>
-                    <input name="estimate_date" type="date" class="contact-prefix">
+                    <input id = "estimate_date" name="estimate_date" type="date" class="contact-prefix">
                     </div>
                     <div class="tabinner-detail">
                     <label>Estimate created by</label>
@@ -655,6 +691,19 @@ function addTotalWM()
 </div>
 </div>
 <script>
+$(document).ready(function(){
+	var date = new Date();
+	var nextWeek = new Date(date.getTime() + 7 * 24 * 60 * 60 * 1000);
+    document.getElementById("data_received").valueAsDate = date;
+	document.getElementById("data_completed").valueAsDate = date;
+	document.getElementById("due_date").valueAsDate = nextWeek;
+	document.getElementById("materials_ordered").valueAsDate = date;
+	document.getElementById("materials_expected").valueAsDate = date;
+	document.getElementById("ticket_date").valueAsDate = date;
+	document.getElementById("completed_date").valueAsDate = nextWeek;
+	document.getElementById("estimate_date").valueAsDate = date;
+})
+//generate search for client names
 document.getElementById("client_name").onkeyup = function(){
 	var value = document.getElementById("client_name").value;
 	$.ajax({
@@ -665,16 +714,21 @@ document.getElementById("client_name").onkeyup = function(){
     success: function (data_business) {
 		$(".client_search_results").empty();
 		for(var i = 0; i < data_business.length; i++){
-			$(".client_search_results").append("<li class = 'client_search_item' onclick = 'fillInput(\"" + data_business[i] + "\")'>" + data_business[i] + "</li>");
+			$(".client_search_results").append("<li class = 'client_search_item' onclick = 'fillInput(\"" + data_business[i] + "\")' style = 'cursor: pointer'>" + data_business[i] + "</li>");
 			if(value == ""){
 				$(".client_search_results").empty();
 			}
 		}
+		if(data_business.length == 0){
+			$(".client_search_results").append("<li><a href = 'add_client.php'>ADD CLIENT</a></li>");
+		}
     }
 });
 };
+//on click of client, autofill input
 function fillInput(info){
 	$("#client_name").val(info);
+	$("#client_name").attr("readonly", true);
 	$.ajax({
     type: "POST",
     url: "generate_client_search.php",
@@ -683,17 +737,82 @@ function fillInput(info){
     success: function (data_info) {
 			$(".client_search_results").empty();
 			$("#contact_name").val(data_info[0]);
+			$("#contact_name").attr("readonly", false);
 			$("#phone").val(data_info[1]);
+			$("#phone").attr("readonly", false);
 			$("#email").val(data_info[2]);
+			$("#email").attr("readonly", false);
 			$("#address_line_1").val(data_info[3]);
+			$("#address_line_1").attr("readonly", false);
 			$("#city").val(data_info[4]);
+			$("#city").attr("readonly", false);
 			$("#state").val(data_info[5]);
+			$("#state").attr("readonly", false);
 			$("#zipcode").val(data_info[6]);
+			$("#zipcode").attr("readonly", false);
 			$("#second_contact").val(data_info[7]);
+			$("#second_contact").attr("readonly", false);
 			$("#fax").val(data_info[8]);
-			alert(data_info[9]);
+			$("#fax").attr("readonly", false);
+			$(".save_client_info").show();
+			$(".save_client_info").attr("id", data_info[9]);
+			$("#non_profit_number").val(data_info[10]);
+			$("#non_profit_number").attr("readonly", false);
+			$("#crid").val(data_info[11]);
+			$("#crid").attr("readonly", false);
+			$(".delete_client_af").show();
 		}
 });
 $(".client_search_results").empty();
 }
+//save client info through ajax call
+$(".save_client_info").click(function(){
+	var client_id = $(".save_client_info").attr("id");
+	var info = [$("#contact_name").val(), $("#phone").val(), $("#email").val(), $("#address_line_1").val(), $("#city").val(), $("#state").val(), $("#zipcode").val(), $("#second_contact").val(), $("#fax").val(), client_id, $("#non_profit_number").val(), $("#crid").val()]
+		$.ajax({
+		type: "POST",
+		url: "job_ticket_save_client_info.php",
+		data: {id: info},
+		dataType: "json", // Set the data type so jQuery can parse it for you
+		success: function (){
+		}
+	});
+});
+//delete autogenerated client fields and hide buttons
+$(".delete_client_af").click(function(){
+	$(".client_search_results").empty();
+	$("#contact_name").val("");
+	$("#contact_name").attr("readonly", true);
+	$("#phone").val("");
+	$("#phone").attr("readonly", true);
+	$("#email").val("");
+	$("#email").attr("readonly", true);
+	$("#address_line_1").val("");
+	$("#address_line_1").attr("readonly", true);
+	$("#city").val("");
+	$("#city").attr("readonly", true);
+	$("#state").val("");
+	$("#state").attr("readonly", true);
+	$("#zipcode").val("");
+	$("#zipcode").attr("readonly", true);
+	$("#second_contact").val("");
+	$("#second_contact").attr("readonly", true);
+	$("#fax").val("");
+	$("#fax").attr("readonly", true);
+	$("#non_profit_number").val("");
+	$("#non_profit_number").attr("readonly", true);
+	$("#crid").val("");
+	$("#crid").attr("readonly", true);
+	$(".save_client_info").hide();
+	$(".delete_client_af").hide();
+	$("#client_name").val("");
+	$("#client_name").attr("readonly", false);
+});
+function showSaveMessage(){
+		swal({   title: "Saved!",   text: "This client has been saved.",   type: "success",      confirmButtonColor: "#4FD8FC",   confirmButtonText: "OK",   closeOnConfirm: true});  
+};
+//put file location as string
+$("#file_location").change(function(){
+	$("#data_location").val($("#file_location").val());
+});
 </script>        

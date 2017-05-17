@@ -255,7 +255,6 @@ require ("connection.php");
 		$materials_expected = $row['materials_expected'];
 		$expected_quantity = $row['expected_quantity'];
 		$job_status = $row['job_status'];
-		$non_profit_number = $row["non_profit_number"];
 		$display = "yes";
 		$mail_class = $row['mail_class'];
 		$rate = $row['rate'];
@@ -265,7 +264,6 @@ require ("connection.php");
 		$permit = $row['permit'];
 		$bmeu = $row['bmeu'];
 		$based_on = $row['based_on'];
-		$non_profit_number = $row['non_profit_number'];
 		$processed_by = $row['processed_by'];
 		$records_total = $row['records_total'];
 		$_SESSION["current_records_total"] = $records_total;
@@ -399,7 +397,7 @@ require ("connection.php");
 			<div id = "wm_info_div" class="newclienttab-inner" style = "float: left; width: 31%">
 				<div class="tabinner-detail">
                 <label>Non Profit Number</label>
-                <input name="non_profit_number" type="text" class="contact-prefix" value="<?php echo $non_profit_number ; ?>">
+                <input name="non_profit_number" type="text" class="contact-prefix">
                 </div>
 				<div class="tabinner-detail">
 				<label>Mail Class</label>

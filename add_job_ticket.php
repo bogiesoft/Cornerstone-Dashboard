@@ -84,7 +84,6 @@ if(isset($_POST['submit_form'])){
 	$permit = $_POST['permit'];
 	$bmeu = $_POST['bmeu'];
 	$based_on = $_POST['based_on'];
-	$non_profit_number = $_POST['non_profit_number'];
 
 	$data_source = $_POST['data_source'];
 	$data_received = date("Y-m-d", strtotime($_POST['data_received']));
@@ -152,7 +151,7 @@ if(isset($_POST['submit_form'])){
 	
 
 	$sql = 'INSERT INTO job_ticket(processed_by,client_name,project_name,ticket_date,due_date,created_by,special_instructions,materials_ordered,materials_expected,estimate_number,estimate_date,estimate_created_by,expected_quantity,records_total,job_status,mail_class,rate,processing_category,
-	mail_dim,weights_measures,permit,bmeu,based_on,non_profit_number) VALUES ("' . $processed_by . '","' . $client_name . '", "' . $project_name . '", "' . $ticket_date . '", "' . $due_date . '","' . $created_by . '","' . $special_instructions . '","' . $materials_ordered . '","' . $materials_expected . '","' . $estimate_number . '","' . $estimate_date . '","' . $estimate_created_by . '","' . $expected_quantity . '","' . $records_total . '","' . $job_status . '", "' . $mail_class . '", "' . $rate . '", "' . $processing_category . '", "' . $mail_dim . '", "' . $wm . '", "' . $permit . '", "' . $bmeu . '", "' . $based_on . '", "' . $non_profit_number . '")';
+	mail_dim,weights_measures,permit,bmeu,based_on) VALUES ("' . $processed_by . '","' . $client_name . '", "' . $project_name . '", "' . $ticket_date . '", "' . $due_date . '","' . $created_by . '","' . $special_instructions . '","' . $materials_ordered . '","' . $materials_expected . '","' . $estimate_number . '","' . $estimate_date . '","' . $estimate_created_by . '","' . $expected_quantity . '","' . $records_total . '","' . $job_status . '", "' . $mail_class . '", "' . $rate . '", "' . $processing_category . '", "' . $mail_dim . '", "' . $wm . '", "' . $permit . '", "' . $bmeu . '", "' . $based_on . '")';
 	$result = $conn->query($sql) or die('Error querying database 0.');
 
 
