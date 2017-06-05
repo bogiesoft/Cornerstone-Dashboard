@@ -257,160 +257,101 @@ function addTotalWM()
                 <div class="newclienttab-inner">
 				<table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
 						<tbody>
-							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='vendor' data-index='4'>Client</th><th class='maintable-thtwo data-header' data-name='material' data-index='6'>Job Name</th><th class='maintable-thtwo data-header' data-name='type' data-index='7'>Due Date</th></tr></thead><tbody>
-							<tr><td><input style = "width: 75%" id = "client_name" placeholder="Start typing" name="client_name" type="text" class="contact-prefix" autocomplete = "off"><a class = "delete_client_af" href = "#" style = "display: none">delete</a></td><td><input style = "width: 75%" name="project_name" type="text" class="contact-prefix"></td><td><input id = "due_date" style = "width: 75%" name="due_date" type="date" class="contact-prefix"></td></tr>
+							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='material' data-index='6'>Job Name</th><th class='maintable-thtwo data-header' data-name='type' data-index='7'>Due Date</th></tr></thead><tbody>
+							<tr><td><input style = "width: 75%" name="project_name" type="text" class="contact-prefix"></td><td><input id = "due_date" style = "width: 75%" name="due_date" type="date" class="contact-prefix"></td></tr>
 						</tbody></table></td></tr></tbody></table>
-                    <div class="tabinner-detail">
-					<ul class = "client_search_results">
-					</ul>
-                    </div>
 				</div>
-				 <div class="newclienttab-inner" style = "float: left; width: 33%">
-                    <div class="tabinner-detail">
-                    <label>Primary Contact</label>
-                    <input id = "contact_name" name="contact_name" type="text" class="contact-prefix" readonly>
-                    </div>
-					<div class="tabinner-detail">
-                    <label>Phone</label>
-                    <input id = "phone" name="phone" type="text" class="contact-prefix" readonly>
-                    </div>
-					<div class="tabinner-detail">
-                    <label>Email</label>
-                    <input id = "email" name="email" type="text" class="contact-prefix" readonly>
-                    </div>
-					<div class="tabinner-detail">
-                    <label>Address</label>
-                    <input id = "address_line_1" name="address" type="text" class="contact-prefix" readonly>
-                    </div>
-					<div class="tabinner-detail">
-                    <label>City</label><input id = "city" style = "width: 20%" name="city" type="text" class="contact-prefix" readonly><label>State</label><input id = "state" style = "width: 20%" name="state" type="text" class="contact-prefix" readonly><label>Zip</label><input id = "zipcode" style = "width: 20%" name="zip" type="text" class="contact-prefix" readonly>
-                    </div>
-					<div class="tabinner-detail">
-                    <label>Second Contact</label>
-                    <input id = "second_contact" name="second_contact" type="text" class="contact-prefix" readonly>
-                    </div>
-					<div class="tabinner-detail">
-                    <label>Fax</label>
-                    <input id = "fax" name="fax" type="text" class="contact-prefix" readonly>
-                    </div>
-					<div class="newcontact-tabbtm" style = "background-color: #f4f5f7">
-                    <input onclick = "showSaveMessage()" class="save_client_info" value="Save Client Changes" name="submit_form" style="display: none; float: left; width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px; cursor: pointer" readonly>
-                </div>
-				</div>
-				<div class="newclienttab-inner" style = "float: left; width: 33%">
-					<div class="tabinner-detail">
-                    <label>Non Profit Number</label>
-                    <input id = "non_profit_number" name="non_profit_number" type="text" class="contact-prefix" readonly>
-                    </div>
-					<div class="tabinner-detail">
-                    <label>CRID</label>
-                    <input id = "crid" name="crid" type="text" class="contact-prefix" readonly>
-                    </div>
-					<div class="tabinner-detail">
-                    <label>Mail Class</label>
-					<select name = "mail_class" style = "width: 200px; margin-right: 200px">
-					<option selected = "selected" value = "FCM">FCM</option>
-					<option value = "Bulk Standard">Bulk Standard</option>
-					<option value = "Non-Profit BLK">Non-Profit BLK</option>
-					<option value = "BPM">BPM</option>
-					<option value = "Non-profit BPM">Non-profit BPM</option>
-					<option value = "Parcel">Parcel</option>
-					<option value = "Non-profit Parcel">Non-profit Parcel</option>
-					<option value = "Hand Stamp FCM">Hand Stamp FCM</option>
-					<option value = "Hand Stamp Bulk">Hand Stamp Bulk</option>
-					</select>
-                    </div>
-					<div class="tabinner-detail">
-                    <label>Rate</label>
-					<select name = "rate">
-					<option selected = "selected" value = "Auto">Auto</option>
-					<option value = "Auto-CRRT">Auto CRRT</option>
-					<option value = "Auto-WSS">Auto-WSS</option>
-					<option value = "Non-auto">Non-auto</option>
-					<option value = "Simplified">Simplified</option>
-					</select>
-                    </div>
-					<div class="tabinner-detail">
-                    <label>Processing Category</label>
-					<select name = "processing_category" style = "width: 200px; margin-right: 200px">
-					<option selected = "selected" value = "Flat">Flat</option>
-					<option value = "Letter">Letter</option>
-					<option value = "Postcard - FCM Only">Postcard - FCM Only</option>
-					</select>
-                    </div>
-					<div class="tabinner-detail">
-                    <label>Mail Dimensions</label>
-                    <input id = "mail_dimensions" name="mail_dim" type="text" class="contact-prefix">
-                    </div>
-					<div class="tabinner-detail">
-                    <label>Total Weights and Measures</label>
-                    <input id = "total_w_m" name="total_w_m" type="text" class="contact-prefix" placeholder = "Auto Generated" readonly>
-                    </div>
-					<div class="tabinner-detail">
-                    <label>Based On</label>
-					<select id = "based_on" style = "width: 100%" name="based_on" onchange = "addTotalWM()">
-                    <option selected = 'selected' value = '0'>--Choose Weights and Measures First--</option>
-					</select>
-                    </div>
-					 <div class="tabinner-detail">
-                    <label>Permit</label>
-                    <input name="permit" type="text" class="contact-prefix">
-                    </div>
-				</div>
-				<div class="newclienttab-inner" style = "float: left; width: 33%">
-					<div class="tabinner-detail">
-                    <label>Records Total</label>
-                    <input name="records_total" type="text" class="contact-prefix">
-                    </div>
-					<div class="tabinner-detail">
-                    <label>Data Location</label>
-					<input id="file_location" type="file">
-                    <textarea id = "data_location" style = "height: 10%" name="data_location" type="text" class="contact-prefix"></textarea>
-                    </div>
-					 <div class="tabinner-detail">
-                    <label>Data Source</label>
-					<select name = "data_source">
-					<option selected = "selected" value = "Client">Client</option>
-					<option value = "BOE">BOE</option>
-					<option value = "Recycled">Recycled</option>
-					<option value = "Occupants Residency">Occupants Residency</option>
-					<option value = "Melissa">Melissa</option>
-					<option value = "Master">Master</option>
-					<option value = "DataConsulate">DataConsulate</option>
-					<option value = "Multiple">Multiple</option>
-					<option value = "Real Property">Real Property</option>
-					<option value = "Other">Other</option>
-					</select>
-                    </div>
-					<div class="tabinner-detail">
-                    <label>Data Received</label>
-                    <input id = "data_received" name="data_received" type="date" class="contact-prefix">
-                    </div>
-                    <div class="tabinner-detail">
-                    <label>Data Completed</label>
-                    <input id = "data_completed" name="data_completed" type="date" class="contact-prefix">
-                    </div>
-					<div class="tabinner-detail">
-                    <label>Processed By</label>
-                     <select name="data_processed_by">
-                    <?php
-                        $result = mysqli_query($conn, "SELECT * FROM users");
-                        $count = 1;
-                        while($row = $result->fetch_assoc()){
-                            if($count == 1){
-                                echo "<option selected = 'selected' value = '" . $row['user'] . "'>" . $row['first_name'] . " " . $row['last_name'] . "</option>"; 
-                            }
-                            else{
-                                echo "<option value = '" . $row['user'] . "'>" . $row['first_name'] . " " . $row['last_name'] . "</option>"; 
-                            }
-                             
-                            $count = $count + 1;
+				<div class = "newclienttab-inner" style = "float: left; width 100%; width: 100%; clear: both">
+					<div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
+							<tbody>
+							<tr valign='top'><th class='allcontacts-title'>General<span class='allcontacts-subtitle'></span></th></tr>
+							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody>
+							<tr><td><label>Records Total</label><input name="records_total" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td><td><?php
+                     
+                         
+                        $result2 = $conn->query("select first_name, last_name, user from users");
+                        echo "<label>Assigned to</label><select name='processed_by' style = 'width: 50%; margin-right: 40%'>";
+                        echo "<option disabled selected value> -- select an option -- </option>";
+                        while ($row2 = $result2->fetch_assoc()) {
+                                      //unset($pm);
+                                      $processed_by = $row2['first_name']. ' '. $row2['last_name']; 
+                                      echo '<option value="'.$row2['user'].'">'.$processed_by.'</option>';
+                                      
                         }
-                    ?>
-                    </select>
-                    </div>
+                        echo "</select>";
+                        ?></td><td><label>Job Status</label><select name='job_status' style = "width: 50%; margin-right: 40%"><option disabled selected value> -- select an option -- </option><option value="in P.M.">in P.M.</option><option value="in Production">in Production</option><option value="on hold">on hold</option><option value="waiting for materials">waiting for materials</option><option value="waiting for data">waiting for data</option><option value="waiting for postage">waiting for postage</option></select></td></tr>
+						<tr><td><label>Ticket Date</label><input id = "ticket_date" name="ticket_date" type="date" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td><td><?php
+                     
+                         
+                        $result1 = $conn->query("select first_name, last_name, user from users");
+                        echo "<label>Created By</label><select name='created_by' style = 'width: 50%; margin-right: 40%'>";
+                        echo "<option disabled selected value> -- select an option -- </option>";
+                        while ($row1 = $result1->fetch_assoc()) {
+                                      unset($created_by);
+                                      $created_by = $row1['first_name'] . ' ' . $row1['last_name']; 
+                                      echo '<option value="'.$row1['user'].'">'.$created_by.'</option>';
+                                      
+                        }
+                        echo "</select>";
+                        ?></td><td><label>Completed Date</label><input id = "completed_date" name="completed_date" type="date" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td></tr>
+						<tr><td><label>Estimate Number</label><input name="estimate_number" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td><td><label>Estimate date</label><input id = "estimate_date" name="estimate_date" type="date" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td><td><label>Estimate created by</label>
+						<select name="estimate_created_by" style = "width: 50%; margin-right: 40%">
+						<?php
+							$result = mysqli_query($conn, "SELECT * FROM users");
+							$count = 1;
+							while($row = $result->fetch_assoc()){
+								if($count == 1){
+									echo "<option selected = 'selected' value = '" . $row['user'] . "'>" . $row['first_name'] . " " . $row['last_name'] . "</option>"; 
+								}
+								else{
+									echo "<option value = '" . $row['user'] . "'>" . $row['first_name'] . " " . $row['last_name'] . "</option>"; 
+								}
+								 
+								$count = $count + 1;
+							}
+						?>
+                    </select></td></tr>
+					</tbody></table></td></tr></tbody></table></div>	
 				</div>
-				<div class="newclienttab-inner" style = "float: left; width: 45%;">
+				<div class = "newclienttab-inner" style = "float: left; width 50%; width: 45%; margin-right: 2%">
+					<div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
+							<tbody>
+							<tr valign='top'><th class='allcontacts-title' style = "width: 50%">Client Information<span class='allcontacts-subtitle'></span></th><th class='allcontacts-title'><input style = "width: 100%" id = "client_name" placeholder="Client Name" name="client_name" type="text" class="contact-prefix" autocomplete = "off"><a class = "delete_client_af" href = "#" style = "display: none; font-size: 20px">delete</a></th></tr>
+							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody>
+							<tr><td><ul class = "client_search_results" style = "list-style-type: none"></ul></td></tr>
+							<tr><td><label>Primary Contact</label><input id = "contact_name" name="contact_name" type="text" class="contact-prefix" style = "width: 78%" readonly></td><td><label>Phone</label><input id = "phone" name="phone" type="text" class="contact-prefix" style = "width: 78%; margin-right: 50px" readonly></td></tr>
+							<tr><td><label>Email</label><input id = "email" name="email" type="text" class="contact-prefix" style = "width: 78%; margin-right: 50px" readonly></td><td><label>Address</label><input id = "address_line_1" name="address" type="text" class="contact-prefix" style = "width: 78%; margin-right: 50px" readonly></td></tr>
+							<tr><td> <label>City</label><input id = "city" style = "width: 20%" name="city" type="text" class="contact-prefix" readonly><label>State</label><input id = "state" style = "width: 20%" name="state" type="text" class="contact-prefix" readonly><label>Zip</label><input id = "zipcode" style = "width: 20%" name="zip" type="text" class="contact-prefix" readonly></td><td><label>Second Contact</label><input id = "second_contact" name="second_contact" type="text" class="contact-prefix" style = "width: 78%" readonly></td></tr>
+							<tr><td> <label>Fax</label><input id = "fax" name="fax" type="text" class="contact-prefix" style = "width: 78%; margin-right: 100px" readonly></td><td><label>Non Profit Number</label><input id = "non_profit_number" name="non_profit_number" type="text" class="contact-prefix" style = "width: 78%" readonly></td></tr>
+							<tr><td> <label>CRID</label><input id = "crid" name="crid" type="text" class="contact-prefix" style = "width: 78%; margin-right: 50px" readonly></td><td><div class="newcontact-tabbtm" style = "background-color: #f4f5f7"><input onclick = "showSaveMessage()" class="save_client_info" value="Save Client Changes" name="submit_form" style="display: none; float: left; width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px; cursor: pointer" readonly></div></td></tr>
+					</tbody></table></td></tr></tbody></table></div>	
+				</div>
+				<div class = "newclienttab-inner" style = "float: left; width 50%; width: 50%">
+					<div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
+							<tbody>
+							<tr valign='top'><th class='allcontacts-title'>Data<span class='allcontacts-subtitle'></span></th></tr>
+							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody>
+							<tr><td><label>Data Location</label><input id="file_location" type="file" style = "width: 78%"><textarea id = "data_location" style = "height: 10%; width: 78%" name="data_location" type="text" class="contact-prefix"></textarea></td><td> <label>Data Source</label><select name = "data_source" style = "width: 75%"><option selected = "selected" value = "Client">Client</option><option value = "BOE">BOE</option><option value = "Recycled">Recycled</option><option value = "Occupants Residency">Occupants Residency</option><option value = "Melissa">Melissa</option><option value = "Master">Master</option><option value = "DataConsulate">DataConsulate</option><option value = "Multiple">Multiple</option><option value = "Real Property">Real Property</option><option value = "Other">Other</option></select></td></tr>
+							<tr><td><label>Data Received</label><input id = "data_received" name="data_received" type="date" class="contact-prefix" style = "width: 70%"></td><td><label>Data Completed</label><input id = "data_completed" name="data_completed" type="date" class="contact-prefix" style = "width: 70%"></td></tr>
+							<tr><td><label>Processed By</label>
+							 <select name="data_processed_by" style = "width: 70%">
+							<?php
+								$result = mysqli_query($conn, "SELECT * FROM users");
+								$count = 1;
+								while($row = $result->fetch_assoc()){
+									if($count == 1){
+										echo "<option selected = 'selected' value = '" . $row['user'] . "'>" . $row['first_name'] . " " . $row['last_name'] . "</option>"; 
+									}
+									else{
+										echo "<option value = '" . $row['user'] . "'>" . $row['first_name'] . " " . $row['last_name'] . "</option>"; 
+									}
+									 
+									$count = $count + 1;
+								}
+							?></select></td><td><label>Data Hours</label><input name="data_hrs" type="text" class="contact-prefix" style = "width: 75%"></td></tr>
+					</tbody></table></td></tr></tbody></table></div>	
+				</div>
+				<div class="newclienttab-inner" style = "float: left; width: 45%; clear: both">
                     <div class="tabinner-detail">
 					<table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
 						<tbody>
@@ -435,195 +376,51 @@ function addTotalWM()
 						</tbody></table></td></tr></tbody></table>
 						</div>
 				</div>
-				<div class="newclienttab-inner" style = "float: right; width: 55%">
-					<div class="tabinner-detail">
-                    <label>Data Hours</label>
-                    <input name="data_hrs" type="text" class="contact-prefix">
-                    </div>
-                    <div class="tabinner-detail">
-                    <label>Graphic Design Hours</label>
-                    <input name="gd_hrs" type="text" class="contact-prefix">
-                    </div>
-                    <div class="tabinner-detail">
-                    <label>Initial Record Count</label>
-                    <input name="initialrec_count" type="text" class="contact-prefix">
-                    </div>
-                    <div class="tabinner-detail">
-                    <label>Manual</label>
-                    <input name="manual" type="text" class="contact-prefix">
-                    </div>
-					<div class="tabinner-detail">
-                    <label>Uncorrected</label>
-                    <input name="uncorrected" type="text" class="contact-prefix">
-                    </div>
-					<div class="tabinner-detail">
-                    <label>Bmeu</label>
-                    <input name="bmeu" type="text" class="contact-prefix">
-                    </div>
-                    <div class="tabinner-detail">
-                    <label>Unverifiable</label>
-                    <input name="unverifiable" type="text" class="contact-prefix">
-                    </div>
-                    <div class="tabinner-detail">
-                    <label>Foreigns</label>
-                    <input name="bs_foreigns" type="text" class="contact-prefix">
-                    </div>
-                    <div class="tabinner-detail">
-                    <label>Exact</label>
-                    <input name="bs_exact" type="text" class="contact-prefix">
-                    </div>
-                    <div class="tabinner-detail">
-                    <label>Loose</label>
-                    <input name="loose" type="text" class="contact-prefix">
-                    </div>
-                    <div class="tabinner-detail">
-                    <label>Householded</label>
-                    <input name="householded" type="text" class="contact-prefix">
-                    </div>
-					<div class="tabinner-detail">
-                    <label>DQR Sent</label>
-                    <input name="dqr_sent" type="date" class="contact-prefix">
-                    </div>
-                    <div class="tabinner-detail">
-                    <label>Basic</label>
-                    <input name="basic" type="text" class="contact-prefix">
-                    </div>
-                    <div class="tabinner-detail">
-                    <label>NCOA Errors</label>
-                    <input name="ncoa_errors" type="text" class="contact-prefix">
-                    </div>
-					<div class="tabinner-detail">
-                    <label>Domestic</label>
-                    <input name="bs_domestic" type="text" class="contact-prefix">
-                    </div>
-                    <div class="tabinner-detail">
-                    <label>NCOA</label>
-                    <input name="bs_ncoa" type="text" class="contact-prefix">
-                    </div>
-                    <div class="tabinner-detail">
-                    <label>Final Count</label>
-                    <input name="final_count" type="text" class="contact-prefix">
-                    </div>
+				<div class = "newclienttab-inner" style = "float: left; width 50%; width: 35%; margin-left: 17%">
+					<div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
+							<tbody>
+							<tr valign='top'><th class='allcontacts-title'>Blue Sheet<span class='allcontacts-subtitle'></span></th></tr>
+							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody>
+							<tr><td><label>Graphic Design Hours</label></td><td><input name="gd_hrs" type="text" class="contact-prefix"></td></tr>
+							<tr><td> <label>Initial Record Count</label></td><td><input name="initialrec_count" type="text" class="contact-prefix"></td></tr>
+							<tr><td><label>Manual</label></td><td><input name="manual" type="text" class="contact-prefix"></td></tr>
+							<tr><td><label>Uncorrected</label></td><td><input name="uncorrected" type="text" class="contact-prefix"></td></tr>
+							<tr><td><label>BMEU</label></td><td><input name="bmeu" type="text" class="contact-prefix"></td></tr>
+							<tr><td><label>Unverifiable</label></td><td><input name="unverifiable" type="text" class="contact-prefix"></td></tr>
+							<tr><td><label>Foreigns</label></td><td><input name="bs_foreigns" type="text" class="contact-prefix"></td></tr>
+							<tr><td><label>Exact</label></td><td><input name="bs_exact" type="text" class="contact-prefix"></td></tr>
+							<tr><td><label>Loose</label></td><td><input name="loose" type="text" class="contact-prefix"></td></tr>
+							<tr><td><label>Householded</label></td><td><input name="householded" type="text" class="contact-prefix"></td></tr>
+							<tr><td><label>DQR Sent</label></td><td><input name="dqr_sent" type="date" class="contact-prefix" style = "width: 78.5%"></td></tr>
+							<tr><td><label>Basic</label></td><td><input name="basic" type="text" class="contact-prefix"></td></tr>
+							<tr><td><label>NCOA</label></td><td><input name="bs_ncoa" type="text" class="contact-prefix"></td></tr>
+							<tr><td><label>NCOA Errors</label></td><td><input name="ncoa_errors" type="text" class="contact-prefix"></td></tr>
+							<tr><td><label>Domestic</label></td><td><input name="bs_domestic" type="text" class="contact-prefix"></td></tr>
+							<tr><td><label>Final Count</label></td><td><input name="final_count" type="text" class="contact-prefix"></td></tr>
+					</tbody></table></td></tr></tbody></table></div>	
 				</div>
-				<div class="newclienttab-inner" style = "float: left; width: 50%">
-                    <div class="tabinner-detail">
-                    <label>Materials Ordered</label>
-                    <input id = "materials_ordered" name="materials_ordered" type="date" class="contact-prefix">
-                    </div>
-                    <div class="tabinner-detail">
-                    <label>Materials Expected</label>
-                    <input id = "materials_expected" name="materials_expected" type="date" class="contact-prefix">
-                    </div>
-                    <div class="tabinner-detail">
-                    <label>Expected Quantity</label>
-                    <input name="expected_quantity" type="text" class="contact-prefix">
-                    </div>
-                    <div class="tabinner-detail">
-                    <label>Job Status</label>
-                    <select name='job_status'>
-                    <option disabled selected value> -- select an option -- </option>
-                    <option value="in P.M.">in P.M.</option>
-                    <option value="in Production">in Production</option>
-                    <option value="on hold">on hold</option>
-                    <option value="waiting for materials">waiting for materials</option>
-                    <option value="waiting for data">waiting for data</option>
-                    <option value="waiting for postage">waiting for postage</option>
-                    </select>
-                    </div>
-					 <div class="tabinner-detail">
-                    <label>Ticket Date</label>
-                    <input id = "ticket_date" name="ticket_date" type="date" class="contact-prefix">
-                    </div>
-					<?php
-                     
-                         
-                        $result2 = $conn->query("select first_name, last_name, user from users");
-                        echo("<div class='tabinner-detail'>");
-                        echo "<label>Assigned to</label><select name='processed_by'>";
-                        echo "<option disabled selected value> -- select an option -- </option>";
-                        while ($row2 = $result2->fetch_assoc()) {
-                                      //unset($pm);
-                                      $processed_by = $row2['first_name']. ' '. $row2['last_name']; 
-                                      echo '<option value="'.$row2['user'].'">'.$processed_by.'</option>';
-                                      
-                        }
-                        echo "</select>";
-                        echo "</div>";
-                        ?>
+				<div class = "newclienttab-inner" style = "float: left; width 100%; width: 100%; clear: both">
+					<div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
+							<tbody>
+							<tr valign='top'><th class='allcontacts-title'>Mailing Information<span class='allcontacts-subtitle'></span></th></tr>
+							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody>
+							<tr><td><label>Mail Class</label><select name = "mail_class" style = "width: 50%; margin-right: 40%"><option selected = "selected" value = "FCM">FCM</option><option value = "Bulk Standard">Bulk Standard</option><option value = "Non-Profit BLK">Non-Profit BLK</option><option value = "BPM">BPM</option><option value = "Non-profit BPM">Non-profit BPM</option><option value = "Parcel">Parcel</option><option value = "Non-profit Parcel">Non-profit Parcel</option><option value = "Hand Stamp FCM">Hand Stamp FCM</option><option value = "Hand Stamp Bulk">Hand Stamp Bulk</option></select></td><td><label>Rate</label><select name = "rate" style = "margin-right: 90%"><option selected = "selected" value = "Auto">Auto</option><option value = "Auto-CRRT">Auto CRRT</option><option value = "Auto-WSS">Auto-WSS</option><option value = "Non-auto">Non-auto</option><option value = "Simplified">Simplified</option></select></td><td><label>Processing Category</label><select name = "processing_category" style = "width: 50%; margin-right: 50%"><option selected = "selected" value = "Flat">Flat</option><option value = "Letter">Letter</option><option value = "Postcard - FCM Only">Postcard - FCM Only</option></select></td></tr>
+							<tr><td><label>Print Template</label><input name="print_template" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td><td><label>Special Address Formatting</label><input name="special_address" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td><td><label>Method of Delivery</label><input name="delivery" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td></tr>
+							<tr><td><label>Permit</label><input name="permit" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td><td><input type="checkbox" name="hold_postage" class="contact-prefix" style = "transform: scale(3.0)"><label style = "margin-left: 4%">Hold Postage</label></td><td><input name="postage_paid" type="checkbox" class="contact-prefix" style = "transform: scale(3.0)"><label style = "margin-left: 4%">Postage Paid</label></td></tr>
+					</tbody></table></td></tr></tbody></table></div>	
 				</div>
-				<div class="newclienttab-inner" style = "float: left; width: 33%;">     
-                    <div class="tabinner-detail">
-                    <label>Completed Date</label>
-                    <input id = "completed_date" name="completed_date" type="date" class="contact-prefix">
-                    </div>
-					<div class="tabinner-detail">
-                    <label>Estimate Number</label>
-                    <input name="estimate_number" type="text" class="contact-prefix">
-                    </div>
-                    <div class="tabinner-detail">
-                    <label>Estimate date</label>
-                    <input id = "estimate_date" name="estimate_date" type="date" class="contact-prefix">
-                    </div>
-                    <div class="tabinner-detail">
-                    <label>Estimate created by</label>
-                    <select name="estimate_created_by">
-                    <?php
-                        $result = mysqli_query($conn, "SELECT * FROM users");
-                        $count = 1;
-                        while($row = $result->fetch_assoc()){
-                            if($count == 1){
-                                echo "<option selected = 'selected' value = '" . $row['user'] . "'>" . $row['first_name'] . " " . $row['last_name'] . "</option>"; 
-                            }
-                            else{
-                                echo "<option value = '" . $row['user'] . "'>" . $row['first_name'] . " " . $row['last_name'] . "</option>"; 
-                            }
-                             
-                            $count = $count + 1;
-                        }
-                    ?>
-                    </select>
-                    </div>
-					<?php
-                     
-                         
-                        $result1 = $conn->query("select first_name, last_name, user from users");
-                        echo("<div class='tabinner-detail'>");
-                        echo "<label>Created By</label><select name='created_by'>";
-                        echo "<option disabled selected value> -- select an option -- </option>";
-                        while ($row1 = $result1->fetch_assoc()) {
-                                      unset($created_by);
-                                      $created_by = $row1['first_name'] . ' ' . $row1['last_name']; 
-                                      echo '<option value="'.$row1['user'].'">'.$created_by.'</option>';
-                                      
-                        }
-                        echo "</select>";
-                        echo "</div>";
-                        ?>
-				</div>
-				<div class="newclienttab-inner" style = "float: left; width: 33%;">
-                    <div class="tabinner-detail">
-                    <input type="checkbox" name="hold_postage" class="contact-prefix"><label>Hold Postage</label>
-                    </div>
-                    <div class="tabinner-detail">
-                    <input name="postage_paid" type="checkbox" class="contact-prefix"><label>Postage Paid</label>
-                    </div>
-                    <div class="tabinner-detail">
-                    <label>Print Template</label>
-                    <input name="print_template" type="text" class="contact-prefix">
-                    </div>
-                    <div class="tabinner-detail">
-                    <label>Special Address Formatting</label>
-                    <input name="special_address" type="text" class="contact-prefix">
-                    </div>
-                    <div class="tabinner-detail">
-                    <label>Method of Delivery</label>
-                    <input name="delivery" type="text" class="contact-prefix">
-                    </div>
+				<div class = "newclienttab-inner" style = "float: left; width 100%; width: 100%; clear: both">
+					<div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
+							<tbody>
+							<tr valign='top'><th class='allcontacts-title'>Weights and Measures<span class='allcontacts-subtitle'></span></th></tr>
+							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody>
+							<tr><td><label>Mail Dimensions</label><input id = "mail_dimensions" name="mail_dim" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td><td><label>Materials Ordered</label><input id = "materials_ordered" name="materials_ordered" type="date" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td><td><label>Materials Expected</label><input id = "materials_expected" name="materials_expected" type="date" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td></tr>
+							<tr><td> <label>Based On</label><select id = "based_on" style = "width: 50%; margin-right: 40%" name="based_on" onchange = "addTotalWM()"><option selected = 'selected' value = '0'>--Choose W&M First--</option></select></td><td> <label>Total Weights and Measures</label><input id = "total_w_m" name="total_w_m" type="text" class="contact-prefix" placeholder = "Auto Generated" style = "width: 50%; margin-right: 40%"></td><td><label>Expected Quantity</label><input name="expected_quantity" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td></tr>
+					</tbody></table></td></tr></tbody></table></div>	
 				</div>
 				<div class="newclienttab-inner" style = "width: 100%">
                     <div class="tabinner-detail">
-                    <label>Weights and Measures</label>
-                    <a class="pull-right" onclick = 'addWeights_Measures()'>Add Weights and Measures</a>
+                    <a class="pull-right" onclick = 'addWeights_Measures()' style = "cursor: pointer">Add Weights and Measures</a>
                     <table id="W_MTable" border="1" cellpadding="1" cellspacing="1" style='text-align: center; vertical-align: middle;'>
                         <thead>
                         <tr>

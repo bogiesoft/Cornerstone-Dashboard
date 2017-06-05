@@ -1,6 +1,17 @@
 <?php
 require ("connection.php");
 if(isset($_POST['submit_form'])){
+	foreach(array_keys($_POST) as $input){
+		if(!is_array($input)){
+			$_POST[$input] = str_replace('"', '', $_POST[$input]);
+			$_POST[$input] = str_replace("'", "", $_POST[$input]);
+		}
+	}
+	foreach($_POST as $input){
+		if(!is_array($input)){
+			echo $input;
+		}
+	}
 	session_start();
 	$user_name = $_SESSION['user'];
 	date_default_timezone_set('America/New_York');
