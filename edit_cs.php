@@ -48,7 +48,7 @@ require ("connection.php");
 			<div class="newcontactstab-detail">
 <form action="update_cs.php" id="form" method="POST">
 				<div class="newcontacttab-inner">
-					<div class="tabinner-detail">
+					<div class="tabinner-detail" style = "display: none">
 					<label>Job Id: </label>
 					<input name="job_id" type="text" value="<?php echo $job_id; ?>" class="contact-prefix">
 					</div>
@@ -62,7 +62,7 @@ require ("connection.php");
 					</div>
 					<div class="tabinner-detail">
 					<label>Invoice date</label>
-					<input name="invoice_date" type="date" value="<?php echo $invoice_date; ?>" class="contact-prefix">
+					<input id = "invoice_date" name="invoice_date" type="date" value="<?php echo $invoice_date; ?>" class="contact-prefix">
 					</div>
 					<div class="tabinner-detail">
 					<label>Residual Returned</label>
@@ -86,6 +86,10 @@ require ("connection.php");
 					<label>Reason</label>
 					<input name="reason" type="text" value="<?php echo $reason; ?>" class="contact-prefix">
 					</div>
+					<div class="tabinner-detail">
+					<label>Completed Date</label>
+					<input id = "completed_date" name="completed_date" type="date" class="contact-prefix">
+					</div>
 				</div>
 				<div class="newcontacttab-inner" >
 					<div class="tabinner-detail-notes">
@@ -108,3 +112,8 @@ require ("connection.php");
 </div>
 <script src="C_SSweetAlert.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script>
+	var date = new Date();
+	document.getElementById("invoice_date").valueAsDate = date;
+	document.getElementById("completed_date").valueAsDate = date;
+</script>

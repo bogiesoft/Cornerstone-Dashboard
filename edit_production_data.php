@@ -80,11 +80,8 @@ require('header.php');
 					  <option value="Collating">Collating</option>
 					  <option value="Labeling">Labeling</option>
 					  <option value="Print Permit">Print Permit</option>
-					  <option value="Correct Permit">Correct Permit</option>
-					  <option value="Carrier Route">Carrier Route</option>
 					  <option value="Endorsement line">Endorsement line</option>
 					  <option value="Address Printing">Address Printing</option>
-					  <option value="Tag as Political">Tag as Political</option>
 					  <option value="Inkjet Printing">Inkjet Printing</option>
 					  <option value="Glue Dots">Glue Dots</option>
 </select></span><br><br>

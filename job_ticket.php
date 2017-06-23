@@ -97,6 +97,7 @@ function getMaterialsID(row_id){
 				}
 				count_result++
             });
+			addTotalWM();
         }
     });
  
@@ -105,7 +106,7 @@ function addWeights_Measures(){
     if(number_of_rows<20){
         number_of_rows=number_of_rows+1;
         id_of_row=id_of_row+1;
-        $("#W_M_tbody").append( "<tr id='"+id_of_row+"'><td >           <input type='checkbox' id='checkbox"+id_of_row+"'checked name='wm[]' value=''>        </td>     <td>          <select class='vendors' id='vendors"+id_of_row+"' name='vendor' style='width:220px;'>             <option value=''>Select</option>            </select>     </td>     <td>          <select class='materials' id='materials"+id_of_row+"' name='material' style='width:220px;'>               <option value=''>Select</option>            </select>     </td>     <td>          <select class='types' id='types"+id_of_row+"' name='vendor' style='width:220px;'>             <option value=''>Select</option>            </select>     </td><td><input type = 'text' id = 'weight" + id_of_row + "' readonly></td><td><input type = 'text' id = 'height" + id_of_row + "' readonly></td><td><input type = 'text' id = 'based_on" + id_of_row + "' readonly></td><td><input type = 'date' name = 'expected_date" + number_of_rows + "'></input> </td><td><input type = 'checkbox' name = 'crst_pickup" + number_of_rows + "'></input></td><td><input type = 'text' name = 'initial" + number_of_rows + "'></input></td><td><input name = 'location" + number_of_rows + "' type = 'text'></td> <td><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeWeights_Measures('#" + id_of_row + "')></td>  </tr>");
+        $("#W_M_tbody").append( "<tr id='"+id_of_row+"'><td style = 'display: none'>           <input type='checkbox' id='checkbox"+id_of_row+"'checked name='wm[]' value=''>        </td>     <td>          <select class='vendors' id='vendors"+id_of_row+"' name='vendor' style='width:220px;'>             <option value=''>Select</option>            </select>     </td>     <td>          <select class='materials' id='materials"+id_of_row+"' name='material' style='width:220px;'>               <option value=''>Select</option>            </select>     </td>     <td>          <select class='types' id='types"+id_of_row+"' name='vendor' style='width:220px;'>             <option value=''>Select</option>            </select>     </td><td><input type = 'text' id = 'weight" + id_of_row + "' readonly></td><td><input type = 'text' id = 'height" + id_of_row + "' readonly></td><td><input type = 'text' id = 'based_on" + id_of_row + "' readonly></td><td><input type = 'date' name = 'expected_date" + number_of_rows + "'></input> </td><td><input type = 'checkbox' name = 'crst_pickup" + number_of_rows + "'></input></td><td><input type = 'text' name = 'initial" + number_of_rows + "'></input></td><td><select name = 'location" + number_of_rows + "'><option value = '' selected = 'selected'>--Choose Location--</option><option value = '29 Front'>29 Front</option><option value = '29 Middle'>29 Middle</option><option value = '29 Back'>29 Back</option><option value = '31 Front'>31 Front</option><option value = '31 Middle'>31 Middle</option><option value = '31 Back'>31 Back</option></select></td> <td><p style = 'cursor: pointer' onclick = removeWeights_Measures('#" + id_of_row + "')>X</p></td>  </tr>");
         getVendors(id_of_row);
  
     }
@@ -134,7 +135,7 @@ function removeWeights_Measures(row_id){
     number_of_rows--;
 	weight = weight.toFixed(2);
 	height = height.toFixed(2);
-	$("#total_w_m").val(weight + " x " + height);
+	$("#total_w_m").val(weight + "lbs. x " + height + " in.");
 };
 function removeTasks(row_id){
     $(row_id).remove();
@@ -212,7 +213,7 @@ function addTotalWM()
 	}
 	weight = weight.toFixed(2);
 	height = height.toFixed(2);
-	$("#total_w_m").val(weight + " x " + height);
+	$("#total_w_m").val(weight + " lbs. x " + height + " in.");
 }
 </script>
 <script type="text/javascript">
@@ -257,16 +258,28 @@ function addTotalWM()
                 <div class="newclienttab-inner">
 				<table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
 						<tbody>
-							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='material' data-index='6'>Job Name</th><th class='maintable-thtwo data-header' data-name='type' data-index='7'>Due Date</th></tr></thead><tbody>
-							<tr><td><input style = "width: 75%" name="project_name" type="text" class="contact-prefix"></td><td><input id = "due_date" style = "width: 75%" name="due_date" type="date" class="contact-prefix"></td></tr>
+							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='material' data-index='6'>Job Name</th><th class='maintable-thtwo data-header' data-name='type' data-index='7'>Job Type</th><th class='maintable-thtwo data-header' data-name='type' data-index='7'>Due Date</th><th class='maintable-thtwo data-header' data-name='type' data-index='7'>Created By</th></tr></thead><tbody>
+							<tr><td><input style = "width: 85%;" name="project_name" type="text" class="contact-prefix"></td><td><select name = "job_type"><option selected = "selected" value = "">--Choose Job Type--</option><option value = "Political">Political</option><option value = 'Non-Profit'>Non-Profit</option><option value = "EDDM">EDDM</option><option value = "Parcel">Parcel</option></select></td><td><input id = "due_date" style = "width: 45%" name="due_date" type="date" class="contact-prefix"></td><td><?php
+                     
+                         
+                        $result1 = $conn->query("select first_name, last_name, user from users");
+                        echo "<select name='created_by' style = 'width: 60%; margin-right: 40%'>";
+                        echo "<option disabled selected value> -- select an option -- </option>";
+                        while ($row1 = $result1->fetch_assoc()) {
+                                      unset($created_by);
+                                      $created_by = $row1['first_name'] . ' ' . $row1['last_name']; 
+                                      echo '<option value="'.$row1['user'].'">'.$created_by.'</option>';
+                                      
+                        }
+                        echo "</select>";
+                        ?></td></tr>
 						</tbody></table></td></tr></tbody></table>
 				</div>
 				<div class = "newclienttab-inner" style = "float: left; width 100%; width: 100%; clear: both">
 					<div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
 							<tbody>
-							<tr valign='top'><th class='allcontacts-title'>General<span class='allcontacts-subtitle'></span></th></tr>
 							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody>
-							<tr><td><label>Records Total</label><input name="records_total" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td><td><?php
+							<tr><td><label>Ticket Date</label><input id = "ticket_date" name="ticket_date" type="date" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td><td><?php
                      
                          
                         $result2 = $conn->query("select first_name, last_name, user from users");
@@ -280,20 +293,6 @@ function addTotalWM()
                         }
                         echo "</select>";
                         ?></td><td><label>Job Status</label><select name='job_status' style = "width: 50%; margin-right: 40%"><option disabled selected value> -- select an option -- </option><option value="in P.M.">in P.M.</option><option value="in Production">in Production</option><option value="on hold">on hold</option><option value="waiting for materials">waiting for materials</option><option value="waiting for data">waiting for data</option><option value="waiting for postage">waiting for postage</option></select></td></tr>
-						<tr><td><label>Ticket Date</label><input id = "ticket_date" name="ticket_date" type="date" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td><td><?php
-                     
-                         
-                        $result1 = $conn->query("select first_name, last_name, user from users");
-                        echo "<label>Created By</label><select name='created_by' style = 'width: 50%; margin-right: 40%'>";
-                        echo "<option disabled selected value> -- select an option -- </option>";
-                        while ($row1 = $result1->fetch_assoc()) {
-                                      unset($created_by);
-                                      $created_by = $row1['first_name'] . ' ' . $row1['last_name']; 
-                                      echo '<option value="'.$row1['user'].'">'.$created_by.'</option>';
-                                      
-                        }
-                        echo "</select>";
-                        ?></td><td><label>Completed Date</label><input id = "completed_date" name="completed_date" type="date" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td></tr>
 						<tr><td><label>Estimate Number</label><input name="estimate_number" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td><td><label>Estimate date</label><input id = "estimate_date" name="estimate_date" type="date" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td><td><label>Estimate created by</label>
 						<select name="estimate_created_by" style = "width: 50%; margin-right: 40%">
 						<?php
@@ -313,28 +312,28 @@ function addTotalWM()
                     </select></td></tr>
 					</tbody></table></td></tr></tbody></table></div>	
 				</div>
-				<div class = "newclienttab-inner" style = "float: left; width 50%; width: 45%; margin-right: 2%">
+				<div class = "newclienttab-inner" style = "float: left; width 50%; width: 100%; margin-right: 2%">
 					<div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
 							<tbody>
 							<tr valign='top'><th class='allcontacts-title' style = "width: 50%">Client Information<span class='allcontacts-subtitle'></span></th><th class='allcontacts-title'><input style = "width: 100%" id = "client_name" placeholder="Client Name" name="client_name" type="text" class="contact-prefix" autocomplete = "off"><a class = "delete_client_af" href = "#" style = "display: none; font-size: 20px">delete</a></th></tr>
 							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody>
 							<tr><td><ul class = "client_search_results" style = "list-style-type: none"></ul></td></tr>
-							<tr><td><label>Primary Contact</label><input id = "contact_name" name="contact_name" type="text" class="contact-prefix" style = "width: 78%" readonly></td><td><label>Phone</label><input id = "phone" name="phone" type="text" class="contact-prefix" style = "width: 78%; margin-right: 50px" readonly></td></tr>
-							<tr><td><label>Email</label><input id = "email" name="email" type="text" class="contact-prefix" style = "width: 78%; margin-right: 50px" readonly></td><td><label>Address</label><input id = "address_line_1" name="address" type="text" class="contact-prefix" style = "width: 78%; margin-right: 50px" readonly></td></tr>
-							<tr><td> <label>City</label><input id = "city" style = "width: 20%" name="city" type="text" class="contact-prefix" readonly><label>State</label><input id = "state" style = "width: 20%" name="state" type="text" class="contact-prefix" readonly><label>Zip</label><input id = "zipcode" style = "width: 20%" name="zip" type="text" class="contact-prefix" readonly></td><td><label>Second Contact</label><input id = "second_contact" name="second_contact" type="text" class="contact-prefix" style = "width: 78%" readonly></td></tr>
-							<tr><td> <label>Fax</label><input id = "fax" name="fax" type="text" class="contact-prefix" style = "width: 78%; margin-right: 100px" readonly></td><td><label>Non Profit Number</label><input id = "non_profit_number" name="non_profit_number" type="text" class="contact-prefix" style = "width: 78%" readonly></td></tr>
-							<tr><td> <label>CRID</label><input id = "crid" name="crid" type="text" class="contact-prefix" style = "width: 78%; margin-right: 50px" readonly></td><td><div class="newcontact-tabbtm" style = "background-color: #f4f5f7"><input onclick = "showSaveMessage()" class="save_client_info" value="Save Client Changes" name="submit_form" style="display: none; float: left; width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px; cursor: pointer" readonly></div></td></tr>
+							<tr><td><label>Primary Contact</label><input id = "contact_name" name="contact_name" type="text" class="contact-prefix" style = "width: 50%; margin-right: 50%" readonly></td><td><label>Phone</label><input id = "phone" name="phone" type="text" class="contact-prefix" style = "width: 50%; margin-right: 50%" readonly></td></tr>
+							<tr><td><label>Email</label><input id = "email" name="email" type="text" class="contact-prefix" style = "width: 50%; margin-right: 50%" readonly></td><td><label>Address</label><input id = "address_line_1" name="address" type="text" class="contact-prefix" style = "width: 50%; margin-right: 50%" readonly></td></tr>
+							<tr><td> <label>City</label><input id = "city" style = "width: 20%" name="city" type="text" class="contact-prefix" readonly><label>State</label><input id = "state" style = "width: 20%" name="state" type="text" class="contact-prefix" readonly><label>Zip</label><input id = "zipcode" style = "width: 20%" name="zip" type="text" class="contact-prefix" readonly></td><td><label>Second Contact</label><input id = "second_contact" name="second_contact" type="text" class="contact-prefix" style = "width: 50%; margin-right: 50%" readonly></td></tr>
+							<tr><td> <label>Fax</label><input id = "fax" name="fax" type="text" class="contact-prefix" style = "width: 50%; margin-right: 50%" readonly></td><td><label>Non Profit Number</label><input id = "non_profit_number" name="non_profit_number" type="text" class="contact-prefix" style = "width: 50%; margin-right: 50%" readonly></td></tr>
+							<tr><td> <label>CRID</label><input id = "crid" name="crid" type="text" class="contact-prefix" style = "width: 50%; margin-right: 50%" readonly></td><td><div class="newcontact-tabbtm" style = "background-color: #f4f5f7"><input onclick = "showSaveMessage()" class="save_client_info" value="Save Client Changes" name="submit_form" style="display: none; float: left; width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px; cursor: pointer" readonly></div></td></tr>
 					</tbody></table></td></tr></tbody></table></div>	
 				</div>
-				<div class = "newclienttab-inner" style = "float: left; width 50%; width: 50%">
+				<div class = "newclienttab-inner" style = "float: left; width 50%; width: 100%">
 					<div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
 							<tbody>
 							<tr valign='top'><th class='allcontacts-title'>Data<span class='allcontacts-subtitle'></span></th></tr>
 							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody>
-							<tr><td><label>Data Location</label><input id="file_location" type="file" style = "width: 78%"><textarea id = "data_location" style = "height: 10%; width: 78%" name="data_location" type="text" class="contact-prefix"></textarea></td><td> <label>Data Source</label><select name = "data_source" style = "width: 75%"><option selected = "selected" value = "Client">Client</option><option value = "BOE">BOE</option><option value = "Recycled">Recycled</option><option value = "Occupants Residency">Occupants Residency</option><option value = "Melissa">Melissa</option><option value = "Master">Master</option><option value = "DataConsulate">DataConsulate</option><option value = "Multiple">Multiple</option><option value = "Real Property">Real Property</option><option value = "Other">Other</option></select></td></tr>
-							<tr><td><label>Data Received</label><input id = "data_received" name="data_received" type="date" class="contact-prefix" style = "width: 70%"></td><td><label>Data Completed</label><input id = "data_completed" name="data_completed" type="date" class="contact-prefix" style = "width: 70%"></td></tr>
+							<tr><td><label>Data Location</label><input id="file_location" type="file" style = "width: 78%"><textarea id = "data_location" style = "height: 10%; width: 78%" name="data_location" type="text" class="contact-prefix"></textarea></td><td><label>Data Source</label><select name = "data_source" style = "width: 50%; margin-right: 50%"><option selected = "selected" value = "Client">Client</option><option value = "BOE">BOE</option><option value = "Recycled">Recycled</option><option value = "Occupants Residency">Occupants Residency</option><option value = "Melissa">Melissa</option><option value = "Master">Master</option><option value = "DataConsulate">DataConsulate</option><option value = "Multiple">Multiple</option><option value = "Real Property">Real Property</option><option value = "Other">Other</option></select></td></tr>
+							<tr><td><label>Data Received</label><input id = "data_received" name="data_received" type="date" class="contact-prefix" style = "width: 50%; margin-right: 50%"></td><td><label>Data Completed</label><input id = "data_completed" name="data_completed" type="date" class="contact-prefix" style = "width: 50%; margin-right: 50%"></td></tr>
 							<tr><td><label>Processed By</label>
-							 <select name="data_processed_by" style = "width: 70%">
+							 <select name="data_processed_by" style = "width: 50%; margin-right: 50%">
 							<?php
 								$result = mysqli_query($conn, "SELECT * FROM users");
 								$count = 1;
@@ -348,10 +347,10 @@ function addTotalWM()
 									 
 									$count = $count + 1;
 								}
-							?></select></td><td><label>Data Hours</label><input name="data_hrs" type="text" class="contact-prefix" style = "width: 75%"></td></tr>
+							?></select></td><td><label>Records Total</label><input name="records_total" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td></tr>
 					</tbody></table></td></tr></tbody></table></div>	
 				</div>
-				<div class="newclienttab-inner" style = "float: left; width: 45%; clear: both">
+				<div class="newclienttab-inner" style = "float: left; width: 50%; clear: both">
                     <div class="tabinner-detail">
 					<table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
 						<tbody>
@@ -366,37 +365,34 @@ function addTotalWM()
 							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Collating"/></td><td><label>Collating</label></td><td><select name = "special_collating"><option select = 'selected' value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option><option value = 'Man. and Auto'>Man. and Auto</option></select></td></tr>
 							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Labeling"/></td><td><label>Labeling</label></td><td></td></tr>
 							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Print Permit"/></td><td><label>Print Permit</label></td><td></td></tr>
-							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Correct Permit"/></td><td><label>Correct Permit</label></td><td></td></tr>
-							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Carrier Route"/></td><td><label>Carrier Route</label></td><td></td></tr>
 							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Endorsement line"/></td><td><label>Endorsement line</label></td><td></td></tr>
 							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Address Printing"/></td><td><label>Address Printing</label></td><td></td></tr>
-							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Tag as Political"/></td><td><label>Tag as Political</label></td><td></td></tr>
 							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Inkjet Printing"/></td><td><label>Inkjet Printing</label></td><td><select name = "special_inkjet_printing"><option select = 'selected' value = '26K'>26K</option><option value = '11K'>11K</option></select></td></tr>
 							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Glue Dots"/></td><td><label>Glue Dots</label></td><td></td></tr>
 						</tbody></table></td></tr></tbody></table>
 						</div>
 				</div>
-				<div class = "newclienttab-inner" style = "float: left; width 50%; width: 35%; margin-left: 17%">
+				<div class = "newclienttab-inner" style = "float: left; width 50%; width: 25%; margin-left: 17%">
 					<div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
 							<tbody>
 							<tr valign='top'><th class='allcontacts-title'>Blue Sheet<span class='allcontacts-subtitle'></span></th></tr>
 							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody>
-							<tr><td><label>Graphic Design Hours</label></td><td><input name="gd_hrs" type="text" class="contact-prefix"></td></tr>
 							<tr><td> <label>Initial Record Count</label></td><td><input name="initialrec_count" type="text" class="contact-prefix"></td></tr>
 							<tr><td><label>Manual</label></td><td><input name="manual" type="text" class="contact-prefix"></td></tr>
 							<tr><td><label>Uncorrected</label></td><td><input name="uncorrected" type="text" class="contact-prefix"></td></tr>
-							<tr><td><label>BMEU</label></td><td><input name="bmeu" type="text" class="contact-prefix"></td></tr>
 							<tr><td><label>Unverifiable</label></td><td><input name="unverifiable" type="text" class="contact-prefix"></td></tr>
 							<tr><td><label>Foreigns</label></td><td><input name="bs_foreigns" type="text" class="contact-prefix"></td></tr>
+							<tr><td><label>Domestic</label></td><td><input name="bs_domestic" type="text" class="contact-prefix"></td></tr>
 							<tr><td><label>Exact</label></td><td><input name="bs_exact" type="text" class="contact-prefix"></td></tr>
 							<tr><td><label>Loose</label></td><td><input name="loose" type="text" class="contact-prefix"></td></tr>
 							<tr><td><label>Householded</label></td><td><input name="householded" type="text" class="contact-prefix"></td></tr>
-							<tr><td><label>DQR Sent</label></td><td><input name="dqr_sent" type="date" class="contact-prefix" style = "width: 78.5%"></td></tr>
 							<tr><td><label>Basic</label></td><td><input name="basic" type="text" class="contact-prefix"></td></tr>
 							<tr><td><label>NCOA</label></td><td><input name="bs_ncoa" type="text" class="contact-prefix"></td></tr>
 							<tr><td><label>NCOA Errors</label></td><td><input name="ncoa_errors" type="text" class="contact-prefix"></td></tr>
-							<tr><td><label>Domestic</label></td><td><input name="bs_domestic" type="text" class="contact-prefix"></td></tr>
 							<tr><td><label>Final Count</label></td><td><input name="final_count" type="text" class="contact-prefix"></td></tr>
+							<tr><td><label>Graphic Design Hours</label></td><td><input name="gd_hrs" type="text" class="contact-prefix"></td></tr>
+							<tr><td><label>Data Hours</label></td><td><input name="data_hrs" type="text" class="contact-prefix"></td></tr>
+							<tr><td><label>Explanation</label></td><td><textarea style = 'height: 150px' name="hrs_explanation" type="text" class="contact-prefix"></textarea></td></tr>
 					</tbody></table></td></tr></tbody></table></div>	
 				</div>
 				<div class = "newclienttab-inner" style = "float: left; width 100%; width: 100%; clear: both">
@@ -404,9 +400,9 @@ function addTotalWM()
 							<tbody>
 							<tr valign='top'><th class='allcontacts-title'>Mailing Information<span class='allcontacts-subtitle'></span></th></tr>
 							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody>
-							<tr><td><label>Mail Class</label><select name = "mail_class" style = "width: 50%; margin-right: 40%"><option selected = "selected" value = "FCM">FCM</option><option value = "Bulk Standard">Bulk Standard</option><option value = "Non-Profit BLK">Non-Profit BLK</option><option value = "BPM">BPM</option><option value = "Non-profit BPM">Non-profit BPM</option><option value = "Parcel">Parcel</option><option value = "Non-profit Parcel">Non-profit Parcel</option><option value = "Hand Stamp FCM">Hand Stamp FCM</option><option value = "Hand Stamp Bulk">Hand Stamp Bulk</option></select></td><td><label>Rate</label><select name = "rate" style = "margin-right: 90%"><option selected = "selected" value = "Auto">Auto</option><option value = "Auto-CRRT">Auto CRRT</option><option value = "Auto-WSS">Auto-WSS</option><option value = "Non-auto">Non-auto</option><option value = "Simplified">Simplified</option></select></td><td><label>Processing Category</label><select name = "processing_category" style = "width: 50%; margin-right: 50%"><option selected = "selected" value = "Flat">Flat</option><option value = "Letter">Letter</option><option value = "Postcard - FCM Only">Postcard - FCM Only</option></select></td></tr>
-							<tr><td><label>Print Template</label><input name="print_template" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td><td><label>Special Address Formatting</label><input name="special_address" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td><td><label>Method of Delivery</label><input name="delivery" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td></tr>
-							<tr><td><label>Permit</label><input name="permit" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td><td><input type="checkbox" name="hold_postage" class="contact-prefix" style = "transform: scale(3.0)"><label style = "margin-left: 4%">Hold Postage</label></td><td><input name="postage_paid" type="checkbox" class="contact-prefix" style = "transform: scale(3.0)"><label style = "margin-left: 4%">Postage Paid</label></td></tr>
+							<tr><td><label>Mail Class</label><select name = "mail_class" style = "width: 50%; margin-right: 40%"><option selected = "selected" value = "FCM">FCM</option><option value = "Bulk Standard">Bulk Standard</option><option value = "Non-Profit BLK">Non-Profit BLK</option><option value = "BPM">BPM</option><option value = "Non-profit BPM">Non-profit BPM</option><option value = "Parcel">Parcel</option><option value = "Non-profit Parcel">Non-profit Parcel</option><option value = "Hand Stamp FCM">Hand Stamp FCM</option><option value = "Hand Stamp Bulk">Hand Stamp Bulk</option><option value = "EDDM Retail">EDDM Retail</option><option value = "EDDM Permit">EDDM Permit</option></select></td><td><label>Rate</label><select name = "rate" style = "margin-right: 90%"><option selected = "selected" value = "Auto">Auto</option><option value = "Auto-CRRT">Auto CRRT</option><option value = "Auto-WSS">Auto-WSS</option><option value = "Non-auto">Non-auto</option><option value = "Simplified">Simplified</option></select></td><td><label>Processing Category</label><select name = "processing_category" style = "width: 50%; margin-right: 50%"><option selected = "selected" value = "Flat">Flat</option><option value = "Letter">Letter</option><option value = "Postcard - FCM Only">Postcard - FCM Only</option></select></td></tr>
+							<tr><td><label>Print Template</label><input name="print_template" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td><td><label>Special Address Formatting</label><input name="special_address" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td><td><label>Method of Delivery</label><select name="delivery" style = "width: 35%; margin-right: 65%"><option value = "" selected = "selected">--Select Method--</option><option value = "Hand Delivery">Hand Delivery</option><option value = "USPS">USPS</option><option value = "Priority Mail">Priority Mail</option><option value = 'Client Pickup'>Client Pickup</option></select></td></tr>
+							<tr><td><label>Permit</label><select name="permit" style = "width: 50%; margin-right: 40%"><option value = "" selected = "selected">--Choose Permit--</option><option value = "473">473</option><option value = "26 Pre-cancelled">26 Pre-cancelled</option><option value = "Client">Client</option></select></td><td><input type="checkbox" name="hold_postage" class="contact-prefix" style = "transform: scale(3.0)"><label style = "margin-left: 4%">Hold Postage</label></td><td><input name="postage_paid" type="checkbox" class="contact-prefix" style = "transform: scale(3.0)"><label style = "margin-left: 4%">Postage Paid</label></td></tr>
 					</tbody></table></td></tr></tbody></table></div>	
 				</div>
 				<div class = "newclienttab-inner" style = "float: left; width 100%; width: 100%; clear: both">
@@ -414,17 +410,16 @@ function addTotalWM()
 							<tbody>
 							<tr valign='top'><th class='allcontacts-title'>Weights and Measures<span class='allcontacts-subtitle'></span></th></tr>
 							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody>
-							<tr><td><label>Mail Dimensions</label><input id = "mail_dimensions" name="mail_dim" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td><td><label>Materials Ordered</label><input id = "materials_ordered" name="materials_ordered" type="date" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td><td><label>Materials Expected</label><input id = "materials_expected" name="materials_expected" type="date" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td></tr>
-							<tr><td> <label>Based On</label><select id = "based_on" style = "width: 50%; margin-right: 40%" name="based_on" onchange = "addTotalWM()"><option selected = 'selected' value = '0'>--Choose W&M First--</option></select></td><td> <label>Total Weights and Measures</label><input id = "total_w_m" name="total_w_m" type="text" class="contact-prefix" placeholder = "Auto Generated" style = "width: 50%; margin-right: 40%"></td><td><label>Expected Quantity</label><input name="expected_quantity" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td></tr>
+							<tr><td><label>Based On</label><select id = "based_on" style = "width: 50%; margin-right: 40%" name="based_on" onchange = "addTotalWM()"><option selected = 'selected' value = '0'>--Choose W&M First--</option></select></td><td><label>Total Weights and Measures</label><input id = "total_w_m" name="total_w_m" type="text" class="contact-prefix" placeholder = "Auto Generated" style = "width: 50%; margin-right: 40%"></td><td><label>Mail Dimensions</label><input id = "mail_dimensions" name="mail_dim" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td></tr>
 					</tbody></table></td></tr></tbody></table></div>	
 				</div>
 				<div class="newclienttab-inner" style = "width: 100%">
                     <div class="tabinner-detail">
-                    <a class="pull-right" onclick = 'addWeights_Measures()' style = "cursor: pointer">Add Weights and Measures</a>
+                    <a class="pull-right" onclick = 'addWeights_Measures()' style = "cursor: pointer"><h1>+</h1></a>
                     <table id="W_MTable" border="1" cellpadding="1" cellspacing="1" style='text-align: center; vertical-align: middle;'>
                         <thead>
                         <tr>
-                            <th>Select</th><th>Vendor</th><th>Material</th><th>Type</th><th>Weight</th><th>Height</th><th>Based On</th><th>Expected Date Received</th><th>CRST Pickup</th><th>Initial</th><th>Location</th><th>Delete</th>
+                            <th style = "display: none">Select</th><th>Vendor</th><th>Material</th><th>Type</th><th>Weight</th><th>Height</th><th>Based On</th><th>Expected Date Received</th><th>CRST Pickup</th><th>Initial</th><th>Location</th><th>Delete</th>
                         </tr>
                         </thead>
                         <tbody id="W_M_tbody">
@@ -432,7 +427,7 @@ function addTotalWM()
                         $result = mysqli_query($conn, "SELECT * FROM materials ORDER BY vendor");
                         while($row = $result->fetch_assoc()){
                                 echo "<tr id='1'>
-                                        <td ><input type='checkbox' id='checkbox1' checked name='wm[]' value='" . $row['material_id'] . "'></td>
+                                        <td style = 'display: none'><input type='checkbox' id='checkbox1' checked name='wm[]' value='" . $row['material_id'] . "'></td>
                                         <td>"; $result = $conn->query("select vendor_name from vendors");
                                             echo "<select class='vendors' id='vendors1' name='vendor' style='width:220px;'><option value=''>Select</option>";
                                             while ($row = $result->fetch_assoc()) {
@@ -463,9 +458,9 @@ function addTotalWM()
 											<input type = 'text' name = 'initial1'></input>
 										</td>
 										<td>
-											<input type = 'text' name = 'location1'></input>
+											<select name = 'location1'><option value = '' selected = 'selected'>--Choose Location--</option><option value = '29 Front'>29 Front</option><option value = '29 Middle'>29 Middle</option><option value = '29 Back'>29 Back</option><option value = '31 Front'>31 Front</option><option value = '31 Middle'>31 Middle</option><option value = '31 Back'>31 Back</option></select>
 										</td>
-                                        <td><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeWeights_Measures('#1')></td>
+                                        <td><p onclick = removeWeights_Measures('#1') style = 'cursor: pointer'>X</p></td>
                                     </tr>";
                                     }
                         ?>
@@ -494,10 +489,7 @@ $(document).ready(function(){
     document.getElementById("data_received").valueAsDate = date;
 	document.getElementById("data_completed").valueAsDate = date;
 	document.getElementById("due_date").valueAsDate = nextWeek;
-	document.getElementById("materials_ordered").valueAsDate = date;
-	document.getElementById("materials_expected").valueAsDate = date;
 	document.getElementById("ticket_date").valueAsDate = date;
-	document.getElementById("completed_date").valueAsDate = nextWeek;
 	document.getElementById("estimate_date").valueAsDate = date;
 })
 //generate search for client names

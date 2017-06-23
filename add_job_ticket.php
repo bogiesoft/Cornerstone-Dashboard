@@ -28,6 +28,7 @@ if(isset($_POST['submit_form'])){
 		$records_total = 0;
 	}
 	$client_name = $_POST['client_name'];
+	$job_type = $_POST["job_type"];
 	
 	$project_name = $_POST['project_name'];
 	$_SESSION["client_name"] = $client_name;
@@ -42,9 +43,6 @@ if(isset($_POST['submit_form'])){
 	$estimate_date = $_POST['estimate_date'];
 	$estimate_created_by = $_POST['estimate_created_by'];
 	$special_instructions = $_POST['special_instructions'];
-	$materials_ordered = date("Y-m-d", strtotime($_POST['materials_ordered']));
-	$materials_expected = date("Y-m-d", strtotime($_POST['materials_expected']));
-	$expected_quantity = $_POST['expected_quantity'];
 	$data_location = str_replace('"', '\"', $_POST["data_location"]);
 	$data_location = str_replace("'", "\'", $data_location);
 	$data_location = str_replace("\\", "\\\\", $data_location);
@@ -93,13 +91,11 @@ if(isset($_POST['submit_form'])){
 	$mail_dim = $_POST['mail_dim'];
 	//$weights_measures = $_POST['weights_measures'];
 	$permit = $_POST['permit'];
-	$bmeu = $_POST['bmeu'];
 	$based_on = $_POST['based_on'];
 
 	$data_source = $_POST['data_source'];
 	$data_received = date("Y-m-d", strtotime($_POST['data_received']));
 	$data_completed = date("Y-m-d", strtotime($_POST['data_completed']));
-	$dqr_sent = date("Y-m-d", strtotime($_POST['dqr_sent']));
 
 	$hold_postage = (isset($_POST['hold_postage'])) ? "yes" : "no";
 	$postage_paid = (isset($_POST['postage_paid'])) ? "yes" : "no";
@@ -141,7 +137,6 @@ if(isset($_POST['submit_form'])){
 	
 	$tasks = substr($tasks, 0, -1);
 	
-	$completed_date = date("Y-m-d", strtotime($_POST['completed_date']));
 	$data_hrs = $_POST['data_hrs'];
 	$gd_hrs = $_POST['gd_hrs'];
 	$initialrec_count = $_POST['initialrec_count'];
@@ -157,12 +152,13 @@ if(isset($_POST['submit_form'])){
 	$bs_ncoa = $_POST['bs_ncoa'];
 	$final_count = $_POST['final_count'];
 	$bs_domestic = $_POST['bs_domestic'];
+	$hrs_explanation = $_POST['hrs_explanation'];
 
 
 	
 
-	$sql = 'INSERT INTO job_ticket(processed_by,client_name,project_name,ticket_date,due_date,created_by,special_instructions,materials_ordered,materials_expected,estimate_number,estimate_date,estimate_created_by,expected_quantity,records_total,job_status,mail_class,rate,processing_category,
-	mail_dim,weights_measures,permit,bmeu,based_on) VALUES ("' . $processed_by . '","' . $client_name . '", "' . $project_name . '", "' . $ticket_date . '", "' . $due_date . '","' . $created_by . '","' . $special_instructions . '","' . $materials_ordered . '","' . $materials_expected . '","' . $estimate_number . '","' . $estimate_date . '","' . $estimate_created_by . '","' . $expected_quantity . '","' . $records_total . '","' . $job_status . '", "' . $mail_class . '", "' . $rate . '", "' . $processing_category . '", "' . $mail_dim . '", "' . $wm . '", "' . $permit . '", "' . $bmeu . '", "' . $based_on . '")';
+	$sql = 'INSERT INTO job_ticket(job_type, processed_by,client_name,project_name,ticket_date,due_date,created_by,special_instructions,estimate_number,estimate_date,estimate_created_by,records_total,job_status,mail_class,rate,processing_category,
+	mail_dim,weights_measures,permit,based_on) VALUES ("' . $job_type . '","' . $processed_by . '","' . $client_name . '", "' . $project_name . '", "' . $ticket_date . '", "' . $due_date . '","' . $created_by . '","' . $special_instructions . '","' . $estimate_number . '","' . $estimate_date . '","' . $estimate_created_by . '","' . $records_total . '","' . $job_status . '", "' . $mail_class . '", "' . $rate . '", "' . $processing_category . '", "' . $mail_dim . '", "' . $wm . '", "' . $permit . '", "' . $based_on . '")';
 	$result = $conn->query($sql) or die('Error querying database 0.');
 
 
@@ -172,14 +168,14 @@ if(isset($_POST['submit_form'])){
 	$_SESSION["job_id"] = $row1["job_id"];
 	$job_id = $_SESSION["job_id"];
 
-	$sql2 = 'INSERT INTO project_management(job_id, data_location, data_processed_by, data_source,data_received,data_completed,dqr_sent) VALUES ("' . $job_id . '", "' . $data_location . '", "' . $data_processed_by . '", "'  . $data_source . '","' . $data_received . '","' . $data_completed . '","' . $dqr_sent . '")';
+	$sql2 = 'INSERT INTO project_management(job_id, data_location, data_processed_by, data_source,data_received,data_completed) VALUES ("' . $job_id . '", "' . $data_location . '", "' . $data_processed_by . '", "'  . $data_source . '","' . $data_received . '","' . $data_completed . '")';
 	$result3 = $conn->query($sql2) or die("error");
 
 	$sql3 = 'INSERT INTO production(job_id,hold_postage,postage_paid,print_template,special_address ,delivery,tasks) VALUES ("' . $job_id . '", "' . $hold_postage . '", "' . $postage_paid . '", "' . $print_template . '","' . $special_address . '","' . $delivery . '","' . $tasks . '")';
 	$result4 = $conn->query($sql3) or die('Error querying database 3.');
 
-	$sql4 = 'INSERT INTO customer_service(job_id,completed_date,data_hrs,gd_hrs,initialrec_count,manual,uncorrected,unverifiable,bs_foreigns,bs_exact,loose,
-	householded,basic, ncoa_errors,bs_ncoa,final_count,bs_domestic) VALUES ("' . $job_id . '","' . $completed_date . '","' . $data_hrs . '","' . $gd_hrs . '","' . $initialrec_count . '","' . $manual . '","' . $uncorrected . '","' . $unverifiable . '","' . $bs_foreigns . '","' . $bs_exact . '","' . $loose . '","' . $householded . '","' . $basic . '","' . $ncoa_errors . '","' . $bs_ncoa . '","' . $final_count . '","' . $bs_domestic . '")';
+	$sql4 = 'INSERT INTO customer_service(job_id,data_hrs,gd_hrs, hrs_explanation, initialrec_count,manual,uncorrected,unverifiable,bs_foreigns,bs_exact,loose,
+	householded,basic, ncoa_errors,bs_ncoa,final_count,bs_domestic) VALUES ("' . $job_id . '","' . $data_hrs . '","' . $gd_hrs . '","' . $hrs_explanation . '","' . $initialrec_count . '","' . $manual . '","' . $uncorrected . '","' . $unverifiable . '","' . $bs_foreigns . '","' . $bs_exact . '","' . $loose . '","' . $householded . '","' . $basic . '","' . $ncoa_errors . '","' . $bs_ncoa . '","' . $final_count . '","' . $bs_domestic . '")';
 	$result5 = $conn->query($sql4) or die('Error querying database 4.');
 
 	$result_processed_by = mysqli_query($conn, "SELECT processed_by FROM job_ticket WHERE job_id = '$job_id'");

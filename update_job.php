@@ -6,7 +6,8 @@ $user_name = $_SESSION['user'];
 date_default_timezone_set('America/New_York');
 $today = date("Y-m-d G:i:s");
 $a_p = date("A");
-$job_id = $_SESSION["job_id"]; 
+$job_id = $_SESSION["job_id"];
+$job_type = $_POST["job_type"]; 
 $wm = $_POST["wm"];
 $records_total = $_POST['records_total'];
 $record_change = $_SESSION["current_records_total"] - $records_total;
@@ -99,9 +100,6 @@ if(isset($_POST['submit_form'])){
 			$estimate_date = $_POST['estimate_date'];
 			$estimate_created_by = $_POST['estimate_created_by'];
 			$special_instructions = $_POST['special_instructions'];
-			$materials_ordered = date("Y-m-d", strtotime($_POST['materials_ordered']));
-			$materials_expected = date("Y-m-d", strtotime($_POST['materials_expected']));
-			$expected_quantity = $_POST['expected_quantity'];
 			$job_status = $_POST['job_status'];
 			
 			$mail_class = $_POST['mail_class'];
@@ -110,9 +108,7 @@ if(isset($_POST['submit_form'])){
 			$mail_dim = $_POST['mail_dim'];
 			$weights_measures = implode(',',$_POST['wm']);
 			$permit = $_POST['permit'];
-			$bmeu = $_POST['bmeu'];
 			$based_on = $_POST['based_on'];
-			$non_profit_number = $_POST['non_profit_number'];
 			
 			$data_source = $_POST['data_source'];
 			$data_received = date("Y-m-d", strtotime($_POST['data_received']));
@@ -123,7 +119,6 @@ if(isset($_POST['submit_form'])){
 			$data_processed_by = $_POST["data_processed_by"];
 			
 			$processed_by = $_POST['processed_by'];
-			$dqr_sent = date("Y-m-d", strtotime($_POST['dqr_sent']));
 			
 			if(isset($_POST['hold_postage'])){
 				$hold_postage = "yes";
@@ -175,7 +170,6 @@ if(isset($_POST['submit_form'])){
 			
 			$tasks = substr($tasks, 0, -1);
 			
-			$completed_date = date("Y-m-d", strtotime($_POST['completed_date']));
 			$data_hrs = $_POST['data_hrs'];
 			$gd_hrs = $_POST['gd_hrs'];
 			$initialrec_count = $_POST['initialrec_count'];
@@ -191,18 +185,20 @@ if(isset($_POST['submit_form'])){
 			$bs_ncoa = $_POST['bs_ncoa'];
 			$final_count = $_POST['final_count'];
 			$bs_domestic = $_POST['bs_domestic'];
+			$total_w_m = $_POST["total_w_m"];
+			$hrs_explanation = $_POST["hrs_explanation"];
 			
-			$sql = 'UPDATE job_ticket SET processed_by = "' . $processed_by . '", client_name = "' . $client_name . '", project_name = "' . $project_name . '",ticket_date = "' . $ticket_date . '",due_date = "' . $due_date . '",created_by = "' . $created_by . '",estimate_number = "' . $estimate_number . '",estimate_date = "' . $estimate_date . '",estimate_created_by = "' . $estimate_created_by . '", special_instructions = "' . $special_instructions . '",materials_ordered = "' . $materials_ordered . '",materials_expected = "' . $materials_expected . '",expected_quantity = "' . $expected_quantity . '",records_total = "' . $records_total . '",job_status = "' . $job_status . '", mail_class = "' . $mail_class . '", rate = "' . $rate . '", processing_category = "' . $processing_category . '", mail_dim = "' . $mail_dim . '", weights_measures = "' . $weights_measures . '", permit = "' . $permit . '", bmeu = "' . $bmeu . '", based_on = "' . $based_on . '", non_profit_number = "' . $non_profit_number . '"  WHERE job_id = "' . $job_id . '"';
+			$sql = 'UPDATE job_ticket SET job_type = "' . $job_type . '", processed_by = "' . $processed_by . '", client_name = "' . $client_name . '", project_name = "' . $project_name . '",ticket_date = "' . $ticket_date . '",due_date = "' . $due_date . '",created_by = "' . $created_by . '",estimate_number = "' . $estimate_number . '",estimate_date = "' . $estimate_date . '",estimate_created_by = "' . $estimate_created_by . '", special_instructions = "' . $special_instructions . '",records_total = "' . $records_total . '",job_status = "' . $job_status . '", mail_class = "' . $mail_class . '", rate = "' . $rate . '", processing_category = "' . $processing_category . '", mail_dim = "' . $mail_dim . '", total_w_m = "' . $total_w_m . '", weights_measures = "' . $weights_measures . '", permit = "' . $permit . '", based_on = "' . $based_on . '" WHERE job_id = "' . $job_id . '"';
 			$result = $conn->query($sql) or die(date('Y-m-d', strtotime($ticket_date)));
 			
-			$sql2 = 'UPDATE project_management SET data_source = "' . $data_source . '",data_received = "' . $data_received . '",data_completed = "' . $data_completed . '", data_location = "' . $data_location . '", data_processed_by = "' . $data_processed_by . '", dqr_sent = "' . $dqr_sent . '" WHERE job_id = "' . $job_id . '"';
+			$sql2 = 'UPDATE project_management SET data_source = "' . $data_source . '",data_received = "' . $data_received . '",data_completed = "' . $data_completed . '", data_location = "' . $data_location . '", data_processed_by = "' . $data_processed_by . '" WHERE job_id = "' . $job_id . '"';
 			$result2 = $conn->query($sql2) or die('Error querying database 2.');
 			
 			
 			$sql3 = 'UPDATE production SET  hold_postage = "' . $hold_postage . '",postage_paid = "' . $postage_paid . '",print_template = "' . $print_template . '" , special_address = "' . $special_address . '",delivery = "' . $delivery . '",tasks = "' . $tasks . '" WHERE job_id = "' . $job_id . '"';
 			$result3 = $conn->query($sql3) or die('Error querying database 3.');
 			
-			$sql4 = 'UPDATE customer_service SET  completed_date = "' . $completed_date . '",data_hrs = "' . $data_hrs . '",gd_hrs = "' . $gd_hrs . '",initialrec_count = "' . $initialrec_count . '",manual = "' . $manual . '",uncorrected = "' . $uncorrected . '",unverifiable = "' . $unverifiable . '",bs_foreigns = "' . $bs_foreigns . '",bs_exact = "' . $bs_exact . '",loose = "' . $loose . '",householded = "' . $householded . '",basic = "' . $basic . '",ncoa_errors = "' . $ncoa_errors . '",bs_ncoa = "' . $bs_ncoa . '",final_count = "' . $final_count . '",bs_domestic = "' . $bs_domestic . '" WHERE job_id = "' . $job_id . '"';
+			$sql4 = 'UPDATE customer_service SET data_hrs = "' . $data_hrs . '",gd_hrs = "' . $gd_hrs . '",initialrec_count = "' . $initialrec_count . '",manual = "' . $manual . '",uncorrected = "' . $uncorrected . '",unverifiable = "' . $unverifiable . '",bs_foreigns = "' . $bs_foreigns . '",bs_exact = "' . $bs_exact . '",loose = "' . $loose . '",householded = "' . $householded . '",basic = "' . $basic . '",ncoa_errors = "' . $ncoa_errors . '",bs_ncoa = "' . $bs_ncoa . '",final_count = "' . $final_count . '",bs_domestic = "' . $bs_domestic . '",hrs_explanation = "' . $hrs_explanation . '" WHERE job_id = "' . $job_id . '"';
 			$result4 = $conn->query($sql4) or die('Error querying database 4.');
 			
 			$result_processed_by = mysqli_query($conn, "SELECT processed_by FROM job_ticket WHERE job_id = '$job_id'");

@@ -25,11 +25,8 @@ require('header.php');
 					  <option value="Collating">Collating</option>
 					  <option value="Labeling">Labeling</option>
 					  <option value="Print Permit">Print Permit</option>
-					  <option value="Correct Permit">Correct Permit</option>
-					  <option value="Carrier Route">Carrier Route</option>
 					  <option value="Endorsement line">Endorsement line</option>
 					  <option value="Address Printing">Address Printing</option>
-					  <option value="Tag as Political">Tag as Political</option>
 					  <option value="Inkjet Printing">Inkjet Printing</option>
 					  <option value="Glue Dots">Glue Dots</option>
 </select><select id = 'special' name = 'special'><option select = 'selected' value = 'Sent to Vendor'>Sent to Vendor</option><option value = 'In-House'>In-House</option></select></span>
@@ -286,7 +283,7 @@ function nextPage(){
 	var recs_min = ["recs_per_min"];
 	var job = ["job"];
 	var errors = ["error"];
-	var jobList = ["Mail Merge", "Letter Printing", "In-House Envelope Printing", "Sealing", "Collating", "Labeling", "Print Permit", "Correct Permit", "Carrier Route", "Endorsement Line", "Address Printing", "Tag as Political", "Inkjet Printing", "Glue Dots", "Inserting", "Printing", "Folding", "Tabbing", "Packaging"];
+	var jobList = ["Mail Merge", "Letter Printing", "In-House Envelope Printing", "Sealing", "Collating", "Labeling", "Print Permit", "Endorsement Line", "Address Printing", "Inkjet Printing", "Glue Dots", "Inserting", "Printing", "Folding", "Tabbing", "Packaging"];
 	var count = 1;
 	var Task = 2;
 	

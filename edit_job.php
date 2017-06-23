@@ -26,11 +26,10 @@ li {
 		var job_status = $("#job_status").val();
 		var ticket_date = $("#ticket_date").val();
 		var created_by = $("#created_by option:selected").text();
-		var completed_date = $("#completed_date").val();
 		var estimate_number = $("#estimate_number").val();
 		var estimate_created_by = $("#estimate_created_by option:selected").text();
 		var estimate_date = $("#estimate_date").val();
-		mywindow.document.write('<div style = "border: 1px solid; padding: 2px 2px 2px 2px; margin-top: 1px" class="allcontacts-table"><table border="0" cellspacing="0" cellpadding="0" class="table-bordered allcontacts-table"><tbody><tr valign="top"><th class="allcontacts-title">General<span class="allcontacts-subtitle"></span></th></tr><tr valign="top"><td colspan="2"><table id = "w_m_table" border="0" cellspacing="0" cellpadding="0" class="table-striped main-table contacts-list"><tbody><tr><td><label>Records Total</label><input name="records_total" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%" value = "' + records_total + '"></td><td><label>Assigned to</label><input value = "' + processed_by + '"></input></td><td><label>Job Status</label><input name= "job_status" style = "width: 50%; margin-right: 40%" value = "' + job_status + '"></td></tr><tr><td><label>Ticket Date</label><input id = "ticket_date" name="ticket_date" type="date" class="contact-prefix" style = "width: 150px; margin-right: 40%" value = "' + ticket_date + '"></td><td><label>Created By</label><input value = "' + created_by + '"></td><td><label>Completed Date</label><input id = "completed_date" name="completed_date" type="date" class="contact-prefix" style = "width: 150px; margin-right: 40%" value = "' + completed_date + '"></td></tr><tr><td><label>Estimate Number</label><input name="estimate_number" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%" value = "' + estimate_number + '"></td><td><label>Estimate date</label><input id = "estimate_date" name="estimate_date" type="date" class="contact-prefix" style = "width: 150px; margin-right: 40%" value = "' + estimate_date + '"></td><td><label>Estimate created by</label><input name="estimate_created_by" style = "width: 150px; margin-right: 40% value = "' + estimate_created_by + '"></td></tr></tbody></table></td></tr></tbody></table></div>');
+		mywindow.document.write('<div style = "border: 1px solid; padding: 2px 2px 2px 2px; margin-top: 1px" class="allcontacts-table"><table border="0" cellspacing="0" cellpadding="0" class="table-bordered allcontacts-table"><tbody><tr valign="top"><th class="allcontacts-title">General<span class="allcontacts-subtitle"></span></th></tr><tr valign="top"><td colspan="2"><table id = "w_m_table" border="0" cellspacing="0" cellpadding="0" class="table-striped main-table contacts-list"><tbody><tr><td><label>Records Total</label><input name="records_total" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%" value = "' + records_total + '"></td><td><label>Assigned to</label><input value = "' + processed_by + '"></input></td><td><label>Job Status</label><input name= "job_status" style = "width: 50%; margin-right: 40%" value = "' + job_status + '"></td></tr><tr><td><label>Ticket Date</label><input id = "ticket_date" name="ticket_date" type="date" class="contact-prefix" style = "width: 150px; margin-right: 40%" value = "' + ticket_date + '"></td><td><label>Created By</label><input value = "' + created_by + '"></td></tr><tr><td><label>Estimate Number</label><input name="estimate_number" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%" value = "' + estimate_number + '"></td><td><label>Estimate date</label><input id = "estimate_date" name="estimate_date" type="date" class="contact-prefix" style = "width: 150px; margin-right: 40%" value = "' + estimate_date + '"></td><td><label>Estimate created by</label><input name="estimate_created_by" style = "width: 150px; margin-right: 40% value = "' + estimate_created_by + '"></td></tr></tbody></table></td></tr></tbody></table></div>');
 		
 		//client information
 		var client_name = $("#client_name").val();
@@ -88,19 +87,17 @@ li {
 		var initialrec_count = $("#initialrec_count").val();
 		var manual = $("#manual").val();
 		var uncorrected = $("#uncorrected").val();
-		var bmeu = $("#bmeu").val();
 		var unverifiable = $("#unverifiable").val();
 		var bs_foreigns = $("#bs_foreigns").val();
 		var bs_exact = $("#bs_exact").val();
 		var loose = $("#loose").val();
 		var householded = $("#householded").val();
-		var dqr_sent = $("#dqr_sent").val();
 		var basic = $("#basic").val();
 		var bs_ncoa = $("#bs_ncoa").val();
 		var ncoa_errors = $("#ncoa_errors").val();
 		var domestic = $("#domestic").val();
 		var final_count = $("#final_count").val();
-		mywindow.document.write('<div id = "blue_sheet_table" class="allcontacts-table" style = "border: 1px solid; width: 43%; float: left; margin-left: 2%"><table border="0" cellspacing="0" cellpadding="0" class="table-bordered allcontacts-table"><tbody><tr valign="top"><th class="allcontacts-title">Blue Sheet<span class="allcontacts-subtitle"></span></th></tr><tr valign="top"><td colspan="2"><table id = "w_m_table" border="0" cellspacing="0" cellpadding="0" class="table-striped main-table contacts-list"><tbody><tr><td><label style = "font-size: 14px;">Graphic Design Hours</label></td><td><input id = "gd_hrs" name="gd_hrs" type="text" class="contact-prefix" value = "' + gd_hrs + '"></td></tr><tr><td> <label>Initial Record Count</label></td><td><input id = "initialrec_count" name="initialrec_count" type="text" class="contact-prefix" value = "' + initialrec_count + '"></td></tr><tr><td><label>Manual</label></td><td><input id = "manual" name="manual" type="text" class="contact-prefix" value = "' + manual + '"></td></tr><tr><td><label>Uncorrected</label></td><td><input id = "uncorrected" name="uncorrected" type="text" class="contact-prefix" value = "' + uncorrected + '"></td></tr><tr><td><label>BMEU</label></td><td><input id = "bmeu" name="bmeu" type="text" class="contact-prefix" value = "' + bmeu + '"></td></tr><tr><td><label>Unverifiable</label></td><td><input id = "unverifiable" name="unverifiable" type="text" class="contact-prefix" value = "' + unverifiable + '"></td></tr><tr><td><label>Foreigns</label></td><td><input id = "bs_foreigns" name="bs_foreigns" type="text" class="contact-prefix" value = "' + bs_foreigns + '"></td></tr><tr><td><label>Exact</label></td><td><input id = "bs_exact" name="bs_exact" type="text" class="contact-prefix" value = "' + bs_exact + '"></td></tr><tr><td><label>Loose</label></td><td><input id = "loose" name="loose" type="text" class="contact-prefix" value = "' + loose + '"></td></tr><tr><td><label>Householded</label></td><td><input id = "householded" name="householded" type="text" class="contact-prefix" value = "' + householded + '"></td></tr><tr><td><label>DQR Sent</label></td><td><input id = "dqr_sent" name="dqr_sent" type="date" class="contact-prefix" style = "width: 78.5%" value = "' + dqr_sent + '"></td></tr><tr><td><label>Basic</label></td><td><input id = "basic" name="basic" type="text" class="contact-prefix" value = "' + basic + '"></td></tr><tr><td><label>NCOA</label></td><td><input id = "bs_ncoa" name="bs_ncoa" type="text" class="contact-prefix" value = "' + bs_ncoa + '"></td></tr><tr><td><label>NCOA Errors</label></td><td><input id = "ncoa_errors" name="ncoa_errors" type="text" class="contact-prefix" value = "' + ncoa_errors + '"></td></tr><tr><td><label>Domestic</label></td><td><input id = "domestic" name="bs_domestic" type="text" class="contact-prefix" value = "' + domestic + '"></td></tr><tr><td><label>Final Count</label></td><td><input id = "final_count" name="final_count" type="text" class="contact-prefix" value = "' + final_count + '"></td></tr></tbody></table></td></tr></tbody></table></div>');
+		mywindow.document.write('<div id = "blue_sheet_table" class="allcontacts-table" style = "border: 1px solid; width: 43%; float: left; margin-left: 2%"><table border="0" cellspacing="0" cellpadding="0" class="table-bordered allcontacts-table"><tbody><tr valign="top"><th class="allcontacts-title">Blue Sheet<span class="allcontacts-subtitle"></span></th></tr><tr valign="top"><td colspan="2"><table id = "w_m_table" border="0" cellspacing="0" cellpadding="0" class="table-striped main-table contacts-list"><tbody><tr><td><label style = "font-size: 14px;">Graphic Design Hours</label></td><td><input id = "gd_hrs" name="gd_hrs" type="text" class="contact-prefix" value = "' + gd_hrs + '"></td></tr><tr><td> <label>Initial Record Count</label></td><td><input id = "initialrec_count" name="initialrec_count" type="text" class="contact-prefix" value = "' + initialrec_count + '"></td></tr><tr><td><label>Manual</label></td><td><input id = "manual" name="manual" type="text" class="contact-prefix" value = "' + manual + '"></td></tr><tr><td><label>Uncorrected</label></td><td><input id = "uncorrected" name="uncorrected" type="text" class="contact-prefix" value = "' + uncorrected + '"></td></tr><tr><td><label>Unverifiable</label></td><td><input id = "unverifiable" name="unverifiable" type="text" class="contact-prefix" value = "' + unverifiable + '"></td></tr><tr><td><label>Foreigns</label></td><td><input id = "bs_foreigns" name="bs_foreigns" type="text" class="contact-prefix" value = "' + bs_foreigns + '"></td></tr><tr><td><label>Exact</label></td><td><input id = "bs_exact" name="bs_exact" type="text" class="contact-prefix" value = "' + bs_exact + '"></td></tr><tr><td><label>Loose</label></td><td><input id = "loose" name="loose" type="text" class="contact-prefix" value = "' + loose + '"></td></tr><tr><td><label>Householded</label></td><td><input id = "householded" name="householded" type="text" class="contact-prefix" value = "' + householded + '"></td></tr><tr><td><label>DQR Sent</label></td></tr><tr><td><label>Basic</label></td><td><input id = "basic" name="basic" type="text" class="contact-prefix" value = "' + basic + '"></td></tr><tr><td><label>NCOA</label></td><td><input id = "bs_ncoa" name="bs_ncoa" type="text" class="contact-prefix" value = "' + bs_ncoa + '"></td></tr><tr><td><label>NCOA Errors</label></td><td><input id = "ncoa_errors" name="ncoa_errors" type="text" class="contact-prefix" value = "' + ncoa_errors + '"></td></tr><tr><td><label>Domestic</label></td><td><input id = "domestic" name="bs_domestic" type="text" class="contact-prefix" value = "' + domestic + '"></td></tr><tr><td><label>Final Count</label></td><td><input id = "final_count" name="final_count" type="text" class="contact-prefix" value = "' + final_count + '"></td></tr></tbody></table></td></tr></tbody></table></div>');
 		
 		//mailing information
 		var mail_class = $("#mail_class").val();
@@ -122,12 +119,9 @@ li {
 		
 		//weights and measures information
 		var mail_dimensions = $("#mail_dimensions").val();
-		var materials_ordered = $("#materials_ordered").val();
-		var materials_expected = $("#materials_expected").val();
 		var based_on = $("#based_on").val();
 		var total_w_m = $("#total_w_m").val();
-		var expected_quantity = $("#expected_quantity").val();
-		mywindow.document.write('<div class = "newclienttab-inner" style = "float: left; width 100%; width: 100%; clear: both; border: 1px solid; padding-bottom: 5px; padding-left: 2px"><div class="allcontacts-table"><table border="0" cellspacing="0" cellpadding="0" class="table-bordered allcontacts-table"><tbody><tr valign="top"><th class="allcontacts-title">Weights and Measures<span class="allcontacts-subtitle"></span></th></tr><tr valign="top"><td colspan="2"><table id = "w_m_table" border="0" cellspacing="0" cellpadding="0" class="table-striped main-table contacts-list"><tbody><tr><td><label>Mail Dimensions</label><input id = "mail_dimensions" name="mail_dim" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%" value = "' + mail_dimensions + '"></td><td><label>Materials Ordered</label><input id = "materials_ordered" name="materials_ordered" type="date" class="contact-prefix" style = "width: 50%; margin-right: 40%" value = "' + materials_ordered + '"></td><td><label>Materials Expected</label><input id = "materials_expected" name="materials_expected" type="date" class="contact-prefix" style = "width: 50%; margin-right: 40%" value = "' + materials_expected + '"></td></tr><tr><td><label>Based On</label><input id = "based_on" style = "width: 50%; margin-right: 40%" name="based_on" value = "' + based_on + '"></td><td><label>Total Weights and Measures</label><input id = "total_w_m" name="total_w_m" type="text" class="contact-prefix" value = "' + total_w_m + '"></td><td><label>Expected Quantity</label><input name="expected_quantity" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%" value = "' + expected_quantity + '"></td></tr></tbody></table></td></tr></tbody></table></div></div>');
+		mywindow.document.write('<div class = "newclienttab-inner" style = "float: left; width 100%; width: 100%; clear: both; border: 1px solid; padding-bottom: 5px; padding-left: 2px"><div class="allcontacts-table"><table border="0" cellspacing="0" cellpadding="0" class="table-bordered allcontacts-table"><tbody><tr valign="top"><th class="allcontacts-title">Weights and Measures<span class="allcontacts-subtitle"></span></th></tr><tr valign="top"><td colspan="2"><table id = "w_m_table" border="0" cellspacing="0" cellpadding="0" class="table-striped main-table contacts-list"><tbody><tr><td><label>Mail Dimensions</label><input id = "mail_dimensions" name="mail_dim" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%" value = "' + mail_dimensions + '"></td></tr><tr><td><label>Based On</label><input id = "based_on" style = "width: 50%; margin-right: 40%" name="based_on" value = "' + based_on + '"></td><td><label>Total Weights and Measures</label><input id = "total_w_m" name="total_w_m" type="text" class="contact-prefix" value = "' + total_w_m + '"></td></tr></tbody></table></td></tr></tbody></table></div></div>');
 		
 		//weights and measures table of info
 		mywindow.document.write('<div class="newclienttab-inner" style = "width: 100%"><div class="tabinner-detail"><table id="W_MTable" border="1" cellpadding="1" cellspacing="1" style="text-align: center; vertical-align: middle;"><thead><tr><th>Select</th><th>Vendor</th><th>Material</th><th>type</th><th>Weight</th><th>Height</th></tr></thead><tbody id="W_M_tbody">');
@@ -246,7 +240,7 @@ function removeWeights_Measures(row_id){
     number_of_rows--;
 	weight = weight.toFixed(2);
 	height = height.toFixed(2);
-	$("#total_w_m").val(weight + " x " + height);
+	$("#total_w_m").val(weight + "lbs. x " + height + " in.");
 };
 function getVendors(row_id)
 {
@@ -320,7 +314,7 @@ function addTotalWM()
 	}
 	weight = weight.toFixed(2);
 	height = height.toFixed(2);
-	$("#total_w_m").val(weight + " x " + height);
+	$("#total_w_m").val(weight + "lbs. x " + height + " in.");
 }
 function showJobInfo(){
 		document.getElementById("job_info").style.display = "block";
@@ -347,6 +341,7 @@ require ("connection.php");
 	if ($result->num_rows > 0) {
 		$row = $result->fetch_assoc();	
 		$job_id = $row['job_id'];
+		$job_type = $row['job_type'];
 		$_SESSION["job_id"] = $job_id;
 		$client_name = $row['client_name'];
 		$project_name = $row['project_name'];
@@ -357,9 +352,6 @@ require ("connection.php");
 		$estimate_date = $row['estimate_date'];
 		$estimate_created_by = $row['estimate_created_by'];
 		$special_instructions = $row['special_instructions'];
-		$materials_ordered = $row['materials_ordered'];
-		$materials_expected = $row['materials_expected'];
-		$expected_quantity = $row['expected_quantity'];
 		$job_status = $row['job_status'];
 		$display = "yes";
 		$mail_class = $row['mail_class'];
@@ -368,10 +360,10 @@ require ("connection.php");
 		$mail_dim = $row['mail_dim'];
 		$weights_measures = $row['weights_measures'];
 		$permit = $row['permit'];
-		$bmeu = $row['bmeu'];
 		$based_on = $row['based_on'];
 		$processed_by = $row['processed_by'];
 		$records_total = $row['records_total'];
+		$total_w_m = $row["total_w_m"];
 		$_SESSION["current_records_total"] = $records_total;
 		$_SESSION["old_wm"] = $weights_measures;		
 		
@@ -382,7 +374,6 @@ require ("connection.php");
 				$data_source = $row2['data_source'];
 				$data_received = $row2['data_received'];
 				$data_completed = $row2['data_completed'];
-				$dqr_sent = $row2['dqr_sent'];
 				$data_location = $row2["data_location"];
 				$data_processed_by = $row2["data_processed_by"];
 
@@ -405,8 +396,6 @@ require ("connection.php");
 		$result4 = mysqli_query($conn,$sql4);
 		if ($result4->num_rows > 0) {
 			$row4 = $result4->fetch_assoc();	
-		
-				$completed_date = $row4['completed_date'];
 				$data_hrs = $row4['data_hrs'];
 				$gd_hrs = $row4['gd_hrs'];
 				$initialrec_count = $row4['initialrec_count'];
@@ -422,6 +411,7 @@ require ("connection.php");
 				$bs_ncoa = $row4['bs_ncoa'];
 				$final_count = $row4['final_count'];
 				$bs_domestic = $row4['bs_domestic'];
+				$hrs_explanation = $row4['hrs_explanation'];
 				
 				
 				
@@ -459,8 +449,24 @@ require ("connection.php");
 			 <div class="newclienttab-inner" id = "main_headers">
 				<table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
 						<tbody>
-							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='material' data-index='6'>Job Name</th><th class='maintable-thtwo data-header' data-name='type' data-index='7'>Due Date</th></tr></thead><tbody>
-							<tr><td><input style = "width: 75%" id = "project_name" name="project_name" type="text" value="<?php echo $project_name ; ?>" class="contact-prefix"></td><td><input style = "width: 75%" id = "due_date" name="due_date" type="date" value="<?php echo $due_date ; ?>" class="contact-prefix"></td></tr>
+							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='material' data-index='6'>Job Name</th><th class='maintable-thtwo data-header' data-name='type' data-index='7'>Job Type</th><th class='maintable-thtwo data-header' data-name='type' data-index='7'>Due Date</th><th class='maintable-thtwo data-header' data-name='type' data-index='7'>Created By</th></tr></thead><tbody>
+							<tr><td><input style = "width: 75%" id = "project_name" name="project_name" type="text" value="<?php echo $project_name ; ?>" class="contact-prefix"></td><td><select name = "job_type"><option selected = "selected" value = "<?php echo $job_type; ?>"><?php echo $job_type; ?></option><option value = "Political">Political</option><option value = 'Non-Profit'>Non-Profit</option><option value = "EDDM">EDDM</option><option value = "Parcel">Parcel</option></select></td><td><input style = "width: 75%" id = "due_date" name="due_date" type="date" value="<?php echo $due_date ; ?>" class="contact-prefix"></td><td><?php
+                     
+                         
+                        $result1 = $conn->query("select first_name, last_name, user from users");
+                        echo "<select id = 'created_by' name='created_by' style = 'width: 50%; margin-right: 40%'>";
+						$result_name = mysqli_query($conn, "SELECT first_name, last_name FROM users WHERE user = '$created_by'");
+						$row = $result_name->fetch_assoc();
+						$name = $row["first_name"] . " " . $row["last_name"];
+                        echo "<option selected = 'selected' value = '" . $created_by . "'>" . $name . "</option>";
+                        while ($row1 = $result1->fetch_assoc()) {
+                                      unset($created_by);
+                                      $created_by = $row1['first_name'] . ' ' . $row1['last_name']; 
+                                      echo '<option value="'.$row1['user'].'">'.$created_by.'</option>';
+                                      
+                        }
+                        echo "</select>";
+                        ?></td></tr>
 						</tbody></table></td></tr></tbody></table>
 			</div>
 			<div class = "newclienttab-inner" style = "float: left; width 100%; width: 100%; clear: both">
@@ -468,7 +474,7 @@ require ("connection.php");
 							<tbody>
 							<tr valign='top'><th class='allcontacts-title'>General<span class='allcontacts-subtitle'></span></th></tr>
 							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody>
-							<tr><td><label>Records Total</label><input id = "records_total" name="records_total" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%" value = "<?php echo $records_total ?>"></td><td><?php
+							<tr><td><label>Ticket Date</label><input id = "ticket_date" name="ticket_date" type="date" class="contact-prefix" style = "width: 50%; margin-right: 40%" value = "<?php echo $ticket_date; ?>"></td><td><?php
                      
                          
                         $result2 = $conn->query("select first_name, last_name, user from users");
@@ -485,23 +491,6 @@ require ("connection.php");
                         }
                         echo "</select>";
                         ?></td><td><label>Job Status</label><select id = "job_status" name='job_status' style = "width: 50%; margin-right: 40%"><option selected = "selected" value = "<?php echo $job_status; ?>"><?php echo $job_status; ?></option><option value="in P.M.">in P.M.</option><option value="in Production">in Production</option><option value="on hold">on hold</option><option value="waiting for materials">waiting for materials</option><option value="waiting for data">waiting for data</option><option value="waiting for postage">waiting for postage</option></select></td></tr>
-						<tr><td><label>Ticket Date</label><input id = "ticket_date" name="ticket_date" type="date" class="contact-prefix" style = "width: 50%; margin-right: 40%" value = "<?php echo $ticket_date; ?>"></td><td><?php
-                     
-                         
-                        $result1 = $conn->query("select first_name, last_name, user from users");
-                        echo "<label>Created By</label><select id = 'created_by' name='created_by' style = 'width: 50%; margin-right: 40%'>";
-						$result_name = mysqli_query($conn, "SELECT first_name, last_name FROM users WHERE user = '$created_by'");
-						$row = $result_name->fetch_assoc();
-						$name = $row["first_name"] . " " . $row["last_name"];
-                        echo "<option selected = 'selected' value = '" . $created_by . "'>" . $name . "</option>";
-                        while ($row1 = $result1->fetch_assoc()) {
-                                      unset($created_by);
-                                      $created_by = $row1['first_name'] . ' ' . $row1['last_name']; 
-                                      echo '<option value="'.$row1['user'].'">'.$created_by.'</option>';
-                                      
-                        }
-                        echo "</select>";
-                        ?></td><td><label>Completed Date</label><input id = "completed_date" name="completed_date" type="date" class="contact-prefix" style = "width: 50%; margin-right: 40%" value = "<?php echo $completed_date; ?>"></td></tr>
 						<tr><td><label>Estimate Number</label><input id = "estimate_number" name="estimate_number" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%" value = "<?php echo $estimate_number; ?>"></td><td><label>Estimate date</label><input id = "estimate_date" name="estimate_date" type="date" class="contact-prefix" style = "width: 50%; margin-right: 40%" value = "<?php echo $estimate_date; ?>"></td><td><label>Estimate created by</label>
 						<select id = "estimate_created_by" name="estimate_created_by" style = "width: 50%; margin-right: 40%">
 						<?php
@@ -523,28 +512,28 @@ require ("connection.php");
                     </select></td></tr>
 					</tbody></table></td></tr></tbody></table></div>	
 				</div>
-			<div class = "newclienttab-inner" style = "float: left; width 50%; width: 45%; margin-right: 2%">
+			<div class = "newclienttab-inner" style = "float: left; width 50%; width: 100%;">
 					<div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
 							<tbody>
 							<tr valign='top'><th class='allcontacts-title' style = "width: 50%">Client Information<span class='allcontacts-subtitle'></span></th><th class='allcontacts-title'><input style = "width: 100%" id = "client_name" placeholder="Client Name" name="client_name" type="text" class="contact-prefix" value="<?php echo $client_name; ?>" autocomplete = "off"><a class = "delete_client_af" href = "#" style = "display: none; font-size: 20px">delete</a></th></tr>
 							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody>
 							<tr><td><ul class = "client_search_results" style = "list-style-type: none; cursor: pointer"></ul></td></tr>
-							<tr><td><label>Primary Contact</label><input id = "contact_name" name="contact_name" type="text" class="contact-prefix" style = "width: 78%" readonly></td><td><label>Phone</label><input id = "phone" name="phone" type="text" class="contact-prefix" style = "width: 78%; margin-right: 50px" readonly></td></tr>
-							<tr><td><label>Email</label><input id = "email" name="email" type="text" class="contact-prefix" style = "width: 78%; margin-right: 50px" readonly></td><td><label>Address</label><input id = "address_line_1" name="address" type="text" class="contact-prefix" style = "width: 78%; margin-right: 50px" readonly></td></tr>
-							<tr><td> <label>City</label><input id = "city" style = "width: 20%" name="city" type="text" class="contact-prefix" readonly><label>State</label><input id = "state" style = "width: 20%" name="state" type="text" class="contact-prefix" readonly><label>Zip</label><input id = "zipcode" style = "width: 20%" name="zip" type="text" class="contact-prefix" readonly></td><td><label>Second Contact</label><input id = "second_contact" name="second_contact" type="text" class="contact-prefix" style = "width: 78%" readonly></td></tr>
-							<tr><td> <label>Fax</label><input id = "fax" name="fax" type="text" class="contact-prefix" style = "width: 78%; margin-right: 100px" readonly></td><td><label>Non Profit Number</label><input id = "non_profit_number" name="non_profit_number" type="text" class="contact-prefix" style = "width: 78%" readonly></td></tr>
-							<tr><td> <label>CRID</label><input id = "crid" name="crid" type="text" class="contact-prefix" style = "width: 78%; margin-right: 50px" readonly></td><td><div class="newcontact-tabbtm" style = "background-color: #f4f5f7"><input onclick = "showSaveMessage()" class="save_client_info" value="Save Client Changes" name="submit_form" style="display: none; float: left; width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px; cursor: pointer" readonly></div></td></tr>
+							<tr><td><label>Primary Contact</label><input id = "contact_name" name="contact_name" type="text" class="contact-prefix" style = "width: 50%; margin-right: 50%" readonly></td><td><label>Phone</label><input id = "phone" name="phone" type="text" class="contact-prefix" style = "width: 50%; margin-right: 50%" readonly></td></tr>
+							<tr><td><label>Email</label><input id = "email" name="email" type="text" class="contact-prefix" style = "width: 50%; margin-right: 50%" readonly></td><td><label>Address</label><input id = "address_line_1" name="address" type="text" class="contact-prefix" style = "width: 50%; margin-right: 50%" readonly></td></tr>
+							<tr><td> <label>City</label><input id = "city" style = "width: 20%" name="city" type="text" class="contact-prefix" readonly><label>State</label><input id = "state" style = "width: 20%" name="state" type="text" class="contact-prefix" readonly><label>Zip</label><input id = "zipcode" style = "width: 20%" name="zip" type="text" class="contact-prefix" readonly></td><td><label>Second Contact</label><input id = "second_contact" name="second_contact" type="text" class="contact-prefix" style = "width: 50%; margin-right: 50%" readonly></td></tr>
+							<tr><td> <label>Fax</label><input id = "fax" name="fax" type="text" class="contact-prefix" style = "width: 50%; margin-right: 50%" readonly></td><td><label>Non Profit Number</label><input id = "non_profit_number" name="non_profit_number" type="text" class="contact-prefix" style = "width: 50%; margin-right: 50%" readonly></td></tr>
+							<tr><td> <label>CRID</label><input id = "crid" name="crid" type="text" class="contact-prefix" style = "width: 50%; margin-right: 50%" readonly></td><td><div class="newcontact-tabbtm" style = "background-color: #f4f5f7"><input onclick = "showSaveMessage()" class="save_client_info" value="Save Client Changes" name="submit_form_client" style="display: none; float: left; width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px; cursor: pointer" readonly></div></td></tr>
 					</tbody></table></td></tr></tbody></table></div>	
 			</div>
-			<div class = "newclienttab-inner" style = "float: left; width 50%; width: 50%">
+			<div class = "newclienttab-inner" style = "float: left; width 50%; width: 100%">
 					<div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
 							<tbody>
 							<tr valign='top'><th class='allcontacts-title'>Data<span class='allcontacts-subtitle'></span></th></tr>
 							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody>
-							<tr><td><label>Data Location</label><input id="file_location" type="file" style = "width: 78%"><textarea id = "data_location" style = "height: 10%; width: 78%" name="data_location" type="text" class="contact-prefix" value = "<?php echo $data_location; ?>"><?php echo $data_location; ?></textarea></td><td> <label>Data Source</label><select id = "data_source" name = "data_source" style = "width: 75%"><option selected = "selected" value = "<?php echo $data_source; ?>"><?php echo $data_source; ?></option><option value = "Client">Client</option><option value = "BOE">BOE</option><option value = "Recycled">Recycled</option><option value = "Occupants Residency">Occupants Residency</option><option value = "Melissa">Melissa</option><option value = "Master">Master</option><option value = "DataConsulate">DataConsulate</option><option value = "Multiple">Multiple</option><option value = "Real Property">Real Property</option><option value = "Other">Other</option></select></td></tr>
-							<tr><td><label>Data Received</label><input id = "data_received" name="data_received" type="date" class="contact-prefix" style = "width: 70%" value = "<?php echo $data_received;?>"></td><td><label>Data Completed</label><input id = "data_completed" name="data_completed" type="date" class="contact-prefix" style = "width: 70%" value = "<?php echo $data_completed;?>"></td></tr>
+							<tr><td><label>Data Location</label><input id="file_location" type="file" style = "width: 78%"><textarea id = "data_location" style = "height: 10%; width: 78%" name="data_location" type="text" class="contact-prefix" value = "<?php echo $data_location; ?>"><?php echo $data_location; ?></textarea></td><td> <label>Data Source</label><select id = "data_source" name = "data_source" style = "width: 50%; margin-right: 50%"><option selected = "selected" value = "<?php echo $data_source; ?>"><?php echo $data_source; ?></option><option value = "Client">Client</option><option value = "BOE">BOE</option><option value = "Recycled">Recycled</option><option value = "Occupants Residency">Occupants Residency</option><option value = "Melissa">Melissa</option><option value = "Master">Master</option><option value = "DataConsulate">DataConsulate</option><option value = "Multiple">Multiple</option><option value = "Real Property">Real Property</option><option value = "Other">Other</option></select></td></tr>
+							<tr><td><label>Data Received</label><input id = "data_received" name="data_received" type="date" class="contact-prefix" style = "width: 50%; margin-right: 50%" value = "<?php echo $data_received;?>"></td><td><label>Data Completed</label><input id = "data_completed" name="data_completed" type="date" class="contact-prefix" style = "width: 50%; margin-right: 50%" value = "<?php echo $data_completed;?>"></td></tr>
 							<tr><td><label>Processed By</label>
-							 <select id = "data_processed_by" name="data_processed_by" style = "width: 70%">
+							 <select id = "data_processed_by" name="data_processed_by" style = "width: 50%; margin-right: 50%">
 							<?php
 								$result = mysqli_query($conn, "SELECT * FROM users");
 								$count = 1;
@@ -561,7 +550,7 @@ require ("connection.php");
 									 
 									$count = $count + 1;
 								}
-							?></select></td><td><label>Data Hours</label><input id = "data_hrs" name="data_hrs" type="text" class="contact-prefix" style = "width: 75%" value = "<?php echo $data_hrs;?>"></td></tr>
+							?></select></td><td><label>Records Total</label><input id = "records_total" name="records_total" type="text" class="contact-prefix" style = "width: 50%; margin-right: 50%" value = "<?php echo $records_total ?>"></td></tr>
 					</tbody></table></td></tr></tbody></table></div>	
 				</div>
 			<div class="newclienttab-inner" style = "float: left; width: 45%; clear: both">
@@ -570,7 +559,7 @@ require ("connection.php");
 						<tbody>
 							<tr valign='top'><td colspan='2'><table id = 'tasks' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='vendor' data-index='4'>Check</th><th class='maintable-thtwo data-header' data-name='material' data-index='6'>Task</th><th class='maintable-thtwo data-header' data-name='type' data-index='7'>Special</th></tr></thead><tbody>
 							<?php
-							$entire_task = array("Mail Merge","Letter Printing", "In-House Envelope Printing", "Tabbing","Folding","Inserting","Sealing","Collating","Labeling","Print Permit","Correct Permit","Carrier Route","Endorsement line","Address Printing","Tag as Political","Inkjet Printing","Glue Dots");
+							$entire_task = array("Mail Merge","Letter Printing", "In-House Envelope Printing", "Tabbing","Folding","Inserting","Sealing","Collating","Labeling","Print Permit","Endorsement line","Address Printing","Inkjet Printing","Glue Dots");
 							$task_array = explode(",", $tasks);
 							for($i = 0;$i<count($entire_task);$i++){
 								$found_task = FALSE;
@@ -641,7 +630,7 @@ require ("connection.php");
 									else if($i == 7){
 										echo '<tr><td><input type="checkbox" name = "tasks[]" value = "Collating"/></td><td><label>Collating</label></td><td><select id = "special_collating" name = "special_collating"><option select = "selected" value = "Manual">Manual</option><option value = "Auto">Auto</option><option value = "Man. and Auto">Man. and Auto</option></select></td></tr>';
 									}
-									else if($i == 15){
+									else if($i == 12){
 										echo '<tr><td><input type="checkbox" name = "tasks[]" value = "Inkjet Printing"/></td><td><label>Inkjet Printing</label></td><td><select id = "special_inkjet_printing" name = "special_inkjet_printing"><option select = "selected" value = "26K">26K</option><option value = "11K">11K</option></select></td></tr>';
 									}
 									else{
@@ -662,18 +651,18 @@ require ("connection.php");
 							<tr><td> <label>Initial Record Count</label></td><td><input id = "initialrec_count" name="initialrec_count" type="text" class="contact-prefix" value = "<?php echo $initialrec_count; ?>"></td></tr>
 							<tr><td><label>Manual</label></td><td><input id = "manual" name="manual" type="text" class="contact-prefix" value = "<?php echo $manual; ?>"></td></tr>
 							<tr><td><label>Uncorrected</label></td><td><input id = "uncorrected" name="uncorrected" type="text" class="contact-prefix" value = "<?php echo $uncorrected; ?>"></td></tr>
-							<tr><td><label>BMEU</label></td><td><input id = "bmeu" name="bmeu" type="text" class="contact-prefix" value = "<?php echo $bmeu;?>"></td></tr>
 							<tr><td><label>Unverifiable</label></td><td><input id = "unverifiable" name="unverifiable" type="text" class="contact-prefix" value = "<?php echo $unverifiable; ?>"></td></tr>
 							<tr><td><label>Foreigns</label></td><td><input id = "bs_foreigns" name="bs_foreigns" type="text" class="contact-prefix" value = "<?php echo $bs_foreigns; ?>"></td></tr>
 							<tr><td><label>Exact</label></td><td><input id = "bs_exact" name="bs_exact" type="text" class="contact-prefix" value = "<?php echo $bs_exact; ?>"></td></tr>
 							<tr><td><label>Loose</label></td><td><input id = "loose" name="loose" type="text" class="contact-prefix" value = "<?php echo $loose; ?>"></td></tr>
 							<tr><td><label>Householded</label></td><td><input id = "householded" name="householded" type="text" class="contact-prefix" value = "<?php echo $householded; ?>"></td></tr>
-							<tr><td><label>DQR Sent</label></td><td><input id = "dqr_sent" name="dqr_sent" type="date" class="contact-prefix" style = "width: 78.5%" value = "<?php echo $dqr_sent; ?>"></td></tr>
 							<tr><td><label>Basic</label></td><td><input id = "basic" name="basic" type="text" class="contact-prefix" value = "<?php echo $basic; ?>"></td></tr>
 							<tr><td><label>NCOA</label></td><td><input id = "bs_ncoa" name="bs_ncoa" type="text" class="contact-prefix" value = "<?php echo $bs_ncoa; ?>"></td></tr>
 							<tr><td><label>NCOA Errors</label></td><td><input id = "ncoa_errors" name="ncoa_errors" type="text" class="contact-prefix" value = "<?php echo $ncoa_errors; ?>"></td></tr>
 							<tr><td><label>Domestic</label></td><td><input id = "domestic" name="bs_domestic" type="text" class="contact-prefix" value = "<?php echo $bs_domestic; ?>"></td></tr>
 							<tr><td><label>Final Count</label></td><td><input id = "final_count" name="final_count" type="text" class="contact-prefix" value = "<?php echo $final_count; ?>"></td></tr>
+							<tr><td><label>Data Hours</label></td><td><input id = "data_hrs" name="data_hrs" type="text" class="contact-prefix" style = "width: 75%" value = "<?php echo $data_hrs;?>"></td></tr>
+							<tr><td><label>Explanation</label></td><td><textarea style = 'height: 150px' name="hrs_explanation" type="text" class="contact-prefix" value = "<?php echo $hrs_explanation; ?>"><?php echo $hrs_explanation; ?></textarea></td></tr>
 					</tbody></table></td></tr></tbody></table></div>	
 			</div>
 			<div class = "newclienttab-inner" style = "float: left; width 100%; width: 100%; clear: both">
@@ -683,7 +672,7 @@ require ("connection.php");
 							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody>
 							<tr><td><label>Mail Class</label><select id = "mail_class" name = "mail_class" style = "width: 50%; margin-right: 40%"><option selected = "selected" value = "<?php echo $mail_class; ?>"><?php echo $mail_class; ?></option><option value = "FCM">FCM</option><option value = "Bulk Standard">Bulk Standard</option><option value = "Non-Profit BLK">Non-Profit BLK</option><option value = "BPM">BPM</option><option value = "Non-profit BPM">Non-profit BPM</option><option value = "Parcel">Parcel</option><option value = "Non-profit Parcel">Non-profit Parcel</option><option value = "Hand Stamp FCM">Hand Stamp FCM</option><option value = "Hand Stamp Bulk">Hand Stamp Bulk</option></select></td><td><label>Rate</label><select id = "rate" name = "rate" style = "margin-right: 90%"><option selected = "selected" value = "<?php echo $rate; ?>"><?php echo $rate; ?></option><option value = "Auto">Auto</option><option value = "Auto-CRRT">Auto CRRT</option><option value = "Auto-WSS">Auto-WSS</option><option value = "Non-auto">Non-auto</option><option value = "Simplified">Simplified</option></select></td><td><label>Processing Category</label><select id = "processing_category" name = "processing_category" style = "width: 50%; margin-right: 50%"><option selected = "selected" value = "<?php echo $processing_category; ?>"><?php echo $processing_category; ?></option><option value = "Flat">Flat</option><option value = "Letter">Letter</option><option value = "Postcard - FCM Only">Postcard - FCM Only</option></select></td></tr>
 							<tr><td><label>Print Template</label><input id = "print_template" name="print_template" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%" value = "<?php echo $print_template; ?>"></td><td><label>Special Address Formatting</label><input id = "special_address" name="special_address" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%" value = "<?php echo $special_address; ?>"></td><td><label>Method of Delivery</label><input id = "delivery" name="delivery" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%" value = "<?php echo $delivery; ?>"></td></tr>
-							<tr><td><label>Permit</label><input id = "permit" name="permit" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%" value = "<?php echo $permit; ?>"></td><td><?php if($hold_postage == "yes"){echo '<input id = "hold_postage" style = "transform: scale(3.0)" type="checkbox" name="hold_postage" class="contact-prefix" checked>';}else{echo '<input id = "hold_postage" style = "transform: scale(3.0)" type="checkbox" name="hold_postage" class="contact-prefix">';}?><label style = "margin-left: 4%">Hold Postage</label></td><td><?php if($postage_paid == "yes"){echo '<input id = "postage_paid" style = "transform: scale(3.0)" type="checkbox" name="postage_paid" class="contact-prefix" checked>';}else{echo '<input id = "postage_paid" style = "transform: scale(3.0)" type="checkbox" name="postage_paid" class="contact-prefix">';}?><label style = "margin-left: 4%">Postage Paid</label></td></tr>
+							<tr><td><label>Permit</label><select name="permit" style = "width: 50%; margin-right: 40%"><option value = "<?php echo $permit; ?>" selected = "selected"><?php echo $permit; ?></option><option value = "473">473</option><option value = "26 Pre-cancelled">26 Pre-cancelled</option><option value = "Client">Client</option></select></td><td><?php if($hold_postage == "yes"){echo '<input id = "hold_postage" style = "transform: scale(3.0)" type="checkbox" name="hold_postage" class="contact-prefix" checked>';}else{echo '<input id = "hold_postage" style = "transform: scale(3.0)" type="checkbox" name="hold_postage" class="contact-prefix">';}?><label style = "margin-left: 4%">Hold Postage</label></td><td><?php if($postage_paid == "yes"){echo '<input id = "postage_paid" style = "transform: scale(3.0)" type="checkbox" name="postage_paid" class="contact-prefix" checked>';}else{echo '<input id = "postage_paid" style = "transform: scale(3.0)" type="checkbox" name="postage_paid" class="contact-prefix">';}?><label style = "margin-left: 4%">Postage Paid</label></td></tr>
 					</tbody></table></td></tr></tbody></table></div>	
 			</div>
 			<div class = "newclienttab-inner" style = "float: left; width 100%; width: 100%; clear: both">
@@ -691,8 +680,7 @@ require ("connection.php");
 							<tbody>
 							<tr valign='top'><th class='allcontacts-title'>Weights and Measures<span class='allcontacts-subtitle'></span></th></tr>
 							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody>
-							<tr><td><label>Mail Dimensions</label><input id = "mail_dimensions" name="mail_dim" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%" value = "<?php echo $mail_dim; ?>"></td><td><label>Materials Ordered</label><input id = "materials_ordered" name="materials_ordered" type="date" class="contact-prefix" style = "width: 50%; margin-right: 40%" value = "<?php echo $materials_ordered; ?>"></td><td><label>Materials Expected</label><input id = "materials_expected" name="materials_expected" type="date" class="contact-prefix" style = "width: 50%; margin-right: 40%" value = "<?php echo $materials_expected; ?>"></td></tr>
-							<tr><td><label>Based On</label><select id = "based_on" style = "width: 50%; margin-right: 40%" name="based_on" onchange = "addTotalWM()"><option selected = 'selected' value = '<?php echo $based_on; ?>'><?php echo $based_on; ?></option></select></td><td><label>Total Weights and Measures</label><input id = "total_w_m" name="total_w_m" type="text" class="contact-prefix" placeholder = "Auto Generated" style = "width: 50%; margin-right: 40%"></td><td><label>Expected Quantity</label><input id = "expected_quantity" name="expected_quantity" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%" value = "<?php echo $expected_quantity; ?>"></td></tr>
+							<tr><td><label>Based On</label><select id = "based_on" style = "width: 50%; margin-right: 50%" name="based_on" onchange = "addTotalWM()"><option selected = 'selected' value = '<?php echo $based_on; ?>'><?php echo $based_on; ?></option></select></td><td><label>Total Weights and Measures</label><input id = "total_w_m" name="total_w_m" type="text" class="contact-prefix" value = "<?php echo $total_w_m; ?>" placeholder = "Auto Generated" style = "width: 50%; margin-right: 40%"></td><td><label>Mail Dimensions</label><input id = "mail_dimensions" name="mail_dim" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%" value = "<?php echo $mail_dim; ?>"></td></tr>
 					</tbody></table></td></tr></tbody></table></div>	
 			</div>
 			<div class="newclienttab-inner" style = "width: 100%">
@@ -766,7 +754,7 @@ require ("connection.php");
 											<input type = 'text' id = 'initial" . ($i + 1) . "' name = 'initial" . ($i + 1) . "' value = '$initial'></input>
 										</td>
 										<td>
-											<input type = 'text' id = 'location" . ($i + 1) . "' name = 'location" . ($i + 1) . "' value = '$location'></input>
+											<select id = 'location" . ($i + 1) . "' name = 'location" . ($i + 1) . "'><option value = '$location' selected = 'selected'>$location</option><option value = '29 Front'>29 Front</option><option value = '29 Middle'>29 Middle</option><option value = '29 Back'>29 Back</option><option value = '31 Front'>31 Front</option><option value = '31 Middle'>31 Middle</option><option value = '31 Back'>31 Back</option></select>
 										</td>
 										<td><img src = 'images/x_button.png' width = '25' height = '25' onclick = removeWeights_Measures('#" . ($i+1) . "')></td>
 								    </tr>";
@@ -851,9 +839,6 @@ $( document ).ready(function() {
 		$('#based_on').append($('<option>', {value: $("#based_on" + based_on_ids[i]).val(), text: $("#based_on" + based_on_ids[i]).val()}));
 		
 	}
-	weight = weight.toFixed(2);
-	height = height.toFixed(2);
-	$("#total_w_m").val(weight + " x " + height);
 });
 document.getElementById("client_name").onkeyup = function(){
 	var value = document.getElementById("client_name").value;
