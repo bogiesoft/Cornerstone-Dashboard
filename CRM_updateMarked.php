@@ -9,13 +9,12 @@ function onPageLoad(){
 }
 
 function singleMarkedUpdate(){
-  $Client_name = $_POST['CName'];
-  $address = $_POST['address'];
+  $client_id = $_POST['CID'];
   $checked = $_POST['checked'];
   if ($checked == "true") {
-    $sql = "UPDATE sales SET mark = 1 WHERE (full_name = '$Client_name' AND address_line_1 = '$address')";
+    $sql = "UPDATE sales SET mark = 1 WHERE client_id = '$client_id'";
   }else {
-    $sql = "UPDATE sales SET mark = 0 WHERE (full_name = '$Client_name' AND address_line_1 = '$address')";
+    $sql = "UPDATE sales SET mark = 0 WHERE client_id = '$client_id'";
   }
   return $sql;
 }

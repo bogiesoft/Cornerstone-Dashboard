@@ -149,7 +149,7 @@ var CodeVersion = '3.0.8';
 				if($data["COLUMN_NAME"] != "mark" && $data["COLUMN_NAME"] != "import_date" && $data["COLUMN_NAME"] != "import_id" && $data["COLUMN_NAME"] != "import_name" && $data["COLUMN_NAME"] != "import_status" && $data["COLUMN_NAME"] != "crid" && $data["COLUMN_NAME"] != "non_profit")
 				{
 					echo "<tr>";
-					echo "<td align=center>$data[COLUMN_NAME]</td><td><select class = 'import_dropdown' name= $data[COLUMN_NAME] form = 'importForm' ><option value = 'none' style = 'display: none'>Choose one provided</option></select></td>";
+					echo "<td align=center>$data[COLUMN_NAME]</td><td><select class = 'import_dropdown' name= $data[COLUMN_NAME] form = 'importForm' ><option value = 'none' style = 'display: none'>Choose one provided</option><option value = 'none'>None</option></select></td>";
 					echo "</tr>";
 				}
 			}

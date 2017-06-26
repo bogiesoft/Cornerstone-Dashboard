@@ -9,8 +9,6 @@ require ("connection.php");
 	$sql = "SELECT * FROM materials WHERE material_id = '$term'"; 
 	$result = mysqli_query($conn,$sql); 
 	
-	
-	
 	if ($result->num_rows > 0) {
 		$row = $result->fetch_assoc();	
 		$material = $row['material'];
@@ -28,6 +26,12 @@ require ("connection.php");
 		$display = "no";
 	}
 	if(isset($_POST['submit_form'])){
+		foreach(array_keys($_POST) as $input){
+			if(!is_array($input)){
+				$_POST[$input] = str_replace('"', '', $_POST[$input]);
+				$_POST[$input] = str_replace("'", "", $_POST[$input]);
+			}
+		}
 		session_start();
 		$user_name = $_SESSION['user'];
 		date_default_timezone_set('America/New_York');

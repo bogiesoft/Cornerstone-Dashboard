@@ -1,15 +1,13 @@
 <?php
 require ("connection.php");
 
-$temp=unserialize($_GET['client_info']);
-$full_name = $temp[0];
-$address_line_1 = $temp[2];
-$business = $temp[1];	
-$sql = "SELECT * FROM sales WHERE full_name = '$full_name' AND address_line_1 = '$address_line_1' AND business = '$business'"; 
+$client_id = $_GET["client_info"];
+$sql = "SELECT * FROM sales WHERE client_id = '$client_id'"; 
 $result = mysqli_query($conn,$sql) or die("error"); 
 
 if ($result->num_rows > 0) {
 	$row = $result->fetch_assoc();	
+	$business = $row["business"];
 	$rep = $row["rep"];
 	$quickbooks = $row["quickbooks"];
 	$prefix = $row["prefix"];
@@ -151,7 +149,7 @@ else if(isset($_POST['submit_form'])){
 	$_SESSION['date'] = $today;
 	$job = "updated client info";
 	$sql = 'UPDATE sales SET rep="' . $rep . '", quickbooks="' . $quickbooks . '", prefix="' . $prefix . '", suffix="' . $suffix . '", full_name="' . $full_name . '", linkedin = "' . $linkedin . '", facebook = "' . $facebook . '", twitter = "' . $twitter . '", skypeid = "' . $skypeid . '", address_line_1="' . $address_line_1 . '", address_line_2="' . $address_line_2 . '", address_line_3 = "' . $address_line_3 . '", phone="' . $phone . '",email1="' . $email1 . '", cc_email = "' . $cc_email . '", source="' . $source . '",web_address="' . $web_address . '", alt_website1 = "' . $alt_website1 . '", alt_website2 = "' . $alt_website2 . '", notes="' . $notes . '",business="' . $business . '",title="' . $title . '", cell_phone = "' . $cell_phone . '", alt_cell_phone = "' . $alt_cell_phone . '", city = "' . $city . '", state = "' . $state . '", 
-	zipcode = "' . $zipcode . '", country = "' . $country . '", fax = "' . $fax . '", alt_fax = "' . $alt_fax . '", contact_name = "' . $contact_name . '", second_contact = "' . $second_contact . '", status = "' . $status . '", call_back_date = "' . $call_back_date . '", priority = "' . $priority . '" , date_added = "' . $date_added . '", mailing_list = "' . $mailing_list . '", pie_day = "' . $pie_day . '", alt_phone = "' . $alt_phone . '", home_phone = "' . $home_phone . '", work_phone = "' . $work_phone . '", email2 = "' . $email2 . '", vertical1 = "' . $vertical1 . '", vertical2 = "' . $vertical2 . '", vertical3 = "' . $vertical3 . '", _2014_pie_day = "' . $_2014_pie_day . '", Non_Profit_Card_08_2013 = "' . $Non_Profit_Card_08_2013 . '", Commercial_Card_08_2013 = "' . $Commercial_Card_08_2013 . '" , USPS_Post_Office_Mailing_03_2014 = "' . $USPS_Post_Office_Mailing_03_2014 . '", Contractor_Small_Business_Select_Mailing_03_2014 = "' . $Contractor_Small_Business_Select_Mailing_03_2014 . '", Contractor_SB_Select_Mailing_04_2014 = "' . $Contractor_SB_Select_Mailing_04_2014 . '", USPS_EDDM_Regs_brochure_Mailing_04_2014 = "' . $USPS_EDDM_Regs_brochure_Mailing_04_2014 . '", USPS_9Y9_EDDM_Marketing_Card = "' . $USPS_9Y9_EDDM_Marketing_Card . '", SEPT_2014_3_5Y11_CRST_Marketing_Card = "' . $SEPT_2014_3_5Y11_CRST_Marketing_Card . '", Contractor_Mailing_2016 = "' . $Contractor_Mailing_2016 . '", crid = "' .$crid . '", non_profit = "'. $non_profit . '", type = "' . $type . '" WHERE full_name= "' . $full_name . '" AND address_line_1 = "' . $address_line_1 . '" AND business = "' . $business . '"';
+	zipcode = "' . $zipcode . '", country = "' . $country . '", fax = "' . $fax . '", alt_fax = "' . $alt_fax . '", contact_name = "' . $contact_name . '", second_contact = "' . $second_contact . '", status = "' . $status . '", call_back_date = "' . $call_back_date . '", priority = "' . $priority . '" , date_added = "' . $date_added . '", mailing_list = "' . $mailing_list . '", pie_day = "' . $pie_day . '", alt_phone = "' . $alt_phone . '", home_phone = "' . $home_phone . '", work_phone = "' . $work_phone . '", email2 = "' . $email2 . '", vertical1 = "' . $vertical1 . '", vertical2 = "' . $vertical2 . '", vertical3 = "' . $vertical3 . '", _2014_pie_day = "' . $_2014_pie_day . '", Non_Profit_Card_08_2013 = "' . $Non_Profit_Card_08_2013 . '", Commercial_Card_08_2013 = "' . $Commercial_Card_08_2013 . '" , USPS_Post_Office_Mailing_03_2014 = "' . $USPS_Post_Office_Mailing_03_2014 . '", Contractor_Small_Business_Select_Mailing_03_2014 = "' . $Contractor_Small_Business_Select_Mailing_03_2014 . '", Contractor_SB_Select_Mailing_04_2014 = "' . $Contractor_SB_Select_Mailing_04_2014 . '", USPS_EDDM_Regs_brochure_Mailing_04_2014 = "' . $USPS_EDDM_Regs_brochure_Mailing_04_2014 . '", USPS_9Y9_EDDM_Marketing_Card = "' . $USPS_9Y9_EDDM_Marketing_Card . '", SEPT_2014_3_5Y11_CRST_Marketing_Card = "' . $SEPT_2014_3_5Y11_CRST_Marketing_Card . '", Contractor_Mailing_2016 = "' . $Contractor_Mailing_2016 . '", crid = "' .$crid . '", non_profit = "'. $non_profit . '", type = "' . $type . '" WHERE client_id = "' . $client_id . '"';
 	
 	
 	$sql6 = "INSERT INTO timestamp (user,time,job, a_p) VALUES ('$user_name', '$today','$job', '$a_p')";

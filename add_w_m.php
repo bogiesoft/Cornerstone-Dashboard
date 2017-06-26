@@ -7,7 +7,12 @@ $user_name = $_SESSION['user'];
 date_default_timezone_set('America/New_York');
 $today = date("Y-m-d G:i:s");
 $a_p = date("A");
-
+foreach(array_keys($_POST) as $input){
+		if(!is_array($input)){
+			$_POST[$input] = str_replace('"', '', $_POST[$input]);
+			$_POST[$input] = str_replace("'", "", $_POST[$input]);
+		}
+}
 $job = "added weights and measure";
 $sql6 = "INSERT INTO timestamp (user,time,job, a_p) VALUES ('$user_name', '$today','$job', '$a_p')";
 $result7 = $conn->query($sql6) or die('Error querying database 5.');

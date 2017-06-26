@@ -55,16 +55,12 @@ $_SESSION["table_type_save_search"] = "CRM";
   			"columnDefs": [ {
   			    "targets": 1,
   			    "render": function ( data, type, row) {
-              var str = serialize([row[1], row[2], row[3]]);
-              var stren = urlencode(str);
-  			      return '<a href="edit_client.php?client_info='+stren+'">'+row[1]+'</a>'; //link for each client name
+  			      return '<a href="edit_client.php?client_info='+row[1]+'">'+row[1]+'</a>'; //link for each client name
   			    }
   			  },{
   			    "targets": 2,
   			    "render": function ( data, type, row) {
-              var str = serialize([row[1], row[2], row[3]]);
-              var stren = urlencode(str);
-  			      return '<a href="edit_client.php?client_info='+stren+'">'+row[2]+'</a>'; //link for each business name
+  			      return '<a href="edit_client.php?client_info='+row[1]+'">'+row[2]+'</a>'; //link for each business name
   			    }
   			  },{
            'targets': 0,
@@ -73,9 +69,9 @@ $_SESSION["table_type_save_search"] = "CRM";
            'className': 'dt-body-center',
            'render': function (data, type, row){
              if (row[0] == 1) {
-               return '<input type="checkbox" id = "check_box" name="id[]" onclick = "rowMarkedClick(\'' + row[0] + '\',\'' + row[1] + '\',\'' + row[3] + '\')" checked>';
+               return '<input type="checkbox" id = "check_box" name="id[]" onclick = "rowMarkedClick(\'' + row[0] + '\',\'' + row[1] + '\')" checked>';
              }else {
-               return '<input type="checkbox" id = "check_box" name="id[]" onclick = "rowMarkedClick(\'' + row[0] + '\',\'' + row[1] + '\',\'' + row[3] + '\')">';
+               return '<input type="checkbox" id = "check_box" name="id[]" onclick = "rowMarkedClick(\'' + row[0] + '\',\'' + row[1] + '\')">';
              }
            }
          }
@@ -523,7 +519,7 @@ $_SESSION["table_type_save_search"] = "CRM";
   }
 
   //When input checkbox is clicked this function is called
-  function rowMarkedClick(checked, clientName, Address){
+  function rowMarkedClick(checked, client_id){
     MarkChecked = (checked == 0)?true:false;
     $.ajax({
       type:'POST',
@@ -531,8 +527,7 @@ $_SESSION["table_type_save_search"] = "CRM";
       data: {
         'function': 1,
         'checked': MarkChecked,
-        'CName': clientName,
-        'address': Address
+        'CID': client_id
       }
     });
     FilteredRecords = (MarkChecked)?FilteredRecords+=1:FilteredRecords-=1;
@@ -631,6 +626,7 @@ $_SESSION["table_type_save_search"] = "CRM";
 			<thead>
 				<tr>
           <th>Mark</th>
+					<th>Client ID</th>
 					<th>Contact Name</th>
 					<th>Business</th>
 					<th>Address</th>
@@ -651,16 +647,17 @@ $_SESSION["table_type_save_search"] = "CRM";
 			<tfoot>
         <tr>
           <td></td>
-  				<td><input type="text" text = "full_name" data-column="1"  placeholder = "Search Client Name" class="search-input-text search_col search_box1" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button1' onclick = "minusSearchCounter('.search_box1', '.add_button1', '.minus_button1')">Clear Client</button><button class = "add_button1" onclick = "addSearchCounter('.search_box1', '.add_button1', '.minus_button1')">Search by Client</button></td>
-  				<td><input type="text" text = "business" data-column="2"  placeholder = "Search Business" class="search-input-text search_col search_box2" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button2' onclick = "minusSearchCounter('.search_box2', '.add_button2', '.minus_button2')">Clear business</button><button class = "add_button2" onclick = "addSearchCounter('.search_box2', '.add_button2', '.minus_button2')">Search by business</button></td>
-  				<td><input type="text" text = "address_line_1" data-column="3"  placeholder = "Search Address" class="search-input-text search_col search_box3" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button3' onclick = "minusSearchCounter('.search_box3', '.add_button3', '.minus_button3')">Clear Address</button><button class = "add_button3" onclick = "addSearchCounter('.search_box3', '.add_button3', '.minus_button3')">Search by Address</button></td>
-  				<td><input type="text" text = "city" data-column="4"  placeholder = "Search City" class="search-input-text search_col search_box4" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button4' onclick = "minusSearchCounter('.search_box4', '.add_button4', '.minus_button4')">Clear City</button><button class = "add_button4" onclick = "addSearchCounter('.search_box4', '.add_button4', '.minus_button4')">Search by city</button></td>
-  				<td><input type="text" text = "state" data-column="5"  placeholder = "Search State" class="search-input-text search_col search_box5" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button5' onclick = "minusSearchCounter('.search_box5', '.add_button5', '.minus_button5')">Clear state</button><button class = "add_button5" onclick = "addSearchCounter('.search_box5', '.add_button5', '.minus_button5')">Search by state</button></td>
-  				<td><input type="text" text = "zipcode" data-column="6"  placeholder = "Search Zip Code" class="search-input-text search_col search_box6" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button6' onclick = "minusSearchCounter('.search_box6', '.add_button6', '.minus_button6')">Clear Zipcode</button><button class = "add_button6" onclick = "addSearchCounter('.search_box6', '.add_button6', '.minus_button6')">Search by zipcode</button></td>
-  				<td><input type="text" text = "call_back_date" data-column="7"  placeholder = "Search call_back_date" class="search-input-text search_col search_box7" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button7' onclick = "minusSearchCounter('.search_box7', '.add_button7', '.minus_button7')">Clear Call Back Date</button><button class = "add_button7" onclick = "addSearchCounter('.search_box7', '.add_button7', '.minus_button7')">Search by Call Back Date</button></td>
+				<td><input type="text" text = "full_name" data-column="1"  placeholder = "Search Client Name" class="search-input-text search_col search_box0" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button0' onclick = "minusSearchCounter('.search_box0', '.add_button0', '.minus_button0')">Clear Client ID</button><button class = "add_button0" onclick = "addSearchCounter('.search_box0', '.add_button0', '.minus_button0')">Search by Client ID</button></td>
+  				<td><input type="text" text = "full_name" data-column="2"  placeholder = "Search Client Name" class="search-input-text search_col search_box1" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button1' onclick = "minusSearchCounter('.search_box1', '.add_button1', '.minus_button1')">Clear Client</button><button class = "add_button1" onclick = "addSearchCounter('.search_box1', '.add_button1', '.minus_button1')">Search by Client</button></td>
+  				<td><input type="text" text = "business" data-column="3"  placeholder = "Search Business" class="search-input-text search_col search_box2" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button2' onclick = "minusSearchCounter('.search_box2', '.add_button2', '.minus_button2')">Clear business</button><button class = "add_button2" onclick = "addSearchCounter('.search_box2', '.add_button2', '.minus_button2')">Search by business</button></td>
+  				<td><input type="text" text = "address_line_1" data-column="4"  placeholder = "Search Address" class="search-input-text search_col search_box3" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button3' onclick = "minusSearchCounter('.search_box3', '.add_button3', '.minus_button3')">Clear Address</button><button class = "add_button3" onclick = "addSearchCounter('.search_box3', '.add_button3', '.minus_button3')">Search by Address</button></td>
+  				<td><input type="text" text = "city" data-column="5"  placeholder = "Search City" class="search-input-text search_col search_box4" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button4' onclick = "minusSearchCounter('.search_box4', '.add_button4', '.minus_button4')">Clear City</button><button class = "add_button4" onclick = "addSearchCounter('.search_box4', '.add_button4', '.minus_button4')">Search by city</button></td>
+  				<td><input type="text" text = "state" data-column="6"  placeholder = "Search State" class="search-input-text search_col search_box5" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button5' onclick = "minusSearchCounter('.search_box5', '.add_button5', '.minus_button5')">Clear state</button><button class = "add_button5" onclick = "addSearchCounter('.search_box5', '.add_button5', '.minus_button5')">Search by state</button></td>
+  				<td><input type="text" text = "zipcode" data-column="7"  placeholder = "Search Zip Code" class="search-input-text search_col search_box6" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button6' onclick = "minusSearchCounter('.search_box6', '.add_button6', '.minus_button6')">Clear Zipcode</button><button class = "add_button6" onclick = "addSearchCounter('.search_box6', '.add_button6', '.minus_button6')">Search by zipcode</button></td>
+  				<td><input type="text" text = "call_back_date" data-column="8"  placeholder = "Search call_back_date" class="search-input-text search_col search_box7" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button7' onclick = "minusSearchCounter('.search_box7', '.add_button7', '.minus_button7')">Clear Call Back Date</button><button class = "add_button7" onclick = "addSearchCounter('.search_box7', '.add_button7', '.minus_button7')">Search by Call Back Date</button></td>
 
   				<td>
-              <select text = "priority" data-column="8"  class="search-input-select search_col search_box8" style = "visibility: hidden">
+              <select text = "priority" data-column="9"  class="search-input-select search_col search_box8" style = "visibility: hidden">
                   <option value="">(Search Priority)</option>
   								<option value="HIGH">HIGH</option>
                   <option value="CALL">CALL</option>
@@ -670,13 +667,13 @@ $_SESSION["table_type_save_search"] = "CRM";
               </select>
   			<button style = 'display: none' class = 'minus_button8' onclick = "minusSearchCounter('.search_box8', '.add_button8', '.minus_button8')">Clear priority</button><button class = "add_button8" onclick = "addSearchCounter('.search_box8', '.add_button8', '.minus_button8')">Search by priority</button>
           </td>
-  				<td><input type="text" text = "title" data-column="9"  placeholder = "Search Title" class="search-input-text search_col search_box9" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button9' onclick = "minusSearchCounter('.search_box9', '.add_button9', '.minus_button9')">Clear title</button><button class = "add_button9" onclick = "addSearchCounter('.search_box9', '.add_button9', '.minus_button9')">Search by title</button></td>
-  				<td><input type="text" text = "phone" data-column="10"  placeholder = "Search Phone" class="search-input-text search_col search_box10" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button10' onclick = "minusSearchCounter('.search_box10', '.add_button10', '.minus_button10')">Clear Phone</button><button class = "add_button10" onclick = "addSearchCounter('.search_box10', '.add_button10', '.minus_button10')">Search by Phone</button></td>
-  				<td><input type="text" text = "web_address" data-column="11"  placeholder = "Search Website" class="search-input-text search_col search_box11" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button11' onclick = "minusSearchCounter('.search_box11', '.add_button11', '.minus_button11')">Clear WebAddress</button><button class = "add_button11" onclick = "addSearchCounter('.search_box11', '.add_button11', '.minus_button11')">Search by WebAddress</button></td>
-  				<td><input type="text" text = "email1" data-column="12"  placeholder = "Search Email" class="search-input-text search_col search_box12" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button12' onclick = "minusSearchCounter('.search_box12', '.add_button12', '.minus_button12')">Clear Email</button><button class = "add_button12" onclick = "addSearchCounter('.search_box12', '.add_button12', '.minus_button12')">Search by Email</button></td>
-  				<td><input type="text" text = "vertical1" data-column="13"  placeholder = "Search Vertical1" class="search-input-text search_col search_box13" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button13' onclick = "minusSearchCounter('.search_box13', '.add_button13', '.minus_button13')">Clear Vertical 1</button><button class = "add_button13" onclick = "addSearchCounter('.search_box13', '.add_button13', '.minus_button13')">Search by Vertical 1</button></td>
-  				<td><input type="text" text = "vertical2" data-column="14"  placeholder = "Search Vertical2" class="search-input-text search_col search_box14" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button14' onclick = "minusSearchCounter('.search_box14', '.add_button14', '.minus_button14')">Clear Vertical 2</button><button class = "add_button14" onclick = "addSearchCounter('.search_box14', '.add_button14', '.minus_button14')">Search by Vertical 2</button></td>
-  				<td><input type="text" text = "vertical3" data-column="15"  placeholder = "Search Vertical3" class="search-input-text search_col search_box15" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button15' onclick = "minusSearchCounter('.search_box15', '.add_button15', '.minus_button15')">Clear Vertical 3</button><button class = "add_button15" onclick = "addSearchCounter('.search_box15', '.add_button15', '.minus_button15')">Search by Vertical 3</button></td>
+  				<td><input type="text" text = "title" data-column="10"  placeholder = "Search Title" class="search-input-text search_col search_box9" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button9' onclick = "minusSearchCounter('.search_box9', '.add_button9', '.minus_button9')">Clear title</button><button class = "add_button9" onclick = "addSearchCounter('.search_box9', '.add_button9', '.minus_button9')">Search by title</button></td>
+  				<td><input type="text" text = "phone" data-column="11"  placeholder = "Search Phone" class="search-input-text search_col search_box10" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button10' onclick = "minusSearchCounter('.search_box10', '.add_button10', '.minus_button10')">Clear Phone</button><button class = "add_button10" onclick = "addSearchCounter('.search_box10', '.add_button10', '.minus_button10')">Search by Phone</button></td>
+  				<td><input type="text" text = "web_address" data-column="12"  placeholder = "Search Website" class="search-input-text search_col search_box11" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button11' onclick = "minusSearchCounter('.search_box11', '.add_button11', '.minus_button11')">Clear WebAddress</button><button class = "add_button11" onclick = "addSearchCounter('.search_box11', '.add_button11', '.minus_button11')">Search by WebAddress</button></td>
+  				<td><input type="text" text = "email1" data-column="13"  placeholder = "Search Email" class="search-input-text search_col search_box12" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button12' onclick = "minusSearchCounter('.search_box12', '.add_button12', '.minus_button12')">Clear Email</button><button class = "add_button12" onclick = "addSearchCounter('.search_box12', '.add_button12', '.minus_button12')">Search by Email</button></td>
+  				<td><input type="text" text = "vertical1" data-column="14"  placeholder = "Search Vertical1" class="search-input-text search_col search_box13" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button13' onclick = "minusSearchCounter('.search_box13', '.add_button13', '.minus_button13')">Clear Vertical 1</button><button class = "add_button13" onclick = "addSearchCounter('.search_box13', '.add_button13', '.minus_button13')">Search by Vertical 1</button></td>
+  				<td><input type="text" text = "vertical2" data-column="15"  placeholder = "Search Vertical2" class="search-input-text search_col search_box14" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button14' onclick = "minusSearchCounter('.search_box14', '.add_button14', '.minus_button14')">Clear Vertical 2</button><button class = "add_button14" onclick = "addSearchCounter('.search_box14', '.add_button14', '.minus_button14')">Search by Vertical 2</button></td>
+  				<td><input type="text" text = "vertical3" data-column="16"  placeholder = "Search Vertical3" class="search-input-text search_col search_box15" style = "visibility: hidden"><button style = 'display: none' class = 'minus_button15' onclick = "minusSearchCounter('.search_box15', '.add_button15', '.minus_button15')">Clear Vertical 3</button><button class = "add_button15" onclick = "addSearchCounter('.search_box15', '.add_button15', '.minus_button15')">Search by Vertical 3</button></td>
   			</tr>
 		</tfoot>
 		<tbody>
