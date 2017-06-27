@@ -125,6 +125,9 @@ if(isset($_POST['submit_form'])){
 		else if($tasks_array[$i] == "Inkjet Printing"){
 			$tasks.="Inkjet Printing^" . $_POST["special_inkjet_printing"] . ",";
 		}
+		else if($tasks_array[$i] == "Labeling"){
+			$tasks.="Labeling^" . $_POST["special_labeling"] . ",";
+		}
 		else{
 			$tasks.=$tasks_array[$i] . ",";
 		}

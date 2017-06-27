@@ -81,7 +81,7 @@ require('header.php');
 					  <option value="Labeling">Labeling</option>
 					  <option value="Print Permit">Print Permit</option>
 					  <option value="Endorsement line">Endorsement line</option>
-					  <option value="Address Printing">Address Printing</option>
+					  <option value="Xante Printing">Xante Printing</option>
 					  <option value="Inkjet Printing">Inkjet Printing</option>
 					  <option value="Glue Dots">Glue Dots</option>
 </select></span><br><br>
@@ -122,22 +122,28 @@ $(document).ready(function()
 		var recs_min = <?php echo json_encode($recs_per_min); ?>;
 		var job = <?php echo json_encode($job); ?>;
 		if($("#job").val() == "Mail Merge"){
-			$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = '" + selected + "'>" + selected + "</option><option select = 'selected' value = 'Sent to Vendor'>Sent to Vendor</option><option value = 'In-House'>In-House</option></select>");
+			$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = '" + selected + "'>" + selected + "</option><option value = 'Sent to Vendor'>Sent to Vendor</option><option value = 'In-House'>In-House</option></select>");
 		}
 		else if($("#job").val() == "Letter Printing"){
-			$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = '" + selected + "'>" + selected + "</option><option select = 'selected' value = 'From PDF'>From PDF</option><option value = 'Inkjet'>Inkjet</option></select>");
+			$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = '" + selected + "'>" + selected + "</option><option value = 'From PDF'>From PDF</option><option value = 'Inkjet'>Inkjet</option></select>");
 		}
 		else if($("#job").val() == "Tabbing"){
-			$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = '" + selected + "'>" + selected + "</option><option select = 'selected' value = 'Manual Single'>Manual Single</option><option value = 'Manual Double'>Manual Double</option><option value = 'Auto Single'>Auto Single</option><option value = 'Auto Double'>Auto Double</option></select>");
+			$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = '" + selected + "'>" + selected + "</option><option value = 'Manual Single'>Manual Single</option><option value = 'Manual Double'>Manual Double</option><option value = 'Manual Triple'>Manual Triple</option><option value = 'Auto Single'>Auto Single</option><option value = 'Auto Double'>Auto Double</option><option value = 'Auto Triple'>Auto Triple</option></select>");
 		}
-		else if($("#job").val() == "Folding" || $("#job").val() == "Inserting" || $("#job").val() == "Sealing"){
-			$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = '" + selected + "'>" + selected + "</option><option select = 'selected' value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option></select>");
+		else if($("#job").val() == "Folding"){
+			$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = '" + selected + "'>" + selected + "</option><option value = 'Manual Double Fold'>Manual Double Fold</option><option value = 'Manual Tri Fold'>Manual Tri Fold</option><option value = 'Manual Parallel Fold'>Manual Parallel Fold</option><option value = 'Manual French Fold'>Manual French Fold</option><option value = 'Manual Gate Fold'>Manual Gate Fold</option><option value = 'Manual Half Fold'>Manual Half Fold</option><option value = 'Auto Double Fold'>Auto Double Fold</option><option value = 'Auto Tri Fold'>Auto Tri Fold</option><option value = 'Auto Parallel Fold'>Auto Parallel Fold</option><option value = 'Auto French Fold'>Auto French Fold</option><option value = 'Auto Gate Fold'>Auto Gate Fold</option><option value = 'Auto Half Fold'>Auto Half Fold</option></select>");
+		}
+		else if($("#job").val() == "Inserting" || $("#job").val() == "Sealing"){
+			$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = '" + selected + "'>" + selected + "</option><option value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option></select>");
 		}
 		else if($("#job").val() == "Collating"){
-			$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = '" + selected + "'>" + selected + "</option><option select = 'selected' value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option><option value = 'Man. and Auto'>Man. and Auto</option></select>");
+			$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = '" + selected + "'>" + selected + "</option><option value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option><option value = 'Man. and Auto'>Man. and Auto</option></select>");
 		}
 		else if($("#job").val() == "Inkjet Printing"){
-			$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = '" + selected + "'>" + selected + "</option><option select = 'selected' value = '26K'>26K</option><option value = '11K'>11K</option></select>");
+			$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = '" + selected + "'>" + selected + "</option><option value = '11K'>11K</option><option value = '26K'>26K</option><option value = '30K'>30K</option></select>");
+		}
+		else if($("#job").val() == "Labeling"){
+			$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = '" + selected + "'>" + selected + "</option><option value = 'Auto'>Auto</option><option value = 'Manual'>Manual</option></select>");
 		}
 		
 		changeBar();
@@ -204,16 +210,22 @@ function checkSpecial(id_name){
 		$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = 'From PDF'>From PDF</option><option value = 'Inkjet'>Inkjet</option></select>");
 	}
 	else if($("#job").val() == "Tabbing"){
-		$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = 'Manual Single'>Manual Single</option><option value = 'Manual Double'>Manual Double</option><option value = 'Auto Single'>Auto Single</option><option value = 'Auto Double'>Auto Double</option></select>");
+		$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = 'Manual Single'>Manual Single</option><option value = 'Manual Double'>Manual Double</option><option value = 'Manual Triple'>Manual Triple</option><option value = 'Auto Single'>Auto Single</option><option value = 'Auto Double'>Auto Double</option><option value = 'Auto Triple'>Auto Triple</option></select>");
 	}
-	else if($("#job").val() == "Folding" || $("#job").val() == "Inserting" || $("#job").val() == "Sealing"){
+	else if($("#job").val() == "Folding"){
+		$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = 'Manual Double Fold'>Manual Double Fold</option><option value = 'Manual Tri Fold'>Manual Tri Fold</option><option value = 'Manual Parallel Fold'>Manual Parallel Fold</option><option value = 'Manual French Fold'>Manual French Fold</option><option value = 'Manual Gate Fold'>Manual Gate Fold</option><option value = 'Manual Half Fold'>Manual Half Fold</option><option value = 'Auto Double Fold'>Auto Double Fold</option><option value = 'Auto Tri Fold'>Auto Tri Fold</option><option value = 'Auto Parallel Fold'>Auto Parallel Fold</option><option value = 'Auto French Fold'>Auto French Fold</option><option value = 'Auto Gate Fold'>Auto Gate Fold</option><option value = 'Auto Half Fold'>Auto Half Fold</option></select>");
+	}
+	else if($("#job").val() == "Inserting" || $("#job").val() == "Sealing"){
 		$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option></select>");
 	}
 	else if($("#job").val() == "Collating"){
 		$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option><option value = 'Man. and Auto'>Man. and Auto</option></select>");
 	}
 	else if($("#job").val() == "Inkjet Printing"){
-		$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = '26K'>26K</option><option value = '11K'>11K</option></select>");
+		$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = '11K'>11K</option><option value = '26K'>26K</option><option value = '30K'>30K</option></select>");
+	}
+	else if($("#job").val() == "Labeling"){
+		$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = 'Auto'>Auto</option><option value = 'Manual'>Manual</option></select>");
 	}
 }
 </script>

@@ -215,6 +215,165 @@ function addTotalWM()
 	height = height.toFixed(2);
 	$("#total_w_m").val(weight + " lbs. x " + height + " in.");
 }
+function showGeneral(){
+	$("#general_info").show();
+	$("#client_info").hide();
+	$("#data_info").hide();
+	$("#task_list_info").hide();
+	$("#blue_sheet_info").hide();
+	$("#mailing_info").hide();
+	$("#w_m_info").hide();
+	$("#special_instructions_info").hide();
+	//-------------------------------
+	$("#general_tab").css("background", '#476d65');
+	$("#client_tab").css("background", '#000000');
+	$("#data_tab").css("background", "#000000");
+	$("#task_tab").css("background", "#000000");
+	$("#bluesheet_tab").css("background", "#000000");
+	$("#mailing_tab").css("background", "#000000");
+	$("#w_m_tab").css("background", "#000000");
+	$("#special_tab").css("background", "#000000");
+	
+}
+function showClientInfo(){
+	$("#general_info").hide();
+	$("#client_info").show();
+	$("#data_info").hide();
+	$("#task_list_info").hide();
+	$("#blue_sheet_info").hide();
+	$("#mailing_info").hide();
+	$("#w_m_info").hide();
+	$("#special_instructions_info").hide();
+	//----------------------------------------
+	$("#general_tab").css("background", '#000000');
+	$("#client_tab").css("background", '#476d65');
+	$("#data_tab").css("background", "#000000");
+	$("#task_tab").css("background", "#000000");
+	$("#bluesheet_tab").css("background", "#000000");
+	$("#mailing_tab").css("background", "#000000");
+	$("#w_m_tab").css("background", "#000000");
+	$("#special_tab").css("background", "#000000");
+	
+}
+function showDataInfo(){
+	$("#general_info").hide();
+	$("#client_info").hide();
+	$("#data_info").show();
+	$("#task_list_info").hide();
+	$("#blue_sheet_info").hide();
+	$("#mailing_info").hide();
+	$("#w_m_info").hide();
+	$("#special_instructions_info").hide();
+	//-----------------------------------------
+	$("#general_tab").css("background", '#000000');
+	$("#client_tab").css("background", '#000000');
+	$("#data_tab").css("background", "#476d65");
+	$("#task_tab").css("background", "#000000");
+	$("#bluesheet_tab").css("background", "#000000");
+	$("#mailing_tab").css("background", "#000000");
+	$("#w_m_tab").css("background", "#000000");
+	$("#special_tab").css("background", "#000000");
+	
+}
+function showTaskInfo(){
+	$("#general_info").hide();
+	$("#client_info").hide();
+	$("#data_info").hide();
+	$("#task_list_info").show();
+	$("#blue_sheet_info").hide();
+	$("#mailing_info").hide();
+	$("#w_m_info").hide();
+	$("#special_instructions_info").hide();
+	//-----------------------------------------
+	$("#general_tab").css("background", '#000000');
+	$("#client_tab").css("background", '#000000');
+	$("#data_tab").css("background", "#000000");
+	$("#task_tab").css("background", "#476d65");
+	$("#bluesheet_tab").css("background", "#000000");
+	$("#mailing_tab").css("background", "#000000");
+	$("#w_m_tab").css("background", "#000000");
+	$("#special_tab").css("background", "#000000");
+	
+}
+function showBlueSheetInfo(){
+	$("#general_info").hide();
+	$("#client_info").hide();
+	$("#data_info").hide();
+	$("#task_list_info").hide();
+	$("#blue_sheet_info").show();
+	$("#mailing_info").hide();
+	$("#w_m_info").hide();
+	$("#special_instructions_info").hide();
+	///---------------------------
+	$("#general_tab").css("background", '#000000');
+	$("#client_tab").css("background", '#000000');
+	$("#data_tab").css("background", "#000000");
+	$("#task_tab").css("background", "#000000");
+	$("#bluesheet_tab").css("background", "#476d65");
+	$("#mailing_tab").css("background", "#000000");
+	$("#w_m_tab").css("background", "#000000");
+	$("#special_tab").css("background", "#000000");
+	
+}
+function showMailingInfo(){
+	$("#general_info").hide();
+	$("#client_info").hide();
+	$("#data_info").hide();
+	$("#task_list_info").hide();
+	$("#blue_sheet_info").hide();
+	$("#mailing_info").show();
+	$("#w_m_info").hide();
+	$("#special_instructions_info").hide();
+	//-------------------------------------
+	$("#general_tab").css("background", '#000000');
+	$("#client_tab").css("background", '#000000');
+	$("#data_tab").css("background", "#000000");
+	$("#task_tab").css("background", "#000000");
+	$("#bluesheet_tab").css("background", "#000000");
+	$("#mailing_tab").css("background", "#476d65");
+	$("#w_m_tab").css("background", "#000000");
+	$("#special_tab").css("background", "#000000");
+	
+}
+function showWMInfo(){
+	$("#general_info").hide();
+	$("#client_info").hide();
+	$("#data_info").hide();
+	$("#task_list_info").hide();
+	$("#blue_sheet_info").hide();
+	$("#mailing_info").hide();
+	$("#w_m_info").show();
+	$("#special_instructions_info").hide();
+	//-------------------------------------------
+	$("#general_tab").css("background", '#000000');
+	$("#client_tab").css("background", '#000000');
+	$("#data_tab").css("background", "#000000");
+	$("#task_tab").css("background", "#000000");
+	$("#bluesheet_tab").css("background", "#000000");
+	$("#mailing_tab").css("background", "#000000");
+	$("#w_m_tab").css("background", "#476d65");
+	$("#special_tab").css("background", "#000000");
+	
+}
+function showSpecialInfo(){
+	$("#general_info").hide();
+	$("#client_info").hide();
+	$("#data_info").hide();
+	$("#task_list_info").hide();
+	$("#blue_sheet_info").hide();
+	$("#mailing_info").hide();
+	$("#w_m_info").hide();
+	$("#special_instructions_info").show();
+	//-----------------------------------------------
+	$("#general_tab").css("background", '#000000');
+	$("#client_tab").css("background", '#000000');
+	$("#data_tab").css("background", "#000000");
+	$("#task_tab").css("background", "#000000");
+	$("#bluesheet_tab").css("background", "#000000");
+	$("#mailing_tab").css("background", "#000000");
+	$("#w_m_tab").css("background", "#000000");
+	$("#special_tab").css("background", "#476d65");
+}
 </script>
 <script type="text/javascript">
 
@@ -247,7 +406,14 @@ function addTotalWM()
     <div class="newcontacts-tabs">
         <!---- Nav Tabs ---->
         <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a  role="tab" data-toggle="tab" aria-expanded="true">Create a Job Ticket</a></li>
+            <li role="presentation" class="active" onclick = "showGeneral()"><a id = "general_tab" role="tab" data-toggle="tab" aria-expanded="true" style = "background: #476d65">General Info</a></li>
+			<li role="presentation" class="active" onclick = "showClientInfo()"><a id = "client_tab"  role="tab" data-toggle="tab" aria-expanded="true">Client Info</a></li>
+			<li role="presentation" class="active" onclick = "showDataInfo()"><a id = "data_tab"  role="tab" data-toggle="tab" aria-expanded="true">Data</a></li>
+			<li role="presentation" class="active" onclick = "showTaskInfo()"><a id = "task_tab"  role="tab" data-toggle="tab" aria-expanded="true">Task List</a></li>
+			<li role="presentation" class="active" onclick = "showBlueSheetInfo()"><a id = "bluesheet_tab"  role="tab" data-toggle="tab" aria-expanded="true">Blue Sheet</a></li>
+			<li role="presentation" class="active" onclick = "showMailingInfo()"><a id = "mailing_tab"  role="tab" data-toggle="tab" aria-expanded="true">Mailing Info</a></li>
+			<li role="presentation" class="active" onclick = "showWMInfo()"><a id = "w_m_tab"  role="tab" data-toggle="tab" aria-expanded="true">Weights and Measures</a></li>
+			<li role="presentation" class="active" onclick = "showSpecialInfo()"><a id = "special_tab"  role="tab" data-toggle="tab" aria-expanded="true">Special Instructions</a></li>
         </ul>
         <!--- Tab Panes --->
     <div class="newcontactstabs-outer">
@@ -255,10 +421,11 @@ function addTotalWM()
             <div role="tabpanel" class="tab-pane active" id="home">
             <div class="newcontactstab-detail" style = "display: 'inline-block'">
             <form action="add_job_ticket.php" method="post">
+				<div id = "general_info">
                 <div class="newclienttab-inner">
-				<table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
+				<table style = "border-style: hidden" border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
 						<tbody>
-							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='material' data-index='6'>Job Name</th><th class='maintable-thtwo data-header' data-name='type' data-index='7'>Job Type</th><th class='maintable-thtwo data-header' data-name='type' data-index='7'>Due Date</th><th class='maintable-thtwo data-header' data-name='type' data-index='7'>Created By</th></tr></thead><tbody>
+							<tr valign='top'><td colspan='2'><table style = "border-style: hidden" id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='material' data-index='6'>Job Name</th><th class='maintable-thtwo data-header' data-name='type' data-index='7'>Job Type</th><th class='maintable-thtwo data-header' data-name='type' data-index='7'>Due Date</th><th class='maintable-thtwo data-header' data-name='type' data-index='7'>Created By</th></tr></thead><tbody>
 							<tr><td><input style = "width: 85%;" name="project_name" type="text" class="contact-prefix"></td><td><select name = "job_type"><option selected = "selected" value = "">--Choose Job Type--</option><option value = "Political">Political</option><option value = 'Non-Profit'>Non-Profit</option><option value = "EDDM">EDDM</option><option value = "Parcel">Parcel</option></select></td><td><input id = "due_date" style = "width: 45%" name="due_date" type="date" class="contact-prefix"></td><td><?php
                      
                          
@@ -276,7 +443,7 @@ function addTotalWM()
 						</tbody></table></td></tr></tbody></table>
 				</div>
 				<div class = "newclienttab-inner" style = "float: left; width 100%; width: 100%; clear: both">
-					<div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
+					<div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' style = "border-style: hidden">
 							<tbody>
 							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody>
 							<tr><td><label>Ticket Date</label><input id = "ticket_date" name="ticket_date" type="date" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td><td><?php
@@ -312,25 +479,26 @@ function addTotalWM()
                     </select></td></tr>
 					</tbody></table></td></tr></tbody></table></div>	
 				</div>
-				<div class = "newclienttab-inner" style = "float: left; width 50%; width: 100%; margin-right: 2%">
-					<div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
+				</div>
+				<div id = "client_info" class = "newclienttab-inner" style = "float: left; width 50%; width: 100%; margin-right: 2%; display: none">
+					<div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table' style = "border-style: hidden">
 							<tbody>
-							<tr valign='top'><th class='allcontacts-title' style = "width: 50%">Client Information<span class='allcontacts-subtitle'></span></th><th class='allcontacts-title'><input style = "width: 100%" id = "client_name" placeholder="Client Name" name="client_name" type="text" class="contact-prefix" autocomplete = "off"><a class = "delete_client_af" href = "#" style = "display: none; font-size: 20px">delete</a></th></tr>
-							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody>
+							<tr valign='top'><th class='allcontacts-title'><input style = "width: 50%; float: left" id = "client_name" placeholder="Client Name" name="client_name" type="text" class="contact-prefix" autocomplete = "off"><a class = "delete_client_af" href = "#" style = "display: none; font-size: 20px">delete</a></th></tr>
+							<tr valign='top'><td colspan='2'><table style = "border-style: hidden" id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody>
 							<tr><td><ul class = "client_search_results" style = "list-style-type: none"></ul></td></tr>
 							<tr><td><label>Primary Contact</label><input id = "contact_name" name="contact_name" type="text" class="contact-prefix" style = "width: 50%; margin-right: 50%" readonly></td><td><label>Phone</label><input id = "phone" name="phone" type="text" class="contact-prefix" style = "width: 50%; margin-right: 50%" readonly></td></tr>
 							<tr><td><label>Email</label><input id = "email" name="email" type="text" class="contact-prefix" style = "width: 50%; margin-right: 50%" readonly></td><td><label>Address</label><input id = "address_line_1" name="address" type="text" class="contact-prefix" style = "width: 50%; margin-right: 50%" readonly></td></tr>
-							<tr><td> <label>City</label><input id = "city" style = "width: 20%" name="city" type="text" class="contact-prefix" readonly><label>State</label><input id = "state" style = "width: 20%" name="state" type="text" class="contact-prefix" readonly><label>Zip</label><input id = "zipcode" style = "width: 20%" name="zip" type="text" class="contact-prefix" readonly></td><td><label>Second Contact</label><input id = "second_contact" name="second_contact" type="text" class="contact-prefix" style = "width: 50%; margin-right: 50%" readonly></td></tr>
-							<tr><td> <label>Fax</label><input id = "fax" name="fax" type="text" class="contact-prefix" style = "width: 50%; margin-right: 50%" readonly></td><td><label>Non Profit Number</label><input id = "non_profit_number" name="non_profit_number" type="text" class="contact-prefix" style = "width: 50%; margin-right: 50%" readonly></td></tr>
-							<tr><td> <label>CRID</label><input id = "crid" name="crid" type="text" class="contact-prefix" style = "width: 50%; margin-right: 50%" readonly></td><td><div class="newcontact-tabbtm" style = "background-color: #f4f5f7"><input onclick = "showSaveMessage()" class="save_client_info" value="Save Client Changes" name="submit_form" style="display: none; float: left; width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px; cursor: pointer" readonly></div></td></tr>
+							<tr><td><label>Email 2</label><input id = "email2" name="email2" type="text" class="contact-prefix" style = "width: 50%; margin-right: 50%" readonly></td><td><label>Address 2</label><input id = "address_line_2" name="address2" type="text" class="contact-prefix" style = "width: 50%; margin-right: 50%" readonly></td></tr>
+							<tr><td><label>City</label><input id = "city" style = "width: 30%" name="city" type="text" class="contact-prefix" readonly><label>State</label><input id = "state" style = "width: 7%" name="state" type="text" class="contact-prefix" readonly><label>ZIP</label><input id = "zipcode" style = "width: 15%" name="zip" type="text" class="contact-prefix" readonly></td><td><label>Second Contact</label><input id = "second_contact" name="second_contact" type="text" class="contact-prefix" style = "width: 50%; margin-right: 50%" readonly></td></tr>
+							<tr><td><label>Fax</label><input id = "fax" name="fax" type="text" class="contact-prefix" style = "width: 20%; margin-right: 80%" readonly></td><td><label>Non Profit Number</label><input id = "non_profit_number" name="non_profit_number" type="text" class="contact-prefix" style = "width: 20%; margin-right: 80%" readonly></td></tr>
+							<tr><td><label>CRID</label><input id = "crid" name="crid" type="text" class="contact-prefix" style = "width: 20%; margin-right: 80%" readonly></td><td><div class="newcontact-tabbtm" style = "background-color: #f4f5f7"><input onclick = "showSaveMessage()" class="save_client_info" value="Save Client Changes" name="submit_form" style="display: none; float: left; width:200px; font-size:16px; background-color:#356CAC; text-align:center; font-weight:400; transition:all 300ms 0s; color:white; padding:5px; cursor: pointer" readonly></div></td></tr>
 					</tbody></table></td></tr></tbody></table></div>	
 				</div>
-				<div class = "newclienttab-inner" style = "float: left; width 50%; width: 100%">
-					<div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
+				<div id = "data_info" class = "newclienttab-inner" style = "float: left; width 50%; width: 100%; display: none">
+					<div class='allcontacts-table'><table style = "border-style: hidden" border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
 							<tbody>
-							<tr valign='top'><th class='allcontacts-title'>Data<span class='allcontacts-subtitle'></span></th></tr>
-							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody>
-							<tr><td><label>Data Location</label><input id="file_location" type="file" style = "width: 78%"><textarea id = "data_location" style = "height: 10%; width: 78%" name="data_location" type="text" class="contact-prefix"></textarea></td><td><label>Data Source</label><select name = "data_source" style = "width: 50%; margin-right: 50%"><option selected = "selected" value = "Client">Client</option><option value = "BOE">BOE</option><option value = "Recycled">Recycled</option><option value = "Occupants Residency">Occupants Residency</option><option value = "Melissa">Melissa</option><option value = "Master">Master</option><option value = "DataConsulate">DataConsulate</option><option value = "Multiple">Multiple</option><option value = "Real Property">Real Property</option><option value = "Other">Other</option></select></td></tr>
+							<tr valign='top'><td colspan='2'><table style = "border-style: hidden" id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody>
+							<tr><td><label>Data Location</label><input id="file_location" type="file" style = "width: 78%; border-style: hidden"><textarea id = "data_location" style = "height: 10%; width: 78%" name="data_location" type="text" class="contact-prefix"></textarea></td><td><label>Data Source</label><select name = "data_source" style = "width: 50%; margin-right: 50%"><option selected = "selected" value = "Client">Client</option><option value = "BOE">BOE</option><option value = "Recycled">Recycled</option><option value = "Occupants Residency">Occupants Residency</option><option value = "Melissa">Melissa</option><option value = "Master">Master</option><option value = "DataConsulate">DataConsulate</option><option value = "Multiple">Multiple</option><option value = "Real Property">Real Property</option><option value = "Other">Other</option></select></td></tr>
 							<tr><td><label>Data Received</label><input id = "data_received" name="data_received" type="date" class="contact-prefix" style = "width: 50%; margin-right: 50%"></td><td><label>Data Completed</label><input id = "data_completed" name="data_completed" type="date" class="contact-prefix" style = "width: 50%; margin-right: 50%"></td></tr>
 							<tr><td><label>Processed By</label>
 							 <select name="data_processed_by" style = "width: 50%; margin-right: 50%">
@@ -350,33 +518,32 @@ function addTotalWM()
 							?></select></td><td><label>Records Total</label><input name="records_total" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td></tr>
 					</tbody></table></td></tr></tbody></table></div>	
 				</div>
-				<div class="newclienttab-inner" style = "float: left; width: 50%; clear: both">
+				<div id = "task_list_info" class="newclienttab-inner" style = "float: left; width: 50%; clear: both; display: none">
                     <div class="tabinner-detail">
-					<table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
+					<table style = "border-style: hidden" border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
 						<tbody>
-							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='vendor' data-index='4'>Check</th><th class='maintable-thtwo data-header' data-name='material' data-index='6'>Task</th><th class='maintable-thtwo data-header' data-name='type' data-index='7'>Special</th></tr></thead><tbody>
+							<tr valign='top'><td colspan='2'><table style = "border-style: hidden" id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><thead><tr valign='top' class='contact-headers'><th class='maintable-thtwo data-header' data-name='vendor' data-index='4'>Check</th><th class='maintable-thtwo data-header' data-name='material' data-index='6'>Task</th><th class='maintable-thtwo data-header' data-name='type' data-index='7'>Special</th></tr></thead><tbody>
 							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Mail Merge"/></td><td><label>Mail Merge</label></td><td><select name = "special_mail_merge"><option select = 'selected' value = 'Sent to Vendor'>Sent to Vendor</option><option value = 'In-House'>In-House</option></select></td></tr>
 							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Letter Printing"/></td><td><label>Letter Printing</label></td><td><select name = "special_letter_printing"><option select = 'selected' value = 'From PDF'>From PDF</option><option value = 'Inkjet'>Inkjet</option></select></td></tr>
 							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "In-House Envelope Printing"/></td><td><label>In-House Envelope Printing</label></td><td></td></tr>
-							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Tabbing"/></td><td><label>Tabbing</label></td><td><select name = "special_tabbing"><option select = 'selected' value = 'Manual Single'>Manual Single</option><option value = 'Manual Double'>Manual Double</option><option value = 'Auto Single'>Auto Single</option><option value = 'Auto Double'>Auto Double</option></select></td></tr>
-							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Folding"/></td><td><label>Folding</label></td><td><select name = "special_folding"><option select = 'selected' value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option></select></td></tr>
+							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Tabbing"/></td><td><label>Tabbing</label></td><td><select name = "special_tabbing"><option select = 'selected' value = 'Manual Single'>Manual Single</option><option value = 'Manual Double'>Manual Double</option><option value = 'Manual Triple'>Manual Triple</option><option value = 'Auto Single'>Auto Single</option><option value = 'Auto Double'>Auto Double</option><option value = 'Auto Triple'>Auto Triple</option></select></td></tr>
+							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Folding"/></td><td><label>Folding</label></td><td><select name = 'special_folding'><option select = 'selected' value = 'Manual Double Fold'>Manual Double Fold</option><option value = 'Manual Tri Fold'>Manual Tri Fold</option><option value = 'Manual Parallel Fold'>Manual Parallel Fold</option><option value = 'Manual French Fold'>Manual French Fold</option><option value = 'Manual Gate Fold'>Manual Gate Fold</option><option value = 'Manual Half Fold'>Manual Half Fold</option><option value = 'Auto Double Fold'>Auto Double Fold</option><option value = 'Auto Tri Fold'>Auto Tri Fold</option><option value = 'Auto Parallel Fold'>Auto Parallel Fold</option><option value = 'Auto French Fold'>Auto French Fold</option><option value = 'Auto Gate Fold'>Auto Gate Fold</option><option value = 'Auto Half Fold'>Auto Half Fold</option></select></td></tr>
 							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Inserting"/></td><td><label>Inserting</label></td><td><select name = "special_inserting"><option select = 'selected' value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option></select></td></tr>
 							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Sealing"/></td><td><label>Sealing</label></td><td><select name = "special_sealing"><option select = 'selected' value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option></select></td></tr>
 							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Collating"/></td><td><label>Collating</label></td><td><select name = "special_collating"><option select = 'selected' value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option><option value = 'Man. and Auto'>Man. and Auto</option></select></td></tr>
-							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Labeling"/></td><td><label>Labeling</label></td><td></td></tr>
+							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Labeling"/></td><td><label>Labeling</label></td><td><select name = "special_labeling"><option select = 'selected' value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option></select></td></tr>
 							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Print Permit"/></td><td><label>Print Permit</label></td><td></td></tr>
 							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Endorsement line"/></td><td><label>Endorsement line</label></td><td></td></tr>
-							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Address Printing"/></td><td><label>Address Printing</label></td><td></td></tr>
-							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Inkjet Printing"/></td><td><label>Inkjet Printing</label></td><td><select name = "special_inkjet_printing"><option select = 'selected' value = '26K'>26K</option><option value = '11K'>11K</option></select></td></tr>
+							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Xante Printing"/></td><td><label>Xante Printing</label></td><td></td></tr>
+							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Inkjet Printing"/></td><td><label>Inkjet Printing</label></td><td><select name = "special_inkjet_printing"><option select = 'selected' value = '11K'>11K</option><option value = '26K'>26K</option><option value = '30K'>30K</option></select></td></tr>
 							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Glue Dots"/></td><td><label>Glue Dots</label></td><td></td></tr>
 						</tbody></table></td></tr></tbody></table>
 						</div>
 				</div>
-				<div class = "newclienttab-inner" style = "float: left; width 50%; width: 25%; margin-left: 17%">
-					<div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
+				<div id = "blue_sheet_info" class = "newclienttab-inner" style = "float: left; width 100%; width: 50%; display: none">
+					<div class='allcontacts-table'><table style = "border-style: hidden" border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
 							<tbody>
-							<tr valign='top'><th class='allcontacts-title'>Blue Sheet<span class='allcontacts-subtitle'></span></th></tr>
-							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody>
+							<tr valign='top'><td colspan='2'><table style = "border-style: hidden" id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody>
 							<tr><td> <label>Initial Record Count</label></td><td><input name="initialrec_count" type="text" class="contact-prefix"></td></tr>
 							<tr><td><label>Manual</label></td><td><input name="manual" type="text" class="contact-prefix"></td></tr>
 							<tr><td><label>Uncorrected</label></td><td><input name="uncorrected" type="text" class="contact-prefix"></td></tr>
@@ -395,21 +562,20 @@ function addTotalWM()
 							<tr><td><label>Explanation</label></td><td><textarea style = 'height: 150px' name="hrs_explanation" type="text" class="contact-prefix"></textarea></td></tr>
 					</tbody></table></td></tr></tbody></table></div>	
 				</div>
-				<div class = "newclienttab-inner" style = "float: left; width 100%; width: 100%; clear: both">
-					<div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
+				<div id = "mailing_info" class = "newclienttab-inner" style = "float: left; width 100%; width: 100%; clear: both; display: none">
+					<div class='allcontacts-table'><table style = "border-style: hidden" border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
 							<tbody>
-							<tr valign='top'><th class='allcontacts-title'>Mailing Information<span class='allcontacts-subtitle'></span></th></tr>
-							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody>
+							<tr valign='top'><td colspan='2'><table style = "border-style: hidden" id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody>
 							<tr><td><label>Mail Class</label><select name = "mail_class" style = "width: 50%; margin-right: 40%"><option selected = "selected" value = "FCM">FCM</option><option value = "Bulk Standard">Bulk Standard</option><option value = "Non-Profit BLK">Non-Profit BLK</option><option value = "BPM">BPM</option><option value = "Non-profit BPM">Non-profit BPM</option><option value = "Parcel">Parcel</option><option value = "Non-profit Parcel">Non-profit Parcel</option><option value = "Hand Stamp FCM">Hand Stamp FCM</option><option value = "Hand Stamp Bulk">Hand Stamp Bulk</option><option value = "EDDM Retail">EDDM Retail</option><option value = "EDDM Permit">EDDM Permit</option></select></td><td><label>Rate</label><select name = "rate" style = "margin-right: 90%"><option selected = "selected" value = "Auto">Auto</option><option value = "Auto-CRRT">Auto CRRT</option><option value = "Auto-WSS">Auto-WSS</option><option value = "Non-auto">Non-auto</option><option value = "Simplified">Simplified</option></select></td><td><label>Processing Category</label><select name = "processing_category" style = "width: 50%; margin-right: 50%"><option selected = "selected" value = "Flat">Flat</option><option value = "Letter">Letter</option><option value = "Postcard - FCM Only">Postcard - FCM Only</option></select></td></tr>
 							<tr><td><label>Print Template</label><input name="print_template" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td><td><label>Special Address Formatting</label><input name="special_address" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td><td><label>Method of Delivery</label><select name="delivery" style = "width: 35%; margin-right: 65%"><option value = "" selected = "selected">--Select Method--</option><option value = "Hand Delivery">Hand Delivery</option><option value = "USPS">USPS</option><option value = "Priority Mail">Priority Mail</option><option value = 'Client Pickup'>Client Pickup</option></select></td></tr>
 							<tr><td><label>Permit</label><select name="permit" style = "width: 50%; margin-right: 40%"><option value = "" selected = "selected">--Choose Permit--</option><option value = "473">473</option><option value = "26 Pre-cancelled">26 Pre-cancelled</option><option value = "Client">Client</option></select></td><td><input type="checkbox" name="hold_postage" class="contact-prefix" style = "transform: scale(3.0)"><label style = "margin-left: 4%">Hold Postage</label></td><td><input name="postage_paid" type="checkbox" class="contact-prefix" style = "transform: scale(3.0)"><label style = "margin-left: 4%">Postage Paid</label></td></tr>
 					</tbody></table></td></tr></tbody></table></div>	
 				</div>
+				<div id = "w_m_info" style = "display: none">
 				<div class = "newclienttab-inner" style = "float: left; width 100%; width: 100%; clear: both">
-					<div class='allcontacts-table'><table border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
+					<div class='allcontacts-table'><table style = "border-style: hidden" border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
 							<tbody>
-							<tr valign='top'><th class='allcontacts-title'>Weights and Measures<span class='allcontacts-subtitle'></span></th></tr>
-							<tr valign='top'><td colspan='2'><table id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody>
+							<tr valign='top'><td colspan='2'><table style = "border-style: hidden" id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody>
 							<tr><td><label>Based On</label><select id = "based_on" style = "width: 50%; margin-right: 40%" name="based_on" onchange = "addTotalWM()"><option selected = 'selected' value = '0'>--Choose W&M First--</option></select></td><td><label>Total Weights and Measures</label><input id = "total_w_m" name="total_w_m" type="text" class="contact-prefix" placeholder = "Auto Generated" style = "width: 50%; margin-right: 40%"></td><td><label>Mail Dimensions</label><input id = "mail_dimensions" name="mail_dim" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td></tr>
 					</tbody></table></td></tr></tbody></table></div>	
 				</div>
@@ -468,9 +634,9 @@ function addTotalWM()
                     </table>
 					</div>
                 </div>
-					<div class="tabinner-detail">
-                    <label>Special Instructions</label>
-                    <textarea name="special_instructions" class="contact-prefix"></textarea>
+				</div>
+					<div id = "special_instructions_info" class="tabinner-detail" style = "display: none;">
+                    <textarea name="special_instructions" class="contact-prefix" style = "width: 900px; height: 500px"></textarea>
                     </div>
             </div>
                 <div class="newcontact-tabbtm">
@@ -549,6 +715,10 @@ function fillInput(info){
 			$("#non_profit_number").attr("readonly", false);
 			$("#crid").val(data_info[11]);
 			$("#crid").attr("readonly", false);
+			$("#email2").val(data_info[12]);
+			$("#email2").attr("readonly", false);
+			$("#address_line_2").val(data_info[13]);
+			$("#address_line_2").attr("readonly", false);
 			$(".delete_client_af").show();
 		}
 });
@@ -557,7 +727,7 @@ $(".client_search_results").empty();
 //save client info through ajax call
 $(".save_client_info").click(function(){
 	var client_id = $(".save_client_info").attr("id");
-	var info = [$("#contact_name").val(), $("#phone").val(), $("#email").val(), $("#address_line_1").val(), $("#city").val(), $("#state").val(), $("#zipcode").val(), $("#second_contact").val(), $("#fax").val(), client_id, $("#non_profit_number").val(), $("#crid").val()]
+	var info = [$("#contact_name").val(), $("#phone").val(), $("#email").val(), $("#address_line_1").val(), $("#city").val(), $("#state").val(), $("#zipcode").val(), $("#second_contact").val(), $("#fax").val(), client_id, $("#non_profit_number").val(), $("#crid").val(), $("#email2").val(), $("#address_line_2").val()];
 		$.ajax({
 		type: "POST",
 		url: "job_ticket_save_client_info.php",
