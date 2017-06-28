@@ -13,6 +13,7 @@ if(isset($_POST['submit_form'])){
 	$status = $_POST["status"];
 	$reason = $_POST["reason"];
 	$invoice_date = $_POST["invoice_date"];
+	$completed_date = $_POST["completed_date"];
 	session_start();
 	$user_name = $_SESSION['user'];
 	date_default_timezone_set('America/New_York');
@@ -21,7 +22,7 @@ if(isset($_POST['submit_form'])){
 	$_SESSION['date'] = $today;
 	$job = $status . " job ticket" . $job_id;
 
-	$sql = 'UPDATE customer_service SET postage="' . $postage . '",invoice_number="' . $invoice_number . '", invoice_date = "' . $invoice_date . '", residual_returned="' . $residual_returned . '",2week_followup="' . $week_followup . '",notes="' . $notes . '",status="' . $status . '",reason="' . $reason . '" WHERE job_id = "' . $job_id . '"';
+	$sql = 'UPDATE customer_service SET postage="' . $postage . '",invoice_number="' . $invoice_number . '", invoice_date = "' . $invoice_date . '", residual_returned="' . $residual_returned . '",2week_followup="' . $week_followup . '",notes="' . $notes . '", completed_date = "' . $completed_date . '", status="' . $status . '",reason="' . $reason . '" WHERE job_id = "' . $job_id . '"';
 
 	$result0 = $conn->query($sql) or die('Error querying database.');
 
@@ -92,6 +93,7 @@ if(isset($_POST['submit_form'])){
 	archive_jobs.completed_date = customer_service.completed_date,
 	archive_jobs.data_hrs = customer_service.data_hrs,
 	archive_jobs.gd_hrs = customer_service.gd_hrs,
+	archive_jobs.hrs_explanation = customer_service.hrs_explanation,
 	archive_jobs.initialrec_count = customer_service.initialrec_count,
 	archive_jobs.manual = customer_service.manual,
 	archive_jobs.uncorrected = customer_service.uncorrected,
@@ -115,6 +117,7 @@ if(isset($_POST['submit_form'])){
 	archive_jobs.2week_followup = customer_service.2week_followup,
 	archive_jobs.notes = customer_service.notes,
 	archive_jobs.status = customer_service.status,
+	archive_jobs.completed_date = customer_service.completed_date,
 	archive_jobs.reason = customer_service.reason
 	 WHERE archive_jobs.job_id = customer_service.job_id AND customer_service.job_id = '$job_id'");
 	$result11 = mysqli_query($conn,"DELETE FROM customer_service WHERE job_id = '$job_id'");
@@ -122,8 +125,6 @@ if(isset($_POST['submit_form'])){
 	$result12 = mysqli_query($conn,"UPDATE archive_jobs, production SET 
 	archive_jobs.hold_postage = production.hold_postage,
 	archive_jobs.postage_paid = production.postage_paid,
-	archive_jobs.print_template = production.print_template,
-	archive_jobs.special_address = production.special_address,
 	archive_jobs.delivery = production.delivery,
 	archive_jobs.completed = production.completed,
 	archive_jobs.tasks = production.tasks

@@ -532,7 +532,7 @@ function showSpecialInfo(){
 							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Sealing"/></td><td><label>Sealing</label></td><td><select name = "special_sealing"><option select = 'selected' value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option></select></td></tr>
 							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Collating"/></td><td><label>Collating</label></td><td><select name = "special_collating"><option select = 'selected' value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option><option value = 'Man. and Auto'>Man. and Auto</option></select></td></tr>
 							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Labeling"/></td><td><label>Labeling</label></td><td><select name = "special_labeling"><option select = 'selected' value = 'Manual'>Manual</option><option value = 'Auto'>Auto</option></select></td></tr>
-							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Print Permit"/></td><td><label>Print Permit</label></td><td></td></tr>
+							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Print Permit"/></td><td><label>Print Permit</label></td><td><select name = "special_print_permit"><option select = 'selected' value = 'Print'>Print</option><option value = 'Print and Fix'>Print and Fix</option></select></td></tr>
 							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Endorsement line"/></td><td><label>Endorsement line</label></td><td></td></tr>
 							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Xante Printing"/></td><td><label>Xante Printing</label></td><td></td></tr>
 							<tr><td><input style = 'width: 25%' type="checkbox" name = "tasks[]" value = "Inkjet Printing"/></td><td><label>Inkjet Printing</label></td><td><select name = "special_inkjet_printing"><option select = 'selected' value = '11K'>11K</option><option value = '26K'>26K</option><option value = '30K'>30K</option></select></td></tr>
@@ -559,16 +559,16 @@ function showSpecialInfo(){
 							<tr><td><label>Final Count</label></td><td><input name="final_count" type="text" class="contact-prefix"></td></tr>
 							<tr><td><label>Graphic Design Hours</label></td><td><input name="gd_hrs" type="text" class="contact-prefix"></td></tr>
 							<tr><td><label>Data Hours</label></td><td><input name="data_hrs" type="text" class="contact-prefix"></td></tr>
-							<tr><td><label>Explanation</label></td><td><textarea style = 'height: 150px' name="hrs_explanation" type="text" class="contact-prefix"></textarea></td></tr>
+							<tr><td><label>Explanation(2 hrs. or more)</label></td><td><textarea style = 'height: 150px' name="hrs_explanation" type="text" class="contact-prefix"></textarea></td></tr>
 					</tbody></table></td></tr></tbody></table></div>	
 				</div>
 				<div id = "mailing_info" class = "newclienttab-inner" style = "float: left; width 100%; width: 100%; clear: both; display: none">
 					<div class='allcontacts-table'><table style = "border-style: hidden" border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
 							<tbody>
 							<tr valign='top'><td colspan='2'><table style = "border-style: hidden" id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody>
-							<tr><td><label>Mail Class</label><select name = "mail_class" style = "width: 50%; margin-right: 40%"><option selected = "selected" value = "FCM">FCM</option><option value = "Bulk Standard">Bulk Standard</option><option value = "Non-Profit BLK">Non-Profit BLK</option><option value = "BPM">BPM</option><option value = "Non-profit BPM">Non-profit BPM</option><option value = "Parcel">Parcel</option><option value = "Non-profit Parcel">Non-profit Parcel</option><option value = "Hand Stamp FCM">Hand Stamp FCM</option><option value = "Hand Stamp Bulk">Hand Stamp Bulk</option><option value = "EDDM Retail">EDDM Retail</option><option value = "EDDM Permit">EDDM Permit</option></select></td><td><label>Rate</label><select name = "rate" style = "margin-right: 90%"><option selected = "selected" value = "Auto">Auto</option><option value = "Auto-CRRT">Auto CRRT</option><option value = "Auto-WSS">Auto-WSS</option><option value = "Non-auto">Non-auto</option><option value = "Simplified">Simplified</option></select></td><td><label>Processing Category</label><select name = "processing_category" style = "width: 50%; margin-right: 50%"><option selected = "selected" value = "Flat">Flat</option><option value = "Letter">Letter</option><option value = "Postcard - FCM Only">Postcard - FCM Only</option></select></td></tr>
-							<tr><td><label>Print Template</label><input name="print_template" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td><td><label>Special Address Formatting</label><input name="special_address" type="text" class="contact-prefix" style = "width: 50%; margin-right: 40%"></td><td><label>Method of Delivery</label><select name="delivery" style = "width: 35%; margin-right: 65%"><option value = "" selected = "selected">--Select Method--</option><option value = "Hand Delivery">Hand Delivery</option><option value = "USPS">USPS</option><option value = "Priority Mail">Priority Mail</option><option value = 'Client Pickup'>Client Pickup</option></select></td></tr>
-							<tr><td><label>Permit</label><select name="permit" style = "width: 50%; margin-right: 40%"><option value = "" selected = "selected">--Choose Permit--</option><option value = "473">473</option><option value = "26 Pre-cancelled">26 Pre-cancelled</option><option value = "Client">Client</option></select></td><td><input type="checkbox" name="hold_postage" class="contact-prefix" style = "transform: scale(3.0)"><label style = "margin-left: 4%">Hold Postage</label></td><td><input name="postage_paid" type="checkbox" class="contact-prefix" style = "transform: scale(3.0)"><label style = "margin-left: 4%">Postage Paid</label></td></tr>
+							<tr><td><label>Mail Class</label><select name = "mail_class" style = "width: 50%; margin-right: 40%"><option selected = "selected" value = "FCM">FCM</option><option value = "Bulk Standard">Bulk Standard</option><option value = "Non-Profit BLK">Non-Profit BLK</option><option value = "BPM">BPM</option><option value = "Non-profit BPM">Non-profit BPM</option><option value = "Parcel">Parcel</option><option value = "Non-profit Parcel">Non-profit Parcel</option><option value = "Hand Stamp FCM">Hand Stamp FCM</option><option value = "Hand Stamp Bulk">Hand Stamp Bulk</option><option value = "EDDM Retail">EDDM Retail</option><option value = "EDDM Permit">EDDM Permit</option></select></td><td><label>Rate</label><select name = "rate" style = "margin-right: 90%"><option selected = "selected" value = "Auto">Auto</option><option value = "Auto-CRRT">Auto CRRT</option><option value = "Auto-WSS">Auto-WSS</option><option value = "Non-auto">Non-auto</option><option value = "Simplified">Simplified</option></select></td><td><label>Processing Category</label><select name = "processing_category" style = "width: 50%; margin-right: 50%"><option selected = "selected" value = "Flat">Flat</option><option value = "Letter">Letter</option><option value = "Postcard - FCM Only">Postcard - FCM Only</option><option value = 'Parcel'>Parcel</option><option value = 'Bound Printed Matter'>Bound Printed Matter</option></select></td></tr>
+							<tr><td><label>Method of Delivery</label><select name="delivery" style = "width: 35%; margin-right: 65%"><option value = "" selected = "selected">--Select Method--</option><option value = "Hand Delivery">Hand Delivery</option><option value = "USPS - BMEU">USPS - BMEU</option><option value = 'USPS - DDU'>USPS - DDU</option><option value = "Priority Mail">Priority Mail</option><option value = 'Client Pickup'>Client Pickup</option></select></td><td><input type="checkbox" name="hold_postage" class="contact-prefix" style = "transform: scale(3.0)"><label style = "margin-left: 4%">Hold Postage</label></td><td><input name="postage_paid" type="checkbox" class="contact-prefix" style = "transform: scale(3.0)"><label style = "margin-left: 4%">Postage Paid</label></td></tr>
+							<tr><td><label>Permit</label><select name="permit" id = "permit" style = "width: 50%; margin-right: 40%"><option value = "" selected = "selected">--Choose Permit--</option><option value = "473">473</option><option value = "26 Pre-cancelled">26 Pre-cancelled</option><option value = "Client">Client</option></select></td><td id = "client_no" style = "visibility: hidden"><label>Client #</label><input type = "text" id = "client_no" name="client_no" style = "width: 50%; margin-right: 40%"></td></tr>
 					</tbody></table></td></tr></tbody></table></div>	
 				</div>
 				<div id = "w_m_info" style = "display: none">
@@ -636,7 +636,7 @@ function showSpecialInfo(){
                 </div>
 				</div>
 					<div id = "special_instructions_info" class="tabinner-detail" style = "display: none;">
-                    <textarea name="special_instructions" class="contact-prefix" style = "width: 900px; height: 500px"></textarea>
+                    <textarea name="special_instructions" class="contact-prefix" style = "width: 900px; height: 500px">Production:&#13;&#10; Project Management: &#13;&#10; Data: &#13;&#10; Printing:</textarea>
                     </div>
             </div>
                 <div class="newcontact-tabbtm">
@@ -649,6 +649,14 @@ function showSpecialInfo(){
 </div>
 </div>
 <script>
+$("#permit").on("change", function(){
+	if($("#permit").val() == "Client"){
+		$('#client_no').css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0});
+	}
+	else{
+		$("#client_no").css("visibility", "hidden");
+	}
+});
 $(document).ready(function(){
 	var date = new Date();
 	var nextWeek = new Date(date.getTime() + 7 * 24 * 60 * 60 * 1000);
@@ -762,6 +770,10 @@ $(".delete_client_af").click(function(){
 	$("#non_profit_number").attr("readonly", true);
 	$("#crid").val("");
 	$("#crid").attr("readonly", true);
+	$("#email2").val("");
+	$("#email2").attr("readonly", true);
+	$("#address_line_2").val("");
+	$("#address_line_2").attr("readonly", true);
 	$(".save_client_info").hide();
 	$(".delete_client_af").hide();
 	$("#client_name").val("");

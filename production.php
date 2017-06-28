@@ -41,6 +41,7 @@ $hours_array = array();
 $canvas_id_array = array();
 $production_data_job_array = array();
 $special_instructions_array = array();
+$tasks_display_array = array();
 $result_production_data = mysqli_query($conn, "SELECT job FROM production_data");
 while($row = $result_production_data->fetch_assoc()){
 	array_push($production_data_job_array, $row["job"]);
@@ -243,6 +244,12 @@ if ($result->num_rows > 0) {
 					echo "<option value = '" . $user . "'>" . $name . "</option>";
 				}
 				$special_instructions = $row['special_instructions'];
+				$result_prod_jobs_display = mysqli_query($conn, "SELECT tasks FROM production WHERE job_id = '$job_id'");
+				$row_prod_jobs_display = $result_prod_jobs_display->fetch_assoc();
+				$tasks = $row_prod_jobs_display["tasks"];
+				$current_tasks_display = explode(",", $tasks);
+				array_push($tasks_display_array, $current_tasks_display);
+				
 				array_push($special_instructions_array, $special_instructions);
 				echo "</select></form>";
 				echo "<form action = '' method = 'post'>";
@@ -257,7 +264,7 @@ if ($result->num_rows > 0) {
 				echo "</div>";
 				echo "</div>";
 				echo '<div class="project_row4">';
-				echo "<a onclick = displayInstr($job_count) href = '#null' style='width:100%; background-color:#356CAC; text-align:center; color:white;'>SPECIAL INSTRUCTIONS</a></div>";
+				echo "<a onclick = displayInstr($job_count) href = '#null' style='width:75%; background-color:#356CAC; text-align:center; color:white;'>SPECIAL INSTRUCTIONS</a><a onclick = displayTasks($job_count) href = '#null' style='width:25%; background-color:#D14700; text-align:center; color:white;'>TASKS</a></div>";
 				echo "</div>";
 		}
 
@@ -461,11 +468,28 @@ function hideTask(id){
 }
 
 var special_instructions = <?php echo json_encode($special_instructions_array); ?>;
+var tasks_display_array = <?php echo json_encode($tasks_display_array); ?>;
 
 function displayInstr(index){
 	showSaveMessage();
 	function showSaveMessage(){
 		swal({   title: "Special Instructions",   text: special_instructions[index-1],   type: "info",      confirmButtonColor: "#4FD8FC",   confirmButtonText: "OK",   closeOnConfirm: true }, 
+			function(){ saveNotClicked=false; $( ".save-btn" ).click();});  
+	};
+}
+function displayTasks(index){
+	var tasks = tasks_display_array[index-1];
+	for(var i = 0; i < tasks.length; i++){
+		if(tasks[i].includes("^")){
+			var str = tasks[i].replace("^", "(");
+			tasks[i] = str + ")";
+		}
+	}
+	var tasks_string = tasks.join();
+	tasks_string = tasks_string.replace(/,/g, '\n');
+	showSaveMessage();
+	function showSaveMessage(){
+		swal({   title: "Tasks",   text: tasks_string,   type: "info",      confirmButtonColor: "#4FD8FC",   confirmButtonText: "OK",   closeOnConfirm: true }, 
 			function(){ saveNotClicked=false; $( ".save-btn" ).click();});  
 	};
 }

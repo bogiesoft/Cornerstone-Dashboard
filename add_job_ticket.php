@@ -86,6 +86,7 @@ if(isset($_POST['submit_form'])){
 	$mail_dim = $_POST['mail_dim'];
 	//$weights_measures = $_POST['weights_measures'];
 	$permit = $_POST['permit'];
+	$client_no = $_POST["client_no"];
 	$based_on = $_POST['based_on'];
 
 	$data_source = $_POST['data_source'];
@@ -94,8 +95,6 @@ if(isset($_POST['submit_form'])){
 
 	$hold_postage = (isset($_POST['hold_postage'])) ? "yes" : "no";
 	$postage_paid = (isset($_POST['postage_paid'])) ? "yes" : "no";
-	$print_template = $_POST['print_template'];
-	$special_address = $_POST['special_address'];
 	$delivery = $_POST['delivery'];
 	//$completed = $_POST['completed']; commented because not needed
 	@$tasks_array= $_POST['tasks']; 
@@ -128,6 +127,9 @@ if(isset($_POST['submit_form'])){
 		else if($tasks_array[$i] == "Labeling"){
 			$tasks.="Labeling^" . $_POST["special_labeling"] . ",";
 		}
+		else if($tasks_array[$i] == "Print Permit"){
+			$tasks.="Print Permit^" . $_POST["special_print_permit"] . ",";
+		}
 		else{
 			$tasks.=$tasks_array[$i] . ",";
 		}
@@ -155,8 +157,8 @@ if(isset($_POST['submit_form'])){
 
 	
 
-	$sql = 'INSERT INTO job_ticket(job_type, processed_by,client_name,project_name,ticket_date,due_date,created_by,special_instructions,estimate_number,estimate_date,estimate_created_by,records_total,job_status,mail_class,rate,processing_category,
-	mail_dim,weights_measures,permit,based_on) VALUES ("' . $job_type . '","' . $processed_by . '","' . $client_name . '", "' . $project_name . '", "' . $ticket_date . '", "' . $due_date . '","' . $created_by . '","' . $special_instructions . '","' . $estimate_number . '","' . $estimate_date . '","' . $estimate_created_by . '","' . $records_total . '","' . $job_status . '", "' . $mail_class . '", "' . $rate . '", "' . $processing_category . '", "' . $mail_dim . '", "' . $wm . '", "' . $permit . '", "' . $based_on . '")';
+	$sql = 'INSERT INTO job_ticket(job_type, processed_by,client_name, client_no, project_name,ticket_date,due_date,created_by,special_instructions,estimate_number,estimate_date,estimate_created_by,records_total,job_status,mail_class,rate,processing_category,
+	mail_dim,weights_measures,permit,based_on) VALUES ("' . $job_type . '","' . $processed_by . '","' . $client_name . '", "' . $client_no . '", "' . $project_name . '", "' . $ticket_date . '", "' . $due_date . '","' . $created_by . '","' . $special_instructions . '","' . $estimate_number . '","' . $estimate_date . '","' . $estimate_created_by . '","' . $records_total . '","' . $job_status . '", "' . $mail_class . '", "' . $rate . '", "' . $processing_category . '", "' . $mail_dim . '", "' . $wm . '", "' . $permit . '", "' . $based_on . '")';
 	$result = $conn->query($sql) or die('Error querying database 0.');
 
 
@@ -169,7 +171,7 @@ if(isset($_POST['submit_form'])){
 	$sql2 = 'INSERT INTO project_management(job_id, data_location, data_processed_by, data_source,data_received,data_completed) VALUES ("' . $job_id . '", "' . $data_location . '", "' . $data_processed_by . '", "'  . $data_source . '","' . $data_received . '","' . $data_completed . '")';
 	$result3 = $conn->query($sql2) or die("error");
 
-	$sql3 = 'INSERT INTO production(job_id,hold_postage,postage_paid,print_template,special_address ,delivery,tasks) VALUES ("' . $job_id . '", "' . $hold_postage . '", "' . $postage_paid . '", "' . $print_template . '","' . $special_address . '","' . $delivery . '","' . $tasks . '")';
+	$sql3 = 'INSERT INTO production(job_id,hold_postage,postage_paid,delivery,tasks) VALUES ("' . $job_id . '", "' . $hold_postage . '", "' . $postage_paid . '", "'  . $delivery . '","' . $tasks . '")';
 	$result4 = $conn->query($sql3) or die('Error querying database 3.');
 
 	$sql4 = 'INSERT INTO customer_service(job_id,data_hrs,gd_hrs, hrs_explanation, initialrec_count,manual,uncorrected,unverifiable,bs_foreigns,bs_exact,loose,

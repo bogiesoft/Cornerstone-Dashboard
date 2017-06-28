@@ -91,7 +91,8 @@ if(isset($_POST['submit_form'])){
 			}
 			$job = "updated job ticket " . $job_id;
 			
-			$client_name = $_POST['client_name'];			
+			$client_name = $_POST['client_name'];
+			$client_no = $_POST["client_no"];
 			$project_name = $_POST['project_name'];
 			$ticket_date = date("Y-m-d", strtotime($_POST['ticket_date']));
 			$due_date = date("Y-m-d", strtotime($_POST['due_date']));
@@ -132,8 +133,6 @@ if(isset($_POST['submit_form'])){
 			else{
 				$postage_paid = "no";
 			}
-			$print_template = $_POST['print_template'];
-			$special_address = $_POST['special_address'];
 			$delivery = $_POST['delivery'];
 			//$completed = $_POST['completed'];
 			$tasks_array = $_POST['tasks']; 
@@ -159,6 +158,12 @@ if(isset($_POST['submit_form'])){
 				}
 				else if($tasks_array[$i] == "Sealing"){
 					$tasks.="Sealing^" . $_POST["special_sealing"] . ",";
+				}
+				else if($tasks_array[$i] == "Labeling"){
+					$tasks.="Labeling^" . $_POST["special_labeling"] . ",";
+				}
+				else if($tasks_array[$i] == "Print Permit"){
+					$tasks.="Print Permit^" . $_POST["special_print_permit"] . ",";
 				}
 				else if($tasks_array[$i] == "Inkjet Printing"){
 					$tasks.="Inkjet Printing^" . $_POST["special_inkjet_printing"] . ",";
@@ -188,14 +193,14 @@ if(isset($_POST['submit_form'])){
 			$total_w_m = $_POST["total_w_m"];
 			$hrs_explanation = $_POST["hrs_explanation"];
 			
-			$sql = 'UPDATE job_ticket SET job_type = "' . $job_type . '", processed_by = "' . $processed_by . '", client_name = "' . $client_name . '", project_name = "' . $project_name . '",ticket_date = "' . $ticket_date . '",due_date = "' . $due_date . '",created_by = "' . $created_by . '",estimate_number = "' . $estimate_number . '",estimate_date = "' . $estimate_date . '",estimate_created_by = "' . $estimate_created_by . '", special_instructions = "' . $special_instructions . '",records_total = "' . $records_total . '",job_status = "' . $job_status . '", mail_class = "' . $mail_class . '", rate = "' . $rate . '", processing_category = "' . $processing_category . '", mail_dim = "' . $mail_dim . '", total_w_m = "' . $total_w_m . '", weights_measures = "' . $weights_measures . '", permit = "' . $permit . '", based_on = "' . $based_on . '" WHERE job_id = "' . $job_id . '"';
+			$sql = 'UPDATE job_ticket SET job_type = "' . $job_type . '", processed_by = "' . $processed_by . '", client_name = "' . $client_name . '", client_no = "' . $client_no . '", project_name = "' . $project_name . '",ticket_date = "' . $ticket_date . '",due_date = "' . $due_date . '",created_by = "' . $created_by . '",estimate_number = "' . $estimate_number . '",estimate_date = "' . $estimate_date . '",estimate_created_by = "' . $estimate_created_by . '", special_instructions = "' . $special_instructions . '",records_total = "' . $records_total . '",job_status = "' . $job_status . '", mail_class = "' . $mail_class . '", rate = "' . $rate . '", processing_category = "' . $processing_category . '", mail_dim = "' . $mail_dim . '", total_w_m = "' . $total_w_m . '", weights_measures = "' . $weights_measures . '", permit = "' . $permit . '", based_on = "' . $based_on . '" WHERE job_id = "' . $job_id . '"';
 			$result = $conn->query($sql) or die(date('Y-m-d', strtotime($ticket_date)));
 			
 			$sql2 = 'UPDATE project_management SET data_source = "' . $data_source . '",data_received = "' . $data_received . '",data_completed = "' . $data_completed . '", data_location = "' . $data_location . '", data_processed_by = "' . $data_processed_by . '" WHERE job_id = "' . $job_id . '"';
 			$result2 = $conn->query($sql2) or die('Error querying database 2.');
 			
 			
-			$sql3 = 'UPDATE production SET  hold_postage = "' . $hold_postage . '",postage_paid = "' . $postage_paid . '",print_template = "' . $print_template . '" , special_address = "' . $special_address . '",delivery = "' . $delivery . '",tasks = "' . $tasks . '" WHERE job_id = "' . $job_id . '"';
+			$sql3 = 'UPDATE production SET  hold_postage = "' . $hold_postage . '",postage_paid = "' . $postage_paid . '",delivery = "' . $delivery . '",tasks = "' . $tasks . '" WHERE job_id = "' . $job_id . '"';
 			$result3 = $conn->query($sql3) or die('Error querying database 3.');
 			
 			$sql4 = 'UPDATE customer_service SET data_hrs = "' . $data_hrs . '",gd_hrs = "' . $gd_hrs . '",initialrec_count = "' . $initialrec_count . '",manual = "' . $manual . '",uncorrected = "' . $uncorrected . '",unverifiable = "' . $unverifiable . '",bs_foreigns = "' . $bs_foreigns . '",bs_exact = "' . $bs_exact . '",loose = "' . $loose . '",householded = "' . $householded . '",basic = "' . $basic . '",ncoa_errors = "' . $ncoa_errors . '",bs_ncoa = "' . $bs_ncoa . '",final_count = "' . $final_count . '",bs_domestic = "' . $bs_domestic . '",hrs_explanation = "' . $hrs_explanation . '" WHERE job_id = "' . $job_id . '"';

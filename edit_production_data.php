@@ -84,6 +84,7 @@ require('header.php');
 					  <option value="Xante Printing">Xante Printing</option>
 					  <option value="Inkjet Printing">Inkjet Printing</option>
 					  <option value="Glue Dots">Glue Dots</option>
+					  <option value="Print Permit">Print Permit</option>
 </select></span><br><br>
 
 <p id = "error" style = "color: red;"></p>
@@ -141,6 +142,9 @@ $(document).ready(function()
 		}
 		else if($("#job").val() == "Inkjet Printing"){
 			$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = '" + selected + "'>" + selected + "</option><option value = '11K'>11K</option><option value = '26K'>26K</option><option value = '30K'>30K</option></select>");
+		}
+		else if($("#job").val() == "Print Permit"){
+			$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = '" + selected + "'>" + selected + "</option><option value = 'Print'>Print</option><option value = 'Print and Fix'>Print and Fix</option></select>");
 		}
 		else if($("#job").val() == "Labeling"){
 			$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = '" + selected + "'>" + selected + "</option><option value = 'Auto'>Auto</option><option value = 'Manual'>Manual</option></select>");
@@ -223,6 +227,9 @@ function checkSpecial(id_name){
 	}
 	else if($("#job").val() == "Inkjet Printing"){
 		$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = '11K'>11K</option><option value = '26K'>26K</option><option value = '30K'>30K</option></select>");
+	}
+	else if($("#job").val() == "Print Permit"){
+		$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = 'Print'>Print</option><option value = 'Print and Fix'>Print and Fix</option></select>");
 	}
 	else if($("#job").val() == "Labeling"){
 		$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option select = 'selected' value = 'Auto'>Auto</option><option value = 'Manual'>Manual</option></select>");

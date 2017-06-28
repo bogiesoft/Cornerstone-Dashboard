@@ -283,7 +283,7 @@ function nextPage(){
 	var recs_min = ["recs_per_min"];
 	var job = ["job"];
 	var errors = ["error"];
-	var jobList = ["Mail Merge", "Letter Printing", "In-House Envelope Printing", "Sealing", "Collating", "Labeling", "Endorsement Line", "Xante Printing", "Inkjet Printing", "Glue Dots", "Inserting", "Printing", "Folding", "Tabbing"];
+	var jobList = ["Mail Merge", "Letter Printing", "In-House Envelope Printing", "Sealing", "Collating", "Labeling", "Endorsement Line", "Xante Printing", "Inkjet Printing", "Glue Dots", "Inserting", "Printing", "Folding", "Tabbing", "Print Permit"];
 	var count = 1;
 	var Task = 2;
 	
@@ -425,6 +425,9 @@ function checkSpecial(id_name){
 		else if($("#job" + number).val() == "Labeling"){
 			$(".job_info" + number).append("<select id = '" + id_name + "' name = '" + id_name + "'><option selected = 'selected' value = 'Auto'>Auto</option><option value = 'Manual'>Manual</option></select>");
 		}
+		else if($("#job" + number).val() == "Print Permit"){
+			$(".job_info" + number).append("<select id = '" + id_name + "' name = '" + id_name + "'><option selected = 'selected' value = 'Print'>Print</option><option value = 'Print and Fix'>Print and Fix</option></select>");
+		}
 		else{
 			$(".job_info" + number).append("<select style = 'visibility: hidden' id = 'special0" + number + "' name = 'special0'><option select = 'selected' value = 'Sent to Vendor'>Sent to Vendor</option><option value = 'In-House'>In-House</option></select>");
 		}
@@ -454,6 +457,9 @@ function checkSpecial(id_name){
 		}
 		else if($("#job").val() == "Labeling"){
 			$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option selected = 'selected' value = 'Auto'>Auto</option><option value = 'Manual'>Manual</option></select>");
+		}
+		else if($("#job").val() == "Print Permit"){
+			$(".job_info").append("<select id = '" + id_name + "' name = '" + id_name + "'><option selected = 'selected' value = 'Print'>Print</option><option value = 'Print and Fix'>Print and Fix</option></select>");
 		}
 		else{
 			$(".job_info").append("<select style = 'visibility: hidden' id = 'special0' name = 'special0'><option select = 'selected' value = 'Sent to Vendor'>Sent to Vendor</option><option value = 'In-House'>In-House</option></select>");
