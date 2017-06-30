@@ -9,6 +9,7 @@
     <li class = "sidelink"><a href="weights_and_measure.php"><i><img src="images/web-icons/windows-3.png"></i>Weights and Measures</a><div class="clear"></div></li>
 	<li class = "sidelink"><a href="archive.php"><i><img src="images/web-icons/archive-1.png"></i>Archive Jobs</a><div class="clear"></div></li>
 	<li class = "sidelink" style="margin-bottom:20px;"><a href="job_ticket.php"><i><img src="images/web-icons/document.png"></i>Job Ticket</a><div class="clear"></div></li>
+	<li class = "sidelink" style="margin-bottom:20px;"><a href="report_issue.php"><i><img src="images/web-icons/document.png"></i>Report Issue</a><div class="clear"></div></li>
   </ul>
   </div>
   <div id='live_updates'>

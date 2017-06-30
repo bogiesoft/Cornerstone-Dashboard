@@ -648,6 +648,7 @@ function showSpecialInfo(){
     </div>
 </div>
 </div>
+</div>
 <script>
 $("#permit").on("change", function(){
 	if($("#permit").val() == "Client"){

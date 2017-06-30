@@ -56,6 +56,9 @@ $_SESSION['title'] = $title;
 					if($title == "ADMIN"){
 						echo "<a href='admin.php'>Accounts</a>";
 					}
+					if($_SESSION["user"] == "sayre" || $_SESSION["user"] == "ayres1"){
+						echo "<a href='bugs_list.php'>Bug List</a>";
+					}
 					?>
 					</div>
 			</li>
