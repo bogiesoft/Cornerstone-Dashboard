@@ -53,7 +53,7 @@ require ("header.php");
   			"columnDefs": [ {
   			    "targets": 0,
   			    "render": function ( data, type, row) {
-  			      return '<a href="edit_inventory.php?material_id='+row[0]+'">'+ row[0] + '</a>'; //link for each client name
+  			      return '<a href="edit_bug.php?bug_id='+row[0]+'">'+ row[0] + '</a>'; //link for each client name
   			    }
   			  }
       ]
