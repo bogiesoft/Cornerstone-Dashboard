@@ -1,7 +1,4 @@
 <?php
-if(!isset($_SESSION["user"]) || ($_SESSION["user"] != "sayre" || $_SESSION["user"] != "ayres1")){
-	header("location: index.php");
-}
 require ("header.php");
 ?>
 

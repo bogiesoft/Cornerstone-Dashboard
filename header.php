@@ -1,6 +1,9 @@
 <?php
 session_start();
-if(!isset($_SESSION["user"])){
+if($_SERVER['REQUEST_URI'] == "/Cornerstone-Dashboard/bugs_list.php" && (!isset($_SESSION["user"]) || ($_SESSION["user"] != "sayre" && $_SESSION["user"] != "ayres1"))){
+	header("location: index.php");
+}
+else if(!isset($_SESSION["user"])){
 	header("location: index.php");
 }
 require('head.php');
