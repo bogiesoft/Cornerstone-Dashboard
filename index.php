@@ -1,6 +1,5 @@
-
 <?php
-   include("head.php");
+include("head.php");
 require ("connection.php");
    session_start();
    $error = "";

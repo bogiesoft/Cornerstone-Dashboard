@@ -4,8 +4,6 @@
    include("connection.php");
    
    if(!isset($_SESSION['user']) || $_SESSION['title'] != 'ADMIN'){
-	   echo "<script>alert('Must be logged in as Admin');</script>";
-	   echo "<script>setTimeout(\"location.href = 'index.php';\",500);</script>";
 	   exit();
    }
    else{
