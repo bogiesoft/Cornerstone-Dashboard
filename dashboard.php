@@ -323,6 +323,20 @@ if ($result9->num_rows > 0) {
 			$row10 = $result10->fetch_assoc();
 			$name = $row10['first_name'] . ' ' . $row10['last_name'];
 		}
+		if(strlen($row8["project_name"]) > 10){
+			$display_project = "";
+			for($i = 0; $i < 10; $i++){
+				$display_project .= $row8["project_name"][$i];
+			}
+			$row8["project_name"] = $display_project . "....";
+		}
+		if(strlen($row8["client_name"]) > 10){
+			$display_client = "";
+			for($i = 0; $i < 10; $i++){
+				$display_client .= $row8["client_name"][$i];
+			}
+			$row8["client_name"] = $display_client . "....";
+		}
 
 		echo "<tr class = 'clickable_job' id = '" . $row8["job_id"] . "'><td>".$row8["job_id"]."</td><td>".  $row8["client_name"]."</td><td>". $row8["project_name"]. "</td><td>". $row8["due_date"]. "</td><td>". $row8["job_status"]."</td><td>". $row9["records_total"]."</td><td>". $name."</td></tr>";
     }
@@ -557,7 +571,7 @@ var jobs_invoiced_monthly = <?php echo json_encode($jobs_invoiced_monthly); ?>;
 			};
 //make entire job row clickable
 $(".clickable_job").click(function(){
-	var job_id = $(".clickable_job").attr("id");
+	var job_id = $(this).attr("id");
 	window.location.href = "edit_job.php?job_id=" + job_id;
 });
 $(".clickable_job").hover(function(){
