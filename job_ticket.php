@@ -431,7 +431,11 @@ function showSpecialInfo(){
                          
                         $result1 = $conn->query("select first_name, last_name, user from users");
                         echo "<select name='created_by' style = 'width: 60%; margin-right: 40%'>";
-                        echo "<option disabled selected value> -- select an option -- </option>";
+						$selected_created_by = $_SESSION["user"];
+						$result_selected_user = mysqli_query($conn, "SELECT first_name, last_name from users WHERE user = '$selected_created_by'");
+						$row_selected_user = $result_selected_user->fetch_assoc();
+						$name = $row_selected_user["first_name"] . " " . $row_selected_user["last_name"];
+                        echo "<option selected = 'selected' value = '$selected_created_by'>$name</option>";
                         while ($row1 = $result1->fetch_assoc()) {
                                       unset($created_by);
                                       $created_by = $row1['first_name'] . ' ' . $row1['last_name']; 

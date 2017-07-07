@@ -97,7 +97,7 @@ $columns = array(
 	$sql.=" ORDER BY ". $columns[$requestData['order'][0]['column']]."   ".$requestData['order'][0]['dir']."   LIMIT ".$requestData['start']." ,".$requestData['length']."   ";
 
 	/* $requestData['order'][0]['column'] contains colmun index, $requestData['order'][0]['dir'] contains order such as asc/desc  */
-	$query=mysqli_query($conn, $sql);
+	$query=mysqli_query($conn, $sql) or die("error");
 
 	$data = array();
 	while( $row=mysqli_fetch_array($query) ) {  // preparing an array
@@ -123,7 +123,7 @@ $columns = array(
 		$data[] = $nestedData;
 	}
 
-
+//echo $sql;
 $json_data = array(
 			"sql"							=> $jsonsql,
 			"draw"            => intval( $requestData['draw'] ),   // for every request/draw by clientside , they send a number as a parameter, when they recieve a response/data they first check the draw number, so we are sending same number in draw.
