@@ -640,7 +640,7 @@ function showSpecialInfo(){
                 </div>
 				</div>
 					<div id = "special_instructions_info" class="tabinner-detail" style = "display: none;">
-                    <textarea name="special_instructions" class="contact-prefix" style = "width: 900px; height: 500px">Production:&#13;&#10; Project Management: &#13;&#10; Data: &#13;&#10; Printing:</textarea>
+                    <textarea name="special_instructions" class="contact-prefix" style = "width: 900px; height: 500px">DATA FILES:  ___________________________.xlsx&#13;&#10; FILE PROCESSING / PROJECT MANAGEMENT: &#13;&#10; GRAPHIC DESIGN:  ______________________________ &#13;&#10; MATERIALS:  ______________________________ &#13;&#10; PRODUCTION:  ______________________________ &#13;&#10; BILLING:  ____________________________</textarea>
                     </div>
             </div>
                 <div class="newcontact-tabbtm">
