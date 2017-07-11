@@ -62,7 +62,7 @@ $_SESSION["table_type_save_search"] = "CLIENT";
   			    "render": function ( data, type, row) {
               var str = serialize([row[1], row[2], row[3]]);
               var stren = urlencode(str);
-  			      return '<a href="edit_client.php?client_info='+stren+'">'+row[2]+'</a>'; //link for each business name
+  			      return '<a href="edit_client.php?client_info='+row[1]+'">'+row[2]+'</a>'; //link for each business name
   			    }
   			  },{
            'targets': 0,

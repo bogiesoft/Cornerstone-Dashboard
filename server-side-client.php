@@ -100,8 +100,37 @@ $columns = array(
 	$query=mysqli_query($conn, $sql);
 
 	$data = array();
+	$regex = <<<'END'
+/
+  (
+    (?: [\x00-\x7F]                 # single-byte sequences   0xxxxxxx
+    |   [\xC0-\xDF][\x80-\xBF]      # double-byte sequences   110xxxxx 10xxxxxx
+    |   [\xE0-\xEF][\x80-\xBF]{2}   # triple-byte sequences   1110xxxx 10xxxxxx * 2
+    |   [\xF0-\xF7][\x80-\xBF]{3}   # quadruple-byte sequence 11110xxx 10xxxxxx * 3 
+    ){1,100}                        # ...one or more times
+  )
+| .                                 # anything else
+/x
+END;
 	while( $row=mysqli_fetch_array($query) ) {  // preparing an array
 		$nestedData=array();
+		$row["mark"] = preg_replace($regex, '$1', $row["mark"]);
+		$row["client_id"] = preg_replace($regex, '$1', $row["client_id"]);
+		$row["full_name"] = preg_replace($regex, '$1', $row["full_name"]);
+		$row["business"] = preg_replace($regex, '$1', $row["business"]);
+		$row["address_line_1"] = preg_replace($regex, '$1', $row["address_line_1"]);
+		$row["city"] =preg_replace($regex, '$1', $row["city"]);
+		$row["state"] = preg_replace($regex, '$1', $row["state"]);
+		$row["zipcode"] = preg_replace($regex, '$1', $row["zipcode"]);
+		$row["call_back_date"] = preg_replace($regex, '$1', $row["call_back_date"]);
+		$row["priority"] = preg_replace($regex, '$1', $row["priority"]);
+		$row["title"] = preg_replace($regex, '$1', $row["title"]);
+		$row["phone"] = preg_replace($regex, '$1', $row["phone"]);
+		$row["web_address"] = preg_replace($regex, '$1', $row["web_address"]);
+		$row["email1"] = preg_replace($regex, '$1', $row["email1"]);
+		$row["vertical1"] = preg_replace($regex, '$1', $row["vertical1"]);
+		$row["vertical2"] = preg_replace($regex, '$1', $row["vertical2"]);
+		$row["vertical3"] = preg_replace($regex, '$1', $row["vertical3"]);
 		$nestedData[] = $row["mark"];
 		$nestedData[] = $row["client_id"];
 		$nestedData[] = $row["full_name"];
