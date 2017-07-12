@@ -236,14 +236,8 @@ require ("header.php");
 <div class="dashboard-cont" style="padding-top:110px;">
 	<div class="contacts-title">
 		<h1 class="pull-left">Edit Client</h1>
-		<?php
-		if($type == "Client"){
-			echo "<a class='pull-right' href='clients.php' >Back to Clients</a>";
-		}
-		else{
-			echo "<a class='pull-right' href='sales.php' >Back to Sales</a>";
-		}
-		?>
+		<a class='pull-right' href='clients.php' style = 'margin-left: 2%'>Back to Clients</a>
+		<a class='pull-right' href='CRM.php' >Back to CRM</a>
 		<div class="clear"></div>
 	</div>
 	<div class="dashboard-detail">
