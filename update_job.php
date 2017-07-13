@@ -101,6 +101,7 @@ if(isset($_POST['submit_form'])){
 			$estimate_date = $_POST['estimate_date'];
 			$estimate_created_by = $_POST['estimate_created_by'];
 			$special_instructions = $_POST['special_instructions'];
+			$special_instructions = str_replace('"', "'", $special_instructions);
 			$job_status = $_POST['job_status'];
 			
 			$mail_class = $_POST['mail_class'];
@@ -194,7 +195,7 @@ if(isset($_POST['submit_form'])){
 			$hrs_explanation = $_POST["hrs_explanation"];
 			
 			$sql = 'UPDATE job_ticket SET job_type = "' . $job_type . '", processed_by = "' . $processed_by . '", client_name = "' . $client_name . '", client_no = "' . $client_no . '", project_name = "' . $project_name . '",ticket_date = "' . $ticket_date . '",due_date = "' . $due_date . '",created_by = "' . $created_by . '",estimate_number = "' . $estimate_number . '",estimate_date = "' . $estimate_date . '",estimate_created_by = "' . $estimate_created_by . '", special_instructions = "' . $special_instructions . '",records_total = "' . $records_total . '",job_status = "' . $job_status . '", mail_class = "' . $mail_class . '", rate = "' . $rate . '", processing_category = "' . $processing_category . '", mail_dim = "' . $mail_dim . '", total_w_m = "' . $total_w_m . '", weights_measures = "' . $weights_measures . '", permit = "' . $permit . '", based_on = "' . $based_on . '" WHERE job_id = "' . $job_id . '"';
-			$result = $conn->query($sql) or die(date('Y-m-d', strtotime($ticket_date)));
+			$result = $conn->query($sql) or die($sql);
 			
 			$sql2 = 'UPDATE project_management SET data_source = "' . $data_source . '",data_received = "' . $data_received . '",data_completed = "' . $data_completed . '", data_location = "' . $data_location . '", data_processed_by = "' . $data_processed_by . '" WHERE job_id = "' . $job_id . '"';
 			$result2 = $conn->query($sql2) or die('Error querying database 2.');

@@ -153,18 +153,26 @@ if ($result->num_rows > 0) {
 			}
 			echo "<div class = 'project_block_left'>";
 				echo "<div class = 'project_row1'>";
+					if(strlen($row["client_name"]) > 34){
+						$row["client_name"] = substr($row["client_name"],0,34);
+						$row["client_name"] .= "...";
+					}
 					$x = $row["job_id"];
 					if($row["client_name"] == ""){
-						echo "<p>Client Name Needed</p>";
+						echo "<p style = 'color: #d11010'>Client Name Needed</p>";
 					}
 					else{
 						echo "<p>" . $row["client_name"] ."</p>";
 					}
+					if(strlen($row["project_name"]) > 34){
+						$row["project_name"] = substr($row["project_name"],0,34);
+						$row["project_name"] .= "...";
+					}
 					if($row["project_name"] == ""){
-						echo "<p>Project Name Needed</p>";
+						echo "<p style = 'color: #d11010'>$x - Project Name Needed</p>";
 					}
 					else{
-						echo "<p>" . $row["project_name"] ."</p>";
+						echo "<p>$x - " . $row["project_name"] ."</p>";
 					}
 					echo "</div>";
 					
@@ -172,7 +180,6 @@ if ($result->num_rows > 0) {
 					$id2 = "button" . $job_count;
 					
 				echo "<div class='project_row2'>";
-					echo "<a href = 'edit_job.php?job_id=$job_id' style = 'text-decoration: none'><p>" . $x . "</p></a>";
 					echo "<p>Records total: ".$row1["records_total"]. "</p>";
 					echo "<p>Due date: ".$row["due_date"]."</p>";
 				echo "</div>";
@@ -219,7 +226,7 @@ if ($result->num_rows > 0) {
 			</div></div>';
 			
 			echo "<div class='project_row4'>
-					<a href='#null' onclick = 'displayWorksheet(" . $job_count . ")' style='width:100%; background-color:#356CAC; float:left; text-align:center; color:white;'>WORKSHEET</a>
+					<a href='#null' onclick = 'displayWorksheet(" . $job_count . ")' style='width:80%; background-color:#356CAC; float:left; text-align:center; color:white;'>WORKSHEET</a><a href='edit_job.php?job_id=$x' style='width:20%; background-color:#D14700; float:right; text-align:center; color:white;'>EDIT</a>
 				</div></div>";
 				
 			echo '<div id = "myModal' . $job_count . '" class = "worksheet-background"><div class="worksheet-content">
