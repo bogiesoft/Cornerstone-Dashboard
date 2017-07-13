@@ -139,21 +139,29 @@ if ($result->num_rows > 0) {
 					echo "</div>";
 				echo "<div class='project_block_left'>";
 					echo "<div class = 'project_row1'>";
-					if($row["client_name"] != ""){
-						echo "<p>".$row["client_name"]."</p>";
+					if(strlen($row["client_name"]) > 34){
+						$row["client_name"] = substr($row["client_name"],0,34);
+						$row["client_name"] .= "...";
+					}
+					$x = $row["job_id"];
+					if($row["client_name"] == ""){
+						echo "<p style = 'color: #d11010'>Client Name Needed</p>";
 					}
 					else{
-						echo "<p>Client Needed</p>";
+						echo "<p>" . $row["client_name"] ."</p>";
 					}
-					if($row["project_name"] != ""){
-						echo "<p>".$row["project_name"]."</p>";
+					if(strlen($row["project_name"]) > 34){
+						$row["project_name"] = substr($row["project_name"],0,34);
+						$row["project_name"] .= "...";
+					}
+					if($row["project_name"] == ""){
+						echo "<p style = 'color: #d11010'>$x - Project Name Needed</p>";
 					}
 					else{
-						echo "<p>Project Name Needed</p>";
+						echo "<p>$x - " . $row["project_name"] ."</p>";
 					}
-				   echo "</div>";
+					echo "</div>";
 				echo "<div class='project_row2'>";
-					echo "<a href = 'edit_job.php?job_id=$x' style = 'text-decoration: none'><p>" . $x . "</p></a>";
 					echo "<p>Records total: ".$row1["records_total"]."</p>";
 					echo "<p>Due date: ".$row["due_date"]."</p>";
 					
@@ -222,7 +230,7 @@ if ($result->num_rows > 0) {
 						else{
 							
 							echo "<div class='graph_block'>
-									<h1>Time Tracking Needed</h1>
+									<h1 style = 'visibility: hidden'>Time Tracking Needed</h1>
 									<p class = 'hours_display" . $graph_count . "' style = 'float: right'>Hours: Unavailable</p></div>";
 							
 						}
@@ -264,7 +272,7 @@ if ($result->num_rows > 0) {
 				echo "</div>";
 				echo "</div>";
 				echo '<div class="project_row4">';
-				echo "<a onclick = displayInstr($job_count) href = '#null' style='width:75%; background-color:#356CAC; text-align:center; color:white;'>SPECIAL INSTRUCTIONS</a><a onclick = displayTasks($job_count) href = '#null' style='width:25%; background-color:#D14700; text-align:center; color:white;'>TASKS</a></div>";
+				echo "<a onclick = displayInstr($job_count) href = '#null' style='width:68%; background-color:#356CAC; text-align:center; color:white;'>SPECIAL INSTRUCTIONS</a><a onclick = displayTasks($job_count) href = '#null' style='width:16%; background-color:#000000; text-align:center; color:white;'>TASKS</a><a href = 'edit_job.php?job_id=$x' style='width:16%; background-color:#D14700; text-align:center; color:white;'>EDIT</a></div>";
 				echo "</div>";
 		}
 
