@@ -63,6 +63,7 @@ $conn->close();
 	
 	for(var i = 0; i < dates.length; i++){
 		var id1 = ids[i];
+		alert(id1);
 		if(occurences[i] == "Day"){
 			events[i] = {
 				url: "edit_reminder.php?id=" + id1,

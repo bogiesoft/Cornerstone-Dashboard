@@ -206,10 +206,10 @@ function getMaterialsID(row_id){
 					$('#based_on' + row_id).val(value);
 				}
 				else if(count_result == 4){
-					$('#weight' + row_id).val(value);
+					$('#weight' + row_id).val(value + " lbs.");
 				}
 				else if(count_result == 5){
-					$('#height' + row_id).val(value);
+					$('#height' + row_id).val(value + " in.");
 				}
 				count_result++
             });
@@ -522,6 +522,7 @@ require ("connection.php");
 		$weights_measures = $row['weights_measures'];
 		$permit = $row['permit'];
 		$based_on = $row['based_on'];
+		$total_w_m = $row["total_w_m"];
 		
 		$records_total = $row['records_total'];
 		$domestic = $row['domestic'];
@@ -674,7 +675,7 @@ require ("connection.php");
 					<div class='allcontacts-table'><table style = "border-style: hidden" border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
 							<tbody>
 							<tr valign='top'><td colspan='2'><table style = "border-style: hidden" id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody>
-							<tr><td><label>Data File Location</label><input style = "border-style: hidden" id="file_location" type="file" style = "width: 78%"><textarea id = "data_location" style = "height: 10%; width: 78%" name="data_location" type="text" class="contact-prefix" value = "<?php echo $data_location; ?>"><?php echo $data_location; ?></textarea></td><td> <label>Data Source</label><select id = "data_source" name = "data_source" style = "width: 50%; margin-right: 50%"><option selected = "selected" value = "<?php echo $data_source; ?>"><?php echo $data_source; ?></option><option value = "Client">Client</option><option value = "BOE">BOE</option><option value = "Recycled">Recycled</option><option value = "Occupants Residency">Occupants Residency</option><option value = "Melissa">Melissa</option><option value = "Master">Master</option><option value = "DataConsulate">DataConsulate</option><option value = "Multiple">Multiple</option><option value = "Real Property">Real Property</option><option value = "Other">Other</option></select></td></tr>
+							<tr><td><label>Data File Location</label><input style = "border-style: hidden; width: 78%; color: transparent" id="file_location" type="file"><textarea id = "data_location" style = "height: 10%; width: 78%" name="data_location" type="text" class="contact-prefix" value = "<?php echo $data_location; ?>"><?php echo $data_location; ?></textarea></td><td> <label>Data Source</label><select id = "data_source" name = "data_source" style = "width: 50%; margin-right: 50%"><option selected = "selected" value = "<?php echo $data_source; ?>"><?php echo $data_source; ?></option><option value = "Client">Client</option><option value = "BOE">BOE</option><option value = "Recycled">Recycled</option><option value = "Occupants Residency">Occupants Residency</option><option value = "Melissa">Melissa</option><option value = "Master">Master</option><option value = "DataConsulate">DataConsulate</option><option value = "Multiple">Multiple</option><option value = "Real Property">Real Property</option><option value = "Other">Other</option></select></td></tr>
 							<tr><td><label>Data Received</label><input id = "data_received" name="data_received" type="date" class="contact-prefix" style = "width: 50%; margin-right: 50%" value = "<?php echo $data_received;?>"></td><td><label>Data Completed</label><input id = "data_completed" name="data_completed" type="date" class="contact-prefix" style = "width: 50%; margin-right: 50%" value = "<?php echo $data_completed;?>"></td></tr>
 							<tr><td><label>Processed By</label>
 							 <select id = "data_processed_by" name="data_processed_by" style = "width: 50%; margin-right: 50%">
@@ -843,11 +844,11 @@ require ("connection.php");
 			</div>
 			<div class="newclienttab-inner" style = "width: 100%">
 				<div class="tabinner-detail">
-				<a class="pull-right" onclick = 'addWeights_Measures()' style = "cursor: pointer"><h1>+</h1></a>
+				<a class="pull-right" onclick = 'addWeights_Measures()' style = "cursor: pointer"><img src = 'images/web-icons/add_symbol.jpg' width = '30' height = '30'></a>
 					<table id="W_MTable" border="1" cellpadding="1" cellspacing="1" style='text-align: center; vertical-align: middle;'>
 					<thead>
 						<tr>
-					        <th>Select</th><th>Vendor</th><th>Material</th><th>type</th><th>Weight</th><th>Height</th><th>Based On</th><th>Expected Date Received</th><th>CRST Pickup</th><th>Initial</th><th>Location</th><th>Delete</th>
+					        <th>Vendor</th><th>Material</th><th>type</th><th>Weight</th><th>Height</th><th>Based On</th><th>Expected Date Received</th><th>CRST Pickup</th><th>Initial</th><th>Location</th><th>Delete</th>
 					    </tr>
 					</thead>
 					<tbody id="W_M_tbody">
@@ -887,10 +888,10 @@ require ("connection.php");
 											<select class='types' id='types1' name='vendor' style='width:220px;'><option value='default'>" . $row['type'] . "</option></select>
 										</td>
 										<td>
-											<input type = 'text' id = 'weight" . ($i + 1) . "' value = '" . $row['weight'] . "' readonly></input>
+											<input type = 'text' id = 'weight" . ($i + 1) . "' value = '" . $row['weight'] . " lbs.' readonly></input>
 										</td>
 										<td>
-											<input type = 'text' id = 'height" . ($i + 1) . "' value = '" . $row['height'] . "' readonly></input>
+											<input type = 'text' id = 'height" . ($i + 1) . "' value = '" . $row['height'] . " in.' readonly></input>
 										</td>
 										<td>
 											<input type = 'text' id = 'based_on" . ($i + 1) . "' value = '" . $row['based_on'] . "' readonly></input>

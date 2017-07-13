@@ -90,10 +90,10 @@ function getMaterialsID(row_id){
 					$('#based_on' + row_id).val(value);
 				}
 				else if(count_result == 4){
-					$('#weight' + row_id).val(value);
+					$('#weight' + row_id).val(value + " lbs.");
 				}
 				else if(count_result == 5){
-					$('#height' + row_id).val(value);
+					$('#height' + row_id).val(value + " in.");
 				}
 				count_result++
             });
@@ -502,7 +502,7 @@ function showSpecialInfo(){
 					<div class='allcontacts-table'><table style = "border-style: hidden" border='0' cellspacing='0' cellpadding='0' class='table-bordered allcontacts-table'>
 							<tbody>
 							<tr valign='top'><td colspan='2'><table style = "border-style: hidden" id = 'w_m_table' border='0' cellspacing='0' cellpadding='0' class='table-striped main-table contacts-list'><tbody>
-							<tr><td><label>Data File Location</label><input id="file_location" type="file" style = "width: 78%; border-style: hidden"><textarea id = "data_location" style = "height: 10%; width: 78%" name="data_location" type="text" class="contact-prefix"></textarea></td><td><label>Data Source</label><select name = "data_source" style = "width: 50%; margin-right: 50%"><option selected = "selected" value = "Client">Client</option><option value = "BOE">BOE</option><option value = "Recycled">Recycled</option><option value = "Occupants Residency">Occupants Residency</option><option value = "Melissa">Melissa</option><option value = "Master">Master</option><option value = "DataConsulate">DataConsulate</option><option value = "Multiple">Multiple</option><option value = "Real Property">Real Property</option><option value = "Other">Other</option></select></td></tr>
+							<tr><td><label>Data File Location</label><input id="file_location" type="file" style = "width: 78%; border-style: hidden; color: transparent;"><textarea id = "data_location" style = "height: 10%; width: 78%" name="data_location" type="text" class="contact-prefix"></textarea></td><td><label>Data Source</label><select name = "data_source" style = "width: 50%; margin-right: 50%"><option selected = "selected" value = "Client">Client</option><option value = "BOE">BOE</option><option value = "Recycled">Recycled</option><option value = "Occupants Residency">Occupants Residency</option><option value = "Melissa">Melissa</option><option value = "Master">Master</option><option value = "DataConsulate">DataConsulate</option><option value = "Multiple">Multiple</option><option value = "Real Property">Real Property</option><option value = "Other">Other</option></select></td></tr>
 							<tr><td><label>Data Received</label><input id = "data_received" name="data_received" type="date" class="contact-prefix" style = "width: 50%; margin-right: 50%"></td><td><label>Data Completed</label><input id = "data_completed" name="data_completed" type="date" class="contact-prefix" style = "width: 50%; margin-right: 50%"></td></tr>
 							<tr><td><label>Processed By</label>
 							 <select name="data_processed_by" style = "width: 50%; margin-right: 50%">
@@ -585,7 +585,7 @@ function showSpecialInfo(){
 				</div>
 				<div class="newclienttab-inner" style = "width: 100%">
                     <div class="tabinner-detail">
-                    <a class="pull-right" onclick = 'addWeights_Measures()' style = "cursor: pointer"><h1>+</h1></a>
+                    <a class="pull-right" onclick = 'addWeights_Measures()' style = "cursor: pointer"><img src = 'images/web-icons/add_symbol.jpg' width = '30' height = '30'></a>
                     <table id="W_MTable" border="1" cellpadding="1" cellspacing="1" style='text-align: center; vertical-align: middle;'>
                         <thead>
                         <tr>
@@ -640,7 +640,7 @@ function showSpecialInfo(){
                 </div>
 				</div>
 					<div id = "special_instructions_info" class="tabinner-detail" style = "display: none;">
-                    <textarea name="special_instructions" class="contact-prefix" style = "width: 900px; height: 500px">DATA FILES:  ___________________________.xlsx&#13;&#10; FILE PROCESSING / PROJECT MANAGEMENT: &#13;&#10; GRAPHIC DESIGN:  ______________________________ &#13;&#10; MATERIALS:  ______________________________ &#13;&#10; PRODUCTION:  ______________________________ &#13;&#10; BILLING:  ____________________________</textarea>
+                    <textarea name="special_instructions" class="contact-prefix" style = "width: 900px; height: 500px">DATA FILES: &#13;&#10; FILE PROCESSING / PROJECT MANAGEMENT: &#13;&#10; GRAPHIC DESIGN:  &#13;&#10; MATERIALS:  &#13;&#10; PRODUCTION: &#13;&#10; BILLING: </textarea>
                     </div>
             </div>
                 <div class="newcontact-tabbtm">
