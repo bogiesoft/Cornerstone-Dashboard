@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 07, 2017 at 11:02 PM
+-- Generation Time: Jul 14, 2017 at 10:50 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -142,6 +142,14 @@ CREATE TABLE `customer_service` (
   `bs_domestic` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `customer_service`
+--
+
+INSERT INTO `customer_service` (`job_id`, `postage`, `invoice_number`, `invoice_date`, `residual_returned`, `2week_followup`, `notes`, `status`, `reason`, `completed_date`, `data_hrs`, `gd_hrs`, `hrs_explanation`, `initialrec_count`, `manual`, `uncorrected`, `unverifiable`, `bs_foreigns`, `bs_exact`, `loose`, `householded`, `basic`, `ncoa_errors`, `bs_ncoa`, `final_count`, `bs_domestic`) VALUES
+(1, '', 0, '0000-00-00', '', '', '', '', '', '0000-00-00', 0, 0, '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(2, '', 0, '0000-00-00', '', '', '', '', '', '0000-00-00', 0, 0, '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -225,7 +233,7 @@ CREATE TABLE `inventory` (
 
 INSERT INTO `inventory` (`material_id`, `material`, `type`, `vendor`, `location`, `material_color`, `quantity`, `per_box`) VALUES
 (7, 'envelope', '#3', 'Joe Mcgee', 'Jimbo', 'Purple', 34000, 2300),
-(8, 'envelope', '#10', 'Lindemyer Company', '13B', 'White', 11600, 10);
+(8, 'envelope', '#10', 'Lindemyer Company', '13B', 'White', 6600, 10);
 
 -- --------------------------------------------------------
 
@@ -273,6 +281,14 @@ CREATE TABLE `job_ticket` (
   `based_on` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `job_ticket`
+--
+
+INSERT INTO `job_ticket` (`job_id`, `job_type`, `processed_by`, `client_name`, `client_no`, `project_name`, `ticket_date`, `due_date`, `created_by`, `estimate_number`, `estimate_date`, `estimate_created_by`, `special_instructions`, `records_total`, `job_status`, `priority`, `mail_class`, `rate`, `processing_category`, `mail_dim`, `total_w_m`, `weights_measures`, `permit`, `based_on`) VALUES
+(1, 'Non-Profit', 'mbroc', '', '', '', '2017-07-13', '2017-07-20', 'sayre', 'E4567TY', '2017-07-13', 'sdf', 'George Washington (February 22, 1732 [O.S. February 11, 1731][b][c] â€“ December 14, 1799) was an American politician and soldier who served as the first President of the United States from 1789 to 1797 and was one of the Founding Fathers of the United States. He served as Commander-in-Chief of the Continental Army during the American Revolutionary War, and later presided over the 1787 convention that drafted the United States Constitution. He is popularly considered the driving force behind the nation\'s establishment and came to be known as the \'father of the country,\' both during his lifetime and to this day.[2]\r\n\r\nWashington was born into the provincial gentry of Colonial Virginia to a family of wealthy planters who owned tobacco plantations and slaves, which he inherited. In his youth, he became a senior officer in the colonial militia during the first stages of the French and Indian War. In 1775, the Second Continental Congress commissioned him as commander-in-chief of the Continental Army in the American Revolution. In that command, Washington forced the British out of Boston in 1776 but was defeated and nearly captured later that year when he lost New York City. After crossing the Delaware River in the middle of winter, he defeated the British in two battles (Trenton and Princeton), retook New Jersey, and restored momentum to the Patriot cause. His strategy enabled Continental forces to capture two major British armies at Saratoga in 1777 and Yorktown in 1781. Historians laud Washington for the selection and supervision of his generals; preservation and command of the army; coordination with the Congress, state governors, and their militia; and attention to supplies, logistics, and training. In battle, however, Washington was often outmaneuvered by British generals with larger armies, yet was always able to avoid defeats which would have resulted in the surrender of his army and the loss of the American Revolution.\r\n\r\nAfter victory had been finalized in 1783, Washington resigned as commander-in-chief rather than seize power, proving his commitment to American republicanism.[3] Washington presided over the Constitutional Convention in 1787, which devised a new form of federal government for the United States. Washington was widely admired for his strong leadership qualities and was unanimously elected president by the Electoral College in the first two national elections. Following his election as president in 1789, he worked to unify rival factions in the fledgling nation. He supported Alexander Hamilton\'s programs to satisfy all debts, federal and state, established a permanent seat of government, implemented an effective tax system, and created a national bank.[4] In avoiding war with Great Britain, he guaranteed a decade of peace and profitable trade by securing the Jay Treaty in 1795, despite intense opposition from the Jeffersonians. He oversaw the creation of a strong, well-financed national government that maintained neutrality in the French Revolutionary Wars, suppressed the Whiskey Rebellion, and won wide acceptance amongst Americans.[5] Washington\'s incumbency established many precedents still in use today, such as the cabinet system, the inaugural address, and the title Mr. President.[6][7] His retirement from office after two terms established a tradition that lasted until 1940 and was later made law by the 22nd Amendment. He remained non-partisan, never joining the Federalist Party, although he largely supported its policies. Washington\'s Farewell Address was an influential primer on civic virtue, warning against partisanship, sectionalism, and involvement in foreign wars. He retired from the presidency in 1797, returning to his home and plantation at Mount Vernon.\r\n\r\nUpon his death, Washington was eulogized as \'first in war, first in peace, and first in the hearts of his countrymen\' by Representative Henry Lee III of Virginia.[8] He was revered in life and in death; scholarly and public polling consistently ranks him among the top three presidents in American history. He has been depicted and remembered in monuments, public works, currency, and other dedications to the present day.', 5000, 'in P.M.', 1, 'Non-profit BPM', 'Auto', 'Flat', '', '', '20', '26 Pre-cancelled', '0'),
+(2, '', 'igadge', '', '', '', '2017-07-13', '2017-07-20', 'sayre', '', '2017-07-13', 'admin', 'DATA FILES:  ___________________________.xlsx\r\n FILE PROCESSING / PROJECT MANAGEMENT: \r\n GRAPHIC DESIGN:  ______________________________ \r\n MATERIALS:  ______________________________ \r\n PRODUCTION:  ______________________________ \r\n BILLING:  ____________________________', 0, 'none', 0, 'FCM', 'Auto', 'Flat', '', '', '20', '', '0');
+
 -- --------------------------------------------------------
 
 --
@@ -317,6 +333,14 @@ CREATE TABLE `production` (
   `delivery` varchar(45) NOT NULL,
   `tasks` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `production`
+--
+
+INSERT INTO `production` (`job_id`, `hold_postage`, `postage_paid`, `delivery`, `tasks`) VALUES
+(1, 'no', 'no', 'Hand Delivery', 'Tabbing^Manual Triple,Folding^Manual Gate Fold'),
+(2, 'no', 'no', '', 'Letter Printing^From PDF');
 
 -- --------------------------------------------------------
 
@@ -405,7 +429,9 @@ INSERT INTO `production_receipts` (`job_id`, `wm_id`, `date_expected`, `crst_pic
 (5754, 19, '2017-06-30', 1, 'SA', '29 Front', 'Joe Mcgee'),
 (5755, 20, '0000-00-00', 0, '', '', 'CRST Inventory'),
 (2, 11, '2017-06-29', 1, 'SA', '31 Front', 'Pro printer'),
-(2, 19, '2017-06-29', 1, 'SA', '29 Back', 'Joe Mcgee');
+(2, 19, '2017-06-29', 1, 'SA', '29 Back', 'Joe Mcgee'),
+(1, 20, '0000-00-00', 0, '', '', 'CRST Inventory'),
+(2, 20, '0000-00-00', 0, '', '', 'CRST Inventory');
 
 -- --------------------------------------------------------
 
@@ -451,6 +477,14 @@ CREATE TABLE `project_management` (
   `percent` float NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `project_management`
+--
+
+INSERT INTO `project_management` (`data_source`, `data_location`, `data_processed_by`, `data_received`, `data_completed`, `job_id`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`, `13`, `14`, `na_1`, `na_2`, `na_3`, `na_4`, `na_5`, `na_6`, `na_7`, `na_8`, `na_9`, `na_10`, `na_11`, `na_12`, `na_13`, `na_14`, `percent`) VALUES
+('Occupants Residency', 'C:\\fakepath\\putnam_assessment.sql', 'mbroc', '2017-07-13', '2017-07-13', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('Client', '', 'admin', '2017-07-13', '2017-07-13', 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -477,7 +511,10 @@ INSERT INTO `reminder` (`id`, `user`, `text`, `date`, `occurence`, `end_date`, `
 (70, 'sayre', 'Sample', '2017-02-18', 'DT', 'none', '13:02'),
 (71, 'sayre', '10 minutes to go', '2017-02-28', 'DT', 'none', '16:50'),
 (72, 'sayre', 'Do work', '2017-04-18', 'Day', 'none', 'none'),
-(74, 'sayre', '\"', '0000-00-00', 'Day', 'none', 'none');
+(74, 'sayre', '\"', '0000-00-00', 'Day', 'none', 'none'),
+(75, 'sayre', 'Work the Fuck Out', '2017-07-29', 'DT', 'none', '17:00'),
+(76, 'sayre', 'Workout', '2017-07-20', 'DT', 'none', '17:00'),
+(77, 'sayre', 'Work out Again', '2017-07-20', 'DT', 'none', '19:00');
 
 -- --------------------------------------------------------
 
@@ -487,10 +524,10 @@ INSERT INTO `reminder` (`id`, `user`, `text`, `date`, `occurence`, `end_date`, `
 
 CREATE TABLE `sales` (
   `client_id` int(11) NOT NULL,
-  `rep` varchar(45) NOT NULL,
+  `rep` varchar(45) CHARACTER SET utf8 NOT NULL,
   `quickbooks` varchar(45) NOT NULL,
   `prefix` varchar(45) NOT NULL,
-  `full_name` varchar(50) NOT NULL,
+  `full_name` varchar(50) CHARACTER SET utf8 NOT NULL,
   `suffix` varchar(45) NOT NULL,
   `title` varchar(45) NOT NULL,
   `contact_name` varchar(45) NOT NULL,
@@ -1133,7 +1170,7 @@ INSERT INTO `sales` (`client_id`, `rep`, `quickbooks`, `prefix`, `full_name`, `s
 (601, 'CRST', ' ', 'Mr.', 'Ron  Matthews', ' ', '', 'Ron Matthews', '845-338-1247', '', '', '', '', '', '', '', 'www.kingston-ny.gov/content/148/162/default.aspx#Fire', '', '', '', '', '', '', 'Kingston Vol. Fireman\'s Hall & Museum', '', 'PO Box 1501', ' ', ' ', 'Kingston', 'NY', '12402', ' ', '0000-00-00', ' ', '2017-03-28', ' ', ' ', '', '', '', '', 'NON-PROFIT', 'Museum', '', ' ', 'Originally Smith P&M Account for Raffle Tickets.    6/26/2012:  Ron - may be interested in doing some fundraising. Said I\'d send info/samples. EC     ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '0', '0', 'Prospect', 0, '2017-03-28 19:35:53', 1, 'TestNewImporter', 'Insert'),
 (602, 'CRST', ' ', 'Mr.', 'Bill  Noelles', ' ', 'Board Member', '', '(845) 331-4481', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'Kingston Volunteer Fire Museum', '', '265 Fair St', ' ', ' ', 'Kingston', 'NY', '12401-3807', ' ', '0000-00-00', ' ', '2017-03-28', ' ', ' ', '', 'vfmuseumofkingston@gmail.com', '', '', 'Fire Dept', '', '', ' ', '   ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '0', '0', 'Prospect', 0, '2017-03-28 19:35:53', 1, 'TestNewImporter', 'Insert'),
 (603, 'CRST', ' ', 'Mr.', 'Al  Alberts', ' ', '', 'Al Alberts', '845 331-0175', '', '', '', '', '', '845 340-9209', '', 'www.ci.kingston.ny.us', '', '', '', '', '', '', 'Kingston Water Department', '', 'PO Box 1537', ' ', ' ', 'Kingston', 'NY', '12401-1537', ' ', '0000-00-00', ' ', '2017-03-28', ' ', ' ', 'Jane Perry', 'aalberts@ci.kingston.ny.us', '', '', 'NON-PROFIT', 'Municipal', '', ' ', '   ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '0', '0', 'Prospect', 0, '2017-03-28 19:35:53', 1, 'TestNewImporter', 'Insert'),
-(604, 'MIKE', ' ', 'Mr.', 'Louis F. Klass', ' ', 'MEMBER', '', '(845) 623-2593', '', '', '', '', '(201) 344-7760', '', '', '', '', '', '', '', '', '', 'Klass Painting & Power Washing LLC', '', '3 Summit Place', ' ', ' ', 'Nanuet', 'NY', '10954-3713', ' ', '0000-00-00', ' ', '2017-03-28', '', '', '', 'lfklass@aol.com', '', '', 'Commercial', 'Contractor', '', ' ', '10/21/2014 3:14:23 PM:  called the 845-623-2593 and left message for Lou.  SG   ', '', '', '', '', '', '', '', '', '', '', '0', '0', 'Client', 0, '2017-03-28 19:35:53', 1, 'TestNewImporter', 'Insert'),
+(604, 'MIKE', ' ', 'Mr.', 'Louis F. Klass', ' ', 'Something or Another', '', '(845) 623-2593', '', '', '', '', '(201) 344-7760', '', '', '', '', '', '', '', '', '', 'Klass Painting & Power Washing LLC', '', '3 Summit Place', ' ', ' ', 'Nanuet', 'NY', '10954-3713', ' ', '0000-00-00', ' ', '2017-03-28', '', '', '', 'lfklass@aol.com', '', '', 'Commercial', 'Contractor', '', ' ', '10/21/2014 3:14:23 PM:  called the 845-623-2593 and left message for Lou.  SG   ', '', '', '', '', '', '', '', '', '', '', '0', '0', 'Client', 0, '2017-03-28 19:35:53', 1, 'TestNewImporter', 'Insert'),
 (605, 'CRST', ' ', 'Mr', 'Fred  Knapp', ' ', '', 'Fred Knapp', '(845) 702-4963', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'Fred Knapp', '', '63 Apple Tree Lane', ' ', ' ', 'Poughquag', 'NY', '12570', ' ', '0000-00-00', ' ', '2017-03-28', ' ', ' ', '', 'fknappjr@hvc.rr.com', '', '', 'Political', '', '', ' ', '   ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '0', '0', 'Prospect', 0, '2017-03-28 19:35:53', 1, 'TestNewImporter', 'Insert'),
 (606, 'CRST', ' ', 'Ms.', 'Sarah  Strnad', ' ', '', 'Sarah Strnad', '718-395-9950', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'Kolot Chayeinu Synagogue', '', '1012 Eighth Avenue', ' ', ' ', 'Brooklyn', 'NY', '11215-4312', ' ', '0000-00-00', ' ', '2017-03-28', ' ', ' ', 'Ms. Efrat Baler-Moses', 'sarah@kolotchayeinu.org', '', 'www.kolotchayeinu.org', 'NON-PROFIT', 'Religious', '', ' ', 'Long-term contact = Ms. Efrat Baler-Moses, Finance  Checks signed once a month; Effi only in on Wednesdays    Invoices should be sent to Liz and Effi at accountsdatamanager@kolotchayeinu.org  (old email = kolot4u@verizon.net)    08/01/2012:  New Admini... Vanessa  ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '0', '0', 'Prospect', 0, '2017-03-28 19:35:53', 1, 'TestNewImporter', 'Insert'),
 (607, 'CRST', ' ', 'Mr.', 'Michael  Fusco', ' ', 'Board Member', '', '(845) 626-0117', '', '', '', '(845) 626-0117', '845-687-9801', '', '', '', '', '', '', '', '', '', 'Kripplebush-Lyonsville Fire Company', '', 'Justin Van Wagenen, Captain', ' ', ' ', 'Accord', 'NY', '12404-0203', ' ', '0000-00-00', ' ', '2017-03-28', ' ', ' ', '', 'mrsoftee48@hotmail.com', '', '', 'NON-PROFIT', 'Service Org', '', ' ', '9/29/2014 1:15:52 PM:  left message for Michael Fusco - just checking in to see how the mailing went - no reason to call back.  SG www.facebook.com/pages/Kripplebush-Lyonsville-Fire-Company  ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '0', '0', 'Prospect', 0, '2017-03-28 19:35:53', 1, 'TestNewImporter', 'Insert'),
@@ -1366,7 +1403,7 @@ INSERT INTO `sales` (`client_id`, `rep`, `quickbooks`, `prefix`, `full_name`, `s
 (838, 'MIKE', ' ', 'Mr.', 'Andrew L McBride', ' ', '', 'Andy McBride', '(845) 246-2800 x345', '', '', '', '', '', '', '', 'www.saugerties.ny.us', '', '', '', '', '', '', 'Town of Saugerties', '', '4 High Street', ' ', ' ', 'Saugerties', 'NY', '12477', ' ', '0000-00-00', ' ', '2017-03-28', ' ', ' ', 'Greg Helsmoortel', 'amcbride@saugerties.ny.us', '', '', 'NON-PROFIT', 'Municipal', '', ' ', '   ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '0', '0', 'Prospect', 0, '2017-03-28 19:35:53', 1, 'TestNewImporter', 'Insert'),
 (839, 'SEAN', ' ', 'Ms', 'Erin  Riley', ' ', '', 'Riley Erin', '(845) 473-4440', '', '', '', '', '', '845 473 2648', '', 'www.scenichudson.org', '', '', '', '', '', '', 'Scenic Hudson, Inc', '', 'External Communications & Development', ' ', ' ', 'Poughkeepsie', 'NY', '12601-3157', ' ', '0000-00-00', ' ', '2017-03-28', ' ', ' ', 'Development Assoc Veronica Damico', 'eriley@scenichudson.org', '', '', 'NON-PROFIT', 'Conservation', '', ' ', '   ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '0', '0', 'Prospect', 0, '2017-03-28 19:35:53', 1, 'TestNewImporter', 'Insert'),
 (840, 'CRST', ' ', 'Mr.', 'Donald  Wiegmann', ' ', '', 'Donald Wiegmann', '(845) 895-8253', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'School of Philosophy Hudson Valley', '', '846 Borden Estates', ' ', ' ', 'Wallkill', 'NY', '12589-3934', ' ', '0000-00-00', ' ', '2017-03-28', ' ', ' ', '', 'dhwieg@aol.com', '', '', 'NON-PROFIT', 'Education', '', ' ', '   ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '0', '0', 'Prospect', 0, '2017-03-28 19:35:53', 1, 'TestNewImporter', 'Insert'),
-(841, 'CRST', ' ', 'Mr.', 'Séamus  Kennedy', ' ', '', 'Séamus Kennedy', '(800) 301-8275', '(646) 239-8599', '', '', '', '', '', '', 'www.philosophyworks.org', '', '', '', '', '', '', 'School of Practical Philosophy', '', '12 East 79th Street', ' ', ' ', 'New York', 'NY', '10075-0106', ' ', '0000-00-00', ' ', '2017-03-28', ' ', ' ', '', 'davidsteingard@gmail.com', '', 'seamus@hersco.com', 'NON-PROFIT', 'Education', '', ' ', 'Wallkill School   Don Wiegmann <dhwieg@aol.com>   ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '0', '0', 'Prospect', 0, '2017-03-28 19:35:53', 1, 'TestNewImporter', 'Insert'),
+(841, 'CRST', ' ', 'Mr.', 'Shamus  Kennedy', ' ', 'MEMBER', 'Sï¿½amus Kennedy', '(800) 301-8275', '(646) 239-8599', '', '', '(646) 239-8599', '', '', '', 'www.philosophyworks.org', '', '', '', '', '', '', 'School of Practical Philosophy', '', '12 East 79th Street', ' ', ' ', 'New York', 'NY', '10075-0106', ' ', '0000-00-00', ' ', '2017-03-28', '', '', '', 'davidsteingard@gmail.com', '', 'seamus@hersco.com', 'NON-PROFIT', 'Education', '', ' ', 'Wallkill School   Don Wiegmann <dhwieg@aol.com>   ', '', '', '', '', '', '', '', '', '', '', '0', '0', 'Prospect', 0, '2017-03-28 19:35:53', 1, 'TestNewImporter', 'Insert'),
 (842, 'MIKE', ' ', 'Mr.', 'Scott R. Haecker', ' ', '', 'Scott Haecker', '(845) 728-2347', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'Scott\'s Lawncare & Landscaping', '', '45 Meadow Lane', ' ', ' ', 'Modena', 'NY', '12548-5128', ' ', '0000-00-00', ' ', '2017-03-28', ' ', ' ', '', 'scottlawn@hotmail.com', '', '', 'Commercial', 'Landscaping', '', ' ', '03-09-2012:  left VM for Scott re: revised estimates.   ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '0', '0', 'Prospect', 0, '2017-03-28 19:35:53', 1, 'TestNewImporter', 'Insert'),
 (843, 'CRST', ' ', 'Mr.', 'Ken  Greene', ' ', '', 'Ken Greene', '845-204-8769', '845-235-7514 cell', '', '', '', '', '', '', 'www.seedlibrary.org', '', '', '', '', '', '', 'Hudson Valley Seed Library', '', '484 Mettacahonts Road', ' ', ' ', 'Accord', 'NY', '12404-5849', ' ', '0000-00-00', ' ', '2017-03-28', ' ', ' ', 'Brian Nelson', 'ken@seedlibrary.org', '', '', 'Commercial', 'Farm', '', ' ', '   ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '0', '0', 'Prospect', 0, '2017-03-28 19:35:53', 1, 'TestNewImporter', 'Insert'),
 (844, 'MIKE', ' ', 'Mr.', 'Bill  Seguin', ' ', 'Owner', '', '(860) 355-2039', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'Seguin Heating & Air Conditioning', '', '21 S End Plz', ' ', ' ', 'New Milford', 'CT', '06776-4235', ' ', '0000-00-00', ' ', '2017-03-28', ' ', ' ', '', 'seguinhvac@aol.com', '', '', 'Commercial', 'Contractor', '', ' ', '   ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '0', '0', 'Prospect', 0, '2017-03-28 19:35:53', 1, 'TestNewImporter', 'Insert'),
@@ -3065,7 +3102,17 @@ INSERT INTO `timestamp` (`id`, `user`, `time`, `job`, `a_p`, `processed_by`, `vi
 (1448, 'sayre', '2017-06-28 12:24:00', 'Closed job ticket2', 'PM', 'jjones', 'no'),
 (1449, 'sayre', '2017-07-07 16:20:03', 'updated client info', 'PM', '', ''),
 (1450, 'sayre', '2017-07-07 16:20:30', 'updated client info', 'PM', '', ''),
-(1451, 'sayre', '2017-07-07 16:20:49', 'updated client info', 'PM', '', '');
+(1451, 'sayre', '2017-07-07 16:20:49', 'updated client info', 'PM', '', ''),
+(1452, 'sayre', '2017-07-10 10:07:59', 'updated client info', 'AM', '', ''),
+(1453, 'sayre', '2017-07-13 09:50:52', 'assigned job ticket 1', 'AM', 'mbroc', 'no'),
+(1454, 'sayre', '2017-07-13 09:51:01', 'updated job ticket 1', 'AM', 'mbroc', 'no'),
+(1455, 'sayre', '2017-07-13 10:10:16', 'updated job ticket 1', 'AM', 'mbroc', 'no'),
+(1456, 'sayre', '2017-07-13 10:14:30', 'updated client info', 'AM', '', ''),
+(1457, 'sayre', '2017-07-13 10:14:44', 'updated client info', 'AM', '', ''),
+(1458, 'sayre', '2017-07-13 10:50:38', 'assigned job ticket 2', 'AM', 'igadge', 'no'),
+(1459, 'sayre', '2017-07-13 10:58:52', 'updated job ticket 1', 'AM', 'mbroc', 'no'),
+(1460, 'sayre', '2017-07-13 11:17:31', 'updated job ticket 1', 'AM', 'mbroc', 'no'),
+(1461, 'sayre', '2017-07-13 11:21:57', 'updated job ticket 1', 'AM', 'mbroc', 'no');
 
 -- --------------------------------------------------------
 
@@ -3225,7 +3272,7 @@ ALTER TABLE `timestamp`
 -- AUTO_INCREMENT for table `customer_service`
 --
 ALTER TABLE `customer_service`
-  MODIFY `job_id` int(45) NOT NULL AUTO_INCREMENT;
+  MODIFY `job_id` int(45) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `employee_data`
 --
@@ -3240,12 +3287,12 @@ ALTER TABLE `inventory`
 -- AUTO_INCREMENT for table `issues`
 --
 ALTER TABLE `issues`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `job_ticket`
 --
 ALTER TABLE `job_ticket`
-  MODIFY `job_id` int(45) NOT NULL AUTO_INCREMENT;
+  MODIFY `job_id` int(45) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `materials`
 --
@@ -3255,12 +3302,12 @@ ALTER TABLE `materials`
 -- AUTO_INCREMENT for table `project_management`
 --
 ALTER TABLE `project_management`
-  MODIFY `job_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `job_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `reminder`
 --
 ALTER TABLE `reminder`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 --
 -- AUTO_INCREMENT for table `sales`
 --
@@ -3275,7 +3322,7 @@ ALTER TABLE `saved_search`
 -- AUTO_INCREMENT for table `timestamp`
 --
 ALTER TABLE `timestamp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1452;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1462;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
